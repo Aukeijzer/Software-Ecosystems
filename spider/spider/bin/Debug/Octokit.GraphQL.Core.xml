@@ -1,0 +1,872 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Octokit.GraphQL.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Octokit.GraphQL.Connection">
+            <summary>
+            A connection for making HTTP requests against the GitHub GraphQL API endpoint.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Connection.GithubApiUri">
+            <summary>
+            Gets the address of the GitHub GraphQL API.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Connection.#ctor(Octokit.GraphQL.ProductHeaderValue,System.String)">
+            <summary>
+            Creates a new connection instance used to make requests of the GitHub GraphQL API.
+            </summary>
+            <remarks>
+            See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required.
+            </remarks>
+            <param name="productInformation">
+            The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+            the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
+            </param>
+            <param name="token">The token to use to authenticate with the GitHub GraphQL API.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="productInformation"/> is <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Octokit.GraphQL.Connection.#ctor(Octokit.GraphQL.ProductHeaderValue,System.Uri,System.String)">
+            <summary>
+            Creates a new connection instance used to make requests of the GitHub GraphQL API.
+            </summary>
+            <remarks>
+            See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required.
+            </remarks>
+            <param name="productInformation">
+            The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+            the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
+            </param>
+            <param name="uri">
+            The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise instance.
+            </param>
+            <param name="token">The token to use to authenticate with the GitHub GraphQL API.</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="uri"/> is not an absolute URI.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="productInformation"/> or <paramref name="uri"/> are <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Octokit.GraphQL.Connection.#ctor(Octokit.GraphQL.ProductHeaderValue,Octokit.GraphQL.ICredentialStore)">
+            <summary>
+            Creates a new connection instance used to make requests of the GitHub GraphQL API.
+            </summary>
+            <remarks>
+            See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required.
+            </remarks>
+            <param name="productInformation">
+            The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+            the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
+            </param>
+            <param name="credentialStore">Provides credentials to the client when making requests.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="productInformation"/> or <paramref name="credentialStore"/> are <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Octokit.GraphQL.Connection.#ctor(Octokit.GraphQL.ProductHeaderValue,System.Uri,Octokit.GraphQL.ICredentialStore)">
+            <summary>
+            Creates a new connection instance used to make requests of the GitHub GraphQL API.
+            </summary>
+            <remarks>
+            See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required.
+            </remarks>
+            <param name="productInformation">
+            The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+            the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
+            </param>
+            <param name="uri">
+            The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise instance.
+            </param>
+            <param name="credentialStore">Provides credentials to the client when making requests.</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="uri"/> is not an absolute URI.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="productInformation"/>, <paramref name="uri"/> or <paramref name="credentialStore"/> are <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Octokit.GraphQL.Connection.#ctor(Octokit.GraphQL.ProductHeaderValue,Octokit.GraphQL.ICredentialStore,System.Net.Http.HttpClient)">
+            <summary>
+            Creates a new connection instance used to make requests of the GitHub GraphQL API.
+            </summary>
+            <remarks>
+            See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required.
+            </remarks>
+            <param name="productInformation">
+            The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+            the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
+            </param>
+            <param name="credentialStore">Provides credentials to the client when making requests.</param>
+            <param name="httpClient">An <see cref="P:Octokit.GraphQL.Connection.HttpClient"/> used to make requests.</param>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="productInformation"/>, <paramref name="credentialStore"/> or <paramref name="httpClient"/> are <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="M:Octokit.GraphQL.Connection.#ctor(Octokit.GraphQL.ProductHeaderValue,System.Uri,Octokit.GraphQL.ICredentialStore,System.Net.Http.HttpClient)">
+            <summary>
+            Creates a new connection instance used to make requests of the GitHub GraphQL API.
+            </summary>
+            <remarks>
+            See more information regarding User-Agent requirements here: https://developer.github.com/v3/#user-agent-required.
+            </remarks>
+            <param name="productInformation">
+            The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
+            the user agent for analytics purposes, and used by GitHub to contact you if there are problems.
+            </param>
+            <param name="uri">
+            The address to point this client to such as https://api.github.com or the URL to a GitHub Enterprise instance.
+            </param>
+            <param name="credentialStore">Provides credentials to the client when making requests.</param>
+            <param name="httpClient">An <see cref="P:Octokit.GraphQL.Connection.HttpClient"/> used to make requests.</param>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="uri"/> is not an absolute URI.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="productInformation"/>, <paramref name="uri"/>, <paramref name="credentialStore"/> or <paramref name="httpClient"/> are <see langword="null"/>.
+            </exception>
+        </member>
+        <member name="P:Octokit.GraphQL.Connection.Uri">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Connection.CredentialStore">
+            <summary>
+            Gets the credential store for the connection.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Connection.HttpClient">
+            <summary>
+            Gets the HTTP client for the connection.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Connection.Accept">
+            <summary>
+            Gets the Accept value for the connection.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Connection.UserAgent">
+            <summary>
+            Gets the User Agent value for the connection.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Connection.Run(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Octokit.GraphQL.Core.Builders.AliasedExpression">
+            <summary>
+            Marker to denote that an expression should be assigned an alias in the GraphQL query.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Builders.AliasedExpression.#ctor(System.Linq.Expressions.Expression,System.Reflection.MemberInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.Builders.AliasedExpression"/> class.
+            </summary>
+            <param name="inner">The expression.</param>
+            <param name="alias">The alias.</param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.AliasedExpression.Inner">
+            <summary>
+            Gets the expression that will be assigned an alias.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.AliasedExpression.Alias">
+            <summary>
+            Gets the alias.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Builders.AliasedExpression.WrapIfNeeded(System.Linq.Expressions.Expression,System.Reflection.MemberInfo)">
+            <summary>
+            Wraps an expression in a <see cref="T:Octokit.GraphQL.Core.Builders.AliasedExpression"/> if <paramref name="alias"/> is
+            not null.
+            </summary>
+            <param name="inner">The expression.</param>
+            <param name="alias">The alias.</param>
+            <returns>
+            An <see cref="T:Octokit.GraphQL.Core.Builders.AliasedExpression"/> if <paramref name="alias"/> is non-null; otherwise
+            <paramref name="inner"/>.
+            </returns>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.Builders.AllPagesExpression">
+            <summary>
+            Marker to denote that an AllPages() call was made on a method.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Builders.AllPagesExpression.#ctor(System.Linq.Expressions.MethodCallExpression,System.Nullable{System.Int32})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.Builders.AllPagesExpression"/> class.
+            </summary>
+            <param name="method">The method that AllPages() was called on.</param>
+            <param name="pageSize">The ConstantExpression that AllPages was sent</param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.AllPagesExpression.Method">
+            <summary>
+            Gets the method that AllPages() was called on.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.AllPagesExpression.PageSize">
+            <summary>
+            Gets the value that was sent to AllPages
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.AllPagesExpression.NodeType">
+            <inheritdoc/>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.AllPagesExpression.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.Builders.SubqueryExpression">
+            <summary>
+            Marker to associate a method call with a subquery.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Builders.SubqueryExpression.#ctor(Octokit.GraphQL.Core.ISubquery,System.Linq.Expressions.MethodCallExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.Builders.SubqueryExpression"/> class.
+            </summary>
+            <param name="subquery">The subquery.</param>
+            <param name="methodCall">The method call.</param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.SubqueryExpression.MethodCall">
+            <summary>
+            Gets the method call.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.SubqueryExpression.Subquery">
+            <summary>
+            Gets the associated subquery.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.SubqueryExpression.NodeType">
+            <inheritdoc/>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.SubqueryExpression.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.Builders.SubqueryPagerExpression">
+            <summary>
+            Marker to denote that a method call is an auto-paging method of a subquery.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Builders.SubqueryPagerExpression.#ctor(System.Linq.Expressions.MethodCallExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.Builders.SubqueryPagerExpression"/> class.
+            </summary>
+            <param name="methodCall">The method call.</param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.SubqueryPagerExpression.MethodCall">
+            <summary>
+            Gets the method call.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.SubqueryPagerExpression.NodeType">
+            <inheritdoc/>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.Builders.SubqueryPagerExpression.Type">
+            <inheritdoc/>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.IPageInfo">
+            <summary>
+            Interface representing a PageInfo GraphQL entity.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.IPageInfo.EndCursor">
+            <summary>
+            Gets the end cursor.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.IPageInfo.HasNextPage">
+            <summary>
+            Gets a value indicating whether more data remains.
+            </summary>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.IPagingConnection">
+            <summary>
+            Denotes a GraphQL connection entity.
+            </summary>
+            <remarks>
+            Note that "connection" here refers to a "cursor connection" as defined by the 
+            [Relay Cursor Connections Sepecification](http://facebook.github.io/relay/graphql/connections.htm)
+            rather than an <see cref="T:Octokit.GraphQL.IConnection"/>.
+            </remarks>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.IPagingConnection.PageInfo">
+            <summary>
+            Gets the paging information field for the connection.
+            </summary>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.IPagingConnection`1">
+            <summary>
+            Denotes a GraphQL connection entity.
+            </summary>
+            <typeparam name="TNode">The node type.</typeparam>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.IPagingConnection`1.Nodes">
+            <summary>
+            Gets the connection nodes.
+            </summary>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.IQueryRunner">
+            <summary>
+            Runns a potentially paged query.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.IQueryRunner.Result">
+            <summary>
+            Gets the result of the query.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.IQueryRunner.RunPage(System.Threading.CancellationToken)">
+            <summary>
+            Runs the next page of the query.
+            </summary>
+            <param name="cancellationToken">The optional cancellation token to use.</param>
+            <returns>
+            A <see cref="T:System.Threading.Tasks.Task`1"/> that returns whether a page was returned.
+            </returns>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.IQueryRunner`1">
+            <summary>
+            Runns a potentially paged query.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.IQueryRunner`1.Result">
+            <summary>
+            Gets the result of the query.
+            </summary>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.ISubquery">
+            <summary>
+            Represents a query which fetches subsequent pages of data after a master query has run.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.ISubquery.ParentIds">
+            <summary>
+            Gets a method which reads the parent IDs from the master query results.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.ISubquery.PageInfo">
+            <summary>
+            Gets a method which reads the query paging information from the subquery results.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.ISubquery.ParentPageInfo">
+            <summary>
+            Gets a method which reads the query paging information the master query results.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.ISubquery.Start(Octokit.GraphQL.IConnection,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Action{System.Object})">
+            <summary>
+            Gets a query runner to run the subquery to completion.
+            </summary>
+            <param name="connection">The connection on which to run the query.</param>
+            <param name="id">The ID of the parent object.</param>
+            <param name="after">The end cursor from the master query.</param>
+            <param name="variables">The query variables.</param>
+            <param name="addResult">The method to call to add an item to the result collection.</param>
+            <returns>An <see cref="T:Octokit.GraphQL.Core.IQueryRunner"/>.</returns>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.ISubqueryRunner">
+            <summary>
+            Represents an <see cref="T:Octokit.GraphQL.Core.IQueryRunner"/> for an <see cref="T:Octokit.GraphQL.Core.ISubquery"/>.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.ISubqueryRunner.SetQueryResultSink(Octokit.GraphQL.Core.ISubquery,System.Action{System.Object})">
+            <summary>
+            Called to tell the runner where a specified subquery should store its results.
+            </summary>
+            <param name="query">The subquery.</param>
+            <param name="add">The method to call to add an item to the target collection.</param>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.PagedQuery`1">
+            <summary>
+            An auto-paging GraphQL query.
+            </summary>
+            <typeparam name="TResult">The query result type.</typeparam>
+            <remarks>
+            A paged query consists of a master query and any number of sub-queries (which may
+            themselves be paged queries). When the full set of results cannot be returned by
+            the master query, the sub-queries are run on order to page in the additional data.
+            </remarks>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedQuery`1.#ctor(Octokit.GraphQL.Core.SimpleQuery{`0},System.Collections.Generic.IEnumerable{Octokit.GraphQL.Core.ISubquery})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.PagedQuery`1"/> class.
+            </summary>
+            <param name="masterQuery">The master query.</param>
+            <param name="subqueries">The sub-queries.</param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedQuery`1.IsMutation">
+            <summary>
+            Gets a value indicating whether the query is a mutation.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedQuery`1.MasterQuery">
+            <summary>
+            Gets the master query.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedQuery`1.Subqueries">
+            <summary>
+            Gets the sub-queries.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedQuery`1.Start(Octokit.GraphQL.IConnection,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an <see cref="T:Octokit.GraphQL.Core.IQueryRunner`1"/> which can be used to run the query on a connection.
+            </summary>
+            <param name="connection">The connection.</param>
+            <param name="variables">The query variables.</param>
+            <returns>A query runner.</returns>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedQuery`1.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedQuery`1.ToString(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedQuery`1.Octokit#GraphQL#ICompiledQuery#Start(Octokit.GraphQL.IConnection,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedQuery`1.Runner.Result">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedQuery`1.Runner.Octokit#GraphQL#Core#IQueryRunner#Result">
+            <inheritdoc />
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedQuery`1.Runner.RunPage(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedQuery`1.Runner.SetQueryResultSink(Octokit.GraphQL.Core.ISubquery,System.Action{System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="T:Octokit.GraphQL.Core.PagedSubquery`1">
+            <summary>
+            A sub-query of a <see cref="T:Octokit.GraphQL.Core.PagedQuery`1"/> which is itself paged.
+            </summary>
+            <typeparam name="TResult">The query result type.</typeparam>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedSubquery`1.#ctor(Octokit.GraphQL.Core.SimpleQuery{`0},System.Collections.Generic.IEnumerable{Octokit.GraphQL.Core.ISubquery},System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IEnumerable{Newtonsoft.Json.Linq.JToken}}},System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,Newtonsoft.Json.Linq.JToken}},System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IEnumerable{Newtonsoft.Json.Linq.JToken}}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.SimpleQuery`1"/> class.
+            </summary>
+            <param name="masterQuery">The master query.</param>
+            <param name="subqueries">The sub-queries.</param>
+            <param name="parentIds">
+            A function which given the data from the master query, returns the IDs of the
+            entities which can be auto-paged.
+            </param>
+            <param name="pageInfo">
+            A function which given the data from the sub-query, returns the paging info.
+            </param>
+            <param name="parentPageInfo">
+            A function which given the data from the master query, returns the paging info
+            for all entities which can be auto-paged.
+            </param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedSubquery`1.ParentIds">
+            <summary>
+            Gets a function which given the data from the master query, returns the IDs of the
+            entities which can be auto-paged.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedSubquery`1.PageInfo">
+            <summary>
+            Gets a function which given the data from the sub-query, returns the paging info.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.PagedSubquery`1.ParentPageInfo">
+            <summary>
+            Gets a function which given the data from the master query, returns the paging info
+            for all entities which can be auto-paged.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedSubquery`1.Start(Octokit.GraphQL.IConnection,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Action{System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.PagedSubquery`1.SubqueryRunner.RunPage(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Octokit.GraphQL.Core.SimpleQuery`1">
+            <summary>
+            A simple GraphQL query with no auto-paging.
+            </summary>
+            <typeparam name="TResult">The query result type.</typeparam>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleQuery`1.#ctor(Octokit.GraphQL.Core.Syntax.OperationDefinition,System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,`0}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.SimpleQuery`1"/> class.
+            </summary>
+            <param name="operationDefinition">The GraphQL operation definition.</param>
+            <param name="resultBuilder">
+            A function which transforms JSON data into the final result.
+            </param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleQuery`1.IsMutation">
+            <summary>
+            Gets a value indicating whether the query is a mutation.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleQuery`1.OperationDefinition">
+            <summary>
+            Gets the GraphQL operation definition.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleQuery`1.Query">
+            <summary>
+            Gets the GraphQL query string.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleQuery`1.ResultBuilder">
+            <summary>
+            Gets a function which transforms JSON data into the final result.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleQuery`1.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleQuery`1.ToString(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleQuery`1.GetPayload(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Gets a payload string consisting of the <see cref="P:Octokit.GraphQL.Core.SimpleQuery`1.Query"/> and any variables.
+            </summary>
+            <param name="variables">The variables.</param>
+            <returns>The payload string.</returns>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleQuery`1.Start(Octokit.GraphQL.IConnection,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an <see cref="T:Octokit.GraphQL.Core.IQueryRunner`1"/> which can be used to run the query on a connection.
+            </summary>
+            <param name="connection">The connection.</param>
+            <param name="variables">The query variables.</param>
+            <returns>A query runner.</returns>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleQuery`1.Octokit#GraphQL#ICompiledQuery#Start(Octokit.GraphQL.IConnection,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleQuery`1.Runner.Result">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleQuery`1.Runner.Octokit#GraphQL#Core#IQueryRunner#Result">
+            <inheritdoc />
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleQuery`1.Runner.RunPage(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Octokit.GraphQL.Core.SimpleSubquery`1">
+            <summary>
+            A sub-query of a <see cref="T:Octokit.GraphQL.Core.PagedQuery`1"/>.
+            </summary>
+            <typeparam name="TResult">The query result type.</typeparam>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleSubquery`1.#ctor(Octokit.GraphQL.Core.Syntax.OperationDefinition,System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,`0}},System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IEnumerable{Newtonsoft.Json.Linq.JToken}}},System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,Newtonsoft.Json.Linq.JToken}},System.Linq.Expressions.Expression{System.Func{Newtonsoft.Json.Linq.JObject,System.Collections.Generic.IEnumerable{Newtonsoft.Json.Linq.JToken}}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Core.SimpleQuery`1"/> class.
+            </summary>
+            <param name="operationDefinition">The GraphQL operation definition.</param>
+            <param name="resultBuilder">
+            A function which transforms JSON data into the final result.
+            </param>
+            <param name="parentIds">
+            A function which given the data from the master query, returns the IDs of the
+            entities which can be auto-paged.
+            </param>
+            <param name="pageInfo">
+            A function which given the data from the sub-query, returns the paging info.
+            </param>
+            <param name="parentPageInfo">
+            A function which given the data from the master query, returns the paging info
+            for all entities which can be auto-paged.
+            </param>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleSubquery`1.ParentIds">
+            <summary>
+            Gets a function which given the data from the master query, returns the IDs of the
+            entities which can be auto-paged.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleSubquery`1.PageInfo">
+            <summary>
+            Gets a function which given the data from the sub-query, returns the paging info.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleSubquery`1.ParentPageInfo">
+            <summary>
+            Gets a function which given the data from the master query, returns the paging info
+            for all entities which can be auto-paged.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleSubquery`1.Start(Octokit.GraphQL.IConnection,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Action{System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleSubquery`1.Runner.Result">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Core.SimpleSubquery`1.Runner.Octokit#GraphQL#Core#IQueryRunner#Result">
+            <inheritdoc />
+        </member>
+        <member name="M:Octokit.GraphQL.Core.SimpleSubquery`1.Runner.RunPage(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Octokit.GraphQL.Core.Utilities.ExpressionExtensions">
+            <summary>
+            Extension methods for Expression objects.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Utilities.ExpressionExtensions.StripQuotes(System.Linq.Expressions.Expression)">
+            <summary>
+            Remove all the outer quotes from an expression.
+            </summary>
+            <param name="expression">Expression that might contain outer quotes.</param>
+            <returns>Expression that no longer contains outer quotes.</returns>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Utilities.ExpressionExtensions.GetLambda(System.Linq.Expressions.Expression)">
+            <summary>
+            Get the lambda for an expression stripping any necessary outer quotes.
+            </summary>
+            <param name="expression">Expression that should be a lamba possibly wrapped
+            in outer quotes.</param>
+            <returns>LambdaExpression no longer wrapped in quotes.</returns>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Utilities.ExpressionExtensions.AddIndexer(System.Linq.Expressions.Expression,Octokit.GraphQL.Core.Syntax.FieldSelection)">
+            <summary>
+            Adds an indexer to an expression representing a <see cref="T:Newtonsoft.Json.Linq.JToken"/>.
+            </summary>
+            <param name="instance">The expression.</param>
+            <param name="field">The field to return.</param>
+            <returns>A new expression.</returns>
+        </member>
+        <member name="M:Octokit.GraphQL.Core.Utilities.ExpressionExtensions.AddIndexer(System.Linq.Expressions.Expression,System.String)">
+            <summary>
+            Adds an indexer to an expression representing a <see cref="T:Newtonsoft.Json.Linq.JToken"/> or a collection of
+            <see cref="T:Newtonsoft.Json.Linq.JToken"/>s.
+            </summary>
+            <param name="expression">The expression.</param>
+            <param name="fieldName">The field to return.</param>
+            <returns>A new expression.</returns>
+        </member>
+        <member name="T:Octokit.GraphQL.Fragment`2">
+            <summary>
+            A GraphQL fragment
+            </summary>
+            <typeparam name="TValue">Input type for the fragment</typeparam>
+            <typeparam name="TResult">The output type of the fragment</typeparam>
+            <remarks>
+            Fragments allow you to share field selections between multiple queries and within the same
+            query: https://graphql.org/learn/queries/#fragments
+            </remarks>
+        </member>
+        <member name="M:Octokit.GraphQL.Fragment`2.#ctor(System.String,System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.Fragment`2"/> class.
+            </summary>
+            <param name="name">The name of the fragment.</param>
+            <param name="expression">The fragment selector expression.</param>
+        </member>
+        <member name="P:Octokit.GraphQL.Fragment`2.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Fragment`2.Expression">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Fragment`2.Octokit#GraphQL#IFragment#InputType">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Fragment`2.Octokit#GraphQL#IFragment#ReturnType">
+            <inheritdoc />
+        </member>
+        <member name="P:Octokit.GraphQL.Fragment`2.Octokit#GraphQL#IFragment#Expression">
+            <inheritdoc />
+        </member>
+        <member name="T:Octokit.GraphQL.ICompiledQuery">
+            <summary>
+            Represents a compiled GraphQL query.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.ICompiledQuery.IsMutation">
+            <summary>
+            Gets a value indicating whether the query is a mutation.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.ICompiledQuery.Start(Octokit.GraphQL.IConnection,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an <see cref="T:Octokit.GraphQL.Core.IQueryRunner"/> which can be used to run the query on a connection.
+            </summary>
+            <param name="connection">The connection.</param>
+            <param name="variables">The query variables.</param>
+            <returns>A query runner.</returns>
+        </member>
+        <member name="M:Octokit.GraphQL.ICompiledQuery.ToString(System.Int32)">
+            <summary>
+            Returns a string representation of the query with the specified indentation.
+            </summary>
+            <param name="indentation">The indentation.</param>
+        </member>
+        <member name="T:Octokit.GraphQL.ICompiledQuery`1">
+            <summary>
+            Represents a compiled GraphQL query.
+            </summary>
+            <typeparam name="TResult">The query result type.</typeparam>
+        </member>
+        <member name="M:Octokit.GraphQL.ICompiledQuery`1.Start(Octokit.GraphQL.IConnection,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an <see cref="T:Octokit.GraphQL.Core.IQueryRunner`1"/> which can be used to run the query on a connection.
+            </summary>
+            <param name="connection">The connection.</param>
+            <param name="variables">The query variables.</param>
+            <returns>A query runner.</returns>
+        </member>
+        <member name="T:Octokit.GraphQL.IConnection">
+            <summary>
+            Defines a connection for making HTTP requests against the GitHub GraphQL API endpoint.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.IConnection.Uri">
+            <summary>
+            Gets the base URI for the connection.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.IConnection.Run(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Runs the specified GraphQL query as an asynchronous operation.
+            </summary>
+            <param name="query">The GraphQL query to run.</param>
+            <param name="cancellationToken">The optional cancellation token to use.</param>
+            <returns>
+            A <see cref="T:System.Threading.Tasks.Task`1"/> representing the asynchronous operation that returns the result of the GraphQL query.
+            </returns>
+        </member>
+        <member name="T:Octokit.GraphQL.ICredentialStore">
+            <summary>
+            Abstraction for interacting with credentials
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.ICredentialStore.GetCredentials(System.Threading.CancellationToken)">
+            <summary>
+            Retrieve the credentials from the underlying store
+            </summary>
+            <param name="cancellationToken">The optional cancellation token to use.</param>
+            <returns>A continuation containing credentials</returns>
+        </member>
+        <member name="T:Octokit.GraphQL.ID">
+            <summary>
+            Represents a unique identifier.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.ID.#ctor(System.String)">
+            <summary>
+            Generates a new instance of the <see cref="T:Octokit.GraphQL.ID"/> struct.
+            </summary>
+            <param name="value">The ID string.</param>
+        </member>
+        <member name="P:Octokit.GraphQL.ID.Value">
+            <summary>
+            Gets the ID as a string value.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.ID.ToString">
+            <summary>
+            Converts the ID to a string.
+            </summary>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:Octokit.GraphQL.IFragment">
+            <summary>
+            Represents a GraphQL fragment.
+            </summary>
+            <see cref="T:Octokit.GraphQL.Fragment`2"/>.
+        </member>
+        <member name="P:Octokit.GraphQL.IFragment.Name">
+            <summary>
+            Gets the name of a fragment.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.IFragment.Expression">
+            <summary>
+            Gets the selector expression.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.IFragment.InputType">
+            <summary>
+            Gets the input type of the fragment.
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.IFragment.ReturnType">
+            <summary>
+            Gets the output type of the fragment.
+            </summary>
+        </member>
+        <member name="T:Octokit.GraphQL.Internal.IDConverter">
+            <summary>
+            Converts <see cref="T:Octokit.GraphQL.ID"/>s to and from JSON strings.
+            </summary>
+        </member>
+        <member name="T:Octokit.GraphQL.Internal.InMemoryCredentialStore">
+            <summary>
+            An in memory credential store
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.Internal.InMemoryCredentialStore.#ctor(System.String)">
+            <summary>
+            Construct an in memory credential store
+            </summary>
+            <param name="token">The token to return</param>
+        </member>
+        <member name="M:Octokit.GraphQL.Internal.InMemoryCredentialStore.GetCredentials(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Octokit.GraphQL.ProductHeaderValue">
+            <summary>
+            Represents a product header value. This is used to generate the User Agent string sent with each request. The
+            name used should represent the product that's using Octokit.net.
+            </summary>
+            <remarks>
+            This class is a wrapper around <seealso href="https://msdn.microsoft.com/en-us/library/system.net.http.headers.productheadervalue(v=vs.118).aspx"/> 
+            so that consumers of Octokit.net would not have to add a reference to the System.Net.Http.Headers namespace.
+            </remarks>
+        </member>
+        <member name="M:Octokit.GraphQL.ProductHeaderValue.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.ProductHeaderValue"/> class.
+            </summary>
+            <param name="name">The name of the product that's using Octokit</param>
+        </member>
+        <member name="M:Octokit.GraphQL.ProductHeaderValue.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Octokit.GraphQL.ProductHeaderValue"/> class.
+            </summary>
+            <param name="name">The name of the product that's using Octokit</param>
+            <param name="version">The version of the product that's using Octokit</param>
+        </member>
+        <member name="P:Octokit.GraphQL.ProductHeaderValue.Name">
+            <summary>
+            The name of the product that's using Octokit
+            </summary>
+        </member>
+        <member name="P:Octokit.GraphQL.ProductHeaderValue.Version">
+            <summary>
+            The version of the product.
+            </summary>
+        </member>
+        <member name="M:Octokit.GraphQL.ProductHeaderValue.Parse(System.String)">
+            <summary>
+            Parses a string in the format "foo" or "foo/1.0" and returns the corresponding
+            <see cref="T:Octokit.GraphQL.ProductHeaderValue" /> instance.
+            </summary>
+            <param name="input">The input.</param>
+        </member>
+        <member name="M:Octokit.GraphQL.ProductHeaderValue.TryParse(System.String,Octokit.GraphQL.ProductHeaderValue@)">
+            <summary>
+            Parses a string in the format "foo" or "foo/1.0" and returns the corresponding
+            <see cref="T:Octokit.GraphQL.ProductHeaderValue" /> instance via an out parameter.
+            </summary>
+            <param name="input">The input.</param>
+            <param name="parsedValue">The parsed value.</param>
+        </member>
+    </members>
+</doc>
