@@ -10,7 +10,7 @@ public class EcosystemsController: ControllerBase
 {
     [HttpGet]
     [SwaggerOperation("Get all ecosystems")]
-    [SwaggerResponse(statusCode: 200, type: typeof(List<Ecosystem>), description: "successful operation")]
+    [SwaggerResponse(statusCode: 200, description: "successful operation")]
     public ActionResult<List<Ecosystem>> GetAll(){
         List<Ecosystem> topics = new List<Ecosystem>
         { new (

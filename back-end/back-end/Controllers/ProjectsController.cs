@@ -17,7 +17,7 @@ public class ProjectsController : ControllerBase
    
     [HttpGet]
     [SwaggerOperation("GetAllProjects")]       
-    [SwaggerResponse(statusCode: 200, type: typeof(List<Project>), description: "successful operation")]
+    [SwaggerResponse(statusCode: 200, description: "successful operation")]
     public ActionResult<List<Project>> GetAll(){
         
         var example = new List<Project>{new("awesome-agriculture", 1, "Open source technology for agriculture, farming, and gardening", null, null, 1100)};
