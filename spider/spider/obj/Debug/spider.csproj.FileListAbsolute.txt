@@ -4,11 +4,7 @@ C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\obj\Debug\spider.
 C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\spider.exe
 C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\spider.pdb
 C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Octokit.GraphQL.Core.dll
-C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Octokit.GraphQL.dll
 C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Octokit.GraphQL.xml
-C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Octokit.GraphQL.Core.xml
 C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\obj\Debug\spider.csproj.CopyComplete
 C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\obj\Debug\spider.exe
 C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\obj\Debug\spider.pdb
@@ -50,3 +46,26 @@ D:\UU\Informatica\Software-Ecosystems\spider\spider\obj\Debug\spider.csproj.Asse
 D:\UU\Informatica\Software-Ecosystems\spider\spider\obj\Debug\spider.csproj.SuggestedBindingRedirects.cache
 D:\UU\Informatica\Software-Ecosystems\spider\spider\obj\Debug\spider.csproj.CoreCompileInputs.cache
 D:\UU\Informatica\Software-Ecosystems\spider\spider\obj\Debug\spider.csproj.CopyComplete
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Abstractions.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Abstractions.Websocket.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Primitives.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Abstractions.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Abstractions.Websocket.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Primitives.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Serializer.Newtonsoft.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Serializer.Newtonsoft.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\spider.exe.config
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Serializer.SystemTextJson.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.Memory.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.Text.Json.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.ValueTuple.dll
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\GraphQL.Client.Serializer.SystemTextJson.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.Memory.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.Text.Json.xml
+C:\Users\Simon Hol\Documents\Software-Ecosystems\spider\spider\bin\Debug\System.ValueTuple.xml
