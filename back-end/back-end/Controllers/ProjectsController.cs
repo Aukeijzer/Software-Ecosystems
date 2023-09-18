@@ -1,5 +1,6 @@
 ﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using SECODashBackend.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SECODashBackend.Controllers;
@@ -9,10 +10,12 @@ namespace SECODashBackend.Controllers;
 public class ProjectsController : ControllerBase
 {
     private readonly ILogger<ProjectsController> _logger;
+    private readonly IProjectsService _projectsService;
 
-    public ProjectsController(ILogger<ProjectsController> logger)
+    public ProjectsController(ILogger<ProjectsController> logger, IProjectsService projectsService)
     {
         _logger = logger;
+        _projectsService = projectsService;
     }
    
     [HttpGet]
@@ -20,7 +23,6 @@ public class ProjectsController : ControllerBase
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
     public ActionResult<List<Project>> GetAll(){
         
-        var example = new List<Project>{new("awesome-agriculture", 1, "Open source technology for agriculture, farming, and gardening", null, null, 1100)};
-        return new ObjectResult(example);
+        return new ObjectResult(_projectsService.GetAll());
     }
 }
