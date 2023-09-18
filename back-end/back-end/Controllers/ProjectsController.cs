@@ -1,8 +1,8 @@
-﻿using LearnAspNet.Models;
+﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace LearnAspNet.Controllers;
+namespace SECODashBackend.Controllers;
 
 [ApiController]
 [Route("[controller]")]

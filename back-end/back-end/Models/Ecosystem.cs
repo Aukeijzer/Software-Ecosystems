@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-
-namespace LearnAspNet.Models;
+namespace SECODashBackend.Models;
 
 [DataContract]
 public class Ecosystem
