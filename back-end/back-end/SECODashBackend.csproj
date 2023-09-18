@@ -4,8 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>SECODash-backend</AssemblyName>
-    <RootNamespace>SECODash-backend</RootNamespace>
+    <AssemblyName>SECODashBackend</AssemblyName>
+    <RootNamespace>SECODashBackend</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +14,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
   </ItemGroup>
+
 
 
 </Project>
