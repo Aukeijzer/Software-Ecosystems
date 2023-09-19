@@ -43,7 +43,7 @@ public class EcosystemsController: ControllerBase
     {
         _ecosystemsService.Add(ecosystem);
         return CreatedAtAction(
-            nameof(GetByName),
+            nameof(GetById),
             new { id = ecosystem.Id },
             ecosystem);
     }
