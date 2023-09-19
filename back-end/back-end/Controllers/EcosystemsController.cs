@@ -1,6 +1,5 @@
 ﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
-using SECODashBackend.Services;
 using SECODashBackend.Services.Ecosystems;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -21,29 +20,33 @@ public class EcosystemsController: ControllerBase
     [HttpGet]
     [SwaggerOperation("Get all ecosystems")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public ActionResult<List<Ecosystem>> GetAll(){
-        return new ObjectResult(_ecosystemsService.GetAll());
+    public async Task<ActionResult<List<Ecosystem>>> GetAllAsync()
+    {
+        var result = await _ecosystemsService.GetAllAsync();
+        return new ObjectResult(result);
     }
 
     [HttpGet("{name}")]
-    public ActionResult<Ecosystem> GetByName(string name)
+    public async Task<ActionResult<Ecosystem>> GetByNameAsync(string name)
     {
-        var result = _ecosystemsService.GetByName(name);
+        var result = await _ecosystemsService.GetByNameAsync(name);
         return result == null ? NotFound() : result;
     }
     
     [HttpGet("{id:long}")]
-    public ActionResult<Ecosystem> GetById(long id)
+    public async Task<ActionResult<Ecosystem>> GetByIdAsync(long id)
     {
-        var result = _ecosystemsService.GetById(id);
+        var result = await _ecosystemsService.GetByIdAsync(id);
         return result == null ? NotFound() : result;
     }
+    
     [HttpPost]
-    public ActionResult Post(Ecosystem ecosystem)
+    public async Task<ActionResult> PostAsync(Ecosystem ecosystem)
     {
-        _ecosystemsService.Add(ecosystem);
+        await _ecosystemsService.AddAsync(ecosystem);
+        
         return CreatedAtAction(
-            nameof(GetById),
+            nameof(GetByIdAsync),
             new { id = ecosystem.Id },
             ecosystem);
     }

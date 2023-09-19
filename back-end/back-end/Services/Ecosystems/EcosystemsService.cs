@@ -12,32 +12,32 @@ public class EcosystemsService : IEcosystemsService
     {
         _dbContext = dbContext;
     }
-    public List<Ecosystem> GetAll()
+    public async Task<List<Ecosystem>> GetAllAsync()
     {
-        return _dbContext.Ecosystems
+        return await _dbContext.Ecosystems
             .Include(e => e.Projects)
             .AsNoTracking()
-            .ToList();
+            .ToListAsync();
     }
 
-    public void Add(Ecosystem ecosystem)
+    public async Task<int> AddAsync(Ecosystem ecosystem)
     {
-        _dbContext.Ecosystems.Add(ecosystem);
-        _dbContext.SaveChanges();
+        await _dbContext.Ecosystems.AddAsync(ecosystem);
+        return await _dbContext.SaveChangesAsync();
     }
 
-    public Ecosystem? GetById(long id)
+    public async Task<Ecosystem?> GetByIdAsync(long id)
     {
-        return _dbContext.Ecosystems
+        return await _dbContext.Ecosystems
             .Include(e => e.Projects)
             .AsNoTracking()
-            .SingleOrDefault(e => e.Id == id);
+            .SingleOrDefaultAsync(e => e.Id == id);
     }
-    public Ecosystem? GetByName(string name)
+    public async Task<Ecosystem?> GetByNameAsync(string name)
     {
-        return _dbContext.Ecosystems
+        return await _dbContext.Ecosystems
             .Include(e => e.Projects)
             .AsNoTracking()
-            .SingleOrDefault(e => e.Name == name);
+            .SingleOrDefaultAsync(e => e.Name == name);
     }
 }

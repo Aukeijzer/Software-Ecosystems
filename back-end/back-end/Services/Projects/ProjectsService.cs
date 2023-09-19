@@ -12,21 +12,23 @@ public class ProjectsService : IProjectsService
     {
         _dbContext = dbContext;
     }
-    public List<Project> GetAll()
+    public async Task<List<Project>> GetAllAsync()
     {
-        return _dbContext.Projects.ToList();
-    }
-
-    public void Add(Project project)
-    {
-        _dbContext.Projects.Add(project);
-        _dbContext.SaveChanges();
-    }
-
-    public Project? GetById(long id)
-    {
-        return _dbContext.Projects
+        return await _dbContext.Projects
             .AsNoTracking()
-            .SingleOrDefault(p => p.Id == id);
+            .ToListAsync();
+    }
+
+    public async Task<int> AddAsync(Project project)
+    {
+        await _dbContext.Projects.AddAsync(project);
+        return await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<Project?> GetByIdAsync(long id)
+    {
+        return await _dbContext.Projects
+            .AsNoTracking()
+            .SingleOrDefaultAsync(p => p.Id == id);
     }
 }
