@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spider", "spider\spider.csproj", "{4E429F4C-90FF-4F0B-80E5-8D3D4E40F5E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spider", "spider\spider.csproj", "{E84F882A-2D40-4D5D-9270-0376C22F5BF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4E429F4C-90FF-4F0B-80E5-8D3D4E40F5E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E429F4C-90FF-4F0B-80E5-8D3D4E40F5E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E429F4C-90FF-4F0B-80E5-8D3D4E40F5E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E429F4C-90FF-4F0B-80E5-8D3D4E40F5E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E84F882A-2D40-4D5D-9270-0376C22F5BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E84F882A-2D40-4D5D-9270-0376C22F5BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E84F882A-2D40-4D5D-9270-0376C22F5BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E84F882A-2D40-4D5D-9270-0376C22F5BF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
