@@ -33,7 +33,7 @@ public class ProjectsController : ControllerBase
     public async Task<ActionResult<Project>> GetByIdAsync(long id)
     {
         var result = await _projectsService.GetByIdAsync(id); 
-        return new ObjectResult(result);
+        return result == null ? NotFound() : result;
     }
 
     [HttpPost]
