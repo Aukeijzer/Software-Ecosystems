@@ -1,13 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Microsoft.EntityFrameworkCore;
+
 namespace SECODashBackend.Models;
 
 [DataContract]
+[Index(nameof(Name), IsUnique = true)]
 public class Ecosystem
 {
 
    [DataMember(Name = "id")]
-   public int Id { get; set; }
+   public int? Id { get; set; }
    
    [Required]
    [DataMember(Name = "name")]

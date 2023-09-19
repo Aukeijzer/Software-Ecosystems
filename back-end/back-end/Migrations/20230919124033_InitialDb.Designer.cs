@@ -12,7 +12,7 @@ using SECODashBackend.Database;
 namespace SECODashBackend.Migrations
 {
     [DbContext(typeof(EcosystemsContext))]
-    [Migration("20230919084257_InitialDb")]
+    [Migration("20230919124033_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace SECODashBackend.Migrations
 
             modelBuilder.Entity("SECODashBackend.Models.Ecosystem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int?>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -47,6 +47,9 @@ namespace SECODashBackend.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Ecosystems");
                 });
