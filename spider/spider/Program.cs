@@ -56,11 +56,17 @@ namespace spider
                             search(query: $name, type: REPOSITORY, first: 10) {
                             repositoryCount
                              nodes {
-                                __typename
                                 ... on Repository {
                                     name
                                     owner{
                                         login
+                                    }
+                                    repositoryTopics(first: 10){
+                                        nodes{
+                                            topic{
+                                            name
+                                            }
+                                        }
                                     }
                                     object(expression: $fileName){
                                         ... on Blob{
