@@ -4,16 +4,8 @@ using System.Runtime.Serialization;
 namespace SECODashBackend.Models;
 
 [DataContract]
-public class Project // : IEquatable<Project>
+public class Project
 {
-   public Project(string name, long? id, string? about, string? owner, string? readMe, int? numberOfStars)
-   {
-      Name = name;
-      Id = id;
-      Owner = owner;
-      ReadMe = readMe;
-      NumberOfStars = numberOfStars;
-   }
    [DataMember(Name = "id")]
    public long? Id { get; set; }
    

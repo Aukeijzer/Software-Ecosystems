@@ -5,15 +5,7 @@ namespace SECODashBackend.Models;
 [DataContract]
 public class Ecosystem
 {
-   public Ecosystem(int id, string name, string displayName, List<Project>? projects,   int? numberOfStars)
-   {
-      Id = id;
-      Name = name;
-      DisplayName = displayName;
-      Projects = projects;
-      NumberOfStars = numberOfStars;
-   }
-   [Required]
+
    [DataMember(Name = "id")]
    public int Id { get; set; }
    
