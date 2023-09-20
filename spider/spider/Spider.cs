@@ -13,11 +13,11 @@ namespace spider
     internal class Spider
     {
         private static bool _queryFinished;
-        private const string Token = "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";
         private const string UserLogin = "Secodash";
 
         public static SpiderData Main()
         {
+            string Token = Environment.GetEnvironmentVariable("API_Token");
             var graphQLClient = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
             graphQLClient.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
             _queryFinished = false;
