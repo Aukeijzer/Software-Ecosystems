@@ -224,3 +224,4 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 .idea*
+spider/Properties/launchSettings.json
