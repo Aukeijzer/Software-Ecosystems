@@ -4,11 +4,12 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 from gensim import corpora
 from gensim.models import LdaModel
 from preprocessing import preprocess_readme
+from pprint import pprint
 
 # Empty list to store all readme's
 preprocessed_documents = []
 # Readme files
-readme_files = ['ai_ex1.txt', 'ai_ex2.txt', 'aggri_ex1.txt', 'aggri_ex2.txt']
+readme_files = ['ai_ex1.txt', 'ai_ex2.txt','ai_ex3.txt', 'ai_ex4.txt', 'aggri_ex1.txt', 'aggri_ex2.txt', 'quan_ex1.txt']
 # Loop through readme files
 for readme_file in readme_files:
     with open(readme_file, 'r') as file:
@@ -33,7 +34,7 @@ corpus = [dictionary.doc2bow(doc) for doc in preprocessed_documents]
 # Set training parameters for LDA
 num_topics = 5
 chunksize = 2000
-passes = 60
+passes = 100
 iterations = 600
 eval_every = None       	# Don't evaluate model perplexity, takes too much time.
 
@@ -55,20 +56,20 @@ model = LdaModel(
 
 top_topics = model.top_topics(corpus)
 
+# Save the LDA model and dictionary
+model.save('saved/lda_model')
+dictionary.save('saved/dictionary')
+
 # Average topic coherence is the sum of topic coherences of all topics, divided by the number of topics.
 avg_topic_coherence = sum([t[1] for t in top_topics]) / num_topics
 print('Average topic coherence: %.4f.' % avg_topic_coherence)
 
-from pprint import pprint
-#pprint(top_topics)
-
 # Print topics with a specified number of top keywords
-num_keywords_per_topic = 5  # Adjust this number as per your preference
+num_keywords_per_topic = 5  
 
 for topic_id, topic in enumerate(model.get_topics()):
     top_keywords = [id2word[word_id] for word_id in topic.argsort()[-num_keywords_per_topic:]]
     print(f"Topic {topic_id + 1}: {', '.join(top_keywords)}")
     
-# Print the topics and their top words
-# for topic in model.print_topics():
-#     print(topic)
+#pprint(top_topics)
+    
