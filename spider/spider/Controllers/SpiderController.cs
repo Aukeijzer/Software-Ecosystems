@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.Models;
 using spider.Converter;
 using spider.Services;
@@ -7,7 +8,7 @@ namespace spider.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class SpiderController
+public class SpiderController : ControllerBase
 {
     private readonly IGitHubService _gitHubService;
     private readonly ISpiderDataConverter _spiderDataConverter;

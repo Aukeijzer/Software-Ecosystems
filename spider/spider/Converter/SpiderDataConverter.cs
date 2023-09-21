@@ -7,6 +7,7 @@ public class SpiderDataConverter : ISpiderDataConverter
 {
     public List<Project> ToProjects(SpiderData data)
     {
+        // Parser to parse the result from the search query to a C# data type.
         var projects = new List<Project>();
         foreach (var repository in data.search.nodes)
         {

@@ -16,18 +16,9 @@ public class GitHubService : IGitHubService
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
     }
 
-    private static async void RateLimitCheck(GraphQLHttpClient client)
-    {
-        var RateLimitCheck = new GraphQLHttpRequest()
-        {
-            Query = @"query rateLimit", OperationName = "RateLimitCheck"
-        };
-        var response = await client.SendQueryAsync<string>(RateLimitCheck);
-        Console.WriteLine(response.Data);
-    }
-
     public async Task<SpiderData> QueryRepositoriesByName(string repositoryName)
     {
+        // GraphQL query to search the respositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
         {
             Query = @"query repositoriesQueryRequest($name: String!, $fileName : String!){
@@ -59,6 +50,7 @@ public class GitHubService : IGitHubService
             Variables = new{name= repositoryName, fileName = "main:README.md"}
         };
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new SpiderData());
+        //Console.WriteLine("Limit: " + response.ResponseHeaders[5] + " || Remaining" + response.ResponseHeaders[6]+" ||  Used: "+response.ResponseHeaders[8]);
         return response.Data;
     }
 }
