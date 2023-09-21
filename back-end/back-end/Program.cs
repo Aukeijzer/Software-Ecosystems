@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.Projects;
+using SECODashBackend.Spider;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<EcosystemsContext>(
 //TODO: figure out appropriate method for adding these service, scoped vs transient vs singleton;
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
+builder.Services.AddScoped<ISpiderService, SpiderService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
