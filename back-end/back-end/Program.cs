@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.Projects;
-using SECODashBackend.Spider;
+using SECODashBackend.Services.Spider;
 
 var builder = WebApplication.CreateBuilder(args);
 

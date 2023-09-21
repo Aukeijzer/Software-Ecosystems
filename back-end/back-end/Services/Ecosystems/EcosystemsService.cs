@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Models;
-using SECODashBackend.Spider;
+using SECODashBackend.Services.Spider;
 
 namespace SECODashBackend.Services.Ecosystems;
     

@@ -1,6 +1,6 @@
 ﻿using SECODashBackend.Models;
 
-namespace SECODashBackend.Spider;
+namespace SECODashBackend.Services.Spider;
 
 public interface ISpiderService
 {
