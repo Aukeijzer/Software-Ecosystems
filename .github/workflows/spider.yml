@@ -7,10 +7,11 @@ on:
       - develop
   pull_request:
 
+defaults:
+  run:
+    working-directory: ./spider
+
 jobs:
-  defaults:
-    run:
-      working-directory: ./spider
   build:
     runs-on: ubuntu-latest
     
