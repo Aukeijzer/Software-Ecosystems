@@ -19,7 +19,7 @@ jobs:
           dotnet-version: 7.0.x
       - name: Restore Dependencies
         working-directory: ./spider
-        run: dotnet-restore
+        run: dotnet restore
       - name: Build
         working-directory: ./spider
         run: dotnet build --no-restore
