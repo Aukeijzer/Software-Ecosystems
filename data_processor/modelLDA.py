@@ -8,15 +8,28 @@ loaded_model = LdaModel.load('saved/lda_model')
 # Load the dictionary used during training
 dictionary = Dictionary.load('saved/dictionary')  
 
-# Read and preprocess a new document
-new_document = preprocess_readme("ai_ex3.txt")
+def extractTopic(readme):
+    # Read and preprocess a new document
+    new_document = preprocess_readme(readme)
 
-# Convert the new document to a bag-of-words representation using the same dictionary
-new_bow = dictionary.doc2bow(new_document)
+    # Convert the new document to a bag-of-words representation using the same dictionary
+    new_bow = dictionary.doc2bow(new_document)
 
-# Infer the topic distribution for the new document
-topics = loaded_model[new_bow]
+    # Infer the topic distribution for the new document
+    topics = loaded_model[new_bow]
 
-# Print the topics and their probabilities
-for topic in topics:
-    print(f"Topic {topic[0] + 1}: {loaded_model.print_topic(topic[0])} - Probability: {topic[1]}")
+    # Print the topics and their probabilities
+    final_topics = ""
+    for topic in topics:
+        topic_string = loaded_model.print_topic(topic[0], topn=5)
+        keywords = topic_string.replace('"', '')
+        keywords = [word.split('*')[1] for word in keywords.split('+')]
+        keywords = ', '.join(keywords)
+        final_topics += f"Topic {topic[0] + 1}: {keywords} - Probability: {topic[1]} \n"        
+    return final_topics
+
+# print(extractTopic("this is an example text about ai"))
+
+
+
+
