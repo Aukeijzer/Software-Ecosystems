@@ -13,6 +13,7 @@ public class EcosystemsService : IEcosystemsService
         _dbContext = dbContext;
     }
     public async Task<List<Ecosystem>> GetAllAsync()
+    public async Task<List<Ecosystem>?> GetAllAsync()
     {
         return await _dbContext.Ecosystems
             .Include(e => e.Projects)
