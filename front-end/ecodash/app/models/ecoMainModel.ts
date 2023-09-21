@@ -1,17 +1,12 @@
+import { Project } from "./ecoDataListModel";
+
 export interface ecoMainResponse {
     id: number,
     name: string,
     displayName: string,
     description: string,
-    projects: project[],
+    projects: Project[],
     numberOfStars: number,
 }
 
-export interface project {
-    id: number,
-    name: string,
-    about: string,
-    owner: string,
-    readMe: string,
-    numberOfStars: number,
-}
+
