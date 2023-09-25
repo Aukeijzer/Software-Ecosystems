@@ -12,18 +12,18 @@ namespace spiderTests;
 [TestFixture]
 public class Tests
 {
-    private GitHubService sgs;
+    private GitHubService spiderGithubService;
     [SetUp]
     public void Setup()
     {
 
-        sgs = new GitHubService();
+        spiderGithubService = new GitHubService();
     }
 
     [Test]
     public async Task searchResultTest()
     {
-        var result = sgs.QueryRepositoriesByName("API_Test_Repo");
+        var result = spiderGithubService.QueryRepositoriesByName("API_Test_Repo");
         Assert.IsNotNull(result.Result);
     }
 }
