@@ -3,9 +3,14 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+# extracts readme from json data
 def getReadme(data_dict):
-    return data_dict.get('readme')
+    try:
+        return data_dict.get('readme')
+    except:
+        print("No readme found")    
 
+# when POST request 
 @app.route("/extract-topics", methods=["POST"])
 def extract_topics():
     if request.method == "POST":

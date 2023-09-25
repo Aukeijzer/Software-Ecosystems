@@ -28,7 +28,6 @@ def extractTopic(readme):
         final_topics += f"Topic {topic[0] + 1}: {keywords} - Probability: {topic[1]} \n"        
     return final_topics
 
-# print(extractTopic("this is an example text about ai"))
 
 
 

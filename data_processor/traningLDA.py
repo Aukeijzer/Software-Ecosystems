@@ -1,26 +1,28 @@
 import logging
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+import os
+# logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 from gensim import corpora
 from gensim.models import LdaModel
 from preprocessing import preprocess_readme
 from pprint import pprint
 
-# Empty list to store all readme's
+# Empty list to store all preprocessed documents
 preprocessed_documents = []
-# Readme files
-readme_files = ['ai_ex1.txt', 'ai_ex2.txt','ai_ex3.txt', 'ai_ex4.txt', 'aggri_ex1.txt', 'aggri_ex2.txt', 'quan_ex1.txt']
-# Loop through readme files
-for readme_file in readme_files:
-    with open(readme_file, 'r') as file:
-        readme_content = file.read()
-        preprocessed_content = preprocess_readme(readme_content)
-        # Documents now contains all the readme files        
-        preprocessed_documents.append(preprocessed_content)
-        
-#print(preprocessed_documents)
 
-#print(documents)
+# Folder containing the training documents
+folder_path = 'training_docs'
+
+# Loop through all files in the folder
+for filename in os.listdir(folder_path):
+    if filename.endswith('.txt'):
+        file_path = os.path.join(folder_path, filename)
+        with open(file_path, 'r', encoding='utf-8') as file:
+            readme_content = file.read()
+            preprocessed_content = preprocess_readme(readme_content)
+            preprocessed_documents.append(preprocessed_content)
+
+# print(preprocessed_documents)
 
 # Flatten the list of lists
 #preprocessed_documents = [token for doc in preprocessed_documents for token in doc]
@@ -34,7 +36,7 @@ corpus = [dictionary.doc2bow(doc) for doc in preprocessed_documents]
 # Set training parameters for LDA
 num_topics = 5
 chunksize = 2000
-passes = 100
+passes = 300
 iterations = 600
 eval_every = None       	# Don't evaluate model perplexity, takes too much time.
 
