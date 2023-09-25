@@ -4,7 +4,12 @@ public class Topic
 {
     public string name { get; set; }
 }
+
+public class TopicWrapper
+{
+    public Topic topic { get; set; }
+}
 public class TopicsWrapper
 {
-    public Topic[] topics { get; set; }
+    public TopicWrapper[] nodes { get; set; }
 }

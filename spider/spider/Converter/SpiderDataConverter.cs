@@ -14,7 +14,7 @@ public class SpiderDataConverter : ISpiderDataConverter
             projects.Add(new Project()
             {
                 Name = repository.name,
-                ReadMe = repository.readmeText,
+                ReadMe = (repository.readme == null ? null : repository.readme.text) ,
                 Owner = repository.owner.login
             });
         }

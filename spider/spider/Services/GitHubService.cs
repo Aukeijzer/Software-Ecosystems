@@ -37,7 +37,7 @@ public class GitHubService : IGitHubService
                                         }
                                     }
                                 }
-                                object(expression: $fileName){
+                                readme: object(expression: $fileName){
                                     ... on Blob{
                                         text
                                         }
@@ -49,6 +49,8 @@ public class GitHubService : IGitHubService
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, fileName = "main:README.md"}
         };
+        var responseString = await _client.SendQueryAsync<Object>(repositoriesQuery);
+        
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new SpiderData());
         //Console.WriteLine("Limit: " + response.ResponseHeaders[5] + " || Remaining" + response.ResponseHeaders[6]+" ||  Used: "+response.ResponseHeaders[8]);
         return response.Data;
