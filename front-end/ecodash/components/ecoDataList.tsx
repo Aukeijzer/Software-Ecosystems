@@ -14,6 +14,3 @@ const ecoDataList =<T extends {}> ({items, renderItem} : ListProps<T>) => {
 }
 
 export default ecoDataList;
-
-
-
