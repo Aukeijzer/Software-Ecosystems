@@ -1,20 +1,21 @@
 //This page should fetch data from the api with the passed props as variable and pass it to its children
 
-import { ecoMainResponse } from "@/app/models/ecoMainModel"
+import { apiNamedEcosystemModel, apiResponse } from "@/app/models/apiResponseModel"
 import EcoInfo from "./ecoInfo";
 import EcoItem from "./ecoItem";
 import EcoDataList from "./ecoDataList";
 import { renderProject } from "@/app/models/ecoDataListModel";
+import  { handleApi, handleApiNamed }  from "./apiHandler";
 
 interface ecoMainProps{
-    ecosystem: string,
+    ecosystem?: string,
 }
 
 export default async function ecoMain({ecosystem}: ecoMainProps){
-    //Make a call to the api
-    //This should eventually be a seperate component
-    const response : Response = await fetch(`http://localhost:5003/ecosystems/${ecosystem}`)
-    const result : ecoMainResponse = await response.json();
+
+
+    const result : apiNamedEcosystemModel = await handleApiNamed(`ecosystems/${ecosystem}`);
+   
 
     //Project dataList
     const EcoDataItem : JSX.Element = <EcoDataList items={result.projects} renderItem={renderProject} />

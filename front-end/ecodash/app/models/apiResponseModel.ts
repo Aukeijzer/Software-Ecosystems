@@ -1,6 +1,6 @@
 import { Project } from "./ecoDataListModel";
 
-export interface ecoMainResponse {
+export interface apiNamedEcosystemModel {
     id: number,
     name: string,
     displayName: string,
@@ -10,3 +10,7 @@ export interface ecoMainResponse {
 }
 
 
+export type apiGetAllEcosystems = apiNamedEcosystemModel[];
+
+
+export type apiResponse = apiGetAllEcosystems | apiNamedEcosystemModel;

@@ -1,9 +1,12 @@
 import Image from 'next/image'
 
-export default function Home() {
+import EcoHome from '@/components/ecoHome'
+
+export default async function Home() {
   return (
     <div>
-        dit is de main page
+     <EcoHome />
     </div>
   )
 }
+//  
