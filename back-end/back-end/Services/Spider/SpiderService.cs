@@ -9,7 +9,7 @@ public class SpiderService : ISpiderService
 
     public SpiderService()
     {
-        var options = new RestClientOptions("https://localhost:7167/Spider");
+        var options = new RestClientOptions("http://localhost:5205/Spider");
         _spiderClient = new RestClient(options);
     }
     public async Task<List<Project>?> GetProjectsByNameAsync(string name)
