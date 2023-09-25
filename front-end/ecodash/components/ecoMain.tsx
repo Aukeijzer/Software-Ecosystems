@@ -15,11 +15,11 @@ export default async function ecoMain({ecosystem}: ecoMainProps){
     const result : apiNamedEcosystemModel = await handleApiNamed(`ecosystems/${ecosystem}`);
    
     //Project dataList
-    const EcoDataItem : JSX.Element = <EcoDataList items={result.projects} renderItem={renderProject} />
+    const EcoDataItem : JSX.Element = <EcoDataList items={result.projects ? result.projects : []} renderItem={renderProject} />
 
     return(
         <div className="flex w-full justify-center flex-col">
-            <EcoInfo title={result.name} description={result.description}/>
+            <EcoInfo title={result.name} description={result.description ? result.description : ""}/>
             <EcoItem title="projects" description="lorem ipsum je kent het wel" ecoData={EcoDataItem} />
         </div>
     )
