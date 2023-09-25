@@ -3,7 +3,6 @@ interface ListProps<T> {
     renderItem: (item: T) => JSX.Element,
 }
 
-
 const ecoDataList =<T extends {}> ({items, renderItem} : ListProps<T>) => {
     return(
         <ul>

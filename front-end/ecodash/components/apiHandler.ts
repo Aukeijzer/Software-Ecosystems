@@ -1,4 +1,4 @@
-import { apiGetAllEcosystems, apiNamedEcosystemModel, apiResponse } from "@/app/models/apiResponseModel";
+import { apiGetAllEcosystems, apiNamedEcosystemModel } from "@/app/models/apiResponseModel";
 
 export async function handleApi(endpoint : string) : Promise<apiGetAllEcosystems> {
     console.log(`http://localhost:5003/${endpoint}`)
@@ -8,13 +8,10 @@ export async function handleApi(endpoint : string) : Promise<apiGetAllEcosystems
         rejectUnauthorized: false,
       });
 
-
     const response : Response = await fetch(`http://localhost:5003/${endpoint}`, httpsAgent);
-
     const result : apiGetAllEcosystems = await response.json();
    
     return result;
-    
 }
 
 export async function handleApiNamed(endpoint : string) : Promise<apiNamedEcosystemModel> {

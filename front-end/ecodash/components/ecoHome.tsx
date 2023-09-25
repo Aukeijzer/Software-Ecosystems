@@ -1,9 +1,8 @@
 import { handleApi } from "./apiHandler";
-import { apiGetAllEcosystems, apiNamedEcosystemModel, apiResponse } from "@/app/models/apiResponseModel";
+import { apiGetAllEcosystems } from "@/app/models/apiResponseModel";
 import EcoDataList from "./ecoDataList";
 import EcoItem from "./ecoItem";
 import { renderEcosystem } from "@/app/models/ecoDataListModel";
-
 
 export default async function ecoHome(){
     const result : apiGetAllEcosystems = await handleApi(`ecosystems`);
@@ -19,9 +18,6 @@ export default async function ecoHome(){
                             />
                         }
                 />
-               
-            
         </div>
     )
-
 }

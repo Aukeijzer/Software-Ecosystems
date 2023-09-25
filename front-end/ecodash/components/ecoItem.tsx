@@ -4,7 +4,6 @@ interface ecoItemProps{
     ecoData: JSX.Element
 }
 
-
 export default function ecoItem({title, description, ecoData} : ecoItemProps){
     return(
         <div className="bg-gray-400 ml-5 mt-3 p-5 mr-5 rounded-3xl">
