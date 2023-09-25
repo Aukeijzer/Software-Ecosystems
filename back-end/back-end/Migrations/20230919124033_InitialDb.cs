@@ -51,6 +51,12 @@ namespace SECODashBackend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Ecosystems_Name",
+                table: "Ecosystems",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_EcosystemId",
                 table: "Projects",
                 column: "EcosystemId");

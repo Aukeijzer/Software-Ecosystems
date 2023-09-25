@@ -4,9 +4,9 @@ namespace SECODashBackend.Services.Ecosystems;
 
 public interface IEcosystemsService
 {
-   public List<Ecosystem> GetAll();
-   void Add(Ecosystem ecosystem);
-   Ecosystem? GetById(long id);
-   Ecosystem? GetByName(string name);
+   public Task<List<Ecosystem>?> GetAllAsync();
+   public Task<int> AddAsync(Ecosystem ecosystem);
+   Task<Ecosystem?> GetByIdAsync(long id);
+   Task<Ecosystem?> GetByNameAsync(string name);
    
 }

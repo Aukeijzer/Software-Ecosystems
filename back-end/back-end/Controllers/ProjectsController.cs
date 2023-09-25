@@ -1,6 +1,5 @@
 ﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
-using SECODashBackend.Services;
 using SECODashBackend.Services.Projects;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -22,25 +21,27 @@ public class ProjectsController : ControllerBase
     [HttpGet]
     [SwaggerOperation("GetAllProjects")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public ActionResult<List<Project>> GetAll(){
-        
-        return new ObjectResult(_projectsService.GetAll());
+    public async Task<ActionResult<List<Project>>> GetAllAsync()
+    {
+        var result = await _projectsService.GetAllAsync(); 
+        return new ObjectResult(result);
     }
 
     [HttpGet("{id:long}")]
     [SwaggerOperation("GetProjectById")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public ActionResult<Project> GetById(long id)
+    public async Task<ActionResult<Project>> GetByIdAsync(long id)
     {
-        return new ObjectResult(_projectsService.GetById(id));
+        var result = await _projectsService.GetByIdAsync(id); 
+        return result == null ? NotFound() : result;
     }
 
     [HttpPost]
-    public ActionResult Post(Project project)
+    public async Task<ActionResult> PostAsync(Project project)
     {
-        _projectsService.Add(project);
+        await _projectsService.AddAsync(project);
         return CreatedAtAction(
-            nameof(GetById),
+            nameof(GetByIdAsync),
             new { id = project.Id },
             project);
     }

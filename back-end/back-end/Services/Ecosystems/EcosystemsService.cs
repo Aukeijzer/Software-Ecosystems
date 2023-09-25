@@ -1,43 +1,54 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Models;
+using SECODashBackend.Services.Spider;
 
 namespace SECODashBackend.Services.Ecosystems;
     
 public class EcosystemsService : IEcosystemsService
 {
     private readonly EcosystemsContext _dbContext;
+    private readonly ISpiderService _spiderService;
 
-    public EcosystemsService(EcosystemsContext dbContext)
+    public EcosystemsService(EcosystemsContext dbContext, ISpiderService spiderService)
     {
         _dbContext = dbContext;
+        _spiderService = spiderService;
     }
-    public List<Ecosystem> GetAll()
+    public async Task<List<Ecosystem>?> GetAllAsync()
     {
-        return _dbContext.Ecosystems
+        return await _dbContext.Ecosystems
             .Include(e => e.Projects)
             .AsNoTracking()
-            .ToList();
+            .ToListAsync();
     }
 
-    public void Add(Ecosystem ecosystem)
+    public async Task<int> AddAsync(Ecosystem ecosystem)
     {
-        _dbContext.Ecosystems.Add(ecosystem);
-        _dbContext.SaveChanges();
+        await _dbContext.Ecosystems.AddAsync(ecosystem);
+        return await _dbContext.SaveChangesAsync();
     }
 
-    public Ecosystem? GetById(long id)
+    public async Task<Ecosystem?> GetByIdAsync(long id)
     {
-        return _dbContext.Ecosystems
+        return await _dbContext.Ecosystems
             .Include(e => e.Projects)
             .AsNoTracking()
-            .SingleOrDefault(e => e.Id == id);
+            .SingleOrDefaultAsync(e => e.Id == id);
     }
-    public Ecosystem? GetByName(string name)
+    public async Task<Ecosystem?> GetByNameAsync(string name)
     {
-        return _dbContext.Ecosystems
+        var ecosystem = await _dbContext.Ecosystems
             .Include(e => e.Projects)
             .AsNoTracking()
-            .SingleOrDefault(e => e.Name == name);
+            .SingleOrDefaultAsync(e => e.Name == name);
+        if (ecosystem == null) return ecosystem;
+        var projects = await _spiderService.GetProjectsByNameAsync(ecosystem.Name);
+        if (projects != null)
+        {
+            ecosystem.Projects?.AddRange(projects);
+        }
+
+        return ecosystem;
     }
 }
