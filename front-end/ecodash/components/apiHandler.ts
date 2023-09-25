@@ -1,7 +1,16 @@
 import { apiGetAllEcosystems, apiNamedEcosystemModel, apiResponse } from "@/app/models/apiResponseModel";
 
 export async function handleApi(endpoint : string) : Promise<apiGetAllEcosystems> {
-    const response : Response = await fetch(`http://localhost:5003/${endpoint}`)
+    console.log(`http://localhost:5003/${endpoint}`)
+    const https = require('https');
+    
+    const httpsAgent = new https.Agent({
+        rejectUnauthorized: false,
+      });
+
+
+    const response : Response = await fetch(`http://localhost:5003/${endpoint}`, httpsAgent);
+
     const result : apiGetAllEcosystems = await response.json();
    
     return result;

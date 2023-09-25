@@ -1,12 +1,12 @@
 import { Project } from "./ecoDataListModel";
 
 export interface apiNamedEcosystemModel {
-    id: number,
+    id?: number,
     name: string,
-    displayName: string,
-    description: string,
-    projects: Project[],
-    numberOfStars: number,
+    displayName?: string,
+    description?: string,
+    projects?: Project[],
+    numberOfStars?: number,
 }
 
 
