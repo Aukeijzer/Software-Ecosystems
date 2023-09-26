@@ -20,7 +20,7 @@ export default async function ecoMain({ecosystem}: ecoMainProps){
     return(
         <div className="flex w-full justify-center flex-col">
             <EcoInfo title={result.name} description={result.description ? result.description : ""}/>
-            <EcoItem title="projects" description="lorem ipsum je kent het wel" ecoData={EcoDataItem} />
+            <EcoItem title="Projects" ecoData={EcoDataItem} />
         </div>
     )
 }
