@@ -46,6 +46,7 @@ public class EcosystemsController: ControllerBase
         await _ecosystemsService.AddAsync(ecosystem);
         
         return CreatedAtAction(
+            // ReSharper disable once Mvc.ActionNotResolved
             nameof(GetByIdAsync),
             new { id = ecosystem.Id },
             ecosystem);
