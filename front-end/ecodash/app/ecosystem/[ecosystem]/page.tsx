@@ -2,7 +2,6 @@ import EcoMain from "@/components/ecoMain";
 import { Metadata } from "next";
 //This page has a dynamic path. Meaning you can put everything after /ecosytem/.... and it will go to that site and pass the .... as props to the page
 
-
 interface ecosystemPageProps{
     params: { ecosystem : string},
 }
@@ -12,7 +11,7 @@ interface ecosystemPageProps{
 export const dynamicParams = false;
 // Define static params
 export function generateStaticParams() {
-    return ["agriculture", "ai"].map(ecosystem => ({ ecosystem }));
+    return ["agriculture", "ai", "quantum"].map(ecosystem => ({ ecosystem }));
 }
 //Set title 
 export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Metadata {
@@ -20,7 +19,6 @@ export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Me
         title: ecosystem + " data page"
     }
 }
-
 
 export default function ecosystemPage({params: {ecosystem}}: ecosystemPageProps){
     return(
