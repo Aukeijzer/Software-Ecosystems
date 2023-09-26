@@ -41,6 +41,7 @@ public class ProjectsController : ControllerBase
     {
         await _projectsService.AddAsync(project);
         return CreatedAtAction(
+            // ReSharper disable once Mvc.ActionNotResolved
             nameof(GetByIdAsync),
             new { id = project.Id },
             project);
