@@ -16,6 +16,7 @@ export const renderProject = (project: Project) => {
         <div className="flex flex-row">
             <p className="flex mr-20 max-w-xl basis-56"> {project.displayName? project.displayName : project.name}</p>
             <p className="flex mr-20 max-w-xl basis-56"> About: {project.about? project.about : "not available"} </p>
+            <p className="flex mr-20 max-w-xl basis-56"> Owner: {project.owner? project.owner : "not available"} </p>
             <p className="flex mr-20 max-w-5xl basis-56"> Readme: {project.readMe? project.readMe : "not available" }</p>
         </div>
     )
