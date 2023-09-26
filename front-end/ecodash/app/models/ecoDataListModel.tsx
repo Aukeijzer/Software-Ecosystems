@@ -4,7 +4,7 @@ import { apiNamedEcosystemModel } from "./apiResponseModel"
 export interface Project {
     id?: number,
     name: string,
-    displayName: string,
+    displayName?: string,
     about?: string,
     owner?: string,
     readMe?: string,
