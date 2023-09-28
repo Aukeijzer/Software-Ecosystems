@@ -28,6 +28,7 @@ public class SpiderController : ControllerBase
     [HttpGet("topic/{topic}")]
     public async Task<ActionResult<List<Project>>> GetByTopic(string topic)
     {
-        return _spiderDataConverter.TopicSearchToProjects(await _gitHubService.QueryRepositoriesByTopic(topic));
+        var result = await _gitHubService.QueryRepositoriesByTopic(topic);
+        return (result.topic == null) ? new BadRequestResult() :  _spiderDataConverter.TopicSearchToProjects(result);
     }
 }
