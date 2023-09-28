@@ -20,4 +20,20 @@ public class SpiderDataConverter : ISpiderDataConverter
         }
         return projects;
     }
+
+    public List<Project> TopicSearchToProjects(TopicSearchData data)
+    {
+        
+        var projects = new List<Project>();
+        foreach (var repository in data.topic.repositories.nodes)
+        {
+            projects.Add(new Project()
+            {
+                Name = repository.name,
+                ReadMe = (repository.readme == null ? null : repository.readme.text) ,
+                Owner = repository.owner.login
+            });
+        }
+        return projects;
+    }
 }

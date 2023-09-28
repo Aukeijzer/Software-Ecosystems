@@ -19,9 +19,15 @@ public class SpiderController : ControllerBase
         _spiderDataConverter = spiderDataConverter;
     }
     //http:localhost:Portnumberhere/spider/name
-    [HttpGet("{name}")]
-    public async Task<ActionResult<List<Project>>> GetByTopic(string name)
+    [HttpGet("name/{name}")]
+    public async Task<ActionResult<List<Project>>> GetByName(string name)
     {
         return _spiderDataConverter.ToProjects(await _gitHubService.QueryRepositoriesByName(name));
+    }
+    
+    [HttpGet("topic/{topic}")]
+    public async Task<ActionResult<List<Project>>> GetByTopic(string topic)
+    {
+        return _spiderDataConverter.TopicSearchToProjects(await _gitHubService.QueryRepositoriesByTopic(topic));
     }
 }

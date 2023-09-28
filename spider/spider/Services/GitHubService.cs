@@ -54,4 +54,36 @@ public class GitHubService : IGitHubService
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new SpiderData());
         return response.Data;
     }
+    
+    public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount = 10)
+    {
+        // GraphQL query to search the respositories with the given name.
+        var topicRepositoriesQuery = new GraphQLHttpRequest()
+        {
+            Query = @"query repositoriesQueryRequest($_topic: String!, $fileName : String!, $_amount : Int!) {
+                        topic(name: $_topic) {
+                            repositories(first: $_amount) {
+                                nodes {
+                                    name
+                                    owner {
+                                        login
+                                    }
+                        readme: object(expression: $fileName) {
+                            ... on Blob {
+                            text
+                                    }
+                                  }
+                                }
+                             }
+                           }
+                         }",
+            OperationName = "repositoriesQueryRequest",
+            Variables = new{_topic= topic, fileName = "main:README.md", _amount = amount}
+        };
+        //var temp = await _client.SendQueryAsync<Object>(topicRepositoriesQuery);
+        //Console.WriteLine(temp.Data.ToString());
+        
+        var response = await _client.SendQueryAsync(topicRepositoriesQuery,  () => new TopicSearchData());
+        return response.Data;
+    }
 }
