@@ -16,13 +16,11 @@ def extract_topics():
     if request.method == "POST":
         try:
             data = request.get_json()
-            readme = getReadme(data)
-            topics = extractTopic(readme)
-            data["topics"] = topics
-            return jsonify(data), 200
+            readmes = [getReadme(dto) for dto in data]
+            response = [extractTopic(readme) for readme in readmes]
+            return jsonify(response), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
-
