@@ -16,13 +16,13 @@ public class GitHubService : IGitHubService
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
     }
 
-    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName)
+    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount)
     {
         // GraphQL query to search the respositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
         {
-            Query = @"query repositoriesQueryRequest($name: String!, $fileName : String!){
-                        search(query: $name, type: REPOSITORY, first: 10) {
+            Query = @"query repositoriesQueryRequest($name: String!, $fileName : String!, $_amount : Int!){
+                        search(query: $name, type: REPOSITORY, first: $_amount) {
                         repositoryCount
                          nodes {
                             ... on Repository {
@@ -47,7 +47,7 @@ public class GitHubService : IGitHubService
                         }
                     }",
             OperationName = "repositoriesQueryRequest",
-            Variables = new{name= repositoryName, fileName = "main:README.md"}
+            Variables = new{name= repositoryName, fileName = "main:README.md", _amount = amount}
         };
         //var responseString = await _client.SendQueryAsync<Object>(repositoriesQuery);
         

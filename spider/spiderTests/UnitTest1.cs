@@ -23,7 +23,7 @@ public class Tests
     [Test]
     public async Task searchResultTest()
     {
-        var result = spiderGithubService.QueryRepositoriesByName("API_Test_Repo");
+        var result = spiderGithubService.QueryRepositoriesByName("API_Test_Repo", 10);
         Assert.IsNotNull(result.Result);
     }
 }

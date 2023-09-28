@@ -4,6 +4,6 @@ namespace spider.Services;
 
 public interface IGitHubService
 {
-    public Task<SpiderData> QueryRepositoriesByName(string name);
+    public Task<SpiderData> QueryRepositoriesByName(string name, int amount = 10);
 
 }
