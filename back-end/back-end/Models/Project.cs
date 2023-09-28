@@ -12,6 +12,10 @@ public class Project
    [Required]
    [DataMember(Name = "name")]
    public required string Name { get; set; }
+   
+   [DataMember(Name = "topics")]
+   public List<Topic>? Topics { get; set; }
+      
    [DataMember(Name = "about")]
    public string? About { get; set; }
    
