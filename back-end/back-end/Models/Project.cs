@@ -11,14 +11,13 @@ public class Project
    
    [Required]
    [DataMember(Name = "name")]
-   public string Name { get; set; }
+   public required string Name { get; set; }
    [DataMember(Name = "about")]
    public string? About { get; set; }
    
    [DataMember(Name = "owner")]
    public string? Owner { get; set; }
    
-
    [DataMember(Name = "readme")]
    public string? ReadMe { get; set; }
    

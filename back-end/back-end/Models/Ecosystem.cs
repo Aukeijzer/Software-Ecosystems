@@ -14,7 +14,7 @@ public class Ecosystem
    
    [Required]
    [DataMember(Name = "name")]
-   public string Name { get; set; }
+   public required string Name { get; set; }
    
    [DataMember(Name = "displayName")]
    public string? DisplayName { get; set; }
