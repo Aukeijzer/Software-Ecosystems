@@ -9,12 +9,14 @@ public class SpiderService : ISpiderService
 
     public SpiderService()
     {
-        var options = new RestClientOptions("http://localhost:5205/Spider");
+        var options = new RestClientOptions("http://localhost:5205");
         _spiderClient = new RestClient(options);
     }
-    public async Task<List<Project>?> GetProjectsByNameAsync(string name)
+    public async Task<List<Project>> GetProjectsByNameAsync(string name)
     {
-        var request = new RestRequest(name);
-        return await _spiderClient.GetAsync<List<Project>>(request);
+        var request = new RestRequest($"Spider/{name}");
+        
+        // Throw an exception if the request cannot be deserialized into a List of Projects
+        return await _spiderClient.GetAsync<List<Project>>(request) ?? throw new HttpRequestException();
     }
 }

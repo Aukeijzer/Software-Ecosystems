@@ -44,10 +44,7 @@ public class EcosystemsService : IEcosystemsService
             .SingleOrDefaultAsync(e => e.Name == name);
         if (ecosystem == null) return ecosystem;
         var projects = await _spiderService.GetProjectsByNameAsync(ecosystem.Name);
-        if (projects != null)
-        {
-            ecosystem.Projects?.AddRange(projects);
-        }
+        ecosystem.Projects?.AddRange(projects);
 
         return ecosystem;
     }
