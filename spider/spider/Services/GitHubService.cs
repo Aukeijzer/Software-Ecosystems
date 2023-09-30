@@ -27,6 +27,16 @@ public class GitHubService : IGitHubService
                          nodes {
                             ... on Repository {
                                 name
+                                description
+                                languages(first: 100) {
+                                  totalSize
+                                  edges {
+                                    size
+                                    node {
+                                      name
+                                    }
+                                  }
+                                }
                                 owner{
                                     login
                                 }
@@ -49,6 +59,7 @@ public class GitHubService : IGitHubService
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, fileName = "main:README.md", _amount = amount}
         };
+        var responseString = await _client.SendQueryAsync<Object>(repositoriesQuery);
         
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new SpiderData());
         return response.Data;
@@ -64,18 +75,35 @@ public class GitHubService : IGitHubService
                             repositories(first: $_amount) {
                                 nodes {
                                     name
-                                    owner {
+                                    description
+                                    languages(first: 100) {
+                                      totalSize
+                                      edges {
+                                        size
+                                        node {
+                                          name
+                                        }
+                                      }
+                                    }
+                                    owner{
                                         login
                                     }
-                        readme: object(expression: $fileName) {
-                            ... on Blob {
-                            text
+                                    repositoryTopics(first: $_amount){
+                                        nodes{
+                                            topic{
+                                            name
+                                            }
+                                        }
+                                    }
+                                    readme: object(expression: $fileName){
+                                        ... on Blob{
+                                            text
+                                            }
+                                        }
                                     }
                                   }
-                                }
                              }
-                           }
-                         }",
+                           }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{_topic= topic, fileName = "main:README.md", _amount = amount}
         };
