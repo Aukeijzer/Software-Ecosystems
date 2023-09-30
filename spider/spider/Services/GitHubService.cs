@@ -30,7 +30,7 @@ public class GitHubService : IGitHubService
                                 owner{
                                     login
                                 }
-                                repositoryTopics(first: 10){
+                                repositoryTopics(first: $_amount){
                                     nodes{
                                         topic{
                                         name

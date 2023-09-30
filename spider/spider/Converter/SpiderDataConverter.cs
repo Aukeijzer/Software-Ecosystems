@@ -23,12 +23,18 @@ public class SpiderDataConverter : ISpiderDataConverter
         var projects = new List<Project>();
         foreach (var repository in nodes)
         {
+            String[] topics = new String[nodes.Length];
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                topics[i] = repository.repositoryTopics.nodes[i].topic.name;
+            }
             projects.Add(new Project()
             {
                 Name = repository.name,
                 ReadMe = (repository.readme == null ? null : repository.readme.text),
                 Owner = repository.owner.login,
-                Description = repository.description
+                Description = repository.description,
+                Topics = topics
             });
         }
 

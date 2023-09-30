@@ -18,6 +18,12 @@ public class Project
    
    [DataMember(Name = "owner")]
    public string? Owner { get; set; }
+   
+   [DataMember(Name = "description")]
+   public string? Description { get; set; }
+   
+   [DataMember(Name = "Topics")]
+   public string[]? Topics { get; set; }
 
    [DataMember(Name = "readme")]
    public string? ReadMe { get; set; }
