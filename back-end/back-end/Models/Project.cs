@@ -24,10 +24,7 @@ public class Project
     public string[]? Topics { get; set; }
    
     [DataMember(Name = "languages")]
-    public string[]? Languages { get; set; }
-   
-    [DataMember(Name = "languageSizes")]
-    public int[]? LanguageSizes { get; set; }
+    public ProgrammingLanguage[]? Languages { get; set; }
    
     [DataMember(Name = "totalSize")]
     public int? TotalSize { get; set; }
@@ -37,4 +34,5 @@ public class Project
    
     [DataMember(Name = "numberOfStars")]
     public int? NumberOfStars { get; set; }
+
 }
