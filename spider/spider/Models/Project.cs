@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using spider.Models;
 
 namespace SECODashBackend.Models;
 
