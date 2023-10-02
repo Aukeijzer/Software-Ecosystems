@@ -20,16 +20,13 @@ public class Project
    [DataMember(Name = "description")]
    public string? Description { get; set; }
    
-   [DataMember(Name = "Topics")]
+   [DataMember(Name = "topics")]
    public string[]? Topics { get; set; }
    
-   [DataMember(Name = "Languages")]
-   public string[]? Languages { get; set; }
+   [DataMember(Name = "languages")]
+   public ProgrammingLanguage[]? Languages { get; set; }
    
-   [DataMember(Name = "LanguageSizes")]
-   public int[]? LanguageSizes { get; set; }
-   
-   [DataMember(Name = "TotalSize")]
+   [DataMember(Name = "totalSize")]
    public int? TotalSize { get; set; }
 
    [DataMember(Name = "readme")]
@@ -37,4 +34,5 @@ public class Project
    
    [DataMember(Name = "numberOfStars")]
    public int? NumberOfStars { get; set; }
+
 }

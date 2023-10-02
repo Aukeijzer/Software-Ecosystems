@@ -30,32 +30,29 @@ public class GraphqlDataConverter : IGraphqlDataConverter
 
     public Project RepositoryToProject(Repository repository)
     {
-        string[] topics = new string[repository.repositoryTopics.nodes.Length];
-        for (int i = 0; i < repository.repositoryTopics.nodes.Length; i++)
+        var topics = new string[repository.repositoryTopics.nodes.Length];
+        for (var i = 0; i < repository.repositoryTopics.nodes.Length; i++)
         {
             topics[i] = repository.repositoryTopics.nodes[i].topic.name;
         }
 
-        string[] languageNames = new string[repository.languages.edges.Length];
-        int[] languageSizes = new int[repository.languages.edges.Length];
-        for (int i = 0; i < repository.languages.edges.Length; i++)
+        var languages = new ProgrammingLanguage[repository.languages.edges.Length];
+        for (var i = 0; i < repository.languages.edges.Length; i++)
         {
-            languageNames[i] = repository.languages.edges[i].node.name;
-            languageSizes[i] = repository.languages.edges[i].size;
+            languages[i] = new ProgrammingLanguage(repository.languages.edges[i].node.name,repository.languages.edges[i].size);
         }
 
-        Project project = new Project
+        var project = new Project
         {
             Name = repository.name,
             Id = repository.id,
-            ReadMe = (repository.readme == null ? null : repository.readme.text),
+            ReadMe = repository.readme?.text,
             Owner = repository.owner.login,
             NumberOfStars = repository.stargazerCount,
             Description = repository.description,
             Topics = topics,
             TotalSize = repository.languages.totalSize,
-            Languages = languageNames,
-            LanguageSizes = languageSizes
+            Languages = languages
         };
         return project;
     }
