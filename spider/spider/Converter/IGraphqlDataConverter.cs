@@ -8,4 +8,6 @@ public interface IGraphqlDataConverter
 
     public List<Project> TopicSearchToProjects(TopicSearchData data);
 
+    public Project RepositoryToProject(Repository repository);
+
 }

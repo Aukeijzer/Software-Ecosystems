@@ -42,7 +42,7 @@ public class GitHubService : IGitHubService
                                 owner{
                                     login
                                 }
-                                repositoryTopics(first: $_amount){
+                                repositoryTopics(first: 100){
                                     nodes{
                                         topic{
                                         name
@@ -92,7 +92,7 @@ public class GitHubService : IGitHubService
                                     owner{
                                         login
                                     }
-                                    repositoryTopics(first: $_amount){
+                                    repositoryTopics(first: 100){
                                         nodes{
                                             topic{
                                             name
@@ -103,16 +103,62 @@ public class GitHubService : IGitHubService
                                         ... on Blob{
                                             text
                                             }
+                                          }
                                         }
+                                      }
                                     }
-                                  }
-                             }
-                           }",
+                                  }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{_topic= topic, fileName = readmeName, _amount = amount}
         };
         
         var response = await _client.SendQueryAsync(topicRepositoriesQuery,  () => new TopicSearchData());
+        return response.Data;
+    }
+    
+    public async Task<RepositoryWrapper> QueryRepositoryByName(string repositoryName, string ownerName, string readmeName)
+    {
+        // GraphQL query to search the respositories with the given name.
+        var repositoriesQuery = new GraphQLHttpRequest()
+        {
+            Query = @"query repositoriesQueryRequest($name: String!, $fileName: String!, $_ownerName: String!) {
+                        repository(name: $name, owner: $_ownerName) {
+                            name
+                            id
+                            description
+                            stargazerCount
+                            languages(first: 100) {
+                              totalSize
+                              edges {
+                                size
+                                node {
+                                  name
+                                }
+                              }
+                            }
+                            owner {
+                              login
+                            }
+                            repositoryTopics(first: 100) {
+                              nodes {
+                                topic {
+                                  name
+                                }
+                              }
+                            }
+                            readme: object(expression: $fileName) {
+                              ... on Blob {
+                                text
+                              }
+                            }
+                          }
+                        }",
+            OperationName = "repositoriesQueryRequest",
+            Variables = new{name= repositoryName, _ownerName = ownerName,fileName = readmeName}
+        };
+        var responseString = await _client.SendQueryAsync<Object>(repositoriesQuery);
+
+        var response = await _client.SendQueryAsync(repositoriesQuery,  () => new RepositoryWrapper());
         return response.Data;
     }
 }

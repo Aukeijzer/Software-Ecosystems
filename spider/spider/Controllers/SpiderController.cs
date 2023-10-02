@@ -30,4 +30,11 @@ public class SpiderController : ControllerBase
         var result = await _gitHubService.QueryRepositoriesByTopic(topic);
         return (result.topic == null) ? new BadRequestResult() :  _graphqlDataConverter.TopicSearchToProjects(result);
     }
+    
+    [HttpGet("repository/{name}/{ownerName}")]
+    public async Task<ActionResult<Project>> GetByName(string name, string ownerName)
+    {
+        var result = await _gitHubService.QueryRepositoryByName(name, ownerName);
+        return _graphqlDataConverter.RepositoryToProject(result.repository);
+    }
 }
