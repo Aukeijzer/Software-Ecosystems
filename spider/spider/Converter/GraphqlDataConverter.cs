@@ -3,9 +3,9 @@ using spider.Models;
 
 namespace spider.Converter;
 
-public class SpiderDataConverter : ISpiderDataConverter
+public class GraphqlDataConverter : IGraphqlDataConverter
 {
-    public List<Project> ToProjects(SpiderData data)
+    public List<Project> SearchToProjects(SpiderData data)
     {
         // Parser to parse the result from the search query to a C# data type.
         List<Project> projects = DataToProjects(data.search.nodes);
