@@ -40,15 +40,16 @@ public class EcosystemsService : IEcosystemsService
     {
         var ecosystem = await _dbContext.Ecosystems
             .Include(e => e.Projects)
-            .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
-        if (ecosystem == null) return ecosystem;
-        var projects = await _spiderService.GetProjectsByNameAsync(ecosystem.Name);
-        if (projects != null)
-        {
-            ecosystem.Projects?.AddRange(projects);
-        }
-
+        if (ecosystem == null) return null;
+        
+        // Request the Spider for projects related to this ecosystem.
+        var newProjects = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
+        
+        // Only add the projects if they are not already in the database.
+        ecosystem.Projects.AddRange(
+            newProjects.Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id)));
+        await _dbContext.SaveChangesAsync();
         return ecosystem;
     }
 }
