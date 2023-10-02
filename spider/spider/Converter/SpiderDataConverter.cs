@@ -39,8 +39,10 @@ public class SpiderDataConverter : ISpiderDataConverter
             projects.Add(new Project()
             {
                 Name = repository.name,
+                Id = repository.id,
                 ReadMe = (repository.readme == null ? null : repository.readme.text),
                 Owner = repository.owner.login,
+                NumberOfStars = repository.stargazerCount,
                 Description = repository.description,
                 Topics = topics,
                 TotalSize = repository.languages.totalSize,

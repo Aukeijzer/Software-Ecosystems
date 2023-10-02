@@ -8,13 +8,11 @@ namespace SECODashBackend.Models;
 public class Project
 {
    [DataMember(Name = "id")]
-   public long? Id { get; set; }
+   public string? Id { get; set; }
    
    [Required]
    [DataMember(Name = "name")]
    public string Name { get; set; }
-   [DataMember(Name = "about")]
-   public string? About { get; set; }
    
    [DataMember(Name = "owner")]
    public string? Owner { get; set; }

@@ -27,7 +27,9 @@ public class GitHubService : IGitHubService
                          nodes {
                             ... on Repository {
                                 name
+                                id
                                 description
+                                stargazerCount
                                 languages(first: 100) {
                                   totalSize
                                   edges {
@@ -69,13 +71,15 @@ public class GitHubService : IGitHubService
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()
         {
-            //graphql gquery to search for repositories based on a github topic
+            //graphql guery to search for repositories based on a github topic
             Query = @"query repositoriesQueryRequest($_topic: String!, $fileName : String!, $_amount : Int!) {
                         topic(name: $_topic) {
                             repositories(first: $_amount) {
                                 nodes {
                                     name
+                                    id
                                     description
+                                    stargazerCount
                                     languages(first: 100) {
                                       totalSize
                                       edges {
