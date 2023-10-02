@@ -21,9 +21,8 @@ public class Ecosystem
    
    [DataMember(Name ="description")]
    public string? Description { get; set; }
-   
-   [DataMember(Name = "projects")]
-   public List<Project>? Projects { get; set; }
+
+   [DataMember(Name = "projects")] public List<Project> Projects { get; set; } = new();
    
    [DataMember(Name = "numberOfStars")]
    public int? NumberOfStars { get; set; }
