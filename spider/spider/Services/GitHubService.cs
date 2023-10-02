@@ -12,8 +12,8 @@ public class GitHubService : IGitHubService
     public GitHubService()
     {
         _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
-        var Token = Environment.GetEnvironmentVariable("API_Token");
-        _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+        var token = Environment.GetEnvironmentVariable("API_Token");
+        _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
     }
 
     public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount, string readmeName)
@@ -61,7 +61,7 @@ public class GitHubService : IGitHubService
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, fileName = readmeName, _amount = amount}
         };
-        var responseString = await _client.SendQueryAsync<Object>(repositoriesQuery);
+        await _client.SendQueryAsync<Object>(repositoriesQuery);
         
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new SpiderData());
         return response.Data;

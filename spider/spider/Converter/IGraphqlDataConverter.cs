@@ -1,5 +1,4 @@
-﻿using SECODashBackend.Models;
-using spider.Models;
+﻿using spider.Models;
 
 namespace spider.Converter;
 

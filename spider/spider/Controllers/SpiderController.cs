@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using SECODashBackend.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using spider.Converter;
+using spider.Models;
 using spider.Services;
 
 namespace spider.Controllers;
