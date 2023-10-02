@@ -16,7 +16,7 @@ public class GitHubService : IGitHubService
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
     }
 
-    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount)
+    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount, string readmeName)
     {
         // GraphQL query to search the respositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
@@ -59,7 +59,7 @@ public class GitHubService : IGitHubService
                         }
                     }",
             OperationName = "repositoriesQueryRequest",
-            Variables = new{name= repositoryName, fileName = "main:README.md", _amount = amount}
+            Variables = new{name= repositoryName, fileName = readmeName, _amount = amount}
         };
         var responseString = await _client.SendQueryAsync<Object>(repositoriesQuery);
         
@@ -67,7 +67,7 @@ public class GitHubService : IGitHubService
         return response.Data;
     }
     
-    public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount = 10)
+    public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount, string readmeName)
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()
         {
@@ -109,7 +109,7 @@ public class GitHubService : IGitHubService
                              }
                            }",
             OperationName = "repositoriesQueryRequest",
-            Variables = new{_topic= topic, fileName = "main:README.md", _amount = amount}
+            Variables = new{_topic= topic, fileName = readmeName, _amount = amount}
         };
         
         var response = await _client.SendQueryAsync(topicRepositoriesQuery,  () => new TopicSearchData());
