@@ -118,7 +118,7 @@ public class GitHubService : IGitHubService
     
     public async Task<RepositoryWrapper> QueryRepositoryByName(string repositoryName, string ownerName, string readmeName)
     {
-        // GraphQL query to search the respositories with the given name.
+        // GraphQL query to search a repository with the given repository name and owner name.
         var repositoriesQuery = new GraphQLHttpRequest()
         {
             Query = @"query repositoriesQueryRequest($name: String!, $fileName: String!, $_ownerName: String!) {
