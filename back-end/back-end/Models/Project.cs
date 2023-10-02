@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace SECODashBackend.Models;
@@ -20,16 +20,16 @@ public class Project
     [DataMember(Name = "description")]
     public string? Description { get; set; }
    
-    [DataMember(Name = "Topics")]
+    [DataMember(Name = "topics")]
     public string[]? Topics { get; set; }
    
-    [DataMember(Name = "Languages")]
+    [DataMember(Name = "languages")]
     public string[]? Languages { get; set; }
    
-    [DataMember(Name = "LanguageSizes")]
+    [DataMember(Name = "languageSizes")]
     public int[]? LanguageSizes { get; set; }
    
-    [DataMember(Name = "TotalSize")]
+    [DataMember(Name = "totalSize")]
     public int? TotalSize { get; set; }
 
     [DataMember(Name = "readme")]
