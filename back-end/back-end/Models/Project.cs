@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace SECODashBackend.Models;
@@ -6,12 +6,13 @@ namespace SECODashBackend.Models;
 [DataContract]
 public class Project
 {
+    [Required]
     [DataMember(Name = "id")]
-    public string? Id { get; set; }
+    public required string Id { get; init; }
    
     [Required]
     [DataMember(Name = "name")]
-    public string Name { get; set; }
+    public required string Name { get; set; }
    
     [DataMember(Name = "owner")]
     public string? Owner { get; set; }
