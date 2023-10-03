@@ -39,7 +39,8 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         var languages = new ProgrammingLanguage[repository.languages.edges.Length];
         for (var i = 0; i < repository.languages.edges.Length; i++)
         {
-            languages[i] = new ProgrammingLanguage(repository.languages.edges[i].node.name,repository.languages.edges[i].size);
+            float percent = repository.languages.edges[i].size / repository.languages.totalSize * 100f;
+            languages[i] = new ProgrammingLanguage(repository.languages.edges[i].node.name,percent);
         }
 
         var project = new Project
