@@ -2,6 +2,7 @@
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
+using spider.Dtos;
 using spider.Models;
 
 namespace spider.Services;
@@ -163,15 +164,15 @@ public class GitHubService : IGitHubService
         return response.Data;
     }
     
-    public async Task<SpiderData> ToQueryString(string[] ownerNames, string[] repoNames)
+    public async Task<SpiderData> ToQueryString(List<ProjectRequestDto> repos)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < ownerNames.Length; i++)
+        foreach (var repo in repos)
         {
             stringBuilder.Append("repo:");
-            stringBuilder.Append(ownerNames[i]);
+            stringBuilder.Append(repo.ownerName);
             stringBuilder.Append('/');
-            stringBuilder.Append(repoNames[i]);
+            stringBuilder.Append(repo.repoName);
             stringBuilder.Append(' ');
         }
 

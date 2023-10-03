@@ -48,8 +48,8 @@ public class SpiderController : ControllerBase
 
     [HttpPost]
 
-    public async Task<ActionResult<List<Project>>> GetByNames(string[] ownerNames, string[] repoNames)
+    public async Task<ActionResult<List<ProjectDto>>> GetByNames(List<ProjectRequestDto> repos)
     {
-        return _graphqlDataConverter.SearchToProjects(await _gitHubService.ToQueryString(ownerNames, repoNames));
+        return _graphqlDataConverter.SearchToProjects(await _gitHubService.ToQueryString(repos));
     }
 }
