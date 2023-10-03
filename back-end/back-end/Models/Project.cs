@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace SECODashBackend.Models;
@@ -13,6 +13,9 @@ public class Project
     [Required]
     [DataMember(Name = "name")]
     public required string Name { get; set; }
+
+    [DataMember(Name = "ecosystems")]
+    public List<Ecosystem> Ecosystems { get; set; } = new List<Ecosystem>();
    
     [DataMember(Name = "owner")]
     public string? Owner { get; set; }
@@ -22,7 +25,7 @@ public class Project
    
     [DataMember(Name = "topics")]
     public string[]? Topics { get; set; }
-   
+
     [DataMember(Name = "languages")]
     public ProgrammingLanguage[]? Languages { get; set; }
    
@@ -34,5 +37,4 @@ public class Project
    
     [DataMember(Name = "numberOfStars")]
     public int? NumberOfStars { get; set; }
-
 }
