@@ -2,18 +2,18 @@ namespace spider.Models;
 
 public class Languages
 {
-    public int totalSize { get; set; }
+    public int TotalSize { get; set; }
 
-    public Language[] edges { get; set; }
+    public Language[] Edges { get; set; }
 }
 
 public class Language
 {
-    public int size { get; set; }
-    public LanguageName node { get; set; }
+    public int Size { get; set; }
+    public LanguageName Node { get; set; }
 }
 
 public class LanguageName
 {
-    public string name { get; set; }
+    public string Name { get; set; }
 }

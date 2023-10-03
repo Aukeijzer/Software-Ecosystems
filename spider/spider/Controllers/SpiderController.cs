@@ -1,10 +1,7 @@
 ﻿using System.Net;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 using spider.Converter;
 using spider.Dtos;
-using spider.Models;
 using spider.Services;
 
 namespace spider.Controllers;
@@ -34,7 +31,7 @@ public class SpiderController : ControllerBase
     {
         topic = WebUtility.UrlDecode(topic);
         var result = await _gitHubService.QueryRepositoriesByTopic(topic);
-        return (result.topic == null) ? new BadRequestResult() :  _graphqlDataConverter.TopicSearchToProjects(result);
+        return (result.Topic == null) ? new BadRequestResult() :  _graphqlDataConverter.TopicSearchToProjects(result);
     }
     
     [HttpGet("repository/{name}/{ownerName}")]
@@ -43,7 +40,7 @@ public class SpiderController : ControllerBase
         name = WebUtility.UrlDecode(name);
         ownerName = WebUtility.UrlDecode(ownerName);
         var result = await _gitHubService.QueryRepositoryByName(name, ownerName);
-        return _graphqlDataConverter.RepositoryToProject(result.repository);
+        return _graphqlDataConverter.RepositoryToProject(result.Repository);
     }
 
     [HttpPost]

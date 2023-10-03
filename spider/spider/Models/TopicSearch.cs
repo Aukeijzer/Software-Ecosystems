@@ -2,6 +2,6 @@ namespace spider.Models;
 
 public class TopicSearch
 {
-    public TopicRepository repositories { get; set; }
+    public TopicRepository Repositories { get; set; }
 
 }

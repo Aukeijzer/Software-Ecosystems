@@ -2,26 +2,26 @@
 
 public class LatestRelease
 {
-    public string? name { get; set; }
-    public Target target { get; set; }
+    public string? Name { get; set; }
+    public Target Target { get; set; }
 }
 
 public class Target
 {
-    public History history { get; set; }
+    public History History { get; set; }
 }
 
 public class History
 {
-    public Edges[] edges { get; set; }
+    public Edges[] Edges { get; set; }
 }
 
 public class Edges
 {
-    public Node? node { get; set; }
+    public Node? Node { get; set; }
 }
 
 public class Node
 {
- public DateTime? committedDate { get; set; }   
+ public DateTime? CommittedDate { get; set; }   
 }
