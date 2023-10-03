@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using spider.Models;
 
-namespace spider.Models;
+namespace spider.Dtos;
 
 [DataContract]
-public class Project
+public class ProjectDto
 {
    [Required]
    [DataMember(Name = "id")]

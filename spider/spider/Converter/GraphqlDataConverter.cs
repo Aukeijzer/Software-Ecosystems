@@ -1,25 +1,26 @@
-﻿using spider.Models;
+﻿using spider.Dtos;
+using spider.Models;
 
 namespace spider.Converter;
 
 public class GraphqlDataConverter : IGraphqlDataConverter
 {
-    public List<Project> SearchToProjects(SpiderData data)
+    public List<ProjectDto> SearchToProjects(SpiderData data)
     {
         // Parser to parse the result from the search query to a C# data type.
-        List<Project> projects = DataToProjects(data.search.nodes);
+        List<ProjectDto> projects = DataToProjectDtos(data.search.nodes);
         return projects;
     }
     
-    public List<Project> TopicSearchToProjects(TopicSearchData data)
+    public List<ProjectDto> TopicSearchToProjects(TopicSearchData data)
     {
-        List<Project> projects = DataToProjects(data.topic.repositories.nodes);
+        List<ProjectDto> projects = DataToProjectDtos(data.topic.repositories.nodes);
         return projects;
     }
     
-    public List<Project> DataToProjects(Repository[] nodes)
+    public List<ProjectDto> DataToProjectDtos(Repository[] nodes)
     {
-        var projects = new List<Project>();
+        var projects = new List<ProjectDto>();
         foreach (var repository in nodes)
         {
             projects.Add(RepositoryToProject(repository));
@@ -28,7 +29,7 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         return projects;
     }
 
-    public Project RepositoryToProject(Repository repository)
+    public ProjectDto RepositoryToProject(Repository repository)
     {
         var topics = new string[repository.repositoryTopics.nodes.Length];
         for (var i = 0; i < repository.repositoryTopics.nodes.Length; i++)
@@ -43,7 +44,7 @@ public class GraphqlDataConverter : IGraphqlDataConverter
             languages[i] = new ProgrammingLanguage(repository.languages.edges[i].node.name,percent);
         }
 
-        var project = new Project
+        var project = new ProjectDto
         {
             Name = repository.name,
             Id = repository.id,

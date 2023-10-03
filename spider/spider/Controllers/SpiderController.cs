@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using spider.Converter;
+using spider.Dtos;
 using spider.Models;
 using spider.Services;
 
@@ -20,14 +21,14 @@ public class SpiderController : ControllerBase
     }
     //http:localhost:Portnumberhere/spider/name
     [HttpGet("name/{name}")]
-    public async Task<ActionResult<List<Project>>> GetByName(string name)
+    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name)
     {
         name = WebUtility.UrlDecode(name);
         return _graphqlDataConverter.SearchToProjects(await _gitHubService.QueryRepositoriesByName(name));
     }
     
     [HttpGet("topic/{topic}")]
-    public async Task<ActionResult<List<Project>>> GetByTopic(string topic)
+    public async Task<ActionResult<List<ProjectDto>>> GetByTopic(string topic)
     {
         topic = WebUtility.UrlDecode(topic);
         var result = await _gitHubService.QueryRepositoriesByTopic(topic);
@@ -35,7 +36,7 @@ public class SpiderController : ControllerBase
     }
     
     [HttpGet("repository/{name}/{ownerName}")]
-    public async Task<ActionResult<Project>> GetByName(string name, string ownerName)
+    public async Task<ActionResult<ProjectDto>> GetByName(string name, string ownerName)
     {
         name = WebUtility.UrlDecode(name);
         ownerName = WebUtility.UrlDecode(ownerName);
