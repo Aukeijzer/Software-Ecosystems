@@ -209,7 +209,6 @@ public class GitHubService : IGitHubService
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, _ownerName = ownerName,fileName = readmeName}
         };
-        var responseString = await _client.SendQueryAsync<Object>(repositoriesQuery);
 
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new RepositoryWrapper());
         return response.Data;
