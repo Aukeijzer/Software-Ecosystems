@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
+using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Spider;
 
@@ -19,6 +20,7 @@ public class EcosystemsService : IEcosystemsService
     {
         return await _dbContext.Ecosystems
             .Include(e => e.Projects)
+            .ThenInclude(p => p.Languages)
             .AsNoTracking()
             .ToListAsync();
     }
@@ -33,6 +35,7 @@ public class EcosystemsService : IEcosystemsService
     {
         return await _dbContext.Ecosystems
             .Include(e => e.Projects)
+            .ThenInclude(p => p.Languages)
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Id == id);
     }
@@ -40,15 +43,19 @@ public class EcosystemsService : IEcosystemsService
     {
         var ecosystem = await _dbContext.Ecosystems
             .Include(e => e.Projects)
+            .ThenInclude(p => p.Languages)
             .SingleOrDefaultAsync(e => e.Name == name);
         if (ecosystem == null) return null;
         
-        // Request the Spider for projects related to this ecosystem.
-        var newProjects = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
+        // Request the Spider for projectsDtos related to this ecosystem.
+        var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
         
         // Only add the projects if they are not already in the database.
         ecosystem.Projects.AddRange(
-            newProjects.Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id)));
+            dtos
+                .Where(x => !ecosystem.Projects
+                    .Exists(y => y.Id == x.Id))
+                .Select(ProjectConverter.ToProject));
         await _dbContext.SaveChangesAsync();
         return ecosystem;
     }
