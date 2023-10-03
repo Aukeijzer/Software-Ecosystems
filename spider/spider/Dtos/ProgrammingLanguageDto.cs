@@ -1,4 +1,4 @@
-﻿namespace spider.Models;
+﻿namespace spider.Dtos;
 
 public struct ProgrammingLanguageDto
 {
