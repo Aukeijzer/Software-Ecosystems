@@ -30,6 +30,23 @@ public class GitHubService : IGitHubService
                             ... on Repository {
                                 name
                                 id
+                                defaultBranchRef {
+                                  name
+                                  target {
+                                    ... on Commit {
+                                      history(first: 1) {
+                                        edges {
+                                          node {
+                                            ... on Commit {
+                                              committedDate
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                                createdAt
                                 description
                                 stargazerCount
                                 languages(first: 100) {
@@ -80,6 +97,23 @@ public class GitHubService : IGitHubService
                                 nodes {
                                     name
                                     id
+                                    defaultBranchRef {
+                                      name
+                                      target {
+                                        ... on Commit {
+                                          history(first: 1) {
+                                            edges {
+                                              node {
+                                                ... on Commit {
+                                                  committedDate
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                    createdAt
                                     description
                                     stargazerCount
                                     languages(first: 100) {
@@ -127,6 +161,23 @@ public class GitHubService : IGitHubService
                         repository(name: $name, owner: $_ownerName) {
                             name
                             id
+                            defaultBranchRef {
+                              name
+                              target {
+                                ... on Commit {
+                                  history(first: 1) {
+                                    edges {
+                                      node {
+                                        ... on Commit {
+                                          committedDate
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                            createdAt
                             description
                             stargazerCount
                             languages(first: 100) {
