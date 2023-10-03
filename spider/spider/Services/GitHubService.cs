@@ -170,9 +170,9 @@ public class GitHubService : IGitHubService
         foreach (var repo in repos)
         {
             stringBuilder.Append("repo:");
-            stringBuilder.Append(repo.ownerName);
+            stringBuilder.Append(repo.OwnerName);
             stringBuilder.Append('/');
-            stringBuilder.Append(repo.repoName);
+            stringBuilder.Append(repo.RepoName);
             stringBuilder.Append(' ');
         }
 

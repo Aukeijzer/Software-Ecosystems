@@ -8,8 +8,8 @@ public class ProjectRequestDto
 {
     [Required] 
     [DataMember(Name = "ownerNames")] 
-    public required string ownerName { get; init; }
+    public required string OwnerName { get; init; }
     
     [DataMember(Name = "repoName")] 
-    public required string repoName { get; init; }
+    public required string RepoName { get; init; }
 }
