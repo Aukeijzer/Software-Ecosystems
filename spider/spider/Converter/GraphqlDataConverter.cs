@@ -48,6 +48,8 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         {
             Name = repository.name,
             Id = repository.id,
+            LatestDefaultBranchCommitDate = repository.defaultBranchRef.target.history.edges[0].node.committedDate,
+            CreatedAt = repository.createdAt,
             ReadMe = repository.readme?.text,
             Owner = repository.owner.login,
             NumberOfStars = repository.stargazerCount,
