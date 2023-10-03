@@ -2,13 +2,13 @@
 
 public struct ProgrammingLanguage
 {
-    public ProgrammingLanguage(string name, float size)
+    public ProgrammingLanguage(string name, float percentage)
     {
         Name = name;
-        Size = size;
+        Percentage = percentage;
     }
 
     public string Name { get; }
-    public float Size { get; }
+    public float Percentage { get; }
    
 }
