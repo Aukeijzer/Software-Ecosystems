@@ -1,4 +1,5 @@
-﻿using SECODashBackend.Dto;
+﻿using System.Text.RegularExpressions;
+using SECODashBackend.Dto;
 using SECODashBackend.Enums;
 using SECODashBackend.Models;
 
@@ -39,17 +40,18 @@ public static class ProjectConverter
 
     private static ProgrammingLanguage ParseProgrammingLanguage(string language)
     {
+        var trimmedLanguage = Regex.Replace( language, @"\s+", "" );
         try
         {
-            return Enum.Parse<ProgrammingLanguage>(language);
+            return Enum.Parse<ProgrammingLanguage>(trimmedLanguage);
         }
         catch (ArgumentException e)
         {
-            return language switch
+            return trimmedLanguage switch
             {
                 "C++" => ProgrammingLanguage.CPlusPlus,
                 "C#" => ProgrammingLanguage.CSharp,
-                "DIGITAL Command Language" => ProgrammingLanguage.DIGITALCommandLanguage,
+                "F#" => ProgrammingLanguage.FSharp, 
                 "Q#" => ProgrammingLanguage.QSharp,
                 _ => ProgrammingLanguage.Undefined,
             };
