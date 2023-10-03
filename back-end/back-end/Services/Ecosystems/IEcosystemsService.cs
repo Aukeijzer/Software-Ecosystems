@@ -8,5 +8,4 @@ public interface IEcosystemsService
    public Task<int> AddAsync(Ecosystem ecosystem);
    Task<Ecosystem?> GetByIdAsync(long id);
    Task<Ecosystem?> GetByNameAsync(string name);
-   
 }

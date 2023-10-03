@@ -8,7 +8,6 @@ namespace SECODashBackend.Models;
 [Index(nameof(Name), IsUnique = true)]
 public class Ecosystem
 {
-
    [DataMember(Name = "id")]
    public int? Id { get; set; }
    
