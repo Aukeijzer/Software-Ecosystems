@@ -1,4 +1,4 @@
-﻿using spider.Dtos;
+using spider.Dtos;
 using spider.Models;
 
 namespace spider.Converter;
@@ -40,7 +40,7 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         var languages = new ProgrammingLanguageDto[repository.languages.edges.Length];
         for (var i = 0; i < repository.languages.edges.Length; i++)
         {
-            float percent = repository.languages.edges[i].size / repository.languages.totalSize * 100f;
+            float percent = (float)repository.languages.edges[i].size / (float)repository.languages.totalSize * 100f;
             languages[i] = new ProgrammingLanguageDto(repository.languages.edges[i].node.name,percent);
         }
 

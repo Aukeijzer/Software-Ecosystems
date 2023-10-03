@@ -1,4 +1,5 @@
-﻿using GraphQL.Client.Abstractions;
+﻿using System.Text;
+using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using spider.Models;
@@ -16,7 +17,7 @@ public class GitHubService : IGitHubService
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
     }
 
-    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount, string readmeName)
+    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string readmeName = "main:README.md")
     {
         // GraphQL query to search the respositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
@@ -160,5 +161,22 @@ public class GitHubService : IGitHubService
 
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new RepositoryWrapper());
         return response.Data;
+    }
+    
+    public async Task<SpiderData> ToQueryString(string[] ownerNames, string[] repoNames)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < ownerNames.Length; i++)
+        {
+            stringBuilder.Append("repo:");
+            stringBuilder.Append(ownerNames[i]);
+            stringBuilder.Append('/');
+            stringBuilder.Append(repoNames[i]);
+            stringBuilder.Append(' ');
+        }
+
+        string query = stringBuilder.ToString();
+        
+       return (await QueryRepositoriesByName(query));
     }
 }

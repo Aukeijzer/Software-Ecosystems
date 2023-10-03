@@ -10,4 +10,6 @@ public interface IGitHubService
     
     public Task<RepositoryWrapper> QueryRepositoryByName(string repoName, string ownerName, string readmeName = "main:README.md");
 
+    public Task<SpiderData> ToQueryString(string[] ownerNames, string[] repoNames);
+
 }

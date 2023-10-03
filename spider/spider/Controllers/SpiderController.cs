@@ -1,5 +1,7 @@
 ﻿using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using spider.Converter;
 using spider.Dtos;
 using spider.Models;
@@ -42,5 +44,12 @@ public class SpiderController : ControllerBase
         ownerName = WebUtility.UrlDecode(ownerName);
         var result = await _gitHubService.QueryRepositoryByName(name, ownerName);
         return _graphqlDataConverter.RepositoryToProject(result.repository);
+    }
+
+    [HttpPost]
+
+    public async Task<ActionResult<List<Project>>> GetByNames(string[] ownerNames, string[] repoNames)
+    {
+        return _graphqlDataConverter.SearchToProjects(await _gitHubService.ToQueryString(ownerNames, repoNames));
     }
 }
