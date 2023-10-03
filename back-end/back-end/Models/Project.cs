@@ -13,6 +13,12 @@ public class Project
     [Required]
     [DataMember(Name = "name")]
     public required string Name { get; set; }
+    
+    [DataMember(Name = "createdAt")]
+    public DateTime? CreatedAt { get; init; }
+
+    [DataMember(Name = "ecosystems")]
+    public List<Ecosystem> Ecosystems { get; set; } = new();
    
     [DataMember(Name = "owner")]
     public string? Owner { get; set; }
@@ -22,9 +28,8 @@ public class Project
    
     [DataMember(Name = "topics")]
     public string[]? Topics { get; set; }
-   
-    [DataMember(Name = "languages")]
-    public ProgrammingLanguage[]? Languages { get; set; }
+
+    [DataMember(Name = "languages")] public List<ProjectProgrammingLanguage> Languages { get; set; } = new();
    
     [DataMember(Name = "totalSize")]
     public int? TotalSize { get; set; }
@@ -34,5 +39,4 @@ public class Project
    
     [DataMember(Name = "numberOfStars")]
     public int? NumberOfStars { get; set; }
-
 }
