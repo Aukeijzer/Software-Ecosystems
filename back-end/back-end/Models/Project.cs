@@ -13,6 +13,9 @@ public class Project
     [Required]
     [DataMember(Name = "name")]
     public required string Name { get; set; }
+    
+    [DataMember(Name = "createdAt")]
+    public DateTime? CreatedAt { get; init; }
 
     [DataMember(Name = "ecosystems")]
     public List<Ecosystem> Ecosystems { get; set; } = new();

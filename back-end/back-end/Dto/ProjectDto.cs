@@ -14,6 +14,9 @@ public class ProjectDto
    [DataMember(Name = "name")]
    public required string Name { get; set; }
    
+   [DataMember(Name = "createdAt")]
+   public DateTime? CreatedAt { get; set; }
+   
    [DataMember(Name = "owner")]
    public string? Owner { get; set; }
    

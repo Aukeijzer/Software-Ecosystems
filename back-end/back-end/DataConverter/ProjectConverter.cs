@@ -1,5 +1,4 @@
-﻿using Microsoft.JSInterop.Infrastructure;
-using SECODashBackend.Dto;
+﻿using SECODashBackend.Dto;
 using SECODashBackend.Enums;
 using SECODashBackend.Models;
 
@@ -9,10 +8,11 @@ public static class ProjectConverter
 {
     public static Project ToProject(ProjectDto dto)
     {
-        var project = new Project()
+        var project = new Project
         {
             Id = dto.Id,
             Name = dto.Name,
+            CreatedAt = dto.CreatedAt,
             Description = dto.Description,
             Languages = new List<ProjectProgrammingLanguage>(dto.Languages.Select(ToProjectProgrammingLanguage)),
             NumberOfStars = dto.NumberOfStars,
@@ -29,7 +29,7 @@ public static class ProjectConverter
 
     private static ProjectProgrammingLanguage ToProjectProgrammingLanguage(ProgrammingLanguageDto dto)
     {
-        return new ProjectProgrammingLanguage()
+        return new ProjectProgrammingLanguage
         {
             Id = Guid.NewGuid().ToString(),
             Language = ParseProgrammingLanguage(dto.Name),
