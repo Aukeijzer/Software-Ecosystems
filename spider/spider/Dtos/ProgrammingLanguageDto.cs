@@ -1,8 +1,8 @@
 ﻿namespace spider.Models;
 
-public struct ProgrammingLanguage
+public struct ProgrammingLanguageDto
 {
-    public ProgrammingLanguage(string name, float percentage)
+    public ProgrammingLanguageDto(string name, float percentage)
     {
         Name = name;
         Percentage = percentage;
@@ -10,5 +10,4 @@ public struct ProgrammingLanguage
 
     public string Name { get; }
     public float Percentage { get; }
-   
 }

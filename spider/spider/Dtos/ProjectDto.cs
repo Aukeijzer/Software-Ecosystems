@@ -25,7 +25,7 @@ public class ProjectDto
    public string[]? Topics { get; set; }
    
    [DataMember(Name = "languages")]
-   public ProgrammingLanguage[]? Languages { get; set; }
+   public ProgrammingLanguageDto[]? Languages { get; set; }
    
    [DataMember(Name = "totalSize")]
    public int? TotalSize { get; set; }
@@ -35,5 +35,4 @@ public class ProjectDto
    
    [DataMember(Name = "numberOfStars")]
    public int? NumberOfStars { get; set; }
-
 }

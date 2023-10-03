@@ -37,11 +37,11 @@ public class GraphqlDataConverter : IGraphqlDataConverter
             topics[i] = repository.repositoryTopics.nodes[i].topic.name;
         }
 
-        var languages = new ProgrammingLanguage[repository.languages.edges.Length];
+        var languages = new ProgrammingLanguageDto[repository.languages.edges.Length];
         for (var i = 0; i < repository.languages.edges.Length; i++)
         {
             float percent = repository.languages.edges[i].size / repository.languages.totalSize * 100f;
-            languages[i] = new ProgrammingLanguage(repository.languages.edges[i].node.name,percent);
+            languages[i] = new ProgrammingLanguageDto(repository.languages.edges[i].node.name,percent);
         }
 
         var project = new ProjectDto
