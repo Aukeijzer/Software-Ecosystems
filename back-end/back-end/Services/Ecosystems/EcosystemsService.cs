@@ -58,7 +58,7 @@ public class EcosystemsService : IEcosystemsService
         // Only add these projects to the database
         ecosystem.Projects.AddRange(newProjects);
         await _dbContext.SaveChangesAsync();
-
+        
         return ecosystem;
     }
 }
