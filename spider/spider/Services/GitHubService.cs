@@ -76,6 +76,13 @@ public class GitHubService : IGitHubService
                                 }
                             }
                         }
+                        rateLimit {
+                          remaining
+                          cost
+                          limit
+                          resetAt
+                          used
+                        }
                     }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, fileName = readmeName, _amount = amount}
@@ -143,6 +150,13 @@ public class GitHubService : IGitHubService
                                         }
                                       }
                                     }
+                                    rateLimit {
+                                      remaining
+                                      cost
+                                      limit
+                                      resetAt
+                                      used
+                                    }
                                   }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{_topic= topic, fileName = readmeName, _amount = amount}
@@ -205,6 +219,13 @@ public class GitHubService : IGitHubService
                               }
                             }
                           }
+                          rateLimit {
+                            remaining
+                            cost
+                            limit
+                            resetAt
+                            used
+                          }
                         }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, _ownerName = ownerName,fileName = readmeName}
@@ -228,6 +249,6 @@ public class GitHubService : IGitHubService
 
         string query = stringBuilder.ToString();
         
-       return (await QueryRepositoriesByName(query));
+       return (await QueryRepositoriesByName(query, repos.Count));
     }
 }
