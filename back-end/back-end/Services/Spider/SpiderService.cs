@@ -1,4 +1,4 @@
-using RestSharp;
+﻿using RestSharp;
 using SECODashBackend.Dto;
 
 namespace SECODashBackend.Services.Spider;
@@ -23,5 +23,11 @@ public class SpiderService : ISpiderService
         var request = new RestRequest("topic/" + topic);
         // Throw an exception if the request cannot be deserialized into a List of Projects
         return await _spiderClient.GetAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
+    }
+
+    public async Task<List<ProjectDto>> UpdateProjects(List<ProjectRequestDto> projectDtos)
+    {
+        var request = new RestRequest("", Method.Post).AddJsonBody(projectDtos);
+        return await _spiderClient.PostAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
     }
 }
