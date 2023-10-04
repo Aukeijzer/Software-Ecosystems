@@ -44,7 +44,6 @@ public class SpiderController : ControllerBase
     }
 
     [HttpPost]
-
     public async Task<ActionResult<List<ProjectDto>>> GetByNames(List<ProjectRequestDto> repos)
     {
         return _graphqlDataConverter.SearchToProjects(await _gitHubService.ToQueryString(repos));

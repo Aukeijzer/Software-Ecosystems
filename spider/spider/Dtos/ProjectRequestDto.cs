@@ -7,7 +7,7 @@ namespace spider.Dtos;
 public class ProjectRequestDto
 {
     [Required] 
-    [DataMember(Name = "ownerNames")] 
+    [DataMember(Name = "ownerName")] 
     public required string OwnerName { get; init; }
     
     [DataMember(Name = "repoName")] 
