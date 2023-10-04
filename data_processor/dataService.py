@@ -1,7 +1,7 @@
 from preprocessing import preprocessDocs 
 from topicModel import extractTopics
 
-# extracts readme from json data
+# Extracts the readme from json data
 def getReadme(data_dict):
     try:
         return data_dict.get('readme')
@@ -16,8 +16,7 @@ class dataService:
         readmes = [getReadme(dto) for dto in self.data]
         preprocessed_readmes = preprocessDocs(readmes)
         topics = extractTopics(preprocessed_readmes)
-        response = topics, 200
-        return response
+        return topics
 
     def getTop5Topics(self, ecosystem):
         return ""
