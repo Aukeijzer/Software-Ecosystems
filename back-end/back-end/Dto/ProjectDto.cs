@@ -24,7 +24,7 @@ public class ProjectDto
    public string? Description { get; set; }
    
    [DataMember(Name = "topics")]
-   public string[]? Topics { get; set; }
+   public List<string>? Topics { get; set; }
 
    [DataMember(Name = "languages")]
    public List<ProgrammingLanguageDto> Languages { get; set; } = new List<ProgrammingLanguageDto>();
