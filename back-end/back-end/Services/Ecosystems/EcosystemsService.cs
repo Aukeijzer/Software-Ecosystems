@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
@@ -31,7 +31,7 @@ public class EcosystemsService : IEcosystemsService
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Ecosystem?> GetByIdAsync(long id)
+    public async Task<Ecosystem?> GetByIdAsync(string id)
     {
         return await _dbContext.Ecosystems
             .Include(e => e.Projects)
