@@ -36,8 +36,8 @@ export default function InfoCardDataTable<T extends {}>(props: infoCardDataTable
 
 export function renderProjectTable(project : Project){
     return(
-        <Table.Row>
-            <Table.Cell>
+        <Table.Row >
+            <Table.Cell >
                 {project.name}
             </Table.Cell>
             <Table.Cell>

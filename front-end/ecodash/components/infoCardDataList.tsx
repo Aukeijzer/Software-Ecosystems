@@ -13,7 +13,7 @@ export default function InfoCardDataList<T extends {}>(props : infoCardDataListP
         <div>
             <ListGroup>
                 {props.items.map((item, i) => (
-                    <ListGroup.Item>
+                    <ListGroup.Item key = {i}>
                         {props.renderItem(item)}
                     </ListGroup.Item>
                 ))}
