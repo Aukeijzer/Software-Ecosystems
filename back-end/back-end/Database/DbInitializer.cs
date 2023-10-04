@@ -11,7 +11,7 @@ public static class DbInitializer
 
       context.Ecosystems.Add(new Ecosystem
       {
-         Id = new Guid().ToString(),
+         Id = Guid.NewGuid().ToString(),
          Name = "agriculture",
          DisplayName = "Agriculture",
          Description = "Software related to agriculture",
@@ -19,7 +19,7 @@ public static class DbInitializer
       });
       context.Ecosystems.Add(new Ecosystem
       {
-         Id = new Guid().ToString(),
+         Id = Guid.NewGuid().ToString(), 
          Name = "quantum",
          DisplayName = "Quantum",
          Description = "Software related to quantum mechanics",
@@ -27,7 +27,7 @@ public static class DbInitializer
       });
       context.Ecosystems.Add(new Ecosystem
       {
-         Id = new Guid().ToString(),
+         Id = Guid.NewGuid().ToString(),
          Name = "artificial-intelligence",
          DisplayName = "Artificial Intelligence",
          Description = "Software related to artificial intelligence",
