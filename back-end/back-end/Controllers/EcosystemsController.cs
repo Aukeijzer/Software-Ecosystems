@@ -26,15 +26,15 @@ public class EcosystemsController: ControllerBase
         return new ObjectResult(result);
     }
 
-    [HttpGet("{name}")]
+    [HttpGet("name/{name}")]
     public async Task<ActionResult<Ecosystem>> GetByNameAsync(string name)
     {
         var result = await _ecosystemsService.GetByNameAsync(name);
         return result == null ? NotFound() : result;
     }
     
-    [HttpGet("{id:long}")]
-    public async Task<ActionResult<Ecosystem>> GetByIdAsync(long id)
+    [HttpGet("id/{id}")]
+    public async Task<ActionResult<Ecosystem>> GetByIdAsync(string id)
     {
         var result = await _ecosystemsService.GetByIdAsync(id);
         return result == null ? NotFound() : result;
