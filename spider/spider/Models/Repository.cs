@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization;
-
+﻿
 namespace spider.Models;
 
 public class Repository
@@ -22,5 +21,6 @@ public class Repository
 public class RepositoryWrapper
 {
     public Repository Repository { get; set; }
+    
     public RateLimit RateLimit { get; set; }
 }
