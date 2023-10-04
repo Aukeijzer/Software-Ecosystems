@@ -31,7 +31,7 @@ public class EcosystemsService : IEcosystemsService
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Ecosystem?> GetByIdAsync(long id)
+    public async Task<Ecosystem?> GetByIdAsync(string id)
     {
         return await _dbContext.Ecosystems
             .Include(e => e.Projects)
@@ -49,14 +49,16 @@ public class EcosystemsService : IEcosystemsService
         
         // Request the Spider for projectsDtos related to this ecosystem.
         var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
+
+        // Check which projects are not already in the Projects list of the ecosystem
+        var newProjects = dtos
+            .Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id))
+            .Select(ProjectConverter.ToProject);
         
-        // Only add the projects if they are not already in the database.
-        ecosystem.Projects.AddRange(
-            dtos
-                .Where(x => !ecosystem.Projects
-                    .Exists(y => y.Id == x.Id))
-                .Select(ProjectConverter.ToProject));
+        // Only add these projects to the database
+        ecosystem.Projects.AddRange(newProjects);
         await _dbContext.SaveChangesAsync();
+
         return ecosystem;
     }
 }

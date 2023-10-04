@@ -7,9 +7,10 @@ namespace SECODashBackend.Models;
 [DataContract]
 [Index(nameof(Name), IsUnique = true)]
 public class Ecosystem
-{
+{  
+   [Required]
    [DataMember(Name = "id")]
-   public int? Id { get; set; }
+   public required string Id { get; init; }
    
    [Required]
    [DataMember(Name = "name")]

@@ -11,19 +11,27 @@ public static class DbInitializer
 
       context.Ecosystems.Add(new Ecosystem
       {
+         Id = new Guid().ToString(),
          Name = "agriculture",
          DisplayName = "Agriculture",
          Description = "Software related to agriculture",
          NumberOfStars = 34565,
-         Projects = new List<Project>(),
       });
       context.Ecosystems.Add(new Ecosystem
       {
+         Id = new Guid().ToString(),
          Name = "quantum",
          DisplayName = "Quantum",
          Description = "Software related to quantum mechanics",
          NumberOfStars = 4352,
-         Projects = new List<Project>(),
+      });
+      context.Ecosystems.Add(new Ecosystem
+      {
+         Id = new Guid().ToString(),
+         Name = "artificial-intelligence",
+         DisplayName = "Artificial Intelligence",
+         Description = "Software related to artificial intelligence",
+         NumberOfStars = 4352,
       });
       context.SaveChanges();
    }

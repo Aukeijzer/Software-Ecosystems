@@ -1,4 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global
 namespace SECODashBackend.Enums;
 
 public enum ProgrammingLanguage
@@ -59,5 +60,17 @@ public enum ProgrammingLanguage
     VHDL,
     VBA,
     ZenScript,
-    Undefined
+    Scheme,
+    GDB,
+    PostScript,
+    GLSL,
+    GAP,
+    ActionScript,
+    M4,
+    Smalltalk,
+    Awk,
+    Gnuplot,
+    StringTemplate,
+    QMake,
+    Unknown
 }

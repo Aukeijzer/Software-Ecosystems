@@ -27,7 +27,7 @@ public class Project
     public string? Description { get; set; }
    
     [DataMember(Name = "topics")]
-    public string[]? Topics { get; set; }
+    public List<string> Topics { get; set; }
 
     [DataMember(Name = "languages")] public List<ProjectProgrammingLanguage> Languages { get; set; } = new();
    
