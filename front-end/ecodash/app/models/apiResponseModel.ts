@@ -1,4 +1,4 @@
-import { Project } from "./ecoDataListModel";
+
 
 export interface apiNamedEcosystemModel {
     id?: number,
@@ -9,6 +9,15 @@ export interface apiNamedEcosystemModel {
     numberOfStars?: number,
 }
 
+export interface Project {
+    id?: number,
+    name: string,
+    displayName?: string,
+    about?: string,
+    owner?: string,
+    readMe?: string,
+    numberOfStars?: number,
+}
 
 export type apiGetAllEcosystems = apiNamedEcosystemModel[];
 
