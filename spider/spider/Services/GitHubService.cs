@@ -76,6 +76,13 @@ public class GitHubService : IGitHubService
                                 }
                             }
                         }
+                        rateLimit {
+                          remaining
+                          cost
+                          limit
+                          resetAt
+                          used
+                        }
                     }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, fileName = readmeName, _amount = amount}
@@ -143,6 +150,13 @@ public class GitHubService : IGitHubService
                                         }
                                       }
                                     }
+                                    rateLimit {
+                                      remaining
+                                      cost
+                                      limit
+                                      resetAt
+                                      used
+                                    }
                                   }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{_topic= topic, fileName = readmeName, _amount = amount}
@@ -204,6 +218,13 @@ public class GitHubService : IGitHubService
                                 text
                               }
                             }
+                          }
+                          rateLimit {
+                            remaining
+                            cost
+                            limit
+                            resetAt
+                            used
                           }
                         }",
             OperationName = "repositoriesQueryRequest",

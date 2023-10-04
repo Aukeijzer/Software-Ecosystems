@@ -22,4 +22,5 @@ public class Repository
 public class RepositoryWrapper
 {
     public Repository Repository { get; set; }
+    public RateLimit RateLimit { get; set; }
 }
