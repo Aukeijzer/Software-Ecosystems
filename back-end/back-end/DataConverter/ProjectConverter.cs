@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using SECODashBackend.Dto;
 using SECODashBackend.Enums;
 using SECODashBackend.Models;
@@ -52,9 +52,10 @@ public static class ProjectConverter
             {
                 "C++" => ProgrammingLanguage.CPlusPlus,
                 "C#" => ProgrammingLanguage.CSharp,
+                "Objective-C" => ProgrammingLanguage.ObjectiveC,
                 "F#" => ProgrammingLanguage.FSharp, 
                 "Q#" => ProgrammingLanguage.QSharp,
-                _ => ProgrammingLanguage.Undefined,
+                _ => ProgrammingLanguage.Unknown,
             };
         }
     }
