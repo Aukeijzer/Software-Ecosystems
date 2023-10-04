@@ -9,7 +9,7 @@ public static class ProjectConverter
 {
     public static Project ToProject(ProjectDto dto)
     {
-        var project = new Project
+        return new Project
         {
             Id = dto.Id,
             Name = dto.Name,
@@ -21,12 +21,15 @@ public static class ProjectConverter
             Owner = dto.Owner,
             ReadMe = dto.ReadMe
         };
-        return project;
     }
 
-    public static ProjectDto ToDto(Project project)
+    public static ProjectRequestDto ToRequestDto(Project project)
     {
-        throw new NotImplementedException();
+        return new ProjectRequestDto
+        {
+            OwnerName = project.Owner,
+            RepoName = project.Name
+        };
     }
 
     private static ProjectProgrammingLanguage ToProjectProgrammingLanguage(ProgrammingLanguageDto dto)
