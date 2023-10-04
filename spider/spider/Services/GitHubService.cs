@@ -228,6 +228,6 @@ public class GitHubService : IGitHubService
 
         string query = stringBuilder.ToString();
         
-       return (await QueryRepositoriesByName(query));
+       return (await QueryRepositoriesByName(query, repos.Count));
     }
 }
