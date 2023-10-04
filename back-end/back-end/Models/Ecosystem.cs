@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace SECODashBackend.Models;
@@ -8,13 +7,11 @@ namespace SECODashBackend.Models;
 [Index(nameof(Name), IsUnique = true)]
 public class Ecosystem
 {  
-   [Required]
    [DataMember(Name = "id")]
    public required string Id { get; init; }
    
-   [Required]
    [DataMember(Name = "name")]
-   public string Name { get; set; }
+   public required string Name { get; set; }
    
    [DataMember(Name = "displayName")]
    public string? DisplayName { get; set; }

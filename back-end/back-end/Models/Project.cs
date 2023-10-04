@@ -6,11 +6,9 @@ namespace SECODashBackend.Models;
 [DataContract]
 public class Project
 {
-    [Required]
     [DataMember(Name = "id")]
     public required string Id { get; init; }
    
-    [Required]
     [DataMember(Name = "name")]
     public required string Name { get; set; }
     

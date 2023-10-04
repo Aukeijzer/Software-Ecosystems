@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace spider.Dtos;
 
 [DataContract]
 public class ProjectRequestDto
 {
-    [Required] 
     [DataMember(Name = "ownerName")] 
     public required string OwnerName { get; init; }
     

@@ -1,16 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace SECODashBackend.Dto;
 
 [DataContract]
 public class ProjectDto
 {
-   [Required]
    [DataMember(Name = "id")]
    public required string Id { get; init; }
    
-   [Required]
    [DataMember(Name = "name")]
    public required string Name { get; set; }
    
