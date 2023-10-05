@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
-using SECODashBackend.DataConverter;
+using SECODashBackend.DataConverters;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Spider;
 
