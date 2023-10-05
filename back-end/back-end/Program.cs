@@ -1,7 +1,13 @@
+using System.Net;
 using System.Text.Json.Serialization;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Options;
+using Elastic.Clients.Elasticsearch.Serialization;
+using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Services.Ecosystems;
+using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
 
@@ -18,6 +24,17 @@ builder.Services.AddDbContext<EcosystemsContext>(
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<ISpiderService, SpiderService>();
+builder.Services.Configure<ElasticsearchClientOptions>(
+    options =>
+    {
+        options.ConfigureSettings += settings => settings.ThrowExceptions();
+        options.ConfigureSettings +=
+            settings => settings.Authentication(new BasicAuthentication("elastic", "SECODash"));
+        // Disable certificate validation, remove in production!
+        options.ConfigureSettings += settings => settings.ServerCertificateValidationCallback((_, _, _, _) => true);
+    });
+builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
+builder.Services.AddElasticsearchClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
