@@ -1,9 +1,9 @@
 ﻿using System.Text.RegularExpressions;
-using SECODashBackend.Dto;
+using SECODashBackend.Dtos;
 using SECODashBackend.Enums;
 using SECODashBackend.Models;
 
-namespace SECODashBackend.DataConverter;
+namespace SECODashBackend.DataConverters;
 
 public static class ProjectConverter
 {
@@ -15,7 +15,7 @@ public static class ProjectConverter
             Name = dto.Name,
             CreatedAt = dto.CreatedAt,
             Description = dto.Description,
-            Topics = dto.Topics ?? new List<string>(),
+            Topics = dto.Topics, 
             Languages = new List<ProjectProgrammingLanguage>(dto.Languages.Select(ToProjectProgrammingLanguage)),
             NumberOfStars = dto.NumberOfStars,
             Owner = dto.Owner,
@@ -29,6 +29,14 @@ public static class ProjectConverter
         {
             OwnerName = project.Owner,
             RepoName = project.Name
+        };
+    }
+    public static ReadmeDto ToReadmeDto(Project project)
+    {
+        return new ReadmeDto
+        {
+            ProjectId = project.Id,
+            Readme = project.ReadMe ?? throw new InvalidOperationException()
         };
     }
 
