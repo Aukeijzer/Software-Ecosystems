@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IGitHubService, GitHubService>();
-builder.Services.AddScoped<ISpiderDataConverter, SpiderDataConverter>();
+builder.Services.AddScoped<IGraphqlDataConverter, GraphqlDataConverter>();
 
 var app = builder.Build();
 
