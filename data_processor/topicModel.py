@@ -1,6 +1,7 @@
 from bertopic import BERTopic
 from bertopic.representation import KeyBERTInspired
 
+
 # Extracting the topics from a list of preprocessed readmes
 def extractTopics(preprocessedDocs):
     # Fit model on readmes
@@ -12,6 +13,6 @@ def extractTopics(preprocessedDocs):
     info = model.get_document_info(preprocessedDocs)
     topic_info = info[['Top_n_words', 'Topic', 'Probability']].copy()
     keyword_info = topic_info.rename(columns={'Top_n_words': 'Keywords'})
-    json_str = keyword_info.to_dict(orient='records')  
+    json_str = keyword_info.to_dict(orient='records')
 
     return json_str

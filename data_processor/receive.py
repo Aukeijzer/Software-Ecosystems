@@ -3,7 +3,8 @@ from dataService import dataService
 
 app = Flask(__name__)
 
-# when POST request 
+
+# when POST request
 @app.route("/extract-topics", methods=["POST"])
 def extract_topics():
     if request.method == "POST":
@@ -14,6 +15,7 @@ def extract_topics():
             return jsonify(response), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)
