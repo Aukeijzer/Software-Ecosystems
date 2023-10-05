@@ -2,6 +2,7 @@
 using SECODashBackend.Database;
 using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
+using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Spider;
 
 namespace SECODashBackend.Services.Ecosystems;
@@ -10,11 +11,16 @@ public class EcosystemsService : IEcosystemsService
 {
     private readonly EcosystemsContext _dbContext;
     private readonly ISpiderService _spiderService;
+    private readonly IElasticsearchService _elasticsearchService;
 
-    public EcosystemsService(EcosystemsContext dbContext, ISpiderService spiderService)
+    public EcosystemsService(
+        EcosystemsContext dbContext,
+        ISpiderService spiderService,
+        IElasticsearchService elasticsearchService)
     {
         _dbContext = dbContext;
         _spiderService = spiderService;
+        _elasticsearchService = elasticsearchService;
     }
     public async Task<List<Ecosystem>?> GetAllAsync()
     {
@@ -58,6 +64,8 @@ public class EcosystemsService : IEcosystemsService
         // Only add these projects to the database
         ecosystem.Projects.AddRange(newProjects);
         await _dbContext.SaveChangesAsync();
+
+        await _elasticsearchService.AddProjects(ProjectConverter.ToProjectDto(ecosystem.Projects.First()));
         
         return ecosystem;
     }

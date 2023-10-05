@@ -1,16 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Models;
+using SECODashBackend.Services.ElasticSearch;
 
 namespace SECODashBackend.Services.Projects;
 
 public class ProjectsService : IProjectsService
 {
     private readonly EcosystemsContext _dbContext;
+    private readonly IElasticsearchService _elasticsearchService;
 
-    public ProjectsService(EcosystemsContext dbContext)
+    public ProjectsService(EcosystemsContext dbContext, IElasticsearchService elasticsearchService)
     {
         _dbContext = dbContext;
+        _elasticsearchService = elasticsearchService;
     }
     public async Task<List<Project>> GetAllAsync()
     {
