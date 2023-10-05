@@ -1,4 +1,4 @@
-using SECODashBackend.Dto;
+using SECODashBackend.Dtos;
 
 namespace SECODashBackend.Services.Spider;
 
