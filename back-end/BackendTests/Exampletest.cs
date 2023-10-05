@@ -7,7 +7,7 @@ public class ExampleTests
     public void Setup()
     {
         //Test fails if this is commented out
-        projectsService = new Ecosystem();
+        //projectsService = new Ecosystem();
     }
 
     // Example test

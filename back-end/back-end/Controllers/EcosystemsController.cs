@@ -41,15 +41,6 @@ public class EcosystemsController: ControllerBase
         return result == null ? NotFound() : result;
     }
     
-    [HttpGet("toplanguages")]
-    [SwaggerOperation("Get top languages for all ecosystems")]
-    [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<List<EcosystemWithTopLanguagesDto>>> GetTopLanguagesForAllEcosystemsAsync()
-    {
-        var result = await _ecosystemsService.GetTopLanguagesAsync();
-        return new ObjectResult(result);
-    }
-    
     [HttpPost]
     public async Task<ActionResult> PostAsync(Ecosystem ecosystem)
     {

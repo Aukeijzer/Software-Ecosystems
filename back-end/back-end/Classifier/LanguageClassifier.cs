@@ -13,6 +13,7 @@ public class LanguageClassifier
         var top5 = ClassifyLanguages(projectsInEcosystems);
         return top5;
     }
+
     private static List<ProjectProgrammingLanguage> ClassifyLanguages(List<Project> projectsInEcosystems)
     {
         // The amount of languages to return
