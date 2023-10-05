@@ -32,6 +32,22 @@ public static class ProjectConverter
         };
     }
 
+    public static ProjectDto ToProjectDto(Project project)
+    {
+        return new ProjectDto
+        {
+            Id = project.Id,
+            Name = project.Name,
+            CreatedAt = project.CreatedAt,
+            Description = project.Description,
+            Topics = project.Topics,
+            // Languages = project.Languages, 
+            NumberOfStars = project.NumberOfStars,
+            Owner = project.Owner,
+            ReadMe = project.ReadMe
+        };
+    }
+
     private static ProjectProgrammingLanguage ToProjectProgrammingLanguage(ProgrammingLanguageDto dto)
     {
         return new ProjectProgrammingLanguage
