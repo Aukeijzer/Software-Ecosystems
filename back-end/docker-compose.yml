@@ -1,0 +1,23 @@
+services:
+ db:
+   image: postgres
+   restart: always
+   environment:
+     POSTGRES_Username: postgres
+     POSTGRES_PASSWORD: SECODash
+   volumes:
+     - postgres-data:/var/lib/postgresql/data
+ adminer:
+   image: adminer
+   restart: always
+   ports:
+     - 8080:8080
+ app:
+   build:
+     context: .
+   ports:
+     - 5003:80
+   depends_on:
+     - db
+volumes:
+ postgres-data:

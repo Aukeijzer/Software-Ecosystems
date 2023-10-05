@@ -40,14 +40,14 @@ builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Log
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Note: For Docker swagger is always used. Upon code delivery this may need to be changed.
+if ( true ) //app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 //app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
