@@ -12,8 +12,8 @@ interface ecosystemPageProps{
 export const dynamicParams = false;
 // Define static params
 export function generateStaticParams() {
-    return ["agriculture", "ai", "quantum"].map(ecosystem => ({ ecosystem }));
-}
+    return ["agriculture", "artificial-intelligence", "quantum"].map(ecosystem => ({ ecosystem }));
+}                           
 //Set title 
 export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Metadata {
     return {

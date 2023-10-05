@@ -8,7 +8,13 @@ const config: Config = {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
-    
+    colors: {
+      'logoColor': '#0f766e',
+      'odin': '#015B6D',
+      'odinAccent': '#143240',
+      'amber': '#F5F8FA',
+
+    }
   },
   plugins: [
     require('flowbite/plugin')

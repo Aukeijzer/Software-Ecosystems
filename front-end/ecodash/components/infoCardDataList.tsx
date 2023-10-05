@@ -1,7 +1,7 @@
 "use client"
 
 import { ListGroup } from "flowbite-react"
-import { Project } from "@/app/models/apiResponseModel";
+import { projectModel } from "@/app/models/apiResponseModel";
 
 interface infoCardDataListProps<T>{
     items: T[],
@@ -24,7 +24,7 @@ export default function InfoCardDataList<T extends {}>(props : infoCardDataListP
 }
 
 
-export function renderProjectList(project : Project){
+export function renderProjectList(project : projectModel){
     return(
         <p>
             {project.name}

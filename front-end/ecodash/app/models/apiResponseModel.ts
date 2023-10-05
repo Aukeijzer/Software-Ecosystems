@@ -1,25 +1,39 @@
+import { programmingLanguage } from "../enums/ProgrammingLanguage"
 
+//Todo:
+//EcosystemByNameDTO
+//Same as ecosystem model  backend
+// Functie die een DTO omzet in een ecosystemModel
 
-export interface apiNamedEcosystemModel {
-    id?: number,
+export interface ecosystemModel{
+    id: string,
     name: string,
     displayName?: string,
     description?: string,
-    projects?: Project[],
-    numberOfStars?: number,
+    projects: projectModel[],
+    numberOfStars: number
 }
 
-export interface Project {
-    id?: number,
+export interface projectModel {
+    id: string,
     name: string,
-    displayName?: string,
-    about?: string,
-    owner?: string,
+    createdAt: string,
+    ecosystem: string[],
+    owner: string,
+    description?: string,
+    topics: string[],
+    languages: languageModel[],
+    totalSize?: number,
     readMe?: string,
-    numberOfStars?: number,
+    numberOfStars: number
 }
 
-export type apiGetAllEcosystems = apiNamedEcosystemModel[];
+export interface languageModel {
+    id: string,
+    language: programmingLanguage,
+    percentage: number
+}
 
 
-export type apiResponse = apiGetAllEcosystems | apiNamedEcosystemModel;
+
+

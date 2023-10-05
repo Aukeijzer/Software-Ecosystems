@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function NavBarTop(){
     return(
-        <Navbar fluid rounded>
+        <Navbar fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
             <Navbar.Brand as={Link} href='/'>
                 <Image
                     src={logo}
@@ -33,12 +33,12 @@ export default function NavBarTop(){
                 <Navbar.Link
                     href="/ecosystem/agriculture"
                 >
-                     agriculture
+                     Agriculture
                     
                 </Navbar.Link>
 
                 <Navbar.Link
-                    href="/ecosystem/AI"
+                    href="/ecosystem/artificial-intelligence"
                 >
                     AI
                 </Navbar.Link>
@@ -46,7 +46,7 @@ export default function NavBarTop(){
                 <Navbar.Link
                     href="/ecosystem/quantum"
                 >
-                    quantum
+                    Quantum
                 </Navbar.Link>
             </Navbar.Collapse>
             <Navbar.Toggle /> 
