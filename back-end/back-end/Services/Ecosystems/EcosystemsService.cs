@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Models;
+using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Spider;
 
 namespace SECODashBackend.Services.Ecosystems;
@@ -10,11 +11,13 @@ public class EcosystemsService : IEcosystemsService
 {
     private readonly EcosystemsContext _dbContext;
     private readonly ISpiderService _spiderService;
+    private readonly IDataProcessorService _dataProcessorService;
 
-    public EcosystemsService(EcosystemsContext dbContext, ISpiderService spiderService)
+    public EcosystemsService(EcosystemsContext dbContext, ISpiderService spiderService, IDataProcessorService dataProcessorService)
     {
         _dbContext = dbContext;
         _spiderService = spiderService;
+        _dataProcessorService = dataProcessorService;
     }
     public async Task<List<Ecosystem>?> GetAllAsync()
     {
