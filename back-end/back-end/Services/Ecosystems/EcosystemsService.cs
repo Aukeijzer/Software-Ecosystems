@@ -3,6 +3,8 @@ using SECODashBackend.Database;
 using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Spider;
+using SECODashBackend.Classifier;
+using SECODashBackend.Dto;
 
 namespace SECODashBackend.Services.Ecosystems;
     
@@ -60,5 +62,36 @@ public class EcosystemsService : IEcosystemsService
         await _dbContext.SaveChangesAsync();
         
         return ecosystem;
+    }
+
+    public async Task<List<EcosystemWithTopLanguagesDto>> GetTopLanguagesAsync()
+    {
+        var ecosystems = await _dbContext.Ecosystems
+            .Include(e => e.Projects)
+            .ThenInclude(p => p.Languages)
+            .AsNoTracking()
+            .ToListAsync();
+        
+        // Extract ecosystem from Database 
+        
+        
+        var result = new List<EcosystemWithTopLanguagesDto>();
+        
+        // find for each ecosystem the top languages
+        foreach (var ecosystem in ecosystems)
+        {
+            var topLanguages = LanguageClassifier.GetLanguagesPerEcosystem(new List<Ecosystem> { ecosystem });
+
+            // Create a new DTO object with ecosystem and top languages
+            var ecosystemWithTopLanguages = new EcosystemWithTopLanguagesDto
+            {
+                Ecosystem = ecosystem,
+                TopLanguages = topLanguages
+            };
+            // Add the DTO to the result list
+            result.Add(ecosystemWithTopLanguages);
+        }
+        
+        return result;
     }
 }

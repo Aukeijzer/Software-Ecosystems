@@ -1,5 +1,6 @@
 ﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using SECODashBackend.Dto;
 using SECODashBackend.Services.Ecosystems;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -38,6 +39,15 @@ public class EcosystemsController: ControllerBase
     {
         var result = await _ecosystemsService.GetByIdAsync(id);
         return result == null ? NotFound() : result;
+    }
+    
+    [HttpGet("toplanguages")]
+    [SwaggerOperation("Get top languages for all ecosystems")]
+    [SwaggerResponse(statusCode: 200, description: "successful operation")]
+    public async Task<ActionResult<List<EcosystemWithTopLanguagesDto>>> GetTopLanguagesForAllEcosystemsAsync()
+    {
+        var result = await _ecosystemsService.GetTopLanguagesAsync();
+        return new ObjectResult(result);
     }
     
     [HttpPost]
