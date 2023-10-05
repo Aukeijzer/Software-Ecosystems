@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
+using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Spider;
 
@@ -19,6 +20,7 @@ public class EcosystemsService : IEcosystemsService
     {
         return await _dbContext.Ecosystems
             .Include(e => e.Projects)
+            .ThenInclude(p => p.Languages)
             .AsNoTracking()
             .ToListAsync();
     }
@@ -29,10 +31,11 @@ public class EcosystemsService : IEcosystemsService
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Ecosystem?> GetByIdAsync(long id)
+    public async Task<Ecosystem?> GetByIdAsync(string id)
     {
         return await _dbContext.Ecosystems
             .Include(e => e.Projects)
+            .ThenInclude(p => p.Languages)
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Id == id);
     }
@@ -40,15 +43,22 @@ public class EcosystemsService : IEcosystemsService
     {
         var ecosystem = await _dbContext.Ecosystems
             .Include(e => e.Projects)
-            .AsNoTracking()
+            .ThenInclude(p => p.Languages)
             .SingleOrDefaultAsync(e => e.Name == name);
-        if (ecosystem == null) return ecosystem;
-        var projects = await _spiderService.GetProjectsByNameAsync(ecosystem.Name);
-        if (projects != null)
-        {
-            ecosystem.Projects?.AddRange(projects);
-        }
+        if (ecosystem == null) return null;
+        
+        // Request the Spider for projectsDtos related to this ecosystem.
+        var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
 
+        // Check which projects are not already in the Projects list of the ecosystem
+        var newProjects = dtos
+            .Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id))
+            .Select(ProjectConverter.ToProject);
+        
+        // Only add these projects to the database
+        ecosystem.Projects.AddRange(newProjects);
+        await _dbContext.SaveChangesAsync();
+        
         return ecosystem;
     }
 }
