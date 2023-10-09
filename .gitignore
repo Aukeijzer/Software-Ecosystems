@@ -74,42 +74,42 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 */.idea*
-./spider/spider/Properties/launchSettings.json
+/spider/spider/Properties/launchSettings.json
 
 ###############
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-./front-end/ecodash/node_modules
-./front-end/ecodash/.pnp
-./front-end/ecodash/.pnp.js
+/front-end/ecodash/node_modules
+/front-end/ecodash/.pnp
+/front-end/ecodash/.pnp.js
 
 # testing
-./front-end/ecodash/coverage
+/front-end/ecodash/coverage
 
 # next.js
-./front-end/ecodash/.next/
-./front-end/ecodash/out/
+/front-end/ecodash/.next/
+/front-end/ecodash/out/
 
 # production
-./front-end/ecodash/build
+/front-end/ecodash/build
 
 # misc
-./front-end/ecodash.DS_Store
+/front-end/ecodash.DS_Store
 *.pem
 
 # debug
-./front-end/ecodash/npm-debug.log*
-./front-end/ecodash/yarn-debug.log*
-./front-end/ecodash/yarn-error.log*
+/front-end/ecodash/npm-debug.log*
+/front-end/ecodash/yarn-debug.log*
+/front-end/ecodash/yarn-error.log*
 
 # local env files
-./front-end/ecodash.env*.local
+/front-end/ecodash.env*.local
 
 # vercel
-./front-end/ecodash/.vercel
+/front-end/ecodash/.vercel
 
 # typescript
 *.tsbuildinfo
-./front-end/ecodash/next-env.d.ts
+/front-end/ecodash/next-env.d.ts
