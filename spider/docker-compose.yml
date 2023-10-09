@@ -1,0 +1,8 @@
+services:
+ app:
+   build:
+     context: .
+   ports:
+     - 5004:80
+   networks:
+     - spider
