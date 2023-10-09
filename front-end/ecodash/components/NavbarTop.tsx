@@ -33,7 +33,7 @@ export default function NavBarTop(){
                 <Navbar.Link
                     href="/ecosystem/agriculture"
                 >
-                     Agriculture
+                    Agriculture
                     
                 </Navbar.Link>
 
@@ -52,5 +52,5 @@ export default function NavBarTop(){
             <Navbar.Toggle /> 
             
         </Navbar>
-    )
+    )   
 }

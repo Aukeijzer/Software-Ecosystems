@@ -18,7 +18,7 @@ import { TableCell } from "flowbite-react/lib/esm/components/Table/TableCell";
 interface infoCardDataTableProps<T>{
     headers: string[],
     items: T[],
-    renderItem: (item: T) => JSX.Element
+    renderFunction: (item: T) => JSX.Element
 }
 
 //Todo: Make a check if headers.count === cells in table?
@@ -37,7 +37,7 @@ export default function InfoCardDataTable<T extends {}>(props: infoCardDataTable
 
                 <Table.Body className="divide-y">
                     {props.items.map((item) => (
-                         props.renderItem(item)
+                         props.renderFunction(item)
                     ))}
                 </Table.Body>
             </Table>

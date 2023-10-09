@@ -11,7 +11,8 @@ export interface ecosystemModel{
     displayName?: string,
     description?: string,
     projects: projectModel[],
-    numberOfStars: number
+    numberOfStars: number,
+    topLanguages: languageModel[]
 }
 
 export interface projectModel {
