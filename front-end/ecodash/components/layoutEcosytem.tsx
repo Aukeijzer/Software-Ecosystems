@@ -16,7 +16,7 @@ interface layoutEcosystemProps {
 export default async function LayoutEcosystem(props: layoutEcosystemProps){
     
     const result : ecosystemModel = await handleApiNamed(`ecosystems/name/${props.ecosystem}`);
-    console.log(result)
+    //console.log(result)
 
     //Set up data items
     const dataListLanguages = <InfoCardDataList items={result.topLanguages} renderFunction={renderLanguageList}/>

@@ -28,13 +28,15 @@ interface infoCardDataGraphProps<T>{
 
 
 //Green Blue Orange Yellow
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
+//const COLORS = [ '#bb0043', '#FFBB28', '#FF8042', '#800080','#0088FE', '#d0ebf9' ];
+//const COLORS = ["#ea5545", "#f46a9b", "#ef9b20", "#edbf33", "#ede15b", "#bdcf32", "#87bc45", "#27aeef", "#b33dc6"];
+//const COLORS = ["#b30000", "#7c1158", "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"];
+const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
 
 
 export default function InfoCardDataGraph<T extends {}>(props: infoCardDataGraphProps<T>){
-    console.log("test")
-    console.log(props.items);
+   //console.log("test")
+    //console.log(props.items);
     return(
         <div>
             {props.renderFunction(props.items)}
@@ -42,12 +44,28 @@ export default function InfoCardDataGraph<T extends {}>(props: infoCardDataGraph
     );
 }  
 
+const renderCustomLabel = ({cx , cy, midAngle, innerRadius, outerRadius, percent, index, payload, value} ) =>{
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const RADIAN = Math.PI / 180;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN) * 1.5;
+    const y = cy + radius * Math.sin(-midAngle * RADIAN) * 1.5;
+
+    const rotation : string = "rotate-180";
+    console.log("HELLO!???================================================================");
+    //console.log(rotation)
+    return(
+        <text className="" x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline={"central"}>
+            {payload.language + ": " + value + '%'}
+        </text>
+    );
+}
+
 export function renderPieGraph(items : languageModel[]){
 
     return(
         <div>
             <PieChart width={400} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}}>
-                <Pie data={items} nameKey="language" dataKey="percentage" cx="50%" cy="50%" label>
+                <Pie data={items} nameKey="language" dataKey="percentage" cx="50%" cy="50%" label={renderCustomLabel} labelLine={false}>
                     {items.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
