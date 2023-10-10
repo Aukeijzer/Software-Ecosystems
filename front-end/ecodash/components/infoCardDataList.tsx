@@ -44,7 +44,7 @@ export function renderProjectList(project : projectModel){
 export function renderLanguageList(language: languageModel){
     return(
         <p>
-            {language.language} + {language.percentage} %
+            {language.language} : {language.percentage} %
         </p>
     )
 }

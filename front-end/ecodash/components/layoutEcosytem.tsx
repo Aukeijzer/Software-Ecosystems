@@ -24,7 +24,7 @@ export default async function LayoutEcosystem(props: layoutEcosystemProps){
     
     //Graph functions
     
-    const dataGraphLanguages = <InfoCardDataGraph items={result.projects[0].languages} renderFunction={renderPieGraph} />
+    const dataGraphLanguages = <InfoCardDataGraph items={result.topLanguages} renderFunction={renderPieGraph} />
 
     return(
         <div>
