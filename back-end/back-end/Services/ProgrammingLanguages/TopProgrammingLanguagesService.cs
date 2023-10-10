@@ -2,7 +2,7 @@
 
 namespace SECODashBackend.Classifier;
 
-public static class LanguageClassifier
+public static class TopProgrammingLanguagesService
 { 
     // The amount of languages to return
     private const int NumberOfLanguages = 5;

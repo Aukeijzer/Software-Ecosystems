@@ -1,10 +1,9 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Spider;
 using SECODashBackend.Classifier;
-using SECODashBackend.Dto;
 
 namespace SECODashBackend.Services.Ecosystems;
     
@@ -60,13 +59,15 @@ public class EcosystemsService : IEcosystemsService
 
         // Only add these projects to the database
         ecosystem.Projects.AddRange(newProjects);
+        
+        // Make the changes persistent by saving them to the database
         await _dbContext.SaveChangesAsync();
 
         // Get the top languages associated with the ecosystem
         var topLanguages = LanguageClassifier.GetTopLanguagesForEcosystem(ecosystem);
         // Add the top languages to the ecosystem
         ecosystem.TopLanguages = topLanguages;
-
+        
         return ecosystem;
     }
 }
