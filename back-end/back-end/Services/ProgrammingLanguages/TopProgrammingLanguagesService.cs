@@ -1,5 +1,4 @@
 ﻿using SECODashBackend.Models;
-using System.Linq;
 
 namespace SECODashBackend.Classifier;
 
@@ -7,8 +6,7 @@ public static class TopProgrammingLanguagesService
 { 
     // The amount of languages to return
     private const int NumberOfLanguages = 5;
-    // total size
-    private static float total = 0;
+    //private static float total = 0;
 
     public static List<EcosystemProgrammingLanguage> GetTopLanguagesForEcosystem(Ecosystem ecosystem)
     {
@@ -22,13 +20,9 @@ public static class TopProgrammingLanguagesService
             Language = l.Key,
             Percentage = l.Sum(p => p.Percentage)
         }).Distinct();
-
-        //var total = Sum(groupedLanguages.Select(l => l.Percentage));
-
-        foreach (var pl in groupedLanguages)
-        {
-            total += pl.Percentage;
-        }
+        
+        // Get the total sum of all percentages
+        float total = groupedLanguages.Select(l => l.Percentage).Sum();
 
         var fixedPercentages = groupedLanguages.Select(l => new EcosystemProgrammingLanguage()
         {
