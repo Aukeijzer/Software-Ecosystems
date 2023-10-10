@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SECODashBackend.Models;
 
-[DataContract]
 [Index(nameof(Name), IsUnique = true)]
 public class Ecosystem
 {  
@@ -26,6 +25,6 @@ public class Ecosystem
    public int? NumberOfStars { get; set; }
    
    [DataMember(Name = "topLanguages")]
-   public List<ProjectProgrammingLanguage> TopLanguages { get; set; } = new();
+   public List<EcosystemProgrammingLanguage> TopLanguages { get; set; } = new();
 }
 
