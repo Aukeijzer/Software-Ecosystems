@@ -113,3 +113,5 @@ _[Ss]cripts
 # typescript
 *.tsbuildinfo
 /front-end/ecodash/next-env.d.ts
+
+*/logs/*.log
