@@ -1,7 +1,7 @@
 ﻿using SECODashBackend.Enums;
 using SECODashBackend.Models;
 
-namespace SECODashBackend.Classifier;
+namespace SECODashBackend.Services.ProgrammingLanguages;
 
 public static class TopProgrammingLanguagesService
 { 

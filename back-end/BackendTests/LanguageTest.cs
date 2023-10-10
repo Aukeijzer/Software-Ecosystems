@@ -1,4 +1,4 @@
-﻿using SECODashBackend.Classifier;
+﻿using SECODashBackend.Services.ProgrammingLanguages;
 using SECODashBackend.Enums;
 
 namespace BackendTests;
@@ -99,8 +99,6 @@ public class LanguageTest
         
         // Assert that the list contains the correct amount of languages
         Assert.That(result, Has.Count.EqualTo(6));
-        // Assert that the total percentage is correct
-        //Assert.That(result.Select(l => l.Percentage).Sum(), Is.EqualTo(300));
         
         Assert.Multiple(() =>
         {
