@@ -33,16 +33,16 @@ public class EcosystemsController: ControllerBase
     {
         _logger.LogInformation("{Origin}: Ecosystem requested by name: '{Ecosystem}'.", this ,name);
         var result = await _ecosystemsService.GetByNameAsync(name);
-        _logger.LogInformation("{Origin}: Ecosystem requested by name: '{Ecosystem}'.", this ,name);
+        _logger.LogInformation("{Origin}: Returning ecosystem '{Ecosystem}'.", this ,name);
         return result == null ? NotFound() : result;
     }
     
     [HttpGet("id/{id}")]
     public async Task<ActionResult<Ecosystem>> GetByIdAsync(string id)
     {
-        _logger.LogInformation("{Origin}: Ecosystem requested by Id: '{Ecosystem}'.", this ,id);
+        _logger.LogInformation("{Origin}: Ecosystem requested by Id: '{id}'.", this ,id);
         var result = await _ecosystemsService.GetByIdAsync(id);
-        _logger.LogInformation("{Origin}: Ecosystem requested by Id: '{Ecosystem}'.", this ,id);
+        _logger.LogInformation("{Origin}: Returning ecosystem with Id: '{id}'.", this ,id);
         return result == null ? NotFound() : result;
     }
     
