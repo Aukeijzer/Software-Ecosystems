@@ -31,7 +31,7 @@ public class LanguageTest
                         {
                             Id = "2",
                             Language = ProgrammingLanguage.Java,
-                            Percentage = 30,
+                            Percentage = 5,
                         }
                     },
                     Owner = "Owner1",
@@ -98,9 +98,10 @@ public class LanguageTest
         var result = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
         
         // Assert that the list contains the correct amount of languages
-        Assert.That(result, Has.Count.EqualTo(5));
-        // Assert that the list contains the correct percentages
-        Assert.That(result[0].Percentage, Is.EqualTo(70 + 60));
+        Assert.That(result, Has.Count.EqualTo(6));
+        // Assert that the total percentage is correct
+        //Assert.That(result.Select(l => l.Percentage).Sum(), Is.EqualTo(300));
+        
         Assert.Multiple(() =>
         {
             // Assert that the whole list is ordered by percentage

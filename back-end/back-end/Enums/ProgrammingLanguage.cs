@@ -73,5 +73,6 @@ public enum ProgrammingLanguage
     StringTemplate,
     QMake,
     YAML,
-    Unknown
+    Unknown,
+    Other
 }
