@@ -32,7 +32,7 @@ public class ProjectsController : ControllerBase
     [HttpGet("{id:long}")]
     [SwaggerOperation("GetProjectById")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<Project>> GetByIdAsync(long id)
+    public async Task<ActionResult<Project>> GetByIdAsync(string id)
     {
         _logger.LogInformation("{Origin}: Project requested by Id: '{Ecosystem}'", this ,id);
         var result = await _projectsService.GetByIdAsync(id); 

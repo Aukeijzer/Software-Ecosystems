@@ -6,22 +6,34 @@ namespace SECODashBackend.Models;
 [DataContract]
 public class Project
 {
-   [DataMember(Name = "id")]
-   public long? Id { get; set; }
+    [DataMember(Name = "id")]
+    public required string Id { get; init; }
    
-   [Required]
-   [DataMember(Name = "name")]
-   public string Name { get; set; }
-   [DataMember(Name = "about")]
-   public string? About { get; set; }
-   
-   [DataMember(Name = "owner")]
-   public string? Owner { get; set; }
-   
+    [DataMember(Name = "name")]
+    public required string Name { get; set; }
+    
+    [DataMember(Name = "createdAt")]
+    public DateTime CreatedAt { get; init; }
 
-   [DataMember(Name = "readme")]
-   public string? ReadMe { get; set; }
+    [DataMember(Name = "ecosystems")]
+    public List<Ecosystem> Ecosystems { get; set; } = new();
    
-   [DataMember(Name = "numberOfStars")]
-   public int? NumberOfStars { get; set; }
+    [DataMember(Name = "owner")]
+    public required string Owner { get; set; }
+   
+    [DataMember(Name = "description")]
+    public string? Description { get; set; }
+
+    [DataMember(Name = "topics")] public List<string> Topics { get; set; } = new();
+
+    [DataMember(Name = "languages")] public List<ProjectProgrammingLanguage> Languages { get; set; } = new();
+   
+    [DataMember(Name = "totalSize")]
+    public int? TotalSize { get; set; }
+
+    [DataMember(Name = "readme")]
+    public string? ReadMe { get; set; }
+   
+    [DataMember(Name = "numberOfStars")]
+    public int NumberOfStars { get; set; }
 }

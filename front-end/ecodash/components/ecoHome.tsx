@@ -11,7 +11,6 @@ export default async function ecoHome(){
         <div className="flex w-full justify-center flex-col">
                 <EcoItem 
                 title="Available ecosystems" 
-                description="lorem ipsum je kent het wel" 
                 ecoData={<EcoDataList 
                             items={result} 
                             renderItem={renderEcosystem}

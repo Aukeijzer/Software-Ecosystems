@@ -15,7 +15,7 @@ export default function navLogo(): JSX.Element{
                     data-cy="navLogoImage"
                 />
                 <span className='flex self-center text-lg' data-cy="navLogoText">
-                    EcoDash
+                    SECODash
                 </span>
             </Link>
         </div>

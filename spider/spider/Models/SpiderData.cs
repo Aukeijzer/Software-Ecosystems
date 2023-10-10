@@ -2,5 +2,7 @@
 
 public class SpiderData
 {
-    public SearchResult search { get; set; }
+    public SearchResult Search { get; set; }
+    
+    public RateLimit? RateLimit { get; set; }
 }
