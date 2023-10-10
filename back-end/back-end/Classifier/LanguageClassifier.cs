@@ -1,38 +1,27 @@
-﻿using SECODashBackend.Dto;
-using SECODashBackend.Models;
+﻿using SECODashBackend.Models;
 
 namespace SECODashBackend.Classifier;
 
-public class LanguageClassifier
-{
-    public static List<ProjectProgrammingLanguage> GetLanguagesPerEcosystem(List<Ecosystem> ecosystems)
-    {
-        // Get the list of projects from the ecosystems 
-        List<Project> projectsInEcosystems = ecosystems.SelectMany(e => e.Projects).ToList();
-        // Classify the languages
-        var top5 = ClassifyLanguages(projectsInEcosystems);
-        return top5;
-    }
+public static class LanguageClassifier
+{ 
+    // The amount of languages to return
+    private const int NumberOfLanguages = 5;
 
-    private static List<ProjectProgrammingLanguage> ClassifyLanguages(List<Project> projectsInEcosystems)
+    public static List<EcosystemProgrammingLanguage> GetTopLanguagesForEcosystem(Ecosystem ecosystem)
     {
-        // The amount of languages to return
-        int x = 5;
-        
         // Get the list of languages from the projects in the ecosystem and flatten it
-        var languages = projectsInEcosystems.Select(p => p.Languages).ToList().SelectMany(l => l);
+        var languages = ecosystem.Projects.Select(p => p.Languages).SelectMany(l => l);
         // Group the languages by their name and sum their percentages and remove duplicates
-        var groupedLanguages = languages.GroupBy(l => l.Language).Select(l => new ProjectProgrammingLanguage
+        var groupedLanguages = languages.GroupBy(l => l.Language).Select(l => new EcosystemProgrammingLanguage()
         {
-            Id = Guid.NewGuid().ToString(),
+            EcosystemId = ecosystem.Id,
             Language = l.Key,
             Percentage = l.Sum(p => p.Percentage)
         }).Distinct();
         
         // Order the languages by their percentage in descending order
-        var orderedLanguages = groupedLanguages.OrderByDescending(l => l.Percentage);
+        var orderedLanguages = groupedLanguages.Take(NumberOfLanguages).OrderByDescending(l => l.Percentage);
         // Return the top x languages
-        return orderedLanguages.Take(x).ToList();
+        return orderedLanguages.ToList();
     }
 }
-

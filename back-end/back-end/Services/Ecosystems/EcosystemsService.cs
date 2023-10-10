@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
@@ -63,7 +63,7 @@ public class EcosystemsService : IEcosystemsService
         await _dbContext.SaveChangesAsync();
 
         // Get the top languages associated with the ecosystem
-        var topLanguages = LanguageClassifier.GetLanguagesPerEcosystem(new List<Ecosystem> { ecosystem });
+        var topLanguages = LanguageClassifier.GetTopLanguagesForEcosystem(ecosystem);
         // Add the top languages to the ecosystem
         ecosystem.TopLanguages = topLanguages;
 
