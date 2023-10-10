@@ -95,7 +95,7 @@ public class LanguageTest
         };
         
         // Act
-        var result = LanguageClassifier.GetTopLanguagesForEcosystem(ecosystem);
+        var result = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
         
         // Assert that the list contains the correct amount of languages
         Assert.That(result, Has.Count.EqualTo(5));

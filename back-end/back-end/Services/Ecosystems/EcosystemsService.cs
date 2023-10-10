@@ -64,7 +64,7 @@ public class EcosystemsService : IEcosystemsService
         await _dbContext.SaveChangesAsync();
 
         // Get the top languages associated with the ecosystem
-        var topLanguages = LanguageClassifier.GetTopLanguagesForEcosystem(ecosystem);
+        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
         // Add the top languages to the ecosystem
         ecosystem.TopLanguages = topLanguages;
         
