@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IGitHubService, GitHubService>();
-builder.Services.AddScoped<ISpiderDataConverter, SpiderDataConverter>();
+builder.Services.AddScoped<IGraphqlDataConverter, GraphqlDataConverter>();
 builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File").GetSection("Options").Bind(options); });
 
 var app = builder.Build();
