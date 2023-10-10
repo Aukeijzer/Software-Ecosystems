@@ -31,11 +31,13 @@ public static class ProjectConverter
             RepoName = project.Name
         };
     }
-    public static ReadmeDto ToReadmeDto(Project project)
+    public static TopicRequestDto ToTopicRequestDto(Project project)
     {
-        return new ReadmeDto
+        return new TopicRequestDto
         {
-            ProjectId = project.Id,
+            Id = project.Id,
+            Name = project.Name,
+            Description = project.Description,
             Readme = project.ReadMe ?? throw new InvalidOperationException()
         };
     }
