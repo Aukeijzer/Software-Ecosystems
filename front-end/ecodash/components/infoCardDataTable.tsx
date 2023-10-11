@@ -61,7 +61,7 @@ export function renderLanguage(language: languageModel){
 */
 export function renderProjectTable(project : projectModel){
     return(
-        <Table.Row >
+        <Table.Row id={project.id} >
             <Table.Cell >
                 {project.name}
             </Table.Cell>
@@ -86,7 +86,7 @@ export function renderProjectTable(project : projectModel){
 
 export function renderEcosystemTable(ecosystem: ecosystemModel){
     return(
-        <Table.Row>
+        <Table.Row >
             <Table.Cell>
                 {ecosystem.name}
             </Table.Cell>
