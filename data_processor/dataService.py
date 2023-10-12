@@ -30,7 +30,7 @@ class dataService:
         topics = extractTopics(preprocessed_docs)
         response = []
         for id, topic in zip(ids, topics): 
-            dict = {"id": id}
+            dict = {"projectId": id}
             dict.update(topic)
             response.append(dict)
         return response

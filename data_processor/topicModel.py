@@ -13,7 +13,7 @@ def extractTopics(preprocessedDocs):
     # Extract topics from the model
     info = model.get_document_info(preprocessedDocs)
     topic_info = info[['Top_n_words', 'Topic', 'Probability']].copy()
-    keyword_info = topic_info.rename(columns={'Top_n_words': 'keywords', 'Topic': 'topic_id', 'Probability': 'probability'})
+    keyword_info = topic_info.rename(columns={'Top_n_words': 'keywords', 'Topic': 'topicId', 'Probability': 'probability'})
 
     dict = keyword_info.to_dict(orient='records')
 
