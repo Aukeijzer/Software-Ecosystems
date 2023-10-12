@@ -20,7 +20,7 @@ public class GitHubService : IGitHubService
 
     public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10)
     {
-        // GraphQL query to search the respositories with the given name.
+        // GraphQL query to search the repositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
         {
             Query = @"query repositoriesQueryRequest($name: String!, $_amount : Int!){
@@ -122,7 +122,7 @@ public class GitHubService : IGitHubService
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()
         {
-            //graphql guery to search for repositories based on a github topic
+            //graphql query to search for repositories based on a github topic
             Query = @"query repositoriesQueryRequest($_topic: String!, $_amount : Int!) {
                         topic(name: $_topic) {
                             repositories(first: $_amount) {
