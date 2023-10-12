@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverter;
 using SECODashBackend.Models;
+using SECODashBackend.Services.ProgrammingLanguages;
 using SECODashBackend.Services.Spider;
 
 namespace SECODashBackend.Services.Ecosystems;
@@ -39,6 +40,7 @@ public class EcosystemsService : IEcosystemsService
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Id == id);
     }
+
     public async Task<Ecosystem?> GetByNameAsync(string name)
     {
         var ecosystem = await _dbContext.Ecosystems
@@ -46,7 +48,7 @@ public class EcosystemsService : IEcosystemsService
             .ThenInclude(p => p.Languages)
             .SingleOrDefaultAsync(e => e.Name == name);
         if (ecosystem == null) return null;
-        
+
         // Request the Spider for projectsDtos related to this ecosystem.
         var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
 
@@ -54,10 +56,17 @@ public class EcosystemsService : IEcosystemsService
         var newProjects = dtos
             .Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id))
             .Select(ProjectConverter.ToProject);
-        
+
         // Only add these projects to the database
         ecosystem.Projects.AddRange(newProjects);
+        
+        // Make the changes persistent by saving them to the database
         await _dbContext.SaveChangesAsync();
+
+        // Get the top languages associated with the ecosystem
+        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
+        // Add the top languages to the ecosystem
+        ecosystem.TopLanguages = topLanguages;
         
         return ecosystem;
     }
