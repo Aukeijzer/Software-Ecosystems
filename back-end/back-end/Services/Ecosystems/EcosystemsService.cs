@@ -50,14 +50,14 @@ public class EcosystemsService : IEcosystemsService
             .SingleOrDefaultAsync(e => e.Name == name);
         if (ecosystem == null) return null;
         
-        // Request the Spider for projectsDtos related to this ecosystem.
+        // Request the Spider for projects related to this ecosystem.
         var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
 
         // Check which projects are not already in the Projects list of the ecosystem
         var newProjects = dtos
             .Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id))
             .Select(ProjectConverter.ToProject);
-        
+
         // Only add these projects to the database
         ecosystem.Projects.AddRange(newProjects);
         await _dbContext.SaveChangesAsync();

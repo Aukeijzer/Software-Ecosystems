@@ -12,6 +12,6 @@ public class DataProcessorService : IDataProcessorService
       var request = new RestRequest("extract-topics", Method.Post).AddJsonBody(readmeDtos);
       
       // Throw an exception if the request cannot be deserialized into a List of ProjectTopicsDtos
-      return  await _client.PostAsync<List<TopicResponseDto>>(request) ?? throw new HttpRequestException();
+      return await _client.PostAsync<List<TopicResponseDto>>(request) ?? throw new HttpRequestException();
    }
 }
