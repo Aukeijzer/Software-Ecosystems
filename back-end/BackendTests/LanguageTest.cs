@@ -1,6 +1,5 @@
 using SECODashBackend.Services.ProgrammingLanguages;
 using SECODashBackend.Enums;
-using SECODashBackend.Services.ProgrammingLanguages;
 
 namespace BackendTests;
 [TestFixture]
