@@ -5,13 +5,13 @@ namespace SECODashBackend.Dtos;
 public class TopicResponseDto
 {
     [DataMember(Name ="projectId")]
-    public int ProjectId { get; set; }
+    public required string ProjectId { get; init; }
     
     [DataMember(Name ="topicId")]
-    public int TopicId { get; set; }
+    public int TopicId { get; init; }
     
     [DataMember(Name = "label")]
-    public string? Label { get; set; }
+    public string? Label { get; init; }
     
     [DataMember(Name = "keywords")]
     public required List<string> Keywords { get; init; }
