@@ -1,5 +1,6 @@
 ﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using SECODashBackend.Dto;
 using SECODashBackend.Services.Ecosystems;
 using Swashbuckle.AspNetCore.Annotations;
 

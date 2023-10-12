@@ -1,4 +1,6 @@
-﻿using SECODashBackend.Models;
+﻿using SECODashBackend.Dto;
+using SECODashBackend.Models;
+
 
 namespace SECODashBackend.Services.Ecosystems;
 

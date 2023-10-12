@@ -42,6 +42,7 @@ public class EcosystemsService : IEcosystemsService
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Id == id);
     }
+
     public async Task<Ecosystem?> GetByNameAsync(string name)
     {
         var ecosystem = await _dbContext.Ecosystems
@@ -60,7 +61,14 @@ public class EcosystemsService : IEcosystemsService
 
         // Only add these projects to the database
         ecosystem.Projects.AddRange(newProjects);
+        
+        // Make the changes persistent by saving them to the database
         await _dbContext.SaveChangesAsync();
+
+        // Get the top languages associated with the ecosystem
+        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
+        // Add the top languages to the ecosystem
+        ecosystem.TopLanguages = topLanguages;
         
         return ecosystem;
     }
