@@ -100,14 +100,19 @@ public class LanguageTest
         // Assert that the list contains the correct amount of languages
         Assert.That(result, Has.Count.EqualTo(6));
         // Assert that the total percentage is correct
-        //Assert.That(result.Select(l => l.Percentage).Sum(), Is.EqualTo(300));
+        Assert.That(result.Select(l => l.Percentage).Sum(), Is.EqualTo(100));
         
+        // Assert that the whole list is ordered by percentage
         Assert.Multiple(() =>
         {
-            // Assert that the whole list is ordered by percentage
             Assert.That(result[0].Percentage, Is.GreaterThan(result[1].Percentage));
-            // Assert that the list contains no duplicates
-            Assert.That(result[0].Language, Is.Not.EqualTo(result[1].Language));
+            Assert.That(result[1].Percentage, Is.GreaterThan(result[2].Percentage));
+            Assert.That(result[2].Percentage, Is.GreaterThan(result[3].Percentage));
+            Assert.That(result[3].Percentage, Is.GreaterThan(result[4].Percentage));
+            Assert.That(result[4].Percentage, Is.GreaterThan(result[5].Percentage));
         });
+        
+        // Assert that the list contains no duplicates
+        Assert.That(result[0].Language, Is.Not.EqualTo(result[1].Language));
     }
 }
