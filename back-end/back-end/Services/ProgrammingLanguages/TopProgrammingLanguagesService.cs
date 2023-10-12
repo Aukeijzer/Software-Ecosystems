@@ -24,7 +24,8 @@ public static class TopProgrammingLanguagesService
                     EcosystemId = ecosystem.Id,
                     Language = l.Key,
                     Percentage = l.Sum(p => p.Percentage)
-                }).Distinct();
+                })
+            .Distinct().ToList();
         
         // Get the total sum of all percentages
         float total = groupedLanguages.Select(l => l.Percentage).Sum();
@@ -40,7 +41,8 @@ public static class TopProgrammingLanguagesService
         // Order the languages by their percentage in descending order
         var orderedLanguages = fixedPercentages
             .OrderByDescending(l => l.Percentage)
-            .Take(NumberOfLanguages);
+            .Take(NumberOfLanguages)
+            .ToList();
         
         var other = new EcosystemProgrammingLanguage
         {
@@ -50,8 +52,8 @@ public static class TopProgrammingLanguagesService
         };
         
         // Add the "Other" language to the list
-        orderedLanguages = orderedLanguages.Append(other);
+        orderedLanguages.Add(other);
         // Return the top x languages with the "Other" 
-        return orderedLanguages.ToList();
+        return orderedLanguages;
     }
 }
