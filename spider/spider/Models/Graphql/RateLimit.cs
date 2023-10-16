@@ -1,4 +1,4 @@
-namespace spider.Models;
+namespace spider.Models.Graphql;
 
 public class RateLimit
 {

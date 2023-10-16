@@ -4,14 +4,15 @@ using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using spider.Dtos;
 using spider.Models;
+using spider.Models.Graphql;
 
 namespace spider.Services;
 
-public class GitHubService : IGitHubService
+public class GitHubGraphqlService : IGitHubGraphqlService
 {
     private readonly GraphQLHttpClient _client;
     
-    public GitHubService()
+    public GitHubGraphqlService()
     {
         _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
         var token = Environment.GetEnvironmentVariable("API_Token");
