@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
@@ -212,7 +212,8 @@ public class GitHubService : IGitHubService
             Variables = new{_topic= topic, _amount = amount}
         };
         
-        var response = await _client.SendQueryAsync(topicRepositoriesQuery,  () => new TopicSearchData());
+        var response = await _client.SendQueryAsync(topicRepositoriesQuery,
+          () => new TopicSearchData());
         return response.Data;
     }
     
