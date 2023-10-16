@@ -1,3 +1,4 @@
-gensim==4.3.2
-nltk==3.8.1
-flask==2.3.3
+bertopic==0.15.0
+Flask==2.2.5
+Markdown==3.5
+beautifulsoup4==4.12.2
