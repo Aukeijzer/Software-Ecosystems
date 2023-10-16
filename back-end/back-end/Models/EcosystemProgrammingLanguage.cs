@@ -1,13 +1,15 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Enums;
 
 namespace SECODashBackend.Models;
 
-public class ProjectProgrammingLanguage
+[PrimaryKey(nameof(EcosystemId), nameof(Language))]
+public class EcosystemProgrammingLanguage
 {
-    [DataMember(Name = "id")]
-    public required string Id { get; init; }
+    [DataMember(Name = "ecosystemId")]
+    public required string EcosystemId { get; init; }
     
     [DataMember(Name = "language")]
     [JsonConverter(typeof(JsonStringEnumConverter))]
