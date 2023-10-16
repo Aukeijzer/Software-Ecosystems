@@ -1,6 +1,22 @@
-import { apiGetAllEcosystems, apiNamedEcosystemModel } from "@/app/models/apiResponseModel";
+/*
+apiHandler exports:
 
-export async function handleApi(endpoint : string) : Promise<apiGetAllEcosystems> {
+- handleApi returns a list of ecosystems given an api endpoint
+    -Input = endpoint : string = endpoint for api on localhost:5003
+    -outPut = Promise <EcosstemModel[]> = list of all ecosystems
+
+
+- handleApiNamed returns a single ecoystem given its name / api endpoint
+    -input = endpoint: string = endpoint for api on localhost:5003
+    - outPut = Promise <ecosystem> = single ecosystem that belogns to the name
+
+*/
+
+
+import { ecosystemModel } from "@/app/models/apiResponseModel";
+
+//Handles API call for /ecosystems
+export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {
     console.log(`http://localhost:5003/${endpoint}`)
     const https = require('https');
     
@@ -9,15 +25,16 @@ export async function handleApi(endpoint : string) : Promise<apiGetAllEcosystems
       });
 
     const response : Response = await fetch(`http://localhost:5003/${endpoint}`, httpsAgent);
-    const result : apiGetAllEcosystems = await response.json();
+    const result : ecosystemModel[] = await response.json();
    
     return result;
 }
 
-export async function handleApiNamed(endpoint : string) : Promise<apiNamedEcosystemModel> {
-    console.log(`http://localhost:5003/${endpoint}`)
+//Handles API calls for /ecosystem/[name]
+export async function handleApiNamed(endpoint : string) : Promise<ecosystemModel> {
+
     const response : Response = await fetch(`http://localhost:5003/${endpoint}`)
-    const result : apiNamedEcosystemModel = await response.json();
+    const result : ecosystemModel = await response.json();
    
     return result;
 }
