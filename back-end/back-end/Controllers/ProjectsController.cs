@@ -43,9 +43,11 @@ public class ProjectsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> PostAsync(Project project)
     {
-        _logger.LogInformation("{Origin}: Posting project with the name: '{Ecosystem}'.", this, project.Name);
+        _logger.LogInformation("{Origin}: Posting project with the name: '{Ecosystem}'.",
+            this, project.Name);
         await _projectsService.AddAsync(project);
-        _logger.LogInformation("{Origin}: Project with the name: '{Ecosystem}' has been posted.", this, project.Name);
+        _logger.LogInformation("{Origin}: Project with the name: '{Ecosystem}' has been posted.",
+            this, project.Name);
 
         
         return CreatedAtAction(
