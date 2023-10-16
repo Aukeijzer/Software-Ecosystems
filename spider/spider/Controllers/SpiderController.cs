@@ -14,7 +14,8 @@ public class SpiderController : ControllerBase
     private readonly IGitHubService _gitHubService;
     private readonly IGraphqlDataConverter _graphqlDataConverter;
 
-    public SpiderController(IGitHubService gitHubService, IGraphqlDataConverter graphqlDataConverter, ILogger<SpiderController> logger)
+    public SpiderController(IGitHubService gitHubService, IGraphqlDataConverter graphqlDataConverter,
+        ILogger<SpiderController> logger)
     {
         _logger = logger;
         _gitHubService = gitHubService;
@@ -26,7 +27,8 @@ public class SpiderController : ControllerBase
     {
         name = WebUtility.UrlDecode(name);
         _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name );
-        var result= _graphqlDataConverter.SearchToProjects(await _gitHubService.QueryRepositoriesByName(name));
+        var result= _graphqlDataConverter.SearchToProjects(
+            await _gitHubService.QueryRepositoriesByName(name));
         _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
         return result;
     }
@@ -46,9 +48,11 @@ public class SpiderController : ControllerBase
     {
         name = WebUtility.UrlDecode(name);
         ownerName = WebUtility.UrlDecode(ownerName);
-        _logger.LogInformation("{Origin}: Repository requested by name and owner: {name}, {owner}.", this, name , ownerName );
+        _logger.LogInformation("{Origin}: Repository requested by name and owner: {name}, {owner}.",
+            this, name , ownerName );
         var result = await _gitHubService.QueryRepositoryByName(name, ownerName);        
-        _logger.LogInformation("{Origin}: Returning repository {name} owned by: {owner}.", this, name , ownerName);
+        _logger.LogInformation("{Origin}: Returning repository {name} owned by: {owner}.",
+            this, name , ownerName);
         return _graphqlDataConverter.RepositoryToProject(result.Repository);
     }
 
