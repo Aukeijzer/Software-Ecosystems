@@ -22,7 +22,8 @@ builder.Services.AddScoped<ISpiderService, SpiderService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File").GetSection("Options").Bind(options); });
+builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File")
+    .GetSection("Options").Bind(options); });
 
 var app = builder.Build();
 

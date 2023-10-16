@@ -51,7 +51,8 @@ public class EcosystemsController: ControllerBase
     {
         _logger.LogInformation("{Origin}: Posting ecosystem with the name: '{Ecosystem}'", this, ecosystem.Name);
         await _ecosystemsService.AddAsync(ecosystem);
-        _logger.LogInformation("{Origin}: Ecosystem with the name: '{Ecosystem}' has been posted.", this, ecosystem.Name);
+        _logger.LogInformation("{Origin}: Ecosystem with the name: '{Ecosystem}' has been posted.",
+            this, ecosystem.Name);
         
         return CreatedAtAction(
             // ReSharper disable once Mvc.ActionNotResolved
