@@ -16,7 +16,7 @@ infoCardDataGraph exports:
 */
 
 import { programmingLanguage } from '@/app/enums/ProgrammingLanguage';
-import { languageModel } from '@/app/models/apiResponseModel';
+import { languageModel } from '@/app/models/languageModel';
 import {
     ValueType,
     NameType,
@@ -45,7 +45,7 @@ interface infoCardDataGraphProps<T>{
 const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
 
 
-export default function InfoCardDataGraph<T extends {}>(props: infoCardDataGraphProps<T>){
+export default function GraphComponent<T extends {}>(props: infoCardDataGraphProps<T>){
     return(
         <div>
             {props.renderFunction(props.items)}

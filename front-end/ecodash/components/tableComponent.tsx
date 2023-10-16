@@ -18,8 +18,11 @@ infoCardDataTable exports:
 */
 
 import { Table } from "flowbite-react";
-import { ecosystemModel, languageModel, projectModel } from "@/app/models/apiResponseModel";
 import { TableCell } from "flowbite-react/lib/esm/components/Table/TableCell";
+import { ecosystemModel } from "@/app/models/ecosystemModel";
+import { projectModel } from "@/app/models/projectModel";
+import { languageModel } from "@/app/models/languageModel";
+
 
 interface infoCardDataTableProps<T>{
     headers: string[],
@@ -29,7 +32,7 @@ interface infoCardDataTableProps<T>{
 
 //Todo: Make a check if headers.count === cells in table?
 
-export default function InfoCardDataTable<T extends {}>(props: infoCardDataTableProps<T>){
+export default function TableComponent<T extends {}>(props: infoCardDataTableProps<T>){
     return(
         <div>
             <Table>

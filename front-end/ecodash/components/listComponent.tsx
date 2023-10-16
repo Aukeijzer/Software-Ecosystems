@@ -41,7 +41,8 @@ infoCardDataList exports:
 */
 
 import { ListGroup } from "flowbite-react"
-import { languageModel, projectModel } from "@/app/models/apiResponseModel";
+import { languageModel } from "@/app/models/languageModel";
+import { projectModel } from "@/app/models/projectModel";
 import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing} from "@/mockData/mockAgriculture";
 import {HiArrowLongUp} from "react-icons/hi2";
 
@@ -50,7 +51,7 @@ interface infoCardDataListProps<T>{
     renderFunction: (item: T) => JSX.Element
 }
 
-export default function InfoCardDataList<T extends {}>(props : infoCardDataListProps<T>){
+export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
     return(
         <div>
             <ListGroup>
@@ -64,7 +65,6 @@ export default function InfoCardDataList<T extends {}>(props : infoCardDataListP
         </div>
     )
 }
-
 
 export function renderProjectList(project : projectModel){
     return(
@@ -107,8 +107,6 @@ export function renderTopic(topic: topTopic){
 }
 
 export function renderTopicGrowing(topic: topTopicGrowing){
-    
-
     return(
         <p className="flex flex-row">
             {topic.name} ({topic.percentage}%) : {topic.growth} <HiArrowLongUp />

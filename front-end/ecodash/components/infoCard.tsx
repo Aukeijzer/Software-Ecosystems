@@ -1,9 +1,9 @@
 "use client"
 import { Card, Alert } from 'flowbite-react'
 import React from 'react'
-import InfoCardDataList from './infoCardDataList'
-import InfoCardDataTable from './infoCardDataTable'
-import InfoCardDataGraph from './infoCardDataGraph'
+import InfoCardDataList from './listComponent'
+import InfoCardDataTable from './tableComponent'
+import InfoCardDataGraph from './graphComponent'
 import {HiInformationCircle} from 'react-icons/hi'
 
 interface infoCardProps{
