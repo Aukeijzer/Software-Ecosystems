@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace SECODashBackend.Models;
 
-[DataContract]
 public class Project
 {
     [DataMember(Name = "id")]

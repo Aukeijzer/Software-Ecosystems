@@ -44,13 +44,20 @@ public class GraphqlDataConverter : IGraphqlDataConverter
             languages[i] = new ProgrammingLanguageDto(repository.Languages.Edges[i].Node.Name,percent);
         }
 
+        string? readme = repository.ReadmeCaps?.Text 
+                         ?? repository.ReadmeLower?.Text 
+                         ?? repository.ReadmeFstCaps?.Text
+                         ?? repository.ReadmerstCaps?.Text
+                         ?? repository.ReadmerstLower?.Text
+                         ?? repository.ReadmerstFstCaps?.Text;
+
         var project = new ProjectDto
         {
             Name = repository.Name,
             Id = repository.Id,
             LatestDefaultBranchCommitDate = repository.DefaultBranchRef.Target.History.Edges[0].Node.CommittedDate,
             CreatedAt = repository.CreatedAt,
-            ReadMe = repository.Readme?.Text,
+            ReadMe = readme,
             Owner = repository.Owner.Login,
             NumberOfStars = repository.StargazerCount,
             Description = repository.Description,

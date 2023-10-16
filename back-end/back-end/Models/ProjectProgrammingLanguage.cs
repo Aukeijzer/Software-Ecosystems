@@ -4,7 +4,6 @@ using SECODashBackend.Enums;
 
 namespace SECODashBackend.Models;
 
-[DataContract]
 public class ProjectProgrammingLanguage
 {
     [DataMember(Name = "id")]
