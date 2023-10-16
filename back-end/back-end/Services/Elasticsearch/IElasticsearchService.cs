@@ -4,5 +4,5 @@ namespace SECODashBackend.Services.ElasticSearch;
 
 public interface IElasticsearchService
 {
-   public Task AddProjects(ProjectDto projectDto);
+   public Task AddProjects(IEnumerable<ProjectDto> projectDtos);
 }

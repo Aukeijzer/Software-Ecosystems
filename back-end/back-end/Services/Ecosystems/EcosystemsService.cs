@@ -65,7 +65,7 @@ public class EcosystemsService : IEcosystemsService
         ecosystem.Projects.AddRange(newProjects);
         await _dbContext.SaveChangesAsync();
 
-        await _elasticsearchService.AddProjects(ProjectConverter.ToProjectDto(ecosystem.Projects.First()));
+        await _elasticsearchService.AddProjects(ecosystem.Projects.Select(ProjectConverter.ToProjectDto));
         
         return ecosystem;
     }
