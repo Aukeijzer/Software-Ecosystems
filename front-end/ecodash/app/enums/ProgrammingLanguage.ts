@@ -73,5 +73,6 @@ export enum programmingLanguage{
     StringTemplate,
     QMake,
     Unknown,
-    YAML
+    YAML,
+    Other
 }
