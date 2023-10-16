@@ -2,7 +2,7 @@
 
 public class SpiderData
 {
-    public required SearchResult Search { get; set; }
+    public SearchResult Search { get; init; }
     
-    public RateLimit? RateLimit { get; set; }
+    public RateLimit? RateLimit { get; init; }
 }

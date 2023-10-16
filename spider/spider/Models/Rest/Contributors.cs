@@ -2,14 +2,14 @@
 
 public class Contributors
 {
-    public List<Contributor>? Items { get; set; }
+    public List<Contributor>? Items { get; init; }
 }
 
 public class Contributor
 {
-    public required string Login { get; set; }
-    public required string Id { get; set; }
-    public required string NodeId { get; set; }
-    public int Contributions { get; set; }
+    public required string Login { get; init; }
+    public required string Id { get; init; }
+    public required string NodeId { get; init; }
+    public int Contributions { get; init; }
     
 }

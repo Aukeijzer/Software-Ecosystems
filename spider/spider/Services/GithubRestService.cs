@@ -1,6 +1,6 @@
-﻿using spider.Models;
-using spider.Dtos;
+﻿using spider.Dtos;
 using RestSharp;
+using spider.Models.Rest;
 
 namespace spider.Services;
 
@@ -13,9 +13,9 @@ public class GithubRestService : IGithubRestService
         _GithubRestClient = new RestClient(options);
     }
 
-    public async Task<> GetRepoContributors(String ownerName, string repoName)
+    public async Task<Contributors> GetRepoContributors(String ownerName, string repoName)
     {
         var request = new RestRequest("repos/" + ownerName + "/" + repoName + "/contributors");
-        return await _GithubRestClient.GetAsync<>(request) ?? throw new HttpRequestException();
+        return await _GithubRestClient.GetAsync<Contributors>(request) ?? throw new HttpRequestException();
     }
 }

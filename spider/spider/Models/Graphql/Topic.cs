@@ -2,14 +2,14 @@
 
 public class Topic
 {
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 }
 
 public class TopicWrapper
 {
-    public required Topic Topic { get; set; }
+    public required Topic Topic { get; init; }
 }
 public class TopicsWrapper
 {
-    public required TopicWrapper[] Nodes { get; set; }
+    public required TopicWrapper[] Nodes { get; init; }
 }

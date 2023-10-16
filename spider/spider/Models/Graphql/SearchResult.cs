@@ -2,6 +2,6 @@ namespace spider.Models.Graphql;
 
 public class SearchResult{
 
-    public int? RepositoryCount { get; set; }
-    public required Repository[] Nodes { get; set; }
+    public int? RepositoryCount { get; init; }
+    public required Repository[] Nodes { get; init; }
 }
