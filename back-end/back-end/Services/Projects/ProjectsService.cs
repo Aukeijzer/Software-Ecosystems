@@ -25,7 +25,7 @@ public class ProjectsService : IProjectsService
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Project?> GetByIdAsync(long id)
+    public async Task<Project?> GetByIdAsync(string id)
     {
         return await _dbContext.Projects
             .AsNoTracking()

@@ -2,6 +2,6 @@ namespace spider.Models;
 
 public class SearchResult{
 
-    public int repositoryCount { get; set; }
-    public Repository[] nodes { get; set; }
+    public int? RepositoryCount { get; set; }
+    public Repository[] Nodes { get; set; }
 }

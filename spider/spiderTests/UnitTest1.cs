@@ -1,10 +1,4 @@
-using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.SystemTextJson;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using spider.Services;
-using spider.Controllers;
-using spider.Converter;
 
 
 namespace spiderTests;
@@ -21,9 +15,9 @@ public class Tests
     }
 
     [Test]
-    public async Task searchResultTest()
+    public async Task SearchResultTest()
     {
-        var result = spiderGithubService.QueryRepositoriesByName("API_Test_Repo");
-        Assert.IsNotNull(result.Result);
+        var result = await spiderGithubService.QueryRepositoriesByName("API_Test_Repo");
+        Assert.IsNotNull(result.Search);
     }
 }
