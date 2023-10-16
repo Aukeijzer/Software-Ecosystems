@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
+using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<EcosystemsContext>(
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<ISpiderService, SpiderService>();
+builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
