@@ -2,9 +2,9 @@ namespace spider.Models;
 
 public class RateLimit
 {
-    public int? Remaining { get; set; }
-    public int? Cost { get; set; }
-    public int? Limit { get; set; }
-    public int? Used { get; set; }
-    public DateTime? ResetAt { get; set; }
+    public int? Remaining { get; init; }
+    public int? Cost { get; init; }
+    public int? Limit { get; init; }
+    public int? Used { get; init; }
+    public DateTime? ReinitAt { get; init; }
 }
