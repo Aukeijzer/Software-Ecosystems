@@ -1,12 +1,43 @@
 "use client"
 
 /*
-    This component renders a <T>[] list: a generic type list
-    required props:
-        - items <T>[] a list that contains objects that extend generic type
-        - renderItem (item: T) => JSX.Element. A function that returns a JSX.Element provided an item from the list
-    Renderfunctions (per T type):
-        - render project list (project: projectModel)
+infoCardDataList exports:
+- InfoCardDataList: JSX.Element containing a div that contains a rendered list
+    - input: 
+        - items: T[]: a list containing items of Type T
+        - renderFunction: (T) => JSX.Elemnent: a function that renders T items. (Must be same as list type)
+    - output: JSX.Element
+- renderProjectList: renders a single project as a list item
+    - input:
+        -item: Project
+    -Output: 
+        - JSX.Element 
+- renderLanguageList: renders a single language as a list item
+    - input:
+        -item: Language
+    - ouput:
+        - JSX.Element
+- renderTechnology: renders a single Technology as a list item
+    - input:
+        -item: technology
+    - ouput:
+        - JSX.Element
+- renderEngineer: renders a single Engineer as a list item
+    - input:
+        -item: topEngineer
+    - ouput:
+        - JSX.Element
+- renderTopic:  renders a single Topic as a list item
+    - input:
+        -item: topTopic
+    - ouput:
+        - JSX.Element
+- renderTopicGrowing renders a growing topic along with growth direction
+    - input:
+        -item: topTopicGrowing
+    - ouput:
+        - JSX.Element
+
 */
 
 import { ListGroup } from "flowbite-react"

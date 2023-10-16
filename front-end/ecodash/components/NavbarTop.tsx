@@ -1,4 +1,11 @@
 "use client"
+/*
+NavBarTop exports:
+- NavBarTop: renders a NavBar with clickable links to the main ecosystems
+    - output: JSX.element
+
+*/
+
 import { Navbar } from 'flowbite-react';
 
 import logo from '../public/logo.png';

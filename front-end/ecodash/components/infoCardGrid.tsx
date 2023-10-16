@@ -1,5 +1,12 @@
 "use client"
 
+/*
+infoCardGrid exports:
+- infoCardGrid: JSX.Element with list of cards placed optimally in three columns
+    - input: cards : JSX.Element[]. A list of infoCards that should be rendered in the Grid
+    - output: JSX.Element
+*/
+
 interface infoCardGridProps{
     cards: JSX.Element[]
 }

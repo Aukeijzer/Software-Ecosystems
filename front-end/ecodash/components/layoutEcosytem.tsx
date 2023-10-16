@@ -75,14 +75,3 @@ export default async function LayoutEcosystem(props: layoutEcosystemProps){
        
     )
 }
-
-
-/*
-
-
-
-
-
-
-
-*/

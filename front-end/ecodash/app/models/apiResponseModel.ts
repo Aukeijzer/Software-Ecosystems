@@ -1,3 +1,11 @@
+/*
+apiResponseModel exports:
+Models various objects used by other functions.
+- interface ecosystemModel
+- interface ProjectModel
+- interface languageModel
+*/
+
 import { programmingLanguage } from "../enums/ProgrammingLanguage"
 
 //Todo:

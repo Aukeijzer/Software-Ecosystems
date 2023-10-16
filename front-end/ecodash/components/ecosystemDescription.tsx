@@ -1,11 +1,22 @@
 "use client"
 
+/*
+ecosystemDescription exports:
+
+ - EcosystemDescription: JSX.Element containing a provided description
+    - input:  - ecosystem : string
+              - description: string
+    
+    - output: - JSX.Element
+
+*/
 import { Card } from 'flowbite-react'
 
 interface ecoSystemDescriptionProps{
     ecosystem: string,
     description: string
 }
+
 export default function EcosystemDescription(props: ecoSystemDescriptionProps){
     return(
         <div>

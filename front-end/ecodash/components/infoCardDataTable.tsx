@@ -1,14 +1,20 @@
 "use client"
 
 /*
-    This component renders a <T>[] list: a generic type list as a Table
-    required props:
-        - items <T>[] a list that contains objects that extend generic type
-        - renderItem (item: T) => JSX.Element. A function that returns a JSX.Element provided an item from the list
-        - headers string[]: a list of strings that the headers of the table will be
-    Renderfunctions (per T type):
-        - render project table (project: projectModel)
-        - render ecosystem table (ecosystem: EcosystemModel)
+infoCardDataTable exports:
+- InfoCardDataTable: JSX.Element filled with a table containing provided data 
+    - input:
+        - headers: string[]: the headers that the table has
+        - items: T[]: a list of items that each should be rendered in the table
+        - renderFunction: a function that takes T item and renders a table row for it
+    - output: 
+        - JSX.Element
+- renderProjectTable: renders a single table row given a project
+    - input: Project
+    - output: JSX.Element: Table.Row
+- renderEcosystemTable: renders a single table row given an ecosystem
+    - input: Ecosystem
+    - output: JSX.Element: Table.Row
 */
 
 import { Table } from "flowbite-react";

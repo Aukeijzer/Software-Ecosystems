@@ -1,3 +1,8 @@
+/*
+ProgrammingLanguage exports:
+ - programmingLangue: enum : list containing programming languages
+*/
+
 export enum programmingLanguage{
     ABAP,
     Ada,

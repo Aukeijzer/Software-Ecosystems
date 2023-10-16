@@ -1,20 +1,26 @@
 "use client"
+/*
+infoCardDataGraph exports:
+
+- InfoCardDataGraph: JSX.element containing a div + the rendered graph
+    - input: 
+            - items <T>[] a list that contains objects that extend generic type. this should be able to convert to a dataPieChartModel
+            - renderGraph (T[]) => JSX.Element. A function that returns a JSX.Element, provided a 
+    - output: 
+            - JSX.element
+- renderPieGraphLanguage: renders a PieGraph given a list of Languages
+    - input:
+            - items: LanguageModel[] a list of {name: ..., data: ...} elements
+    - output:
+            - JSX.Element
+*/
+
 import { programmingLanguage } from '@/app/enums/ProgrammingLanguage';
 import { languageModel } from '@/app/models/apiResponseModel';
 import {
     ValueType,
     NameType,
 } from 'recharts/types/component/DefaultTooltipContent';
-
-/*
-    This component renders a <T>[] list: a generic type list
-    required props:
-        - items <T>[] a list that contains objects that extend generic type. this should be able to convert to a dataPieChartModel
-        - renderGraph () => JSX.Element. A function that returns a JSX.Element, 
-    Renderfunctions (per T type):
-        - render pie graph: dataPieChartModel
-*/
-
 import dynamic from 'next/dynamic'
 import { Pie, Cell , ResponsiveContainer, TooltipProps, LabelProps, Legend } from "recharts";
 
@@ -40,8 +46,6 @@ const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e
 
 
 export default function InfoCardDataGraph<T extends {}>(props: infoCardDataGraphProps<T>){
-   //console.log("test")
-    //console.log(props.items);
     return(
         <div>
             {props.renderFunction(props.items)}
@@ -49,6 +53,13 @@ export default function InfoCardDataGraph<T extends {}>(props: infoCardDataGraph
     );
 }  
 
+/*
+renderCustomLabel: function passed to Pie Element
+input = point passed by Pie element (Dont call this function yourself!)
+Output = a single label for a given data point
+*/
+
+/*
 const renderCustomLabel = ({cx , cy, midAngle, innerRadius, outerRadius, percent, index, payload, value} : LabelProps<ValueType, NameType> ) =>{
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const RADIAN = Math.PI / 180;
@@ -63,6 +74,7 @@ const renderCustomLabel = ({cx , cy, midAngle, innerRadius, outerRadius, percent
         </text>
     );
 }
+*/
 
 export function renderPieGraph(items : languageModel[]){
 
