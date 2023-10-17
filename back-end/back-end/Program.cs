@@ -40,11 +40,17 @@ builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Log
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-// Note: For Docker swagger is always used. Upon code delivery this may need to be changed.
+// Note: For Docker development swagger is always used. Upon code delivery this may need to be changed.
 if ( true ) //app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+// TODO: Remove this sleep when the database connetion issues are resolved.
+if (!app.Environment.IsDevelopment())
+{ 
+    Thread.Sleep(3000);
 }
 
 //app.UseHttpsRedirection();
