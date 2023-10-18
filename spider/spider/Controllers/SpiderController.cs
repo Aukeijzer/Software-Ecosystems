@@ -13,13 +13,17 @@ public class SpiderController : ControllerBase
     private readonly ILogger<SpiderController> _logger;
     private readonly IGitHubGraphqlService _gitHubGraphqlService;
     private readonly IGraphqlDataConverter _graphqlDataConverter;
+    private readonly IGithubRestService _githubRestService;
+    private readonly IRestDataConverter _restDataConverter;
 
     public SpiderController(IGitHubGraphqlService gitHubGraphqlService, IGraphqlDataConverter graphqlDataConverter,
-        ILogger<SpiderController> logger)
+        IGithubRestService githubRestService, IRestDataConverter restDataConverter, ILogger<SpiderController> logger)
     {
         _logger = logger;
         _gitHubGraphqlService = gitHubGraphqlService;
         _graphqlDataConverter = graphqlDataConverter;
+        _githubRestService = githubRestService;
+        _restDataConverter = restDataConverter;
     }
     //http:localhost:Portnumberhere/spider/name
     [HttpGet("name/{name}")]
@@ -63,5 +67,18 @@ public class SpiderController : ControllerBase
         var result = _graphqlDataConverter.SearchToProjects(await _gitHubGraphqlService.ToQueryString(repos));
         _logger.LogInformation("{Origin}: Returning all requested repositories.", this);
         return result;
+    }
+    
+    [HttpGet("Contributors/{name}/{ownerName}")]
+    public async Task<ActionResult<List<ContributorDto>>> GetContributorsByName(string name, string ownerName)
+    {
+        name = WebUtility.UrlDecode(name);
+        ownerName = WebUtility.UrlDecode(ownerName);
+        _logger.LogInformation("{Origin}: Contributors requested by name and owner: {name}, {owner}.",
+            this, name , ownerName );
+        var result = await _githubRestService.GetRepoContributors(name, ownerName);        
+        _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
+            this, name , ownerName);
+        return _restDataConverter.ToContributors(result);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using spider.Dtos;
 using RestSharp;
+using RestSharp.Authenticators;
 using spider.Models.Rest;
 
 namespace spider.Services;
