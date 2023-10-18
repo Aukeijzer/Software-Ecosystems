@@ -21,5 +21,20 @@ public class ElasticsearchService : IElasticsearchService
             projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p));
         request.Operations = new BulkOperationsCollection(indexOperations);
         var response = await _client.BulkAsync(request);
+        if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
+    }
+
+    public async Task<List<ProjectDto>> GetProjectsByTopic(string topic, int amount)
+    {
+        var response = await _client.SearchAsync<ProjectDto>(s => s 
+            .Index(ProjectIndex) 
+            .From(0)
+            .Size(amount)
+            .Query(q => q
+                .Term(t => t.Topics, topic) 
+            )
+        );
+        if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
+        return response.Documents.ToList();
     }
 }

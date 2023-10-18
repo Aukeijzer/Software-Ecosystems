@@ -64,8 +64,10 @@ public class EcosystemsService : IEcosystemsService
         // Only add these projects to the database
         ecosystem.Projects.AddRange(newProjects);
         await _dbContext.SaveChangesAsync();
-
+        
+        // TODO: remove, used for testing elasticsearch
         await _elasticsearchService.AddProjects(ecosystem.Projects.Select(ProjectConverter.ToProjectDto));
+        var elasticsearchProjects = await _elasticsearchService.GetProjectsByTopic(ecosystem.Name); 
         
         return ecosystem;
     }
