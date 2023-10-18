@@ -8,9 +8,9 @@ public class ContributorDto
     [DataMember(Name = "login")]
     public required string Login { get; init; }
     [DataMember(Name = "id")]
-    public required string Id { get; init; }
-    [DataMember(Name = "nodeId")]
-    public required string NodeId { get; init; }
+    public required int Id { get; init; }
+    [DataMember(Name = "NodeId")]
+    public string? node_id { get; init; }
     [DataMember(Name = "contributions")]
-    public required int Contributions { get; init; }
+    public int? Contributions { get; init; }
 }

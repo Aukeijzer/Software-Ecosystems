@@ -14,16 +14,14 @@ public class SpiderController : ControllerBase
     private readonly IGitHubGraphqlService _gitHubGraphqlService;
     private readonly IGraphqlDataConverter _graphqlDataConverter;
     private readonly IGithubRestService _githubRestService;
-    private readonly IRestDataConverter _restDataConverter;
 
     public SpiderController(IGitHubGraphqlService gitHubGraphqlService, IGraphqlDataConverter graphqlDataConverter,
-        IGithubRestService githubRestService, IRestDataConverter restDataConverter, ILogger<SpiderController> logger)
+        IGithubRestService githubRestService, ILogger<SpiderController> logger)
     {
         _logger = logger;
         _gitHubGraphqlService = gitHubGraphqlService;
         _graphqlDataConverter = graphqlDataConverter;
         _githubRestService = githubRestService;
-        _restDataConverter = restDataConverter;
     }
     //http:localhost:Portnumberhere/spider/name
     [HttpGet("name/{name}")]
@@ -79,6 +77,6 @@ public class SpiderController : ControllerBase
         var result = await _githubRestService.GetRepoContributors(name, ownerName);        
         _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
             this, name , ownerName);
-        return _restDataConverter.ToContributors(result);
+        return result;
     }
 }

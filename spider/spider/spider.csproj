@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Rest\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
