@@ -20,19 +20,15 @@ builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNa
 builder.Services.AddDbContext<EcosystemsContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb"))
     );
-//TODO: figure out appropriate method for adding these service, scoped vs transient vs singleton;
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<ISpiderService, SpiderService>();
-builder.Services.Configure<ElasticsearchClientOptions>(
-    options =>
-    {
-        options.ConfigureSettings += settings => settings.ThrowExceptions();
-        options.ConfigureSettings +=
-            settings => settings.Authentication(new BasicAuthentication("elastic", "SECODash"));
-        // Disable certificate validation, remove in production!
-        options.ConfigureSettings += settings => settings.ServerCertificateValidationCallback((_, _, _, _) => true);
-    });
+// TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
+builder.Services.AddSingleton(
+    new ElasticsearchClient(
+        builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value!,
+        new ApiKey(builder.Configuration.GetSection("ElasticSearch").GetSection("ApiKey").Value!)
+        ));
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
 builder.Services.AddElasticsearchClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
