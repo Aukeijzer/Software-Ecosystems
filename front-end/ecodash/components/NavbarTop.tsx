@@ -7,12 +7,16 @@ NavBarTop exports:
 */
 
 import { Navbar } from 'flowbite-react';
-
 import logo from '../public/logo.png';
 import Image from 'next/image'
 import Link from 'next/link';
+import React, {useState} from 'react'
+import { IconContext } from 'react-icons'
+import { BsMenuUp } from 'react-icons/bs';
 
 export default function NavBarTop(){
+    const [toggle, setToggle] = useState(false);
+
     return(
         <Navbar fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
             <Navbar.Brand as={Link} href='/'>
@@ -27,37 +31,47 @@ export default function NavBarTop(){
                     SECODash
                 </span>
 
+                
             </Navbar.Brand>
-            
-            <Navbar.Collapse>
-                <Navbar.Link
-                    href="/"
-                   
-                >
-                        Home
-                </Navbar.Link>
 
-                <Navbar.Link
-                    href="/ecosystem/agriculture"
-                >
-                    Agriculture
+           {toggle? (null):(
+                <div className="flex align-middle justify-center p-1 text-gray-800 dark:text-white">
+                <IconContext.Provider value={{ size: '30' }}>
+                    <BsMenuUp onClick={(e : Event) => setToggle(!toggle)} />
+                </IconContext.Provider>
+            </div>
+           )} 
+            
+           
+            {toggle? (
+                <div className='flex flex-row gap-5'>
+                    <Navbar.Link
+                        href="/"
                     
-                </Navbar.Link>
+                    >
+                            Home
+                    </Navbar.Link>
 
-                <Navbar.Link
-                    href="/ecosystem/artificial-intelligence"
-                >
-                    AI
-                </Navbar.Link>
+                    <Navbar.Link
+                        href="/ecosystem/agriculture"
+                    >
+                        Agriculture
+                        
+                    </Navbar.Link>
 
-                <Navbar.Link
-                    href="/ecosystem/quantum"
-                >
-                    Quantum
-                </Navbar.Link>
-            </Navbar.Collapse>
-            <Navbar.Toggle /> 
-            
+                    <Navbar.Link
+                        href="/ecosystem/artificial-intelligence"
+                    >
+                        AI
+                    </Navbar.Link>
+
+                    <Navbar.Link
+                        href="/ecosystem/quantum"
+                    >
+                        Quantum
+                    </Navbar.Link>
+                </div>
+                ) : null} 
         </Navbar>
     )   
 }

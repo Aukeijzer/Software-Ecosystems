@@ -45,6 +45,7 @@ import { languageModel } from "@/app/models/languageModel";
 import { projectModel } from "@/app/models/projectModel";
 import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing} from "@/mockData/mockAgriculture";
 import {HiArrowLongUp} from "react-icons/hi2";
+import { ogranization } from "@/mockData/mockEcosystems";
 
 interface infoCardDataListProps<T>{
     items: T[],
@@ -53,7 +54,7 @@ interface infoCardDataListProps<T>{
 
 export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
     return(
-        <div>
+        <div className="h-full">
             <ListGroup>
                 {props.items.map((item, i) => (
                     <ListGroup.Item key = {i} >
@@ -111,6 +112,14 @@ export function renderTopicGrowing(topic: topTopicGrowing){
         <p className="flex flex-row">
             {topic.name} ({topic.percentage}%) : {topic.growth} <HiArrowLongUp />
         </p>
+    )
+}
+
+export function renderOrganization(org: ogranization){
+    return(
+        <div>
+            {org.name}
+        </div>
     )
 }
 
