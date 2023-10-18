@@ -6,6 +6,8 @@ using Elastic.Clients.Elasticsearch.Serialization;
 using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
+using SECODashBackend.Logging;
+using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Projects;
@@ -23,6 +25,7 @@ builder.Services.AddDbContext<EcosystemsContext>(
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<ISpiderService, SpiderService>();
+builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
 builder.Services.AddSingleton(
     new ElasticsearchClient(
@@ -34,6 +37,8 @@ builder.Services.AddElasticsearchClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File")
+    .GetSection("Options").Bind(options); });
 
 var app = builder.Build();
 

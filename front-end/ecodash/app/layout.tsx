@@ -1,4 +1,4 @@
-import NavBar from '@/components/navBar'
+import NavBarTop from '@/components/NavbarTop'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -17,8 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      
       <body className={inter.className}>
-        <NavBar />
+      <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
+          <NavBarTop />
           <main>
             {children}
           </main>
@@ -26,3 +28,6 @@ export default function RootLayout({
     </html>
   )
 }
+
+
+

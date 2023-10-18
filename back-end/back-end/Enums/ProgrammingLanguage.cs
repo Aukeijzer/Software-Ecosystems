@@ -72,5 +72,7 @@ public enum ProgrammingLanguage
     Gnuplot,
     StringTemplate,
     QMake,
-    Unknown
+    YAML,
+    Unknown,
+    Other
 }
