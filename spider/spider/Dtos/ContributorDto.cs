@@ -10,7 +10,9 @@ public class ContributorDto
     [DataMember(Name = "id")]
     public required int Id { get; init; }
     [DataMember(Name = "NodeId")]
-    public string? node_id { get; init; }
+    public string? Node_id { get; init; }
     [DataMember(Name = "contributions")]
     public int? Contributions { get; init; }
+    [DataMember(Name = "type")]
+    public string? Type { get; init; }
 }

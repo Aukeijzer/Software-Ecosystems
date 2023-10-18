@@ -15,7 +15,7 @@ public class GithubRestService : IGithubRestService
 
     public async Task<List<ContributorDto>> GetRepoContributors(String ownerName, string repoName)
     {
-        var request = new RestRequest("repos/" + ownerName + "/" + repoName + "/contributors");
+        var request = new RestRequest("repos/" + repoName + "/" + ownerName + "/contributors");
         var result = await _githubRestClient.GetAsync<Object>(request) ?? throw new HttpRequestException();
         return await _githubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
     }
