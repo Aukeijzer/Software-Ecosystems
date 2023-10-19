@@ -10,13 +10,12 @@ import InfoCard from "./infoCard";
 import ListComponent, { renderLanguageList, renderProjectList, renderTechnology, renderEngineer, renderTopic, renderTopicGrowing } from "./listComponent";
 import TableComponent, { renderProjectTable } from "./tableComponent";
 import GraphComponent, { renderPieGraph } from "./graphComponent";
-import InfoCardGrid from "./infoCardGrid";
 import { ecosystemModel } from "@/app/models/ecosystemModel";
 import EcosystemDescription from "./ecosystemDescription";
 
 //Mock data
 import { topTopics, topTechnologies, topEngineers, topProjects, topTopicsGrowing } from "@/mockData/mockAgriculture";
-import { InfoCardGridLayout } from "./infoCardGridLayout";
+import  GridLayout  from "./gridLayout";
 export interface cardWrapper{
     card: JSX.Element,
     width: number,
@@ -94,7 +93,7 @@ export default async function LayoutEcosystem(props: layoutEcosystemProps){
 
     return(
         <div className="mt-5 ml-10 mr-10">
-            <InfoCardGridLayout cards={cards} />
+            <GridLayout cards={cards} />
         </div>  
     )
 }

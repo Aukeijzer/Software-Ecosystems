@@ -1,16 +1,25 @@
 "use client"
+/*
+gridLayout exports:
+- GridLayout: JSX.Element containing a grid that can fit any number of grid items
+- input:
+    - cards: cardWrapper[] a list containing elements that have a cardWrapper around them
+- output: JSX.Element
+
+*/
+
+
 import 'react-grid-layout/css/styles.css' 
 import 'react-resizable/css/styles.css' 
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { cardTotal } from '@/app/test/page';
 import { cardWrapper } from './layoutEcosytem';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 interface InfoCardGridProps{
     cards: cardWrapper[]
 }
-export function InfoCardGridLayout(props: InfoCardGridProps){
+export default function GridLayout(props: InfoCardGridProps){
     const layout = [
         { i: "0", x: 0, y: 0, w: 2, h: 1},
         { i: "1", x: 2, y: 1, w: 2, h: 1},

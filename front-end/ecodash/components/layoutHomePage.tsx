@@ -3,13 +3,12 @@ import { handleApi } from "./apiHandler";
 import EcosystemInformationData from "./ecosystemInformationData";
 import EcosystemDescription from "./ecosystemDescription";
 import InfoCard from "./infoCard";
-import InfoCardDataTotal from "./infoCardDataTotal";
 import ListComponent, { renderOrganization } from "./listComponent";
 
 //Mock data
 import { totalInformation, topOrganizations, ogranization } from "@/mockData/mockEcosystems";
 import { cardWrapper } from "./layoutEcosytem";
-import { InfoCardGridLayout } from "./infoCardGridLayout";
+import  GridLayout  from "./gridLayout";
 
 export default async function LayoutHomePage(){
     
@@ -38,7 +37,7 @@ export default async function LayoutHomePage(){
 
     return(
         <div className="mt-10 ml-10 mr-10">
-            <InfoCardGridLayout cards={cards} />
+            <GridLayout cards={cards} />
         </div>
     )
 }
