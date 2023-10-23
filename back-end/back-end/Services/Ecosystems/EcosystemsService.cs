@@ -73,8 +73,8 @@ public class EcosystemsService : IEcosystemsService
         // Make the changes persistent by saving them to the database
         await _dbContext.SaveChangesAsync();
 
-        // Get the top languages associated with the ecosystem
-        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
+        // Get the most popular programming languages associated with the ecosystem
+        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(projectList);
         // Add the top languages to the ecosystem
         ecosystem.TopLanguages = topLanguages;
         
