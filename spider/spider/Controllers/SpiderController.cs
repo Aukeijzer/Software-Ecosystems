@@ -67,7 +67,7 @@ public class SpiderController : ControllerBase
         return result;
     }
     
-    [HttpGet("Contributors/{name}/{ownerName}")]
+    [HttpGet("Contributors/{ownerName}/{name}")]
     public async Task<ActionResult<List<ContributorDto>>> GetContributorsByName(string name, string ownerName)
     {
         name = WebUtility.UrlDecode(name);
