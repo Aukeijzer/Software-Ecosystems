@@ -23,23 +23,34 @@ public class SpiderController : ControllerBase
         _graphqlDataConverter = graphqlDataConverter;
         _githubRestService = githubRestService;
     }
-    //http:localhost:Portnumberhere/spider/name
+    //http:localhost:Portnumberhere/spider/name/amount
     [HttpGet("name/{name}/{amount}")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name, int amount, string? startCursor = null)
+    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name, int amount)
+    {
+        return await GetByName(name, amount, null);
+    }
+
+    [HttpGet("name/{name}/{amount}/{startCursor}")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name, int amount, string? startCursor)
+    {
+        return await ActionResult(name, amount, startCursor);
+    }
+    
+    private async Task<ActionResult<List<ProjectDto>>> ActionResult(string name, int amount, string? startCursor)
     {
         name = WebUtility.UrlDecode(name);
         if (startCursor != null)
         {
             WebUtility.UrlDecode(startCursor);
         }
-        _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name );
+        _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name);
         var listResult = await _gitHubGraphqlService.QueryRepositoriesByNameHelper(name, amount, startCursor);
         List<ProjectDto> result = new List<ProjectDto>();
         foreach (var spiderData in listResult)
         {
             result = result.Concat(_graphqlDataConverter.SearchToProjects(spiderData)).ToList();
         }
-        
+
         _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
         return result;
     }
