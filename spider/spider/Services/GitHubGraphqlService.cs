@@ -147,6 +147,29 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         return response.Data;
     }
     
+    public async Task<List<TopicSearchData>> QueryRepositoriesByTopicHelper(String topic, int amount, string? startCursor)
+    {
+      var projects = new List<TopicSearchData>();
+      string? cursor = startCursor;
+      
+      while (amount > 0)
+      {
+        if (amount > 50)
+        {
+          var temp = await QueryRepositoriesByTopic(topic, 50, cursor);
+          amount -= 50;
+          projects.Add(temp);
+          cursor = temp.Topic?.Repositories.PageInfo?.EndCursor;
+        }
+        else
+        {
+          projects.Add(await QueryRepositoriesByTopic(topic, amount, cursor));
+          amount = 0;
+        }
+      }
+      return projects;
+    }
+    
     public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount, string? cursor = null)
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()

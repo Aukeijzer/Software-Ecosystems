@@ -58,13 +58,33 @@ public class SpiderController : ControllerBase
     [HttpGet("topic/{topic}/{amount}")]
     public async Task<ActionResult<List<ProjectDto>>> GetByTopic(string topic, int amount)
     {
-        topic = WebUtility.UrlDecode(topic);
-        _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic );
-        var result = await _gitHubGraphqlService.QueryRepositoriesByTopic(topic);
-        _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.", this, topic);
-        return (result.Topic == null) ? new BadRequestResult() :  _graphqlDataConverter.TopicSearchToProjects(result);
+        return await GetByTopic(topic, amount, null);
     }
-    
+
+    [HttpGet("topic/{topic}/{amount}/{startCursor}")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByTopic(string topic, int amount, string? startCursor)
+    {
+        return await GetByTopicHelper(topic, amount, startCursor);
+    }
+
+    private async Task<ActionResult<List<ProjectDto>>> GetByTopicHelper(string topic, int amount, string? startCursor)
+    {
+        topic = WebUtility.UrlDecode(topic);
+        if (startCursor != null)
+        {
+            WebUtility.UrlDecode(startCursor);
+        }
+        var listResult = await _gitHubGraphqlService.QueryRepositoriesByTopicHelper(topic, amount, startCursor);
+        _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
+        List<ProjectDto> result = new List<ProjectDto>();
+        foreach (var topicSearchData in listResult)
+        {
+            result = result.Concat(_graphqlDataConverter.TopicSearchToProjects(topicSearchData)).ToList();
+        }
+        _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.", this, topic);
+        return result;
+    }
+
     [HttpGet("repository/{name}/{ownerName}")]
     public async Task<ActionResult<ProjectDto>> GetByName(string name, string ownerName)
     {
