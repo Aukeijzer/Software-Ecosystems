@@ -33,10 +33,10 @@ public class SpiderController : ControllerBase
     [HttpGet("name/{name}/{amount}/{startCursor}")]
     public async Task<ActionResult<List<ProjectDto>>> GetByName(string name, int amount, string? startCursor)
     {
-        return await ActionResult(name, amount, startCursor);
+        return await GetByNameHelper(name, amount, startCursor);
     }
     
-    private async Task<ActionResult<List<ProjectDto>>> ActionResult(string name, int amount, string? startCursor)
+    private async Task<ActionResult<List<ProjectDto>>> GetByNameHelper(string name, int amount, string? startCursor)
     {
         name = WebUtility.UrlDecode(name);
         if (startCursor != null)
