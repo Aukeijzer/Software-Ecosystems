@@ -24,19 +24,28 @@ public class SpiderController : ControllerBase
         _githubRestService = githubRestService;
     }
     //http:localhost:Portnumberhere/spider/name
-    [HttpGet("name/{name}")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name)
+    [HttpGet("name/{name}/{amount}")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name, int amount, string? startCursor = null)
     {
         name = WebUtility.UrlDecode(name);
+        if (startCursor != null)
+        {
+            WebUtility.UrlDecode(startCursor);
+        }
         _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name );
-        var result= _graphqlDataConverter.SearchToProjects(
-            await _gitHubGraphqlService.QueryRepositoriesByName(name));
+        var listResult = await _gitHubGraphqlService.QueryRepositoriesByNameHelper(name, amount, startCursor);
+        List<ProjectDto> result = new List<ProjectDto>();
+        foreach (var spiderData in listResult)
+        {
+            result = result.Concat(_graphqlDataConverter.SearchToProjects(spiderData)).ToList();
+        }
+        
         _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
         return result;
     }
     
-    [HttpGet("topic/{topic}")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByTopic(string topic)
+    [HttpGet("topic/{topic}/{amount}")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByTopic(string topic, int amount)
     {
         topic = WebUtility.UrlDecode(topic);
         _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic );
@@ -67,8 +76,8 @@ public class SpiderController : ControllerBase
         return result;
     }
     
-    [HttpGet("Contributors/{ownerName}/{name}")]
-    public async Task<ActionResult<List<ContributorDto>>> GetContributorsByName(string name, string ownerName)
+    [HttpGet("Contributors/{ownerName}/{name}/{amount}")]
+    public async Task<ActionResult<List<ContributorDto>>> GetContributorsByName(string name, string ownerName, int amount)
     {
         name = WebUtility.UrlDecode(name);
         ownerName = WebUtility.UrlDecode(ownerName);

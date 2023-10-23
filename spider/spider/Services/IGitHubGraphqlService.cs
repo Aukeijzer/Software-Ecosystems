@@ -6,9 +6,10 @@ namespace spider.Services;
 
 public interface IGitHubGraphqlService
 {
-    public Task<SpiderData> QueryRepositoriesByName(string name, int amount = 10);
+    public Task<List<SpiderData>> QueryRepositoriesByNameHelper(string name, int amount = 10, string? startCursor = null);
+    public Task<SpiderData> QueryRepositoriesByName(string name, int amount = 10, string? cursor = null);
 
-    public Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount = 10);
+    public Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount = 10, string? cursor = null);
     
     public Task<RepositoryWrapper> QueryRepositoryByName(string repoName, string ownerName);
 

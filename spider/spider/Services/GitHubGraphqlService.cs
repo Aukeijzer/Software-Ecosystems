@@ -19,14 +19,42 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
     }
 
-    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10)
+    public async Task<List<SpiderData>> QueryRepositoriesByNameHelper(String name, int amount, string? startCursor)
+    {
+      var projects = new List<SpiderData>();
+      string? cursor = startCursor;
+      
+      while (amount > 0)
+      {
+        if (amount > 50)
+        {
+          var temp = await QueryRepositoriesByName(name, 50, cursor);
+          amount -= 50;
+          projects.Add(temp);
+          cursor = temp.Search.PageInfo?.EndCursor;
+        }
+        else
+        {
+          projects.Add(await QueryRepositoriesByName(name, amount, cursor));
+          amount = 0;
+        }
+      }
+      return projects;
+    }
+
+    
+    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string? cursor = null)
     {
         // GraphQL query to search the repositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
         {
-            Query = @"query repositoriesQueryRequest($name: String!, $_amount : Int!){
-                        search(query: $name, type: REPOSITORY, first: $_amount) {
+            Query = @"query repositoriesQueryRequest($name: String!, $_amount : Int!, $_cursor : String){
+                        search(query: $name, type: REPOSITORY, first: $_amount, after: $_cursor) {
                         repositoryCount
+                        pageInfo{
+                          startCursor
+                          endCursor
+                        }
                          nodes {
                             ... on Repository {
                                 name
@@ -111,7 +139,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                         }
                     }",
             OperationName = "repositoriesQueryRequest",
-            Variables = new{name= repositoryName, _amount = amount}
+            Variables = new{name= repositoryName, _amount = amount, _cursor = cursor}
         };
         await _client.SendQueryAsync<Object>(repositoriesQuery);
         
@@ -119,14 +147,18 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         return response.Data;
     }
     
-    public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount)
+    public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount, string? cursor = null)
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()
         {
             //graphql query to search for repositories based on a github topic
-            Query = @"query repositoriesQueryRequest($_topic: String!, $_amount : Int!) {
+            Query = @"query repositoriesQueryRequest($_topic: String!, $_amount : Int!, $_cursor : string) {
                         topic(name: $_topic) {
-                            repositories(first: $_amount) {
+                            repositories(first: $_amount, after: $_cursor) {
+                                pageInfo{
+                                  startCursor
+                                  endCursor
+                                }
                                 nodes {
                                     name
                                     id
@@ -210,7 +242,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                                     }
                                   }",
             OperationName = "repositoriesQueryRequest",
-            Variables = new{_topic= topic, _amount = amount}
+            Variables = new{_topic= topic, _amount = amount, _cursor = cursor}
         };
         
         var response = await _client.SendQueryAsync(topicRepositoriesQuery,
