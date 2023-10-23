@@ -1,4 +1,4 @@
-using SECODashBackend.Models;
+﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Project;
@@ -20,17 +20,6 @@ public class ProjectsController : ControllerBase
         _projectsService = projectsService;
     }
    
-    [HttpGet]
-    [SwaggerOperation("GetAllProjects")]       
-    [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<List<Project>>> GetAllAsync()
-    {
-        _logger.LogInformation("{Origin}: All projects requested.", this);
-        var result = await _projectsService.GetAllAsync(); 
-        _logger.LogInformation("{Origin}: Returning all projects.", this);
-        return new ObjectResult(result);
-    }
-
     [HttpGet("{id:long}")]
     [SwaggerOperation("GetProjectById")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
@@ -41,21 +30,22 @@ public class ProjectsController : ControllerBase
         _logger.LogInformation("{Origin}: Returning project with Id: '{Ecosystem}'.", this ,id);
         return result == null ? NotFound() : result;
     }
-
-    [HttpPost]
-    public async Task<ActionResult> PostAsync(Project project)
+    
+    [HttpPost("searchbytopic")]
+    [SwaggerOperation("GetProjectsByTopics")]       
+    [SwaggerResponse(statusCode: 200, description: "successful operation")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByTopicsAsync(params string[] topics)
     {
-        _logger.LogInformation("{Origin}: Posting project with the name: '{Ecosystem}'.",
-            this, project.Name);
-        await _projectsService.AddAsync(project);
-        _logger.LogInformation("{Origin}: Project with the name: '{Ecosystem}' has been posted.",
-            this, project.Name);
-
-        
-        return CreatedAtAction(
-            // ReSharper disable once Mvc.ActionNotResolved
-            nameof(GetByIdAsync),
-            new { id = project.Id },
-            project);
+        _logger.LogInformation("{Origin}: Projects requested with topics: '{topics}'.", this, topics);
+        var dtos = await _projectsService.GetByTopicAsync(topics);
+        var projects = dtos.Select(ProjectConverter.ToProjectDto);
+        var projectDtos = projects.ToList();
+        if (!projectDtos.Any())
+        {
+            _logger.LogInformation("{Origin}: No projects found with topics: '{topics}'.", this, topics);
+            return NotFound();
+        }
+        _logger.LogInformation("{Origin}: Returning projects with topics: '{topics}'.", this, topics);
+        return projectDtos;
     }
 }
