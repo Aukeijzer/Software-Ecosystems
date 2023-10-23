@@ -19,7 +19,7 @@ public class EcosystemsService : IEcosystemsService
     public EcosystemsService(
         EcosystemsContext dbContext,
         ISpiderService spiderService,
-        IElasticsearchService elasticsearchService
+        IElasticsearchService elasticsearchService,
         IDataProcessorService dataProcessorService)
     {
         _dbContext = dbContext;
