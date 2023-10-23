@@ -1,6 +1,5 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Enums;
 
 namespace SECODashBackend.Models;

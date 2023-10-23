@@ -1,5 +1,7 @@
-﻿using SECODashBackend.Models;
+using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using SECODashBackend.DataConverters;
+using SECODashBackend.Dtos.Project;
 using SECODashBackend.Services.Projects;
 using Swashbuckle.AspNetCore.Annotations;
 

@@ -1,8 +1,5 @@
-using System.Net;
 using System.Text.Json.Serialization;
 using Elastic.Clients.Elasticsearch;
-using Elastic.Clients.Elasticsearch.Options;
-using Elastic.Clients.Elasticsearch.Serialization;
 using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;

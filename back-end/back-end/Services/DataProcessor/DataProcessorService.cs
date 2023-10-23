@@ -1,5 +1,5 @@
 ﻿using RestSharp;
-using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.Topic;
 
 namespace SECODashBackend.Services.DataProcessor;
 

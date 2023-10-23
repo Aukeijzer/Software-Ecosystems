@@ -1,6 +1,6 @@
 ﻿using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Core.Bulk;
-using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Services.ElasticSearch;
 

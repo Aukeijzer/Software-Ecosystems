@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.ProgrammingLanguage;
+using SECODashBackend.Dtos.Project;
+using SECODashBackend.Dtos.Topic;
 using SECODashBackend.Enums;
 using SECODashBackend.Models;
 
