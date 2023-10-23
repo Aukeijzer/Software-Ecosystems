@@ -12,19 +12,16 @@ namespace SECODashBackend.Services.Ecosystems;
 public class EcosystemsService : IEcosystemsService
 {
     private readonly EcosystemsContext _dbContext;
-    private readonly ISpiderService _spiderService;
     private readonly IDataProcessorService _dataProcessorService;
-    private readonly IElasticsearchService _elasticsearchService;
+    private readonly IProjectsService _projectsService;
 
     public EcosystemsService(
         EcosystemsContext dbContext,
-        ISpiderService spiderService,
-        IElasticsearchService elasticsearchService,
+        IProjectsService projectsService,
         IDataProcessorService dataProcessorService)
     {
         _dbContext = dbContext;
-        _spiderService = spiderService;
-        _elasticsearchService = elasticsearchService;
+        _projectsService = projectsService;
         _dataProcessorService = dataProcessorService;
     }
     public async Task<List<Ecosystem>?> GetAllAsync()
@@ -59,28 +56,23 @@ public class EcosystemsService : IEcosystemsService
             .SingleOrDefaultAsync(e => e.Name == name);
         if (ecosystem == null) return null;
         
-        // Request the Spider for projects related to this ecosystem.
-        var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
-
-        // Check which projects are not already in the Projects list of the ecosystem
-        var newProjects = dtos
-            .Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id))
-            .Select(ProjectConverter.ToProject);
-
-        // Only add these projects to the database
-        ecosystem.Projects.AddRange(newProjects);
         
-        // Make the changes persistent by saving them to the database
-        await _dbContext.SaveChangesAsync();
+        if (ecosystem == null) throw new KeyNotFoundException();
+
+        var ecosystemDto = EcosystemConverter.ToDto(ecosystem);
+        
+        // Retrieve the projects belonging to the ecosystem
+        var projects = await _projectsService.GetByTopicAsync(ecosystem.Name);
+        var projectList = projects.ToList();
 
         // Get the most popular programming languages associated with the ecosystem
         var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(projectList);
         // Add the top languages to the ecosystem
         ecosystem.TopLanguages = topLanguages;
         
-        // TODO: remove, used for testing elasticsearch
-        await _elasticsearchService.AddProjects(ecosystem.Projects.Select(ProjectConverter.ToProjectDto));
-        var elasticsearchProjects = await _elasticsearchService.GetProjectsByTopic(ecosystem.Name); 
+        // Add the projects and languages to the ecosystem dto
+        ecosystemDto.Projects = projectList.Select(ProjectConverter.ToProjectDto);
+        ecosystemDto.TopLanguages = topLanguages;
         
         return ecosystem;
     }
