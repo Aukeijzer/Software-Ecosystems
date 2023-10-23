@@ -1,4 +1,5 @@
 ﻿using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
 
 
@@ -6,8 +7,8 @@ namespace SECODashBackend.Services.Ecosystems;
 
 public interface IEcosystemsService
 {
-   public Task<List<Ecosystem>?> GetAllAsync();
+   public Task<List<EcosystemDto>> GetAllAsync();
    public Task<int> AddAsync(Ecosystem ecosystem);
-   Task<Ecosystem?> GetByIdAsync(string id);
-   Task<Ecosystem?> GetByNameAsync(string name);
+   Task<EcosystemDto> GetByIdAsync(string id);
+   Task<EcosystemDto> GetByNameAsync(string name);
 }

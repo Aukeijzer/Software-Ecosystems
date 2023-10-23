@@ -13,33 +13,18 @@ namespace SECODashBackend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Ecosystems",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    DisplayName = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    NumberOfStars = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ecosystems", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Owner = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Owner = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Topics = table.Column<List<string>>(type: "text[]", nullable: false),
                     TotalSize = table.Column<int>(type: "integer", nullable: true),
                     ReadMe = table.Column<string>(type: "text", nullable: true),
-                    NumberOfStars = table.Column<int>(type: "integer", nullable: true)
+                    NumberOfStars = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,27 +32,24 @@ namespace SECODashBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EcosystemProject",
+                name: "Ecosystems",
                 columns: table => new
                 {
-                    EcosystemsId = table.Column<string>(type: "text", nullable: false),
-                    ProjectsId = table.Column<string>(type: "text", nullable: false)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    DisplayName = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    NumberOfStars = table.Column<int>(type: "integer", nullable: true),
+                    ProjectId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EcosystemProject", x => new { x.EcosystemsId, x.ProjectsId });
+                    table.PrimaryKey("PK_Ecosystems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EcosystemProject_Ecosystems_EcosystemsId",
-                        column: x => x.EcosystemsId,
-                        principalTable: "Ecosystems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EcosystemProject_Projects_ProjectsId",
-                        column: x => x.ProjectsId,
+                        name: "FK_Ecosystems_Projects_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -90,15 +72,15 @@ namespace SECODashBackend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EcosystemProject_ProjectsId",
-                table: "EcosystemProject",
-                column: "ProjectsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Ecosystems_Name",
                 table: "Ecosystems",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ecosystems_ProjectId",
+                table: "Ecosystems",
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectProgrammingLanguage_ProjectId",
@@ -110,13 +92,10 @@ namespace SECODashBackend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EcosystemProject");
+                name: "Ecosystems");
 
             migrationBuilder.DropTable(
                 name: "ProjectProgrammingLanguage");
-
-            migrationBuilder.DropTable(
-                name: "Ecosystems");
 
             migrationBuilder.DropTable(
                 name: "Projects");

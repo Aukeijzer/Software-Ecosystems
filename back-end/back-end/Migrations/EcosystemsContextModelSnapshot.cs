@@ -23,21 +23,6 @@ namespace SECODashBackend.Migrations
 
             NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
 
-            modelBuilder.Entity("EcosystemProject", b =>
-                {
-                    b.Property<string>("EcosystemsId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProjectsId")
-                        .HasColumnType("text");
-
-                    b.HasKey("EcosystemsId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("EcosystemProject");
-                });
-
             modelBuilder.Entity("SECODashBackend.Models.Ecosystem", b =>
                 {
                     b.Property<string>("Id")
@@ -56,10 +41,15 @@ namespace SECODashBackend.Migrations
                     b.Property<int?>("NumberOfStars")
                         .HasColumnType("integer");
 
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Ecosystems");
                 });
@@ -69,7 +59,7 @@ namespace SECODashBackend.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
@@ -79,10 +69,11 @@ namespace SECODashBackend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("NumberOfStars")
+                    b.Property<int>("NumberOfStars")
                         .HasColumnType("integer");
 
                     b.Property<string>("Owner")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ReadMe")
@@ -121,19 +112,11 @@ namespace SECODashBackend.Migrations
                     b.ToTable("ProjectProgrammingLanguage");
                 });
 
-            modelBuilder.Entity("EcosystemProject", b =>
+            modelBuilder.Entity("SECODashBackend.Models.Ecosystem", b =>
                 {
-                    b.HasOne("SECODashBackend.Models.Ecosystem", null)
-                        .WithMany()
-                        .HasForeignKey("EcosystemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SECODashBackend.Models.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Ecosystems")
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("SECODashBackend.Models.ProjectProgrammingLanguage", b =>
@@ -145,6 +128,8 @@ namespace SECODashBackend.Migrations
 
             modelBuilder.Entity("SECODashBackend.Models.Project", b =>
                 {
+                    b.Navigation("Ecosystems");
+
                     b.Navigation("Languages");
                 });
 #pragma warning restore 612, 618

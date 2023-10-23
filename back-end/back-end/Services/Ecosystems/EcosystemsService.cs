@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
+using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
 using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.ProgrammingLanguages;
-using SECODashBackend.Services.ElasticSearch;
+using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
 
 namespace SECODashBackend.Services.Ecosystems;
@@ -24,38 +25,37 @@ public class EcosystemsService : IEcosystemsService
         _projectsService = projectsService;
         _dataProcessorService = dataProcessorService;
     }
-    public async Task<List<Ecosystem>?> GetAllAsync()
+    public async Task<List<EcosystemDto>> GetAllAsync()
     {
-        return await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
+        var ecosystems = await _dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
+        return ecosystems.Select(EcosystemConverter.ToDto).ToList();
     }
 
+    // TODO: convert to accept a dto instead of an Ecosystem
     public async Task<int> AddAsync(Ecosystem ecosystem)
     {
         await _dbContext.Ecosystems.AddAsync(ecosystem);
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Ecosystem?> GetByIdAsync(string id)
-    {
-        return await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
-            .AsNoTracking()
-            .SingleOrDefaultAsync(e => e.Id == id);
-    }
-
-    public async Task<Ecosystem?> GetByNameAsync(string name)
+    public async Task<EcosystemDto> GetByIdAsync(string id)
     {
         var ecosystem = await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
-            .SingleOrDefaultAsync(e => e.Name == name);
-        if (ecosystem == null) return null;
+            .AsNoTracking()
+            .SingleOrDefaultAsync(e => e.Id == id);
         
+        if (ecosystem == null) throw new KeyNotFoundException();
+        
+        return EcosystemConverter.ToDto(ecosystem);
+    }
+
+    public async Task<EcosystemDto> GetByNameAsync(string name)
+    {
+        var ecosystem = await _dbContext.Ecosystems
+            .AsNoTracking()
+            .SingleOrDefaultAsync(e => e.Name == name);
         
         if (ecosystem == null) throw new KeyNotFoundException();
 
@@ -64,16 +64,14 @@ public class EcosystemsService : IEcosystemsService
         // Retrieve the projects belonging to the ecosystem
         var projects = await _projectsService.GetByTopicAsync(ecosystem.Name);
         var projectList = projects.ToList();
-
+        
         // Get the most popular programming languages associated with the ecosystem
         var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(projectList);
-        // Add the top languages to the ecosystem
-        ecosystem.TopLanguages = topLanguages;
         
         // Add the projects and languages to the ecosystem dto
         ecosystemDto.Projects = projectList.Select(ProjectConverter.ToProjectDto);
         ecosystemDto.TopLanguages = topLanguages;
         
-        return ecosystem;
+        return ecosystemDto;
     }
 }
