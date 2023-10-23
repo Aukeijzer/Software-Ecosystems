@@ -8,6 +8,7 @@ public class ElasticsearchService : IElasticsearchService
 {
     private const string ProjectIndex = "projects";
     private readonly ElasticsearchClient _client;
+    private const int NumberOfRequestedProjects = 1000;
     
     public ElasticsearchService(ElasticsearchClient client)
     {
@@ -24,16 +25,17 @@ public class ElasticsearchService : IElasticsearchService
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
 
-    public async Task<List<ProjectDto>> GetProjectsByTopic(string topic, int amount)
+    public async Task<List<ProjectDto>> GetProjectsByTopic(params string[] topics)
     {
         var response = await _client.SearchAsync<ProjectDto>(s => s 
             .Index(ProjectIndex) 
             .From(0)
-            .Size(amount)
+            .Size(NumberOfRequestedProjects)
             .Query(q => q
-                .Term(t => t.Topics, topic) 
-            )
-        );
+                .TermsSet(t => t
+                    .Field(p => p.Topics)
+                    .Terms(topics)
+                    .MinimumShouldMatchScript( new Script(new InlineScript("params.num_terms"))))));
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
         return response.Documents.ToList();
     }
