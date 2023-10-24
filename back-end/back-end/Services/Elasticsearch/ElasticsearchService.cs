@@ -24,7 +24,12 @@ public class ElasticsearchService : IElasticsearchService
         var response = await _client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
-
+/// <summary>
+/// Search the projects index for project documents for which the "topics" property contains all of the provided topics/ecosystems
+/// </summary>
+/// <param name="topics"></param>
+/// <returns></returns>
+/// <exception cref="HttpRequestException"></exception>
     public async Task<List<ProjectDto>> GetProjectsByTopic(params string[] topics)
     {
         var response = await _client.SearchAsync<ProjectDto>(s => s 

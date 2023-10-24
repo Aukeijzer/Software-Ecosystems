@@ -18,6 +18,7 @@ public class ProjectsService : IProjectsService
         _spiderService = spiderService;
     }
 
+    // TODO: determine if we still need this functionality, if so, implement it using elasticsearch
     public async Task<Project?> GetByIdAsync(string id)
     {
         throw new NotImplementedException();
