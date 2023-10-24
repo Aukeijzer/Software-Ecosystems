@@ -163,7 +163,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         }
         else
         {
-          projects.Add(await QueryRepositoriesByTopic(topic, amount, cursor));
+          var temp = await QueryRepositoriesByTopic(topic, amount, cursor);
+          projects.Add(temp);
           amount = 0;
         }
       }
@@ -175,95 +176,95 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         var topicRepositoriesQuery = new GraphQLHttpRequest()
         {
             //graphql query to search for repositories based on a github topic
-            Query = @"query repositoriesQueryRequest($_topic: String!, $_amount : Int!, $_cursor : string) {
+            Query = @"query repositoriesQueryRequest($_topic: String!, $_amount: Int!, $_cursor: String) {
                         topic(name: $_topic) {
-                            repositories(first: $_amount, after: $_cursor) {
-                                pageInfo{
-                                  startCursor
-                                  endCursor
-                                }
-                                nodes {
-                                    name
-                                    id
-                                    defaultBranchRef {
-                                      name
-                                      target {
-                                        ... on Commit {
-                                          history(first: 1) {
-                                            edges {
-                                              node {
-                                                ... on Commit {
-                                                  committedDate
-                                                }
-                                              }
-                                            }
+                          repositories(first: $_amount, after: $_cursor) {
+                            pageInfo {
+                              startCursor
+                              endCursor
+                            }
+                            nodes {
+                              name
+                              id
+                              defaultBranchRef {
+                                name
+                                target {
+                                  ... on Commit {
+                                    history(first: 1) {
+                                      edges {
+                                        node {
+                                          ... on Commit {
+                                            committedDate
                                           }
                                         }
                                       }
                                     }
-                                    createdAt
-                                    description
-                                    stargazerCount
-                                    languages(first: 100) {
-                                      totalSize
-                                      edges {
-                                        size
-                                        node {
-                                          name
-                                        }
-                                      }
-                                    }
-                                    owner{
-                                        login
-                                    }
-                                    repositoryTopics(first: 100){
-                                        nodes{
-                                            topic{
-                                            name
-                                            }
-                                        }
-                                    }
-                                    readmeCaps: object(expression: ""HEAD:README.md"") {
-                                      ... on Blob {
-                                        text
-                                      }
-                                    }
-                                    readmeLower: object(expression: ""HEAD:readme.md"") {
-                                      ... on Blob {
-                                        text
-                                      }
-                                    }
-                                    readmeFstCaps: object(expression: ""HEAD:Readme.md"") {
-                                      ... on Blob {
-                                        text
-                                      }
-                                    }
-                                    readmerstCaps: object(expression: ""HEAD:README.rst"") {
-                                      ... on Blob {
-                                        text
-                                      }
-                                    }
-                                    readmerstLower: object(expression: ""HEAD:readme.rst"") {
-                                      ... on Blob {
-                                        text
-                                      }
-                                    }
-                                    readmerstFstCaps: object(expression: ""HEAD:Readme.rst"") {
-                                      ... on Blob {
-                                        text
-                                      }
-                                    }
-                                        }
-                                      }
-                                    }
-                                    rateLimit {
-                                      remaining
-                                      cost
-                                      limit
-                                      resetAt
-                                      used
-                                    }
-                                  }",
+                                  }
+                                }
+                              }
+                              createdAt
+                              description
+                              stargazerCount
+                              languages(first: 100) {
+                                totalSize
+                                edges {
+                                  size
+                                  node {
+                                    name
+                                  }
+                                }
+                              }
+                              owner {
+                                login
+                              }
+                              repositoryTopics(first: 100) {
+                                nodes {
+                                  topic {
+                                    name
+                                  }
+                                }
+                              }
+                              readmeCaps: object(expression: ""HEAD:README.md"") {
+                                ... on Blob {
+                                  text
+                                }
+                              }
+                              readmeLower: object(expression: ""HEAD:readme.md"") {
+                                ... on Blob {
+                                  text
+                                }
+                              }
+                              readmeFstCaps: object(expression: ""HEAD:Readme.md"") {
+                                ... on Blob {
+                                  text
+                                }
+                              }
+                              readmerstCaps: object(expression: ""HEAD:README.rs"") {
+                                ... on Blob {
+                                  text
+                                }
+                              }
+                              readmerstLower: object(expression: ""HEAD:readme.rs"") {
+                                ... on Blob {
+                                  text
+                                }
+                              }
+                              readmerstFstCaps: object(expression: ""HEAD:Readme.rst"") {
+                                ... on Blob {
+                                  text
+                                }
+                              }
+                            }
+                          }
+                        }
+                        rateLimit {
+                          remaining
+                          cost
+                          limit
+                          resetAt
+                          used
+                        }
+                      }",
             OperationName = "repositoriesQueryRequest",
             Variables = new{_topic= topic, _amount = amount, _cursor = cursor}
         };
