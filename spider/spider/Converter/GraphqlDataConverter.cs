@@ -1,5 +1,6 @@
 using spider.Dtos;
 using spider.Models;
+using spider.Models.Graphql;
 
 namespace spider.Converter;
 

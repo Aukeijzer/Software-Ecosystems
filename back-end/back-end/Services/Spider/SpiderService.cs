@@ -1,5 +1,6 @@
 using RestSharp;
 using SECODashBackend.Dtos;
+using spider.Dtos;
 
 namespace SECODashBackend.Services.Spider;
 
@@ -29,5 +30,11 @@ public class SpiderService : ISpiderService
     {
         var request = new RestRequest("", Method.Post).AddJsonBody(projectDtos);
         return await _spiderClient.PostAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
+    }
+
+    public async Task<List<ContributorDto>> GetContributors(ProjectRequestDto projectDto)
+    {
+        var request = new RestRequest("contributors/" + projectDto.OwnerName + "/" + projectDto.RepoName);
+        return await _spiderClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
     }
 }
