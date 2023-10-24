@@ -1,9 +1,10 @@
 using spider.Dtos;
 using spider.Models;
+using spider.Models.Graphql;
 
 namespace spider.Services;
 
-public interface IGitHubService
+public interface IGitHubGraphqlService
 {
     public Task<SpiderData> QueryRepositoriesByName(string name, int amount = 10);
 

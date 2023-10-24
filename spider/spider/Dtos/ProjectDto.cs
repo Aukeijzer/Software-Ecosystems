@@ -6,7 +6,7 @@ namespace spider.Dtos;
 public class ProjectDto
 {
    [DataMember(Name = "id")]
-   public required string Id { get; init; }
+   public required string Id { get; set; }
    
    [DataMember(Name = "name")]
    public required string Name { get; set; }
