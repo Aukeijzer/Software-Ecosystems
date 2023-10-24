@@ -178,7 +178,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             //graphql query to search for repositories based on a github topic
             Query = @"query repositoriesQueryRequest($_topic: String!, $_amount: Int!, $_cursor: String) {
                         topic(name: $_topic) {
-                          repositories(first: $_amount, after: $_cursor) {
+                          repositories(first: $_amount, after: $_cursor, orderBy: {field: STARGAZERS, direction: DESC}) {
                             pageInfo {
                               startCursor
                               endCursor
