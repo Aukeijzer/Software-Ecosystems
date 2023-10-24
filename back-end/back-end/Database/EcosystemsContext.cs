@@ -14,5 +14,4 @@ public class EcosystemsContext: DbContext
       modelBuilder.UseSerialColumns();
    }
    public DbSet<Ecosystem> Ecosystems { get; set; }
-   public DbSet<Project> Projects { get; set; }
 }

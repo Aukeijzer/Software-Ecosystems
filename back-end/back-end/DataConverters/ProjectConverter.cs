@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.ProgrammingLanguage;
+using SECODashBackend.Dtos.Project;
+using SECODashBackend.Dtos.Topic;
 using SECODashBackend.Enums;
 using SECODashBackend.Models;
 
@@ -39,6 +41,22 @@ public static class ProjectConverter
             Name = project.Name,
             Description = project.Description,
             Readme = project.ReadMe ?? throw new InvalidOperationException()
+        };
+    }
+
+    public static ProjectDto ToProjectDto(Project project)
+    {
+        return new ProjectDto
+        {
+            Id = project.Id,
+            Name = project.Name,
+            CreatedAt = project.CreatedAt,
+            Description = project.Description,
+            Topics = project.Topics,
+            // Languages = project.Languages, 
+            NumberOfStars = project.NumberOfStars,
+            Owner = project.Owner,
+            ReadMe = project.ReadMe
         };
     }
 

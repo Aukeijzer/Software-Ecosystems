@@ -9,93 +9,88 @@ public class LanguageTest
     public void GetLanguagesPerEcosystem_ReturnsCorrectList()
     {
         // Arrange
-        var ecosystem = new Ecosystem
+        var projects = new List<Project>
         {
-            Id = "1",
-            Name = "Ecosystem1",
-            Projects = new List<Project>
+            new Project
             {
-                new Project
+                Id = "1",
+                Name = "Project1",
+                Languages = new List<ProjectProgrammingLanguage>
                 {
-                    Id = "1",
-                    Name = "Project1",
-                    Languages = new List<ProjectProgrammingLanguage>
+                    new ProjectProgrammingLanguage
                     {
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "1",
-                            Language = ProgrammingLanguage.CSharp,
-                            Percentage = 70,
-                        },
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "2",
-                            Language = ProgrammingLanguage.Java,
-                            Percentage = 5,
-                        }
+                        Id = "1",
+                        Language = ProgrammingLanguage.CSharp,
+                        Percentage = 70,
                     },
-                    Owner = "Owner1",
+                    new ProjectProgrammingLanguage
+                    {
+                        Id = "2",
+                        Language = ProgrammingLanguage.Java,
+                        Percentage = 5,
+                    }
                 },
-                new Project
+                Owner = "Owner1",
+            },
+            new Project
+            {
+                Id = "2",
+                Name = "Project2",
+                Languages = new List<ProjectProgrammingLanguage>
                 {
-                    Id = "2",
-                    Name = "Project2",
-                    Languages = new List<ProjectProgrammingLanguage>
+                    new ProjectProgrammingLanguage
                     {
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "3",
-                            Language = ProgrammingLanguage.ABAP,
-                            Percentage = 10
-                        },
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "4",
-                            Language = ProgrammingLanguage.Python,
-                            Percentage = 30
-                        },
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "5",
-                            Language = ProgrammingLanguage.CSharp,
-                            Percentage = 60
-                        }
+                        Id = "3",
+                        Language = ProgrammingLanguage.ABAP,
+                        Percentage = 10
                     },
-                    Owner = "owner2",
+                    new ProjectProgrammingLanguage
+                    {
+                        Id = "4",
+                        Language = ProgrammingLanguage.Python,
+                        Percentage = 30
+                    },
+                    new ProjectProgrammingLanguage
+                    {
+                        Id = "5",
+                        Language = ProgrammingLanguage.CSharp,
+                        Percentage = 60
+                    }
                 },
-                new Project
+                Owner = "owner2",
+            },
+            new Project
+            {
+                Id = "3",
+                Name = "Project3",
+                Languages = new List<ProjectProgrammingLanguage>
                 {
-                    Id = "3",
-                    Name = "Project3",
-                    Languages = new List<ProjectProgrammingLanguage>
+                    new ProjectProgrammingLanguage
                     {
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "6",
-                            Language = ProgrammingLanguage.ABAP,
-                            Percentage = 40
-                        },
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "7",
-                            Language = ProgrammingLanguage.R,
-                            Percentage = 20
-                        },
-                        new ProjectProgrammingLanguage
-                        {
-                            Id = "8",
-                            Language = ProgrammingLanguage.Dockerfile,
-                            Percentage = 40
-                        }
+                        Id = "6",
+                        Language = ProgrammingLanguage.ABAP,
+                        Percentage = 40
                     },
-                    Owner = "owner3",
-                }
-                
+                    new ProjectProgrammingLanguage
+                    {
+                        Id = "7",
+                        Language = ProgrammingLanguage.R,
+                        Percentage = 20
+                    },
+                    new ProjectProgrammingLanguage
+                    {
+                        Id = "8",
+                        Language = ProgrammingLanguage.Dockerfile,
+                        Percentage = 40
+                    }
+                },
+                Owner = "owner3",
             }
+
         };
         
         // Act
-        var result = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
+        var result = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(projects);
         
         // Assert that the list contains the correct amount of languages
         Assert.That(result, Has.Count.EqualTo(6));
