@@ -13,15 +13,15 @@ public class SpiderController : ControllerBase
     private readonly ILogger<SpiderController> _logger;
     private readonly IGitHubGraphqlService _gitHubGraphqlService;
     private readonly IGraphqlDataConverter _graphqlDataConverter;
-    private readonly IGithubRestService _githubRestService;
+    private readonly IGitHubRestService _gitHubRestService;
 
     public SpiderController(IGitHubGraphqlService gitHubGraphqlService, IGraphqlDataConverter graphqlDataConverter,
-        IGithubRestService githubRestService, ILogger<SpiderController> logger)
+        IGitHubRestService gitHubRestService, ILogger<SpiderController> logger)
     {
         _logger = logger;
         _gitHubGraphqlService = gitHubGraphqlService;
         _graphqlDataConverter = graphqlDataConverter;
-        _githubRestService = githubRestService;
+        _gitHubRestService = gitHubRestService;
     }
     //http:localhost:Portnumberhere/spider/name/amount
     [HttpGet("name/{name}/{amount}")]
@@ -114,7 +114,7 @@ public class SpiderController : ControllerBase
         ownerName = WebUtility.UrlDecode(ownerName);
         _logger.LogInformation("{Origin}: Contributors requested by name and owner: {name}, {owner}.",
             this, name , ownerName );
-        var result = await _githubRestService.GetRepoContributors(name, ownerName, amount);     
+        var result = await _gitHubRestService.GetRepoContributors(name, ownerName, amount);     
         _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
             this, name , ownerName);
         return result;

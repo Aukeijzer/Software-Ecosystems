@@ -3,14 +3,14 @@ using RestSharp;
 
 namespace spider.Services;
 
-public class GithubRestService : IGithubRestService
+public class GitHubRestService : IGitHubRestService
 {
-    private readonly RestClient _githubRestClient;
-    public GithubRestService()
+    private readonly RestClient _gitHubRestClient;
+    public GitHubRestService()
     {
         var options = new RestClientOptions("https://api.github.com");
-        _githubRestClient = new RestClient(options);
-        _githubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable("API_Token"));
+        _gitHubRestClient = new RestClient(options);
+        _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable("API_Token"));
     }
 
     public async Task<List<ContributorDto>> GetRepoContributors(String ownerName, string repoName, int amount = 50)
@@ -24,7 +24,7 @@ public class GithubRestService : IGithubRestService
             if (amount > 50)
             {
                 request.AddOrUpdateParameter("page", page);
-                var temp =  await _githubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
+                var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
                 result = result.Concat(temp).ToList();
                 if (temp.Count < 50)
                 {
@@ -36,7 +36,7 @@ public class GithubRestService : IGithubRestService
             else
             {
                 request.AddOrUpdateParameter("page", page);
-                var temp =  await _githubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
+                var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
                 if (temp.Count < amount)
                 {
                     result = result.Concat(temp).ToList();
