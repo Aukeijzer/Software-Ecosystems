@@ -114,7 +114,7 @@ public class SpiderController : ControllerBase
         ownerName = WebUtility.UrlDecode(ownerName);
         _logger.LogInformation("{Origin}: Contributors requested by name and owner: {name}, {owner}.",
             this, name , ownerName );
-        var result = await _githubRestService.GetRepoContributors(name, ownerName);        
+        var result = await _githubRestService.GetRepoContributors(name, ownerName, amount);     
         _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
             this, name , ownerName);
         return result;
