@@ -141,7 +141,6 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             OperationName = "repositoriesQueryRequest",
             Variables = new{name= repositoryName, _amount = amount, _cursor = cursor}
         };
-        await _client.SendQueryAsync<Object>(repositoriesQuery);
         
         var response = await _client.SendQueryAsync(repositoriesQuery,  () => new SpiderData());
         return response.Data;
