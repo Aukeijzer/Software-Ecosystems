@@ -1,9 +1,12 @@
 using System.Text.Json.Serialization;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Logging;
 using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Ecosystems;
+using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
 
@@ -16,11 +19,18 @@ builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNa
 builder.Services.AddDbContext<EcosystemsContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb"))
     );
-//TODO: figure out appropriate method for adding these service, scoped vs transient vs singleton;
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<ISpiderService, SpiderService>();
 builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
+// TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
+builder.Services.AddSingleton(
+    new ElasticsearchClient(
+        builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value!,
+        new ApiKey(builder.Configuration.GetSection("ElasticSearch").GetSection("ApiKey").Value!)
+        ));
+builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
+builder.Services.AddElasticsearchClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,4 +1,4 @@
-﻿using spider.Dtos;
+using spider.Dtos;
 using RestSharp;
 
 namespace spider.Services;

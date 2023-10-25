@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using SECODashBackend.Dtos.ProgrammingLanguage;
 
-namespace SECODashBackend.Dtos;
+namespace SECODashBackend.Dtos.Project;
 
 [DataContract]
 public class ProjectDto

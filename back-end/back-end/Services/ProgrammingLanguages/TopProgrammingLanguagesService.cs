@@ -8,11 +8,10 @@ public static class TopProgrammingLanguagesService
     // The amount of languages to return
     private const int NumberOfLanguages = 5;
 
-    public static List<EcosystemProgrammingLanguage> GetTopLanguagesForEcosystem(Ecosystem ecosystem)
+    public static List<EcosystemProgrammingLanguage> GetTopLanguagesForEcosystem(IEnumerable<Project> projects)
     {
-       
         // Get the list of languages from the projects in the ecosystem and flatten it
-        var languages = ecosystem.Projects
+        var languages = projects
             .Select(p => p.Languages)
             .SelectMany(l => l);
         
@@ -21,7 +20,6 @@ public static class TopProgrammingLanguagesService
             .GroupBy(l => l.Language)
             .Select(l => new EcosystemProgrammingLanguage
                 {
-                    EcosystemId = ecosystem.Id,
                     Language = l.Key,
                     Percentage = l.Sum(p => p.Percentage)
                 })
@@ -30,23 +28,21 @@ public static class TopProgrammingLanguagesService
         // Get the total sum of all percentages
         float total = groupedLanguages.Select(l => l.Percentage).Sum();
 
-        var fixedPercentages = groupedLanguages
-            .Select(l => new EcosystemProgrammingLanguage
-                {
-                    EcosystemId = l.EcosystemId,
-                    Language = l.Language,
-                    Percentage = float.Round(l.Percentage / total * 100)
-                });
+        // Correct the percentages so they add up to 100
+        groupedLanguages
+            .ForEach(l =>
+            {
+                l.Percentage = float.Round(l.Percentage / total * 100);
+            });
         
         // Order the languages by their percentage in descending order
-        var orderedLanguages = fixedPercentages
+        var orderedLanguages = groupedLanguages
             .OrderByDescending(l => l.Percentage)
             .Take(NumberOfLanguages)
             .ToList();
         
         var other = new EcosystemProgrammingLanguage
         {
-            EcosystemId = ecosystem.Id,
             Language = ProgrammingLanguage.Other,
             Percentage = 100 - orderedLanguages.Select(l => l.Percentage).Sum()
         };

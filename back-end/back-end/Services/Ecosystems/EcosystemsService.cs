@@ -1,76 +1,76 @@
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
+using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
 using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.ProgrammingLanguages;
-using SECODashBackend.Services.Spider;
+using SECODashBackend.Services.Projects;
 
 namespace SECODashBackend.Services.Ecosystems;
     
 public class EcosystemsService : IEcosystemsService
 {
     private readonly EcosystemsContext _dbContext;
-    private readonly ISpiderService _spiderService;
     private readonly IDataProcessorService _dataProcessorService;
+    private readonly IProjectsService _projectsService;
 
-    public EcosystemsService(EcosystemsContext dbContext, ISpiderService spiderService, IDataProcessorService dataProcessorService)
+    public EcosystemsService(
+        EcosystemsContext dbContext,
+        IProjectsService projectsService,
+        IDataProcessorService dataProcessorService)
     {
         _dbContext = dbContext;
-        _spiderService = spiderService;
+        _projectsService = projectsService;
         _dataProcessorService = dataProcessorService;
     }
-    public async Task<List<Ecosystem>?> GetAllAsync()
+    public async Task<List<EcosystemDto>> GetAllAsync()
     {
-        return await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
+        var ecosystems = await _dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
+        return ecosystems.Select(EcosystemConverter.ToDto).ToList();
     }
 
+    // TODO: convert to accept a dto instead of an Ecosystem
     public async Task<int> AddAsync(Ecosystem ecosystem)
     {
         await _dbContext.Ecosystems.AddAsync(ecosystem);
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Ecosystem?> GetByIdAsync(string id)
-    {
-        return await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
-            .AsNoTracking()
-            .SingleOrDefaultAsync(e => e.Id == id);
-    }
-
-    public async Task<Ecosystem?> GetByNameAsync(string name)
+    public async Task<EcosystemDto> GetByIdAsync(string id)
     {
         var ecosystem = await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
+            .AsNoTracking()
+            .SingleOrDefaultAsync(e => e.Id == id);
+        
+        if (ecosystem == null) throw new KeyNotFoundException();
+        
+        return EcosystemConverter.ToDto(ecosystem);
+    }
+
+    public async Task<EcosystemDto> GetByNameAsync(string name)
+    {
+        var ecosystem = await _dbContext.Ecosystems
+            .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
-        if (ecosystem == null) return null;
         
-        // Request the Spider for projects related to this ecosystem.
-        var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
+        if (ecosystem == null) throw new KeyNotFoundException();
 
-        // Check which projects are not already in the Projects list of the ecosystem
-        var newProjects = dtos
-            .Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id))
-            .Select(ProjectConverter.ToProject);
-
-        // Only add these projects to the database
-        ecosystem.Projects.AddRange(newProjects);
+        var ecosystemDto = EcosystemConverter.ToDto(ecosystem);
         
-        // Make the changes persistent by saving them to the database
-        await _dbContext.SaveChangesAsync();
-
-        // Get the top languages associated with the ecosystem
-        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
-        // Add the top languages to the ecosystem
-        ecosystem.TopLanguages = topLanguages;
+        // Retrieve the projects belonging to the ecosystem
+        var projects = await _projectsService.GetByTopicAsync(ecosystem.Name);
+        var projectList = projects.ToList();
         
-        return ecosystem;
+        // Get the most popular programming languages associated with the ecosystem
+        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(projectList);
+        
+        // Add the projects and languages to the ecosystem dto
+        ecosystemDto.Projects = projectList.Select(ProjectConverter.ToProjectDto);
+        ecosystemDto.TopLanguages = topLanguages;
+        
+        return ecosystemDto;
     }
 }

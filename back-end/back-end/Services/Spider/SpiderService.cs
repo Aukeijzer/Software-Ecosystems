@@ -1,5 +1,5 @@
 using RestSharp;
-using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.Project;
 using spider.Dtos;
 
 namespace SECODashBackend.Services.Spider;
