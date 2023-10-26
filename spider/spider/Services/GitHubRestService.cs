@@ -17,13 +17,13 @@ public class GitHubRestService : IGitHubRestService
     {
         var result = new List<ContributorDto>();
         var request = new RestRequest("repos/" + repoName + "/" + ownerName + "/contributors");
-        request.AddParameter("per_page", 50);
+        request.AddQueryParameter("per_page", 50);
         int page = 1;
         while (amount > 0)
         {
             if (amount > 50)
             {
-                request.AddOrUpdateParameter("page", page);
+                request.AddQueryParameter("page", page);
                 var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
                 result = result.Concat(temp).ToList();
                 if (temp.Count < 50)
@@ -35,7 +35,7 @@ public class GitHubRestService : IGitHubRestService
             }
             else
             {
-                request.AddOrUpdateParameter("page", page);
+                request.AddQueryParameter("page", page);
                 var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
                 if (temp.Count < amount)
                 {

@@ -26,10 +26,10 @@ public class GitHubGraphqlService : IGitHubGraphqlService
       
       while (amount > 0)
       {
-        if (amount > 50)
+        if (amount > 25)
         {
-          var temp = await QueryRepositoriesByName(name, 50, cursor);
-          amount -= 50;
+          var temp = await QueryRepositoriesByName(name, 25, cursor);
+          amount -= 25;
           projects.Add(temp);
           cursor = temp.Search.PageInfo?.EndCursor;
         }
@@ -153,10 +153,10 @@ public class GitHubGraphqlService : IGitHubGraphqlService
       
       while (amount > 0)
       {
-        if (amount > 50)
+        if (amount > 25)
         {
-          var temp = await QueryRepositoriesByTopic(topic, 50, cursor);
-          amount -= 50;
+          var temp = await QueryRepositoriesByTopic(topic, 25, cursor);
+          amount -= 25;
           projects.Add(temp);
           cursor = temp.Topic?.Repositories.PageInfo?.EndCursor;
         }
