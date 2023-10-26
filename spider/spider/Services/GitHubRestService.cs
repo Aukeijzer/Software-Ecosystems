@@ -11,6 +11,7 @@ public class GitHubRestService : IGitHubRestService
         var options = new RestClientOptions("https://api.github.com");
         _gitHubRestClient = new RestClient(options);
         _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable("API_Token"));
+        _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
     }
 
     public async Task<List<ContributorDto>> GetRepoContributors(String ownerName, string repoName, int amount = 50)

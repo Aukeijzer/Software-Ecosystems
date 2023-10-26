@@ -17,6 +17,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
         var token = Environment.GetEnvironmentVariable("API_Token");
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+        _client.HttpClient.DefaultRequestHeaders.Add("X-Github-Next-Global-ID", "1");
     }
 
     public async Task<List<SpiderData>> QueryRepositoriesByNameHelper(String name, int amount, string? startCursor)
