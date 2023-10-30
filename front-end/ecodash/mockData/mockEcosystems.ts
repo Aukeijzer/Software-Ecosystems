@@ -1,4 +1,4 @@
-import { ecosystemModel } from "@/app/models/apiResponseModel";
+import { ecosystemModel } from "@/app/models/ecosystemModel";
 
 export interface totalInformation {
     totalProjects : number,

@@ -43,7 +43,7 @@ infoCardDataList exports:
 import { ListGroup } from "flowbite-react"
 import { languageModel } from "@/app/models/languageModel";
 import { projectModel } from "@/app/models/projectModel";
-import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing} from "@/mockData/mockAgriculture";
+import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing, topTechnologyGrowing} from "@/mockData/mockAgriculture";
 import {HiArrowLongUp} from "react-icons/hi2";
 import { ogranization } from "@/mockData/mockEcosystems";
 
@@ -123,6 +123,10 @@ export function renderOrganization(org: ogranization){
     )
 }
 
-
-
-
+export function renderTechnologyGrowing(technology: topTechnologyGrowing){
+    return(
+        <div className="flex flex-row">
+            {technology.name} ({technology.percentage}%) : {technology.growth} <HiArrowLongUp />
+        </div>    
+    )
+}

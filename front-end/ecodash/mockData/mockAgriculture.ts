@@ -22,6 +22,12 @@ export interface topProject {
 export interface topEngineer {
     name: string
 }
+
+export interface topTechnologyGrowing {
+    name: string,
+    percentage: number,
+    growth: number
+}
 export const topTopics : topTopic[] = [
     {name: "DAO", percentage: 31},
     {name: "protocols", percentage: 22},
@@ -61,4 +67,13 @@ export const topTopicsGrowing : topTopicGrowing[] = [
     {name: "PPO", percentage: 4, growth: 2},
     {name: "Flamingo", percentage: 3, growth: 2},
 
+]
+
+
+export const topTechnologyGrowing: topTechnologyGrowing[] = [
+    {name: "Etereum", percentage: 31, growth:5},
+    {name: "Blockchain", percentage: 22, growth:3},
+    {name: "Hyperledger", percentage: 11, growth:3},
+    {name: "Solana", percentage: 9, growth:2},
+    {name: "Cardano", percentage: 5, growth:1}
 ]

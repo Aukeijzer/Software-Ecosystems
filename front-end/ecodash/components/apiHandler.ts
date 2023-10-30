@@ -13,7 +13,7 @@ apiHandler exports:
 */
 
 
-import { ecosystemModel } from "@/app/models/apiResponseModel";
+import { ecosystemModel } from "@/app/models/ecosystemModel";
 
 //Handles API call for /ecosystems
 export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {
@@ -36,5 +36,13 @@ export async function handleApiNamed(endpoint : string) : Promise<ecosystemModel
     const response : Response = await fetch(`http://localhost:5003/${endpoint}`)
     const result : ecosystemModel = await response.json();
    
+    return result;
+}
+//Handles API calls for /ecosystem/[name]/[subEcosystemName[]]
+export async function apiCallSubEcosystem(ecosystem : string, domains : string[]) : Promise<ecosystemModel> {
+    console.log("Fetching with string:   " + `http://localhost:5003/${ecosystem}/${domains.join(',')}`)
+    const response: Response = await fetch(`http://localhost:5003/${ecosystem}/${domains.join(',')}`);
+    const result : ecosystemModel = await response.json();
+
     return result;
 }

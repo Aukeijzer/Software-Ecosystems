@@ -47,11 +47,10 @@ export default function NavBarTop(){
                 <div className='flex flex-row gap-5'>
                     <Navbar.Link
                         href="/"
-                    
-                    >
+                    >   
                             Home
                     </Navbar.Link>
-
+                
                     <Navbar.Link
                         href="/ecosystem/agriculture"
                     >
