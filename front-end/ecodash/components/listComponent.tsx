@@ -46,6 +46,7 @@ import { projectModel } from "@/app/models/projectModel";
 import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing, topTechnologyGrowing} from "@/mockData/mockAgriculture";
 import {HiArrowLongUp} from "react-icons/hi2";
 import { ogranization } from "@/mockData/mockEcosystems";
+import Link from "next/link";
 
 interface infoCardDataListProps<T>{
     items: T[],
@@ -101,9 +102,9 @@ export function renderEngineer(engineer : topEngineer){
 
 export function renderTopic(topic: topTopic){
     return(
-        <p>
+        <Link href={`/subdomain?subdomains=${topic.name}`}>
             {topic.name} ({topic.percentage}%)
-        </p>
+        </Link>
     )
 }
 
