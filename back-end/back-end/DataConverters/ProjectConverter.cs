@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Dtos.Project;
 using SECODashBackend.Dtos.Topic;
@@ -18,7 +18,7 @@ public static class ProjectConverter
             CreatedAt = dto.CreatedAt,
             Description = dto.Description,
             Topics = dto.Topics, 
-            Languages = new List<ProjectProgrammingLanguage>(dto.Languages.Select(ToProjectProgrammingLanguage)),
+            Languages = dto.Languages, 
             NumberOfStars = dto.NumberOfStars,
             Owner = dto.Owner,
             ReadMe = dto.ReadMe
