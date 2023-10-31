@@ -38,7 +38,7 @@ export default function TableComponent<T extends {}>(props: infoCardDataTablePro
             <Table>
                 <Table.Head>
                     {props.headers.map((header) => (
-                        <Table.HeadCell>
+                        <Table.HeadCell key={header}>
                             {header}
                         </Table.HeadCell>
                     ))}
@@ -70,7 +70,7 @@ export function renderLanguage(language: languageModel){
 */
 export function renderProjectTable(project : projectModel){
     return(
-        <Table.Row id={project.id} >
+        <Table.Row id={project.id} key={project.id} >
             <Table.Cell >
                 {project.name}
             </Table.Cell>
@@ -83,7 +83,7 @@ export function renderProjectTable(project : projectModel){
             <Table.Cell>
                 <ul>
                     {project.languages.map((language) => (
-                        <li> {renderLanguage(language)}</li>
+                        <li key={language.id}> {renderLanguage(language)}</li>
                     ))}
                 </ul>
                
@@ -95,7 +95,7 @@ export function renderProjectTable(project : projectModel){
 
 export function renderEcosystemTable(ecosystem: ecosystemModel){
     return(
-        <Table.Row >
+        <Table.Row key={ecosystem.id}>
             <Table.Cell>
                 {ecosystem.name}
             </Table.Cell>

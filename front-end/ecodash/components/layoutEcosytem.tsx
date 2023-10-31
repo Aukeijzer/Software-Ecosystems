@@ -57,12 +57,12 @@ export default async function LayoutEcosystem(props: layoutEcosystemProps){
     const dataTableProjects = <TableComponent items={result.projects} headers={["name", "description", "owner", "languages"]} renderFunction={renderProjectTable} />
     const cardProjects = <InfoCard title={"Test table"} data={dataTableProjects} />
     const cardProjectsWrapped : cardWrapper= {card: cardProjects, width:2, height:14, x: 0, y: 1, minH: 10  , minW: 2}
-    /*
+    
     //Graph functions
     const dataGraphLanguages = <GraphComponent items={result.topLanguages} renderFunction={renderPieGraph} />
     const cardGraph = <InfoCard title={"Graph: Top 5 languages"} data={dataGraphLanguages} />
     const cardGraphWrapped : cardWrapper = {card: cardGraph, width:2, height:3, x: 4, y: 1, minH: 3, minW: 2}
-
+    /*
     //Top Technologies
     const dataListTechnology = <ListComponent items={topTechnologies} renderFunction={renderTechnology} />
     const cardTechnology = <InfoCard title={"Top 5 technologies"} data={dataListTechnology} alert="This is mock data" />
@@ -100,7 +100,7 @@ export default async function LayoutEcosystem(props: layoutEcosystemProps){
     //Add cards to cards
     //cards.push(cardLanguagesWrapped);
     //cards.push(cardProjectsWrapped);
-   // cards.push(cardGraphWrapped);
+    cards.push(cardGraphWrapped);
    // cards.push(cardTechnologyWrapped);
     //cards.push(cardEngineerWrapped);
     cards.push(cardTopicWrapped);

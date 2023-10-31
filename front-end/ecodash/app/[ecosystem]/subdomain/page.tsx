@@ -4,9 +4,9 @@ import { apiCallSubEcosystem } from '@/components/apiHandler';
 import { ecosystemModel } from '@/app/models/ecosystemModel';
 import LayoutEcosystem from '@/components/layoutEcosytem';
 
-export default function subDomainPage(){
-    const searchParams = useSearchParams();
-    const domainsString : string | null = searchParams.get('subdomains');
+export default function SubDomainPage(){
+    const SearchParams = useSearchParams();
+    const domainsString : string | null = SearchParams.get('subdomains');
     const domains = domainsString?.split(',');
 
     
