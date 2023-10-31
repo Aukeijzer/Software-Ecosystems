@@ -1,6 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using SECODashBackend.Dtos;
-using SECODashBackend.Enums;
+﻿using SECODashBackend.Dtos.Project;
+using SECODashBackend.Dtos.Topic;
 using SECODashBackend.Models;
 
 namespace SECODashBackend.DataConverters;
@@ -16,7 +15,7 @@ public static class ProjectConverter
             CreatedAt = dto.CreatedAt,
             Description = dto.Description,
             Topics = dto.Topics, 
-            Languages = new List<ProjectProgrammingLanguage>(dto.Languages.Select(ToProjectProgrammingLanguage)),
+            Languages = dto.Languages, 
             NumberOfStars = dto.NumberOfStars,
             Owner = dto.Owner,
             ReadMe = dto.ReadMe
@@ -42,34 +41,19 @@ public static class ProjectConverter
         };
     }
 
-    private static ProjectProgrammingLanguage ToProjectProgrammingLanguage(ProgrammingLanguageDto dto)
+    public static ProjectDto ToProjectDto(Project project)
     {
-        return new ProjectProgrammingLanguage
+        return new ProjectDto
         {
-            Id = Guid.NewGuid().ToString(),
-            Language = ParseProgrammingLanguage(dto.Name),
-            Percentage = dto.Percentage
+            Id = project.Id,
+            Name = project.Name,
+            CreatedAt = project.CreatedAt,
+            Description = project.Description,
+            Topics = project.Topics,
+            // Languages = project.Languages, 
+            NumberOfStars = project.NumberOfStars,
+            Owner = project.Owner,
+            ReadMe = project.ReadMe
         };
-    }
-
-    private static ProgrammingLanguage ParseProgrammingLanguage(string language)
-    {
-        var trimmedLanguage = Regex.Replace( language, @"\s+", "" );
-        try
-        {
-            return Enum.Parse<ProgrammingLanguage>(trimmedLanguage);
-        }
-        catch (ArgumentException e)
-        {
-            return trimmedLanguage switch
-            {
-                "C++" => ProgrammingLanguage.CPlusPlus,
-                "C#" => ProgrammingLanguage.CSharp,
-                "Objective-C" => ProgrammingLanguage.ObjectiveC,
-                "F#" => ProgrammingLanguage.FSharp, 
-                "Q#" => ProgrammingLanguage.QSharp,
-                _ => ProgrammingLanguage.Unknown,
-            };
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SECODashBackend.Dtos;
+﻿using SECODashBackend.Dtos.Topic;
 
 namespace SECODashBackend.Services.DataProcessor;
 public interface IDataProcessorService

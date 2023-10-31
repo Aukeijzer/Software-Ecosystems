@@ -1,6 +1,6 @@
 ﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
-using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Services.Ecosystems;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -25,29 +25,13 @@ public class EcosystemsController: ControllerBase
     {
         _logger.LogInformation("{Origin}: All ecosystems requested.", this);
         var result = await _ecosystemsService.GetAllAsync();
-        _logger.LogInformation("{Origin}: Return all ecosystems found.", this);
+        _logger.LogInformation("{Origin}: Return all ecosystems.", this);
         return new ObjectResult(result);
     }
 
-    [HttpGet("name/{name}")]
-    public async Task<ActionResult<Ecosystem>> GetByNameAsync(string name)
-    {
-        _logger.LogInformation("{Origin}: Ecosystem requested by name: '{Ecosystem}'.", this ,name);
-        var result = await _ecosystemsService.GetByNameAsync(name);
-        _logger.LogInformation("{Origin}: Returning ecosystem '{Ecosystem}'.", this ,name);
-        return result == null ? NotFound() : result;
-    }
-    
-    [HttpGet("id/{id}")]
-    public async Task<ActionResult<Ecosystem>> GetByIdAsync(string id)
-    {
-        _logger.LogInformation("{Origin}: Ecosystem requested by Id: '{id}'.", this ,id);
-        var result = await _ecosystemsService.GetByIdAsync(id);
-        _logger.LogInformation("{Origin}: Returning ecosystem with Id: '{id}'.", this ,id);
-        return result == null ? NotFound() : result;
-    }
-    
-    [HttpPost]
+    [HttpPost("add")]
+    // Currently not in use
+    // TODO: convert to accept a dto instead of an Ecosystem
     public async Task<ActionResult> PostAsync(Ecosystem ecosystem)
     {
         _logger.LogInformation("{Origin}: Posting ecosystem with the name: '{Ecosystem}'", this,
@@ -58,8 +42,32 @@ public class EcosystemsController: ControllerBase
         
         return CreatedAtAction(
             // ReSharper disable once Mvc.ActionNotResolved
-            nameof(GetByIdAsync),
+            nameof(SearchByTopics),
             new { id = ecosystem.Id },
             ecosystem);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<EcosystemDto>> SearchByTopics(EcosystemRequestDto dto)
+    {
+        _logger.LogInformation("{Origin}: Ecosystem requested with topics: '{topics}'.", this, dto.Topics);
+        try
+        {
+            var ecosystem = await _ecosystemsService.GetByTopicsAsync(dto);
+            _logger.LogInformation("{Origin}: Ecosystem returned with topics: '{topics}'.", this, dto.Topics);
+            return ecosystem;
+        }
+        catch (ArgumentException e)
+        {
+            _logger.LogInformation("{Origin}: No ecosystem returned: '{exception}'.", this, e.Message);
+            return BadRequest(e.Message);
+        }
+        catch (HttpRequestException e)
+        {
+            _logger.LogInformation("{Origin}: No ecosystem returned: '{exception}'.", this, e.Message);
+            return Problem(e.Message);
+        }
+    }
+    
+
 }
