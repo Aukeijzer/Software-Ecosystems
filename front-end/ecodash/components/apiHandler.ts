@@ -39,9 +39,41 @@ export async function handleApiNamed(endpoint : string) : Promise<ecosystemModel
     return result;
 }
 //Handles API calls for /ecosystem/[name]/[subEcosystemName[]]
-export async function apiCallSubEcosystem(ecosystem : string, domains : string[]) : Promise<ecosystemModel> {
-    console.log("Fetching with string:   " + `http://localhost:5003/${ecosystem}/${domains.join(',')}`)
-    const response: Response = await fetch(`http://localhost:5003/${ecosystem}/${domains.join(',')}`);
+// post on /ecosystems
+export async function apiCallSubEcosystem(ecosystem : string, domains : string[], numberOfTopLanguages: number, numberOfTopSubEcosystems: number, numberOfTopContributors: number ) : Promise<ecosystemModel> {
+
+    //Make post request with JSON object
+        // Eerste in list is ecosystem
+        // Verder list alle topics:
+        // topics
+        // Hoeveelheid top x : numberOfTopLanguages
+        // numberOfTopSubEcosystems
+        // numberOfTopContributors
+
+    interface apiBodyInterface {
+        ecosystems: string[],
+        numberOfTopLanguages: number,
+        numberOfTopSubEcosystems: number,
+        numberOfTopContributors: number
+    }
+    //Add ecosystem to the start of the array
+    domains.unshift(ecosystem);
+    console.log(domains);
+    const apiBody : apiBodyInterface = {ecosystems : domains, 
+                                        numberOfTopLanguages: numberOfTopLanguages,
+                                        numberOfTopSubEcosystems: numberOfTopSubEcosystems,
+                                        numberOfTopContributors: numberOfTopContributors,
+                                        }
+    
+    const apiBodyJson = JSON.stringify(apiBody);
+    const response: Response = await fetch(`http://localhost:5003/ecosystems`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: apiBodyJson
+    })
+    
     const result : ecosystemModel = await response.json();
 
     return result;

@@ -10,16 +10,21 @@ import { Navbar } from 'flowbite-react';
 import logo from '../public/logo.png';
 import Image from 'next/image'
 import Link from 'next/link';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { IconContext } from 'react-icons'
 import { BsMenuUp } from 'react-icons/bs';
+import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { Router } from 'next/router';
 
 export default function NavBarTop(){
     const [toggle, setToggle] = useState(false);
-
+    const router = useRouter();
+   
+    //For now has the basepath 
     return(
         <Navbar fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
-            <Navbar.Brand as={Link} href='/'>
+            <Navbar.Brand onClick={() => router.push("http://localhost:3000")}>
                 <Image
                     src={logo}
                     alt="SECODash logo"
@@ -52,20 +57,20 @@ export default function NavBarTop(){
                     </Navbar.Link>
                 
                     <Navbar.Link
-                        href="/ecosystem/agriculture"
+                        href="http://agriculture.localhost:3000"
                     >
                         Agriculture
                         
                     </Navbar.Link>
 
                     <Navbar.Link
-                        href="/ecosystem/artificial-intelligence"
+                        href="http://artificial-intelligence.localhost:3000"
                     >
                         AI
                     </Navbar.Link>
 
                     <Navbar.Link
-                        href="/ecosystem/quantum"
+                        href="http://quantum.localhost:3000"
                     >
                         Quantum
                     </Navbar.Link>

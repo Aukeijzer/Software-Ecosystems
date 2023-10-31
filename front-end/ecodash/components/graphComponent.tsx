@@ -15,6 +15,7 @@ infoCardDataGraph exports:
             - JSX.Element
 */
 
+
 import { programmingLanguage } from '@/app/enums/ProgrammingLanguage';
 import { languageModel } from '@/app/models/languageModel';
 import {
@@ -31,6 +32,8 @@ const PieChart = dynamic(() => import('recharts').then(mod => mod.PieChart), {
     loading: () => <p> Loading Graph...</p> 
     
 })
+
+
 
 interface infoCardDataGraphProps<T>{
     items: languageModel[],

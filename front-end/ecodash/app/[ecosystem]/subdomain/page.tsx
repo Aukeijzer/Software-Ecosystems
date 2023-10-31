@@ -1,11 +1,10 @@
-'use client'
- 
+ "use client"
 import { useSearchParams } from 'next/navigation'
 import { apiCallSubEcosystem } from '@/components/apiHandler';
 import { ecosystemModel } from '@/app/models/ecosystemModel';
 import LayoutEcosystem from '@/components/layoutEcosytem';
 
-export default async function subDomainPage(){
+export default function subDomainPage(){
     const searchParams = useSearchParams();
     const domainsString : string | null = searchParams.get('subdomains');
     const domains = domainsString?.split(',');
