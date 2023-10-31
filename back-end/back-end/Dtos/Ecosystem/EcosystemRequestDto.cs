@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace SECODashBackend.Dtos.Ecosystem;
 
