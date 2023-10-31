@@ -1,4 +1,4 @@
-﻿using SECODashBackend.Models;
+using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Project;
@@ -20,7 +20,7 @@ public class ProjectsController : ControllerBase
         _projectsService = projectsService;
     }
    
-    [HttpGet("{id:long}")]
+    [HttpGet("{id}")]
     [SwaggerOperation("GetProjectById")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
     public async Task<ActionResult<Project>> GetByIdAsync(string id)
