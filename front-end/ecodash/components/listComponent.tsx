@@ -43,21 +43,40 @@ infoCardDataList exports:
 import { ListGroup } from "flowbite-react"
 import { languageModel } from "@/app/models/languageModel";
 import { projectModel } from "@/app/models/projectModel";
-import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing} from "@/mockData/mockAgriculture";
+import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing, topTechnologyGrowing} from "@/mockData/mockAgriculture";
 import {HiArrowLongUp} from "react-icons/hi2";
+import { ogranization } from "@/mockData/mockEcosystems";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface infoCardDataListProps<T>{
     items: T[],
-    renderFunction: (item: T) => JSX.Element
+    renderFunction: (item: T, url: string) => JSX.Element,
 }
 
 export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
+    //Get pre-existing route
+    var url : string= usePathname();
+    var urlSplit = url.split('/')
+    
+
+    //Check if on subecosystem route
+    //Preparing url
+    if(urlSplit[2] == "subdomain"){
+         url = url + "," 
+    } else {
+        url = `/subdomain?subdomain=`
+    }
+
     return(
-        <div>
+        <div className="h-full">
             <ListGroup>
                 {props.items.map((item, i) => (
                     <ListGroup.Item key = {i} >
-                        {props.renderFunction(item)}
+                        
+                            {props.renderFunction(item, url)}
+                        
                     </ListGroup.Item>
                 ))}
             </ListGroup>
@@ -66,13 +85,16 @@ export default function ListComponent<T extends {}>(props : infoCardDataListProp
     )
 }
 
-export function renderProjectList(project : projectModel){
+export function renderProjectList(project : projectModel, url : string){
+    console.log(url + project.name)
     return(
-        <p>
+        <Link href={url + project.name}>
             {project.name}
-        </p>
+        </Link>
+       
     )
 }
+
 
 export function renderLanguageList(language: languageModel){
     return(
@@ -98,11 +120,11 @@ export function renderEngineer(engineer : topEngineer){
     )
 }
 
-export function renderTopic(topic: topTopic){
+export function renderTopic(topic: topTopic, url : string){
     return(
-        <p>
-            {topic.name} ({topic.percentage}%)
-        </p>
+        <Link href={url + topic.name}>
+              {topic.name} ({topic.percentage}%)
+        </Link>  
     )
 }
 
@@ -114,6 +136,18 @@ export function renderTopicGrowing(topic: topTopicGrowing){
     )
 }
 
+export function renderOrganization(org: ogranization){
+    return(
+        <div>
+            {org.name}
+        </div>
+    )
+}
 
-
-
+export function renderTechnologyGrowing(technology: topTechnologyGrowing){
+    return(
+        <div className="flex flex-row">
+            {technology.name} ({technology.percentage}%) : {technology.growth} <HiArrowLongUp />
+        </div>    
+    )
+}
