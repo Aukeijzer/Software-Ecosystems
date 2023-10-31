@@ -1,4 +1,4 @@
-﻿using SECODashBackend.Models;
+using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Services.Ecosystems;
@@ -29,44 +29,8 @@ public class EcosystemsController: ControllerBase
         return new ObjectResult(result);
     }
 
-    [HttpGet("name/{name}")]
-    public async Task<ActionResult<EcosystemDto>> GetByNameAsync(string name)
-    {
-        _logger.LogInformation("{Origin}: Ecosystem requested by name: '{name}'.", this,name);
-        try
-        {
-            var result = await _ecosystemsService.GetByNameAsync(name);
-            _logger.LogInformation("{Origin}: Returning ecosystem with name: '{name}'.", this ,name);
-            return result;
-        }
-        catch (KeyNotFoundException)
-        {
-            _logger.LogInformation(
-                "{Origin}: Ecosystem with name: '{name}' was not found.",
-                this, 
-                name);
-            return NotFound();
-        }
-    }
-    
-    [HttpGet("id/{id}")]
-    public async Task<ActionResult<EcosystemDto>> GetByIdAsync(string id)
-    {
-        _logger.LogInformation("{Origin}: Ecosystem requested by Id: '{id}'.", this, id);
-        try
-        {
-            var result = await _ecosystemsService.GetByIdAsync(id);
-            _logger.LogInformation("{Origin}: Returning ecosystem with Id: '{id}'.", this, id);
-            return result;
-        }
-        catch (KeyNotFoundException)
-        {
-            _logger.LogInformation("{Origin}: Ecosystem with Id: '{id}' was not found.", this, id);
-            return NotFound();
-        }
-    }
-    
-    [HttpPost]
+    [HttpPost("add")]
+    // Currently not in use
     // TODO: convert to accept a dto instead of an Ecosystem
     public async Task<ActionResult> PostAsync(Ecosystem ecosystem)
     {
