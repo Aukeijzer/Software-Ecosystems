@@ -1,4 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Core.Bulk;
 using SECODashBackend.Dtos.Project;
 
@@ -24,24 +24,21 @@ public class ElasticsearchService : IElasticsearchService
         var response = await _client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
-/// <summary>
-/// Search the projects index for project documents for which the "topics" property contains all of the provided topics/ecosystems
-/// </summary>
-/// <param name="topics"></param>
-/// <returns></returns>
-/// <exception cref="HttpRequestException"></exception>
-    public async Task<List<ProjectDto>> GetProjectsByTopic(params string[] topics)
+    
+    public async Task<List<ProjectDto>> GetProjectsByTopic(List<string> topics)
     {
-        var response = await _client.SearchAsync<ProjectDto>(s => s 
-            .Index(ProjectIndex) 
+        var response = await _client.SearchAsync<ProjectDto>(search => search
+            .Index(ProjectIndex)
             .From(0)
             .Size(NumberOfRequestedProjects)
             .Query(q => q
                 .TermsSet(t => t
                     .Field(p => p.Topics)
                     .Terms(topics)
-                    .MinimumShouldMatchScript( new Script(new InlineScript("params.num_terms"))))));
+                    .MinimumShouldMatchScript(new Script(new InlineScript("params.num_terms"))))));
+        
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
+
         return response.Documents.ToList();
     }
 }

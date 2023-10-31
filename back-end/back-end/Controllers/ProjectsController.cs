@@ -34,10 +34,10 @@ public class ProjectsController : ControllerBase
     [HttpPost("searchbytopic")]
     [SwaggerOperation("GetProjectsByTopics")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByTopicsAsync(params string[] topics)
+    public async Task<ActionResult<List<ProjectDto>>> GetByTopicsAsync(List<string> topics)
     {
         _logger.LogInformation("{Origin}: Projects requested with topics: '{topics}'.", this, topics);
-        var dtos = await _projectsService.GetByTopicAsync(topics);
+        var dtos = await _projectsService.GetByTopicsAsync(topics);
         var projects = dtos.Select(ProjectConverter.ToProjectDto);
         var projectDtos = projects.ToList();
         if (!projectDtos.Any())
