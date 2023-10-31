@@ -1,4 +1,4 @@
-using SECODashBackend.Models;
+﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Services.Ecosystems;
@@ -42,8 +42,32 @@ public class EcosystemsController: ControllerBase
         
         return CreatedAtAction(
             // ReSharper disable once Mvc.ActionNotResolved
-            nameof(GetByIdAsync),
+            nameof(SearchByTopics),
             new { id = ecosystem.Id },
             ecosystem);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<EcosystemDto>> SearchByTopics(EcosystemRequestDto dto)
+    {
+        _logger.LogInformation("{Origin}: Ecosystem requested with topics: '{topics}'.", this, dto.Topics);
+        try
+        {
+            var ecosystem = await _ecosystemsService.GetByTopicsAsync(dto);
+            _logger.LogInformation("{Origin}: Ecosystem returned with topics: '{topics}'.", this, dto.Topics);
+            return ecosystem;
+        }
+        catch (ArgumentException e)
+        {
+            _logger.LogInformation("{Origin}: No ecosystem returned: '{exception}'.", this, e.Message);
+            return BadRequest(e.Message);
+        }
+        catch (HttpRequestException e)
+        {
+            _logger.LogInformation("{Origin}: No ecosystem returned: '{exception}'.", this, e.Message);
+            return Problem(e.Message);
+        }
+    }
+    
+
 }
