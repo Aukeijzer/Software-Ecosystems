@@ -79,7 +79,7 @@ public class ElasticsearchService : IElasticsearchService
         var subEcosystems = topicsAggregate?.Buckets
             .Select(topic => new SubEcosystemDto
             {
-                Topics = new List<string>{topic.Key.ToString()},
+                Topic = topic.Key.ToString(),
                 ProjectCount = (int)topic.DocCount
             }).ToList();
         subEcosystems!.Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
