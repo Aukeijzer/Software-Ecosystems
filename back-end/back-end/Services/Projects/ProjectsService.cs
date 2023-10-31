@@ -1,4 +1,4 @@
-using SECODashBackend.DataConverters;
+﻿using SECODashBackend.DataConverters;
 using SECODashBackend.Models;
 using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Spider;
@@ -29,5 +29,14 @@ public class ProjectsService : IProjectsService
         // Retrieve all related projects from elasticsearch
         var dtos = await _elasticsearchService.GetProjectsByTopic(topics);
         return dtos.Select(ProjectConverter.ToProject);
+    }
+
+    public async Task MineByTopicAsync(string topic)
+    {
+        // Request the Spider for projects related to this topic.
+        var newDtos = await _spiderService.GetProjectsByTopicAsync(topic);
+        
+        // Save these projects to elasticsearch
+        await _elasticsearchService.AddProjects(newDtos);
     }
 }

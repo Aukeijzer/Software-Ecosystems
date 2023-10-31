@@ -1,4 +1,4 @@
-using SECODashBackend.Models;
+﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Project;
@@ -47,5 +47,13 @@ public class ProjectsController : ControllerBase
         }
         _logger.LogInformation("{Origin}: Returning projects with topics: '{topics}'.", this, topics);
         return projectDtos;
+    }
+    
+    [HttpPost("mine")]
+    public async Task<ActionResult> MineByTopic(string topic)
+    {
+        _logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
+        await _projectsService.MineByTopicAsync(topic);
+        return Accepted();
     }
 }
