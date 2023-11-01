@@ -6,7 +6,7 @@ namespace SECODashBackend.Services.ElasticSearch;
 
 public class ElasticsearchService : IElasticsearchService
 {
-    private const string ProjectIndex = "projects";
+    private const string ProjectIndex = "projects-01";
     private readonly ElasticsearchClient _client;
     private const int NumberOfRequestedProjects = 1000;
     
