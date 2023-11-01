@@ -10,8 +10,8 @@ namespace SECODashBackend.Services.ElasticSearch;
 public class ElasticsearchService : IElasticsearchService
 {
     // Name of the projects index in Elasticsearch
-    private const string ProjectIndex = "projects-test";
-    
+    private const string ProjectIndex = "projects-01";
+
     // Used to create and retrieve aggregates in the Elasticsearch queries
     private const string LanguageAggregateName = "languages";
     private const string SumAggregateName = "sum";
