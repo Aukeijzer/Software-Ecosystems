@@ -13,12 +13,12 @@ export default class subEcosystem extends displayable {
     
     renderAsListItem(url: string): JSX.Element {
         
-        var teest = () => {
+        var onClick = () => {
             window.location.href = url + this.topic;
         }
         
         return(
-            <Link href={url + this.topic} onClick={teest}>
+            <Link href={url + this.topic} onClick={onClick}>
                 {this.topic} with {this.projectCount} projects.
             </Link>
 
@@ -34,7 +34,7 @@ export default class subEcosystem extends displayable {
     renderAsGraph(index: number): JSX.Element {
         return(
             <div>
-                
+
             </div>
         )
     }
