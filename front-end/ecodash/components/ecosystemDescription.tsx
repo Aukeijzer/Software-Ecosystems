@@ -1,5 +1,6 @@
 "use client"
 
+import subEcosystem from '@/app/classes/subEcosystemClass'
 /*
 ecosystemDescription exports:
 
@@ -15,7 +16,8 @@ import { Card } from 'flowbite-react'
 
 interface ecoSystemDescriptionProps{
     ecosystem: string,
-    description: string
+    description: string,
+    subEcosystems?: string[]
 }
 
 export default function EcosystemDescription(props: ecoSystemDescriptionProps){
@@ -25,9 +27,20 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                 <h1 className='text-3xl'>
                     Welcome to the <b> {props.ecosystem} </b> ecosystem page
                 </h1>
+                {props.subEcosystems? <p>
+                    The following sub-ecosystems have been selected
+                    <ul>
+                        {props.subEcosystems?.map((item, i) => (<li key={i}>
+                            * {item}
+                        </li>) )}
+                    </ul>
+                    
+                </p> : <p></p>
+                }
                 <p>
                     {props.description}
                 </p>
+
             </Card>
         </div>
     )

@@ -1,43 +1,53 @@
-import { ecosystemModel } from "@/app/models/ecosystemModel";
-import { handleApi } from "./apiHandler";
-import EcosystemInformationData from "./ecosystemInformationData";
-import EcosystemDescription from "./ecosystemDescription";
+"use client"
+import {useEffect, useState} from "react"
+import { handleApi } from "./apiHandler"
+import { ecosystemModel } from "@/app/models/ecosystemModel"
+import GridLayout from "./gridLayout";
+import { cardWrapper } from "./layoutEcosystem";
+import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
-import ListComponent, { renderOrganization } from "./listComponent";
 
-//Mock data
-import { totalInformation, topOrganizations, ogranization } from "@/mockData/mockEcosystems";
-import { cardWrapper } from "./layoutEcosytem";
-import  GridLayout  from "./gridLayout";
-
-export default async function LayoutHomePage(){
+export default function layoutHomePage(){
+    const [dataLoaded, setDataLoaded] = useState<boolean>(false);
     
-    const result : ecosystemModel[] = await handleApi(`ecosystems`);
-    console.log(result);
+    useEffect(() => {
+        handleApi("ecosystems").then(data => transferData(data))
+    })
 
-    ///General info about all ecosystems
+    function transferData(data: ecosystemModel[]){
+        //No idea what this data should be?
+
+        setDataLoaded(true);
+    }
+
+    //General information about SECODash
     const info = (<div className="flex flex-col"> 
-                    <span> Total ecosystems: {totalInformation.totalEcosystems}</span>
-                    <span> Total projects: {totalInformation.totalProjects} </span>
-                    <span> Total topics: {totalInformation.totalTopics} </span>
-                </div>)
+        <span> Total ecosystems: {totalInformation.totalEcosystems}</span>
+        <span> Total projects: {totalInformation.totalProjects} </span>
+        <span> Total topics: {totalInformation.totalTopics} </span>
+    </div>)
     const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
     const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 1, x: 0, y: 0}
-    //Top languages
 
-    //Top organizations
-    const dataListTopOrganizations = <ListComponent items={topOrganizations} renderFunction={renderOrganization}/>
-    const cardTopOrganizations = <InfoCard title={"Top active organizations"} data={dataListTopOrganizations} alert="This is mock data!" />
-    const cardTopOrganizationsWrapped : cardWrapper = {card: cardTopOrganizations, width: 2, height: 2, x: 0, y: 2}
 
     //Add to card list
     var cards: cardWrapper[] = [];
-    cards.push(infoCardWrapped)
-    cards.push(cardTopOrganizationsWrapped)
 
-    return(
-        <div className="mt-10 ml-10 mr-10">
+    cards.push(infoCardWrapped)
+
+    if(dataLoaded){
+        return(
             <GridLayout cards={cards} />
-        </div>
-    )
+        )
+    } else {
+        return(
+            <div>
+                loading...
+            </div>
+        )
+    }
+
+
+
+
 }

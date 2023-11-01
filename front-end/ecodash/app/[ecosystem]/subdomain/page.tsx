@@ -1,29 +1,16 @@
- "use client"
+"use client"
 import { useSearchParams } from 'next/navigation'
-import { apiCallSubEcosystem } from '@/components/apiHandler';
-import { ecosystemModel } from '@/app/models/ecosystemModel';
-import LayoutEcosystem from '@/components/layoutEcosytem';
+import LayoutEcosystem from '@/components/layoutEcosystem';
 
 export default function SubDomainPage(){
     const SearchParams = useSearchParams();
-    const domainsString : string | null = SearchParams.get('subdomains');
+    const domainsString : string | null = SearchParams.get('subdomain');
     const domains = domainsString?.split(',');
 
-    
-
-    if(domains){
-      //If subdomains selected show ecosystem layout object
-
-
-    } else {
-        //Go to ecosystem page when no subdomains are selected
-
-    }
-    
-    
+    const url = "/subdomain?subdomain="+ domains +"," 
     return(
         <div>
-            {domains? <LayoutEcosystem  ecosystem='agriculture' subDomains={domains} /> : <div> helaas </div>}
+            {domains? <LayoutEcosystem  ecosystem='agriculture' url={url} subDomains={domains}  /> : <div> helaas </div> }
         </div>
     )
 }

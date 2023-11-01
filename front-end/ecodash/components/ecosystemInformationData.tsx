@@ -13,7 +13,7 @@ export default function EcosystemInformationData(props : ecosystemInformationDat
     const data = (
         <div className="flex flex-col">
             <span> {props.ecosystem.description} </span>
-            <span> amount of projects: {props.ecosystem.projects.length}</span>
+            <span> amount of projects: </span>
         </div>
     )
     

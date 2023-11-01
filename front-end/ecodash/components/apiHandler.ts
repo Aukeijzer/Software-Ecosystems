@@ -49,17 +49,22 @@ export async function apiCallSubEcosystem(ecosystem : string, domains : string[]
         // Hoeveelheid top x : numberOfTopLanguages
         // numberOfTopSubEcosystems
         // numberOfTopContributors
+    
+    
 
     interface apiBodyInterface {
-        ecosystems: string[],
+        topics: string[],
         numberOfTopLanguages: number,
         numberOfTopSubEcosystems: number,
         numberOfTopContributors: number
     }
     //Add ecosystem to the start of the array
-    domains.unshift(ecosystem);
-    console.log(domains);
-    const apiBody : apiBodyInterface = {ecosystems : domains, 
+    //domains.unshift(ecosystem);
+    var topics : string[] = [ecosystem , ...domains]
+    
+    //console.log(domains);
+    console.log("The domains are " + topics + " end")
+    const apiBody : apiBodyInterface = {topics : topics, 
                                         numberOfTopLanguages: numberOfTopLanguages,
                                         numberOfTopSubEcosystems: numberOfTopSubEcosystems,
                                         numberOfTopContributors: numberOfTopContributors,
@@ -75,6 +80,5 @@ export async function apiCallSubEcosystem(ecosystem : string, domains : string[]
     })
     
     const result : ecosystemModel = await response.json();
-
     return result;
 }

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getValidSubdomain } from './app/utils/subdomain';
 
 export async function middleware(req: NextRequest) {
-    console.log('Middleware activated')
     //Clone the url
     const url = req.nextUrl.clone();
 

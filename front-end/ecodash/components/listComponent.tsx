@@ -46,108 +46,28 @@ import { projectModel } from "@/app/models/projectModel";
 import {topTopic, topTechnology, topProject, topEngineer, topTopicGrowing, topTechnologyGrowing} from "@/mockData/mockAgriculture";
 import {HiArrowLongUp} from "react-icons/hi2";
 import { ogranization } from "@/mockData/mockEcosystems";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { subEcosystem } from "@/app/models/ecosystemModel";
+import displayable from "@/app/classes/displayableClass";
 
 interface infoCardDataListProps<T>{
-    items: T[],
-    renderFunction: (item: T, url: string) => JSX.Element,
+    items: displayable[],
+    url: string
 }
 
 export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
-    //Get pre-existing route
-    var url : string= usePathname();
-    var urlSplit = url.split('/')
-    
-
-    //Check if on subecosystem route
-    //Preparing url
-    if(urlSplit[2] == "subdomain"){
-         url = url + "," 
-    } else {
-        url = `/subdomain?subdomain=`
-    }
-
     return(
         <div className="h-full">
             <ListGroup>
                 {props.items.map((item, i) => (
                     <ListGroup.Item key = {i} >
-                        
-                            {props.renderFunction(item, url)}
-                        
+                       {item.renderAsListItem(props.url)}
                     </ListGroup.Item>
                 ))}
             </ListGroup>
             
         </div>
-    )
-}
-
-export function renderProjectList(project : projectModel, url : string){
-    console.log(url + project.name)
-    return(
-        <Link href={url + project.name}>
-            {project.name}
-        </Link>
-       
-    )
-}
-
-
-export function renderLanguageList(language: languageModel){
-    return(
-        <p>
-            {language.language} : {language.percentage} %
-        </p>
-    )
-}
-
-export function renderTechnology(technology: topTechnology){
-    return(
-        <p>
-            {technology.name} ({technology.percentage}%)
-        </p>
-    )
-}
-
-export function renderEngineer(engineer : topEngineer){
-    return(
-        <p>
-            {engineer.name}
-        </p>
-    )
-}
-
-export function renderTopic(topic: topTopic, url : string){
-    return(
-        <Link href={url + topic.name}>
-              {topic.name} ({topic.percentage}%)
-        </Link>  
-    )
-}
-
-export function renderTopicGrowing(topic: topTopicGrowing){
-    return(
-        <p className="flex flex-row">
-            {topic.name} ({topic.percentage}%) : {topic.growth} <HiArrowLongUp />
-        </p>
-    )
-}
-
-export function renderOrganization(org: ogranization){
-    return(
-        <div>
-            {org.name}
-        </div>
-    )
-}
-
-export function renderTechnologyGrowing(technology: topTechnologyGrowing){
-    return(
-        <div className="flex flex-row">
-            {technology.name} ({technology.percentage}%) : {technology.growth} <HiArrowLongUp />
-        </div>    
     )
 }
