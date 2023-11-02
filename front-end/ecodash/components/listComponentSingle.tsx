@@ -11,19 +11,20 @@ infoCardDataList exports:
 
 import { ListGroup } from "flowbite-react"
 import displayable from "@/app/classes/displayableClass";
+import displayableSingle from "@/app/classes/displayableClassSingle";
 
 interface infoCardDataListProps<T>{
-    items: displayable[],
-    url: string
+    items: displayableSingle[],
+    onClick: (sub: string) => void
 }
 
-export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
+export default function ListComponentSingle<T extends {}>(props : infoCardDataListProps<T>){
     return(
         <div className="h-full">
             <ListGroup>
                 {props.items.map((item, i) => (
                     <ListGroup.Item key = {i} >
-                       {item.renderAsListItem(props.url)}
+                       {item.renderAsListItem(props.onClick)}
                     </ListGroup.Item>
                 ))}
             </ListGroup>
