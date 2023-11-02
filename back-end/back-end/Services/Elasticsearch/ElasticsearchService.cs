@@ -12,6 +12,9 @@ public class ElasticsearchService : IElasticsearchService
     // Name of the projects index in Elasticsearch
     private const string ProjectIndex = "projects-01";
 
+    // Property of the Project document that contains the topics of the project 
+    private const string TopicProperty = "topics.keyword";
+
     // Used to create and retrieve aggregates in the Elasticsearch queries
     private const string LanguageAggregateName = "languages";
     private const string SumAggregateName = "sum";
@@ -44,7 +47,7 @@ public class ElasticsearchService : IElasticsearchService
             .Size(NumberOfRequestedProjects)
             .Query(q => q
                 .TermsSet(t => t
-                    .Field(p => p.Topics)
+                    .Field(TopicProperty)
                     .Terms(topics)
                     .MinimumShouldMatchScript(new Script(new InlineScript("params.num_terms"))))));
         
@@ -61,7 +64,7 @@ public class ElasticsearchService : IElasticsearchService
             .Size(0)
             .Query(q => q
                 .TermsSet(t => t
-                    .Field(p => p.Topics)
+                    .Field(TopicProperty)
                     .Terms(topics)
                     .MinimumShouldMatchScript(new Script(new InlineScript("params.num_terms")))))
             .Aggregations(a => a
