@@ -1,6 +1,8 @@
 services:
  db:
    image: postgres
+   networks:
+    - secodash-network
    restart: always
    environment:
      POSTGRES_Username: postgres
@@ -9,15 +11,26 @@ services:
      - postgres-data:/var/lib/postgresql/data
  adminer:
    image: adminer
-   restart: always
    ports:
-     - 8080:8080
+    - 8080:8080
+   networks:
+    - secodash-network
+   restart: always
  app:
    build:
      context: .
    ports:
-     - 5003:80
+    - 5003:80
+   networks:
+    - secodash-network
+   restart: always
    depends_on:
      - db
 volumes:
  postgres-data:
+
+networks:
+  secodash-network:
+    name: secodash-network
+    driver: bridge
+    external: true

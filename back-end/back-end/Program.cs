@@ -47,7 +47,7 @@ if ( true ) //app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// TODO: Remove this sleep when the database connetion issues are resolved.
+// TODO: Remove this sleep when the database connection issues are resolved.
 if (!app.Environment.IsDevelopment())
 { 
     Thread.Sleep(3000);

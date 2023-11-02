@@ -2,7 +2,13 @@ services:
  app:
    build:
      context: .
-   ports:
-     - 5004:80
    networks:
-     - spider
+    - secodash-network
+   environment:
+    API_Token: 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
+
+networks:
+  secodash-network:
+    name: secodash-network
+    driver: bridge
+    external: true
