@@ -84,6 +84,7 @@ public class ElasticsearchService : IElasticsearchService
             }).ToList();
         subEcosystems!.Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
         var topSubEcosystems = subEcosystems
+            .Where(s => !topics.Contains(s.Topic))
             .Take(numberOfTopSubEcosystems)
             .Where(s => s.ProjectCount > 1);
         
