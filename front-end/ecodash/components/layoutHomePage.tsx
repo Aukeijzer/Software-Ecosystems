@@ -7,7 +7,7 @@ import { cardWrapper } from "./layoutEcosystem";
 import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 
-export default function layoutHomePage(){
+export default function LayoutHomePage(){
     const [dataLoaded, setDataLoaded] = useState<boolean>(false);
     
     useEffect(() => {

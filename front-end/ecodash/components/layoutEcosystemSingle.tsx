@@ -17,7 +17,7 @@ interface layoutEcosystemSingleProps{
     ecosystem: string,
 }
 
-export default function layoutEcosystemSingle(props: layoutEcosystemSingleProps){
+export default function LayoutEcosystemSingle(props: layoutEcosystemSingleProps){
     //Ecosystem data
     const [subEcosystems, setSubEcosystems] = useState<subEcosystemSingle[] | null>(null)
     const [languages, setLanguages] = useState<languageClass[] | null>(null)
