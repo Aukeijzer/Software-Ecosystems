@@ -1,5 +1,6 @@
 "use client"
 
+import displayable from "@/app/classes/displayableClass";
 /*
 infoCardDataTable exports:
 - InfoCardDataTable: JSX.Element filled with a table containing provided data 
@@ -15,8 +16,7 @@ import { Table } from "flowbite-react";
 
 interface infoCardDataTableProps<T>{
     headers: string[],
-    items: T[],
-    renderFunction: (item: T) => JSX.Element
+    items: displayable[]
 }
 
 export default function TableComponent<T extends {}>(props: infoCardDataTableProps<T>){
@@ -33,7 +33,7 @@ export default function TableComponent<T extends {}>(props: infoCardDataTablePro
 
                 <Table.Body className="divide-y">
                     {props.items.map((item) => (
-                         props.renderFunction(item)
+                        item.renderAsTableItem()
                     ))}
                 </Table.Body>
             </Table>
