@@ -4,9 +4,6 @@ namespace SECODashBackend.Services.ProgrammingLanguages;
 
 public static class TopProgrammingLanguagesService
 { 
-    // The amount of languages to return
-    private const int NumberOfLanguages = 5;
-
     /// <summary>
     /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
     /// all projects to a "Top x" list, i.e. in descending order of x length with the percentages normalised.
