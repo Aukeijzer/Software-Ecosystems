@@ -85,11 +85,7 @@ public class ElasticsearchService : IElasticsearchService
                 Topic = topic.Key.ToString(),
                 ProjectCount = (int)topic.DocCount
             }).ToList();
-        subEcosystems!.Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
-        var topSubEcosystems = subEcosystems
-            .Where(s => !topics.Contains(s.Topic))
-            .Take(numberOfTopSubEcosystems)
-            .Where(s => s.ProjectCount > 1);
+
         
         var programmingLanguageDtos = languagesAggregate?.Buckets
             .Select(b => 
@@ -103,8 +99,8 @@ public class ElasticsearchService : IElasticsearchService
         return new EcosystemDto
         {
             Topics = topics.ToList(),
-            SubEcosystems = topSubEcosystems.ToList()
             TopLanguages = EcosystemAnalysisService.GetNormalisedTopXLanguages(programmingLanguageDtos!, numberOfTopLanguages),
+            SubEcosystems = EcosystemAnalysisService.GetTopXSubEcosystems(subEcosystems!, topics, numberOfTopSubEcosystems) 
         };
     }
 }

@@ -20,4 +20,18 @@ public static class EcosystemAnalysisService
             .ForEach(l => l.Percentage = float.Round(l.Percentage / totalSum * 100));
         return topXLanguages;
     }
+
+    public static List<SubEcosystemDto> GetTopXSubEcosystems(
+        List<SubEcosystemDto> subEcosystemDtos,
+        ICollection<string> topics,
+        int numberOfTopSubEcosystems)
+    {
+        subEcosystemDtos.Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
+        var topSubEcosystems = subEcosystemDtos
+            .Where(s => !topics.Contains(s.Topic))
+            .Take(numberOfTopSubEcosystems)
+            .Where(s => s.ProjectCount > 1)
+            .ToList();
+        return topSubEcosystems;
+    }
 }
