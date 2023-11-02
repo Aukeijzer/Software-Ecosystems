@@ -3,7 +3,7 @@ using Elastic.Clients.Elasticsearch.Core.Bulk;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Dtos.Project;
-using SECODashBackend.Services.ProgrammingLanguages;
+using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.ElasticSearch;
 
@@ -103,8 +103,8 @@ public class ElasticsearchService : IElasticsearchService
         return new EcosystemDto
         {
             Topics = topics.ToList(),
-            TopLanguages = TopProgrammingLanguagesService.GetNormalisedTopXLanguages(programmingLanguageDtos!, numberOfTopLanguages),
             SubEcosystems = topSubEcosystems.ToList()
+            TopLanguages = EcosystemAnalysisService.GetNormalisedTopXLanguages(programmingLanguageDtos!, numberOfTopLanguages),
         };
     }
 }

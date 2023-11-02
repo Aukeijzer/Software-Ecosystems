@@ -1,9 +1,9 @@
 using SECODashBackend.Dtos.ProgrammingLanguage;
-using SECODashBackend.Services.ProgrammingLanguages;
+using SECODashBackend.Services.Analysis;
 
 namespace BackendTests;
 [TestFixture]
-public class TopProgrammingLanguageServiceTests
+public class EcosystemAnalysisServiceTests
 {
     [Test]
     public void GetNormalisedTopXLanguages_ReturnsCorrectList()
@@ -54,7 +54,7 @@ public class TopProgrammingLanguageServiceTests
         };
         
         // Act
-        var result = TopProgrammingLanguagesService.GetNormalisedTopXLanguages(programmingLanguageDtos, 5);
+        var result = EcosystemAnalysisService.GetNormalisedTopXLanguages(programmingLanguageDtos, 5);
         
         // Assert that the list contains the correct amount of languages
         Assert.That(result, Has.Count.EqualTo(5));

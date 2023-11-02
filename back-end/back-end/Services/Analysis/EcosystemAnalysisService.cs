@@ -1,8 +1,9 @@
-﻿using SECODashBackend.Dtos.ProgrammingLanguage;
+﻿using SECODashBackend.Dtos.Ecosystem;
+using SECODashBackend.Dtos.ProgrammingLanguage;
 
-namespace SECODashBackend.Services.ProgrammingLanguages;
+namespace SECODashBackend.Services.Analysis;
 
-public static class TopProgrammingLanguagesService
+public static class EcosystemAnalysisService
 { 
     /// <summary>
     /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
