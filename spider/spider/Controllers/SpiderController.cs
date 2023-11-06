@@ -48,7 +48,10 @@ public class SpiderController : ControllerBase
         List<ProjectDto> result = new List<ProjectDto>();
         foreach (var spiderData in listResult)
         {
-            result = result.Concat(_graphqlDataConverter.SearchToProjects(spiderData)).ToList();
+            if (spiderData != null)
+            {
+                result = result.Concat(_graphqlDataConverter.SearchToProjects(spiderData)).ToList();
+            }
         }
 
         _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);

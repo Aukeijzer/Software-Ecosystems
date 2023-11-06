@@ -18,15 +18,18 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         List<ProjectDto> projects = DataToProjectDtos(data.Topic.Repositories.Nodes);
         return projects;
     }
-    
+
     public List<ProjectDto> DataToProjectDtos(Repository[] nodes)
     {
         var projects = new List<ProjectDto>();
-        foreach (var repository in nodes)
+        if (nodes != null)
         {
-            projects.Add(RepositoryToProject(repository));
+            foreach (var repository in nodes)
+            {
+                projects.Add(RepositoryToProject(repository));
+            }
+            
         }
-
         return projects;
     }
 
