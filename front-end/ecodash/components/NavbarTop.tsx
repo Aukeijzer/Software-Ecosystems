@@ -7,15 +7,24 @@ NavBarTop exports:
 */
 
 import { Navbar } from 'flowbite-react';
-
 import logo from '../public/logo.png';
 import Image from 'next/image'
 import Link from 'next/link';
+import React, {useState, useEffect} from 'react'
+import { IconContext } from 'react-icons'
+import { BsMenuUp } from 'react-icons/bs';
+import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { Router } from 'next/router';
 
 export default function NavBarTop(){
+    const [toggle, setToggle] = useState(false);
+    const router = useRouter();
+   
+    //For now has the basepath 
     return(
         <Navbar fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
-            <Navbar.Brand as={Link} href='/'>
+            <Navbar.Brand onClick={() => router.push("http://localhost:3000")}>
                 <Image
                     src={logo}
                     alt="SECODash logo"
@@ -27,37 +36,46 @@ export default function NavBarTop(){
                     SECODash
                 </span>
 
+                
             </Navbar.Brand>
+
+           {toggle? (null):(
+                <div className="flex align-middle justify-center p-1 text-gray-800 dark:text-white">
+                <IconContext.Provider value={{ size: '30' }}>
+                    <BsMenuUp onClick={(e : Event) => setToggle(!toggle)} />
+                </IconContext.Provider>
+            </div>
+           )} 
             
-            <Navbar.Collapse>
-                <Navbar.Link
-                    href="/"
-                   
-                >
-                        Home
-                </Navbar.Link>
+           
+            {toggle? (
+                <div className='flex flex-row gap-5'>
+                    <Navbar.Link
+                        href="/"
+                    >   
+                            Home
+                    </Navbar.Link>
+                
+                    <Navbar.Link
+                        href="http://agriculture.localhost:3000"
+                    >
+                        Agriculture
+                        
+                    </Navbar.Link>
 
-                <Navbar.Link
-                    href="/ecosystem/agriculture"
-                >
-                    Agriculture
-                    
-                </Navbar.Link>
+                    <Navbar.Link
+                        href="http://artificial-intelligence.localhost:3000"
+                    >
+                        AI
+                    </Navbar.Link>
 
-                <Navbar.Link
-                    href="/ecosystem/artificial-intelligence"
-                >
-                    AI
-                </Navbar.Link>
-
-                <Navbar.Link
-                    href="/ecosystem/quantum"
-                >
-                    Quantum
-                </Navbar.Link>
-            </Navbar.Collapse>
-            <Navbar.Toggle /> 
-            
+                    <Navbar.Link
+                        href="http://quantum.localhost:3000"
+                    >
+                        Quantum
+                    </Navbar.Link>
+                </div>
+                ) : null} 
         </Navbar>
     )   
 }

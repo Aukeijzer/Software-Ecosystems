@@ -24,16 +24,19 @@ public class ProjectsService : IProjectsService
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<Project>> GetByTopicAsync(params string[] topics)
+    public async Task<IEnumerable<Project>> GetByTopicsAsync(List<string> topics)
     {
-        // Request the Spider for new projects related to this ecosystem.
-        var newDtos = await _spiderService.GetProjectsByTopicAsync(topics.First());
-        
-        // Save these projects to elasticsearch
-        await _elasticsearchService.AddProjects(newDtos);
-        
         // Retrieve all related projects from elasticsearch
         var dtos = await _elasticsearchService.GetProjectsByTopic(topics);
         return dtos.Select(ProjectConverter.ToProject);
+    }
+
+    public async Task MineByTopicAsync(string topic)
+    {
+        // Request the Spider for projects related to this topic.
+        var newDtos = await _spiderService.GetProjectsByTopicAsync(topic);
+        
+        // Save these projects to elasticsearch
+        await _elasticsearchService.AddProjects(newDtos);
     }
 }

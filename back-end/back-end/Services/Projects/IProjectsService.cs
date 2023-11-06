@@ -5,5 +5,6 @@ namespace SECODashBackend.Services.Projects;
 public interface IProjectsService
 {
     public Task<Project?> GetByIdAsync(string id);
-    public Task<IEnumerable<Project>> GetByTopicAsync(params string[] topics);
+    public Task<IEnumerable<Project>> GetByTopicsAsync(List<string> topics);
+    public Task MineByTopicAsync(string topic);
 }

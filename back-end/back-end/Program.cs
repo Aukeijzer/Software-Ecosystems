@@ -11,7 +11,16 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+            policy =>
+            {
+                //policy.WithOrigins("http://localhost:3000", "http://argiculture.localhost:3000");
+                policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
+            });
+});
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
@@ -47,7 +56,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapControllers();

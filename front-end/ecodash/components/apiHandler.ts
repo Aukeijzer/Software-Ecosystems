@@ -13,7 +13,7 @@ apiHandler exports:
 */
 
 
-import { ecosystemModel } from "@/app/models/apiResponseModel";
+import { ecosystemModel } from "@/app/models/ecosystemModel";
 
 //Handles API call for /ecosystems
 export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {
@@ -30,11 +30,35 @@ export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {
     return result;
 }
 
-//Handles API calls for /ecosystem/[name]
-export async function handleApiNamed(endpoint : string) : Promise<ecosystemModel> {
-
-    const response : Response = await fetch(`http://localhost:5003/${endpoint}`)
+//Handles API calls for /ecosystem/[name]/[subEcosystemName[]]
+// post on /ecosystems
+export async function apiCallSubEcosystem(ecosystem : string, domains : string[], numberOfTopLanguages: number, numberOfTopSubEcosystems: number, numberOfTopContributors: number ) : Promise<ecosystemModel> { 
+    interface apiBodyInterface {
+        topics: string[],
+        numberOfTopLanguages: number,
+        numberOfTopSubEcosystems: number,
+        numberOfTopContributors: number
+    }
+    //Add ecosystem to the start of the array
+    var topics : string[] = [ecosystem , ...domains]
+    
+    //console.log(domains);
+    console.log("The domains are " + topics + " end")
+    const apiBody : apiBodyInterface = {topics : topics, 
+                                        numberOfTopLanguages: numberOfTopLanguages,
+                                        numberOfTopSubEcosystems: numberOfTopSubEcosystems,
+                                        numberOfTopContributors: numberOfTopContributors,
+                                        }
+    
+    const apiBodyJson = JSON.stringify(apiBody);
+    const response: Response = await fetch(`http://localhost:5003/ecosystems`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: apiBodyJson
+    })
+    
     const result : ecosystemModel = await response.json();
-   
     return result;
 }

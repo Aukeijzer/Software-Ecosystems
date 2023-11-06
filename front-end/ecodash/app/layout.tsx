@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       
       <body className={inter.className}>
-      <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
+      
           <NavBarTop />
           <main>
             {children}

@@ -20,7 +20,7 @@ public class ProjectsController : ControllerBase
         _projectsService = projectsService;
     }
    
-    [HttpGet("{id:long}")]
+    [HttpGet("{id}")]
     [SwaggerOperation("GetProjectById")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
     public async Task<ActionResult<Project>> GetByIdAsync(string id)
@@ -34,10 +34,10 @@ public class ProjectsController : ControllerBase
     [HttpPost("searchbytopic")]
     [SwaggerOperation("GetProjectsByTopics")]       
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByTopicsAsync(params string[] topics)
+    public async Task<ActionResult<List<ProjectDto>>> GetByTopicsAsync(List<string> topics)
     {
         _logger.LogInformation("{Origin}: Projects requested with topics: '{topics}'.", this, topics);
-        var dtos = await _projectsService.GetByTopicAsync(topics);
+        var dtos = await _projectsService.GetByTopicsAsync(topics);
         var projects = dtos.Select(ProjectConverter.ToProjectDto);
         var projectDtos = projects.ToList();
         if (!projectDtos.Any())
@@ -47,5 +47,13 @@ public class ProjectsController : ControllerBase
         }
         _logger.LogInformation("{Origin}: Returning projects with topics: '{topics}'.", this, topics);
         return projectDtos;
+    }
+    
+    [HttpPost("mine")]
+    public async Task<ActionResult> MineByTopic(string topic)
+    {
+        _logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
+        await _projectsService.MineByTopicAsync(topic);
+        return Accepted();
     }
 }

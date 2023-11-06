@@ -2,12 +2,12 @@
 
 public struct ProgrammingLanguageDto
 {
-    public ProgrammingLanguageDto(string name, float percentage)
+    public ProgrammingLanguageDto(string language, float percentage)
     {
-        Name = name;
+        Language = language;
         Percentage = percentage;
     }
 
-    public string Name { get; }
+    public string Language { get; }
     public float Percentage { get; }
 }
