@@ -11,17 +11,18 @@ public class SpiderService : ISpiderService
     public SpiderService()
     {
         var options = new RestClientOptions("http://localhost:5205/Spider");
+        options.MaxTimeout = 10000000;
         _spiderClient = new RestClient(options);
     }
-    public async Task<List<ProjectDto>> GetProjectsByKeywordAsync(string keyword)
+    public async Task<List<ProjectDto>> GetProjectsByKeywordAsync(string keyword, int amount)
     {
-        var request = new RestRequest("name/" + keyword);
+        var request = new RestRequest("name/" + keyword + "/" + amount);
         // Throw an exception if the request cannot be deserialized into a List of Projects
         return await _spiderClient.GetAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
     }
-    public async Task<List<ProjectDto>> GetProjectsByTopicAsync(string topic)
+    public async Task<List<ProjectDto>> GetProjectsByTopicAsync(string topic, int amount)
     {
-        var request = new RestRequest("topic/" + topic);
+        var request = new RestRequest("topic/" + topic + "/" + amount);
         // Throw an exception if the request cannot be deserialized into a List of Projects
         return await _spiderClient.GetAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
     }

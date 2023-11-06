@@ -26,7 +26,7 @@ public class GitHubRestService : IGitHubRestService
             {
                 request.AddQueryParameter("page", page);
                 var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
-                result = result.Concat(temp).ToList();
+                result.AddRange(temp);
                 if (temp.Count < 50)
                 {
                     break;
@@ -40,10 +40,10 @@ public class GitHubRestService : IGitHubRestService
                 var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
                 if (temp.Count < amount)
                 {
-                    result = result.Concat(temp).ToList();
+                    result.AddRange(temp);
                     break;
                 }
-                result = result.Concat(temp.GetRange(0,amount)).ToList();
+                result.AddRange(temp.GetRange(0,amount));
                 amount = 0;
             }
         }

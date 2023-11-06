@@ -49,11 +49,19 @@ public class ProjectsController : ControllerBase
         return projectDtos;
     }
     
-    [HttpPost("mine")]
-    public async Task<ActionResult> MineByTopic(string topic)
+    [HttpPost("mine/topic")]
+    public async Task<ActionResult> MineByTopic(string topic, int amount)
     {
         _logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
-        await _projectsService.MineByTopicAsync(topic);
+        await _projectsService.MineByTopicAsync(topic, amount);
+        return Accepted();
+    }
+    
+    [HttpPost("mine/search")]
+    public async Task<ActionResult> MineByKeyword(string keyword, int amount)
+    {
+        _logger.LogInformation("{Origin}: Mining command received for topic: '{keyword}'.", this,keyword);
+        await _projectsService.MineByKeywordAsync(keyword, amount);
         return Accepted();
     }
 }
