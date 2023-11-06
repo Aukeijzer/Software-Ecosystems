@@ -1,5 +1,4 @@
 "use client"
-import displayable from '@/app/classes/displayableClassPaged'
 import dynamic from 'next/dynamic'
 import { CartesianGrid, XAxis, YAxis, Line, Legend, ResponsiveContainer, Tooltip} from 'recharts'
 import { lineData } from '@/mockData/mockAgriculture'

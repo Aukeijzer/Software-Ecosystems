@@ -24,7 +24,9 @@ export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Me
 
 export default function ecosystemPage({params: {ecosystem}}: ecosystemPageProps){
     return( 
-        
-        <LayoutEcosystem ecosystem={ecosystem} />
+        <div className="h-full">
+            <LayoutEcosystem ecosystem={ecosystem} />
+        </div>
+       
     )
 }

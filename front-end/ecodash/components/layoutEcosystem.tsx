@@ -13,6 +13,7 @@ import ListComponentSingle from "./listComponent"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import risingClass from "@/app/classes/risingClass"
 import GraphLine from "./graphLine"
+import SpinnerComponent from "./spinner"
 
 interface layoutEcosystemSingleProps{
     ecosystem: string,
@@ -106,50 +107,46 @@ export default function LayoutEcosystem(props: layoutEcosystemSingleProps){
     }
 
     if(dataLoaded) {
-        //List of topics
-        const dataListTopic = <ListComponentSingle items={subEcosystems!} onClick={onClickTopic}/>
-        const cardTopic = <InfoCard title={"Top 5 topics"} data={dataListTopic} />
-        const cardTopicWrapped: cardWrapper = {card: cardTopic, width: 1, height: 2, x: 2, y: 1, minH: 2}
-
-        //List of languages
-        const dataListLanguages = <ListComponentSingle items={languages!} onClick={onClickTopic}/>
-        const cardLanguages = <InfoCard title={"Top 5 languages"} data={dataListLanguages} />
-        const cardLanguagesWrapped : cardWrapper= {card: cardLanguages, width:1, height:2, x: 3, y: 1, minH: 2}
-
-        //Graph of languages
-        const dataGraphLanguages = <GraphComponent items={languages!}/>
-        const cardGraph = <InfoCard title={"Graph: Top 5 languages"} data={dataGraphLanguages} />
-        const cardGraphWrapped : cardWrapper = {card: cardGraph, width:2, height:3, x: 4, y: 1, minH: 3, minW: 2}
-
-        //List of growing topics
-        const dataListTopicsGrowing = <ListComponentSingle items={subEcosystemsGrowing!} onClick={onClickTopic}/>
-        const cardTopicsGrowing = <InfoCard title={"Top 5 rising topics"} data={dataListTopicsGrowing} alert="This is mock data"/>
-        const cardTopicsGrowingWrapped : cardWrapper = {card: cardTopicsGrowing, width: 2, height:2 , x: 0, y: 3}
-
         //List of technologies
         const dataListTechnologies = <ListComponentSingle items={technologies!} onClick={onClickTopic}/>
         const cardTechnologies = <InfoCard title={"Top 5 technologies"} data={dataListTechnologies} alert="This is mock data" />
-        const carrdTechnologiesWrapped : cardWrapper = {card: cardTechnologies, width: 2, height: 2, x: 0, y: 0}
+        const carrdTechnologiesWrapped : cardWrapper = {card: cardTechnologies, width: 2, height: 4, x: 6, y: 3}
 
         //List of rising technologies
         const dataListTechnologiesGrowing = <ListComponentSingle items={technologiesGrowing!} onClick={onClickTopic} />
         const cardTechnologiesGrowing = <InfoCard title={"Top 5 rising technologies"} data={dataListTechnologiesGrowing} alert="This is mock data" />
-        const cardTechnologiesGrowingWrapped: cardWrapper = {card: cardTechnologiesGrowing, width: 2, height: 2, x: 2, y : 2}
+        const cardTechnologiesGrowingWrapped: cardWrapper = {card: cardTechnologiesGrowing, width: 2, height: 4, x: 2, y : 3}
+
+        //List of topics
+        const dataListTopic = <ListComponentSingle items={subEcosystems!} onClick={onClickTopic}/>
+        const cardTopic = <InfoCard title={"Top 5 topics"} data={dataListTopic} />
+        const cardTopicWrapped: cardWrapper = {card: cardTopic, width: 1, height: 4, x: 0, y: 3, minH: 2}
+
+        //List of growing topics
+        const dataListTopicsGrowing = <ListComponentSingle items={subEcosystemsGrowing!} onClick={onClickTopic}/>
+        const cardTopicsGrowing = <InfoCard title={"Top 5 rising topics"} data={dataListTopicsGrowing} alert="This is mock data"/>
+        const cardTopicsGrowingWrapped : cardWrapper = {card: cardTopicsGrowing, width: 1, height:4 , x: 1, y: 3}
+
+        //Graph of languages
+        const dataGraphLanguages = <GraphComponent items={languages!}/>
+        const cardGraph = <InfoCard title={"Graph: Top 5 languages"} data={dataGraphLanguages} />
+        const cardGraphWrapped : cardWrapper = {card: cardGraph, width:2, height:6, x: 0, y: 4, minH: 3, minW: 2}
+
+        
  
         //Description ecosystem information
         const ecosystemDescription =  <EcosystemDescription ecosystem={ecosystem? ecosystem : props.ecosystem}   removeTopic={onRemoveTopic} description={description? description : "No description provided" }  subEcosystems={selectedSubs} />
-        const ecosystemDescriptionWrapped : cardWrapper = {card: ecosystemDescription, width: 6, height: 1, x: 0, y: 0, static:true}
+        const ecosystemDescriptionWrapped : cardWrapper = {card: ecosystemDescription, width: 6, height: 2, x: 0, y: 0, static:true}
 
         //Line graph topicsGrowing
         const lineGraphTopicsGrowing = <GraphLine items={topicGrowthLine} />
         const cardLineGraph = <InfoCard title={"Top 5 Topics over time"} data={lineGraphTopicsGrowing} alert="This is mock data"/>
-        const cardLineGraphWrapped: cardWrapper = {card: cardLineGraph, x: 0, y : 5, width: 6, height: 3}
+        const cardLineGraphWrapped: cardWrapper = {card: cardLineGraph, x: 2, y : 12, width: 4, height: 6}
 
         //Add to card list
         var cards : cardWrapper[] = [];
 
         cards.push(cardTopicWrapped);
-        cards.push(cardLanguagesWrapped);
         cards.push(ecosystemDescriptionWrapped);
         cards.push(cardGraphWrapped);
         cards.push(cardTopicsGrowingWrapped);
@@ -164,8 +161,8 @@ export default function LayoutEcosystem(props: layoutEcosystemSingleProps){
         )
     } else {
         return(
-            <div>
-                loading...
+            <div className="">
+                <SpinnerComponent />
             </div>
         )
     }
