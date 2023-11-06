@@ -15,7 +15,7 @@ export default class languageClass extends displayable{
     renderAsListItem(): JSX.Element {
         return(
             <div>
-                {this.language} : {this.percentage} %
+                <b>{this.language} </b>: {this.percentage} %
             </div>
         )
     }

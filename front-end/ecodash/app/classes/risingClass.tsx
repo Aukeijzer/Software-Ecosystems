@@ -17,10 +17,10 @@ export default class risingClass extends displayable {
     renderAsListItem(onClick: (sub: string) => void): JSX.Element {
         return(
             <p className="flex flex-row gap-1"onClick={() => onClick(this.topic)}>
-                {this.topic}  {this.percentage}% : {this.growth}  %
+                <b>{this.topic}</b>  {this.percentage}% : {this.growth}  %
                  <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
-                </svg>.
+                    <path stroke="green" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
+                </svg>
         </p>
         )
     }

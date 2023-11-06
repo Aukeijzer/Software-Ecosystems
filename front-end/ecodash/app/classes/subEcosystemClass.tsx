@@ -13,7 +13,7 @@ export default class subEcosystemClass extends displayable {
     renderAsListItem(onClick: (sub: string) => void): JSX.Element {    
         return(
             <p onClick={() => onClick(this.topic)}>
-                {this.topic} with {this.projectCount} projects.
+                <b>{this.topic}</b> with {this.projectCount} projects.
             </p>
         )
     }

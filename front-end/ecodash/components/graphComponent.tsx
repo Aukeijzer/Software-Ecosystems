@@ -18,7 +18,7 @@ infoCardDataGraph exports:
 import { languageModel } from '@/app/models/languageModel';
 import dynamic from 'next/dynamic'
 import { Pie, Cell, Legend } from "recharts";
-import displayable from '@/app/classes/displayableClassPaged';
+import displayable from '@/app/classes/displayableClass';
 
 //This must be imported dynamicly so that SSR can be disabled
 //TODO: Maybe add a spinner to loading time?

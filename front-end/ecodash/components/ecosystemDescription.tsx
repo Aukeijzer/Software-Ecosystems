@@ -30,9 +30,13 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                 </h1>
                 {props.subEcosystems? <div>
                     The following sub-ecosystems have been selected
-                    <ul>
-                        {props.subEcosystems?.map((item, i) => (<li key={i} onClick={() => props.removeTopic!(item)}>
-                            * {item}
+                    <ul className='flex flex-row gap-5'>
+                        {props.subEcosystems?.map((item, i) => (
+                        <li key={i} className='flex flex-row gap-5 mb-1'>
+                            
+                             
+
+                            <button onClick={() => props.removeTopic!(item)} className='bg-gray-300 rounded-md pl-1 pr-1'> X {item} </button>
                         </li>) )}
                     </ul>
                     
