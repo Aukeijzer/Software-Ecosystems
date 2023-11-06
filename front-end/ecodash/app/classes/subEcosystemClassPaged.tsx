@@ -1,9 +1,7 @@
-import displayable from "./displayableClass";
-import displayableSingle from "./displayableClassSingle";
+import displayablePaged from "./displayableClassPaged";
 import Link from "next/link";
 
-
-export default class subEcosystemSingle extends displayableSingle {
+export default class subEcosystem extends displayablePaged {
     topic: string;
     projectCount: number;
     
@@ -13,11 +11,17 @@ export default class subEcosystemSingle extends displayableSingle {
         this.projectCount = projectCount;
     }
     
-    renderAsListItem(onClick: (sub: string) => void): JSX.Element {    
+    renderAsListItem(url: string): JSX.Element {
+        
+        var onClick = () => {
+            window.location.href = url + this.topic;
+        }
+        
         return(
-            <p onClick={() => onClick(this.topic)}>
+            <Link href={url + this.topic} onClick={onClick}>
                 {this.topic} with {this.projectCount} projects.
-            </p>
+            </Link>
+
         )
     }
     renderAsTableItem(): JSX.Element {

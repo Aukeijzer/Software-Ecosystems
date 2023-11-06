@@ -13,9 +13,7 @@ infoCard exports:
 
 import { Card, Alert } from 'flowbite-react'
 import React from 'react'
-import InfoCardDataList from './listComponent'
-import InfoCardDataTable from './tableComponent'
-import InfoCardDataGraph from './graphComponent'
+import InfoCardDataList from './listComponentPaged'
 import {HiInformationCircle} from 'react-icons/hi'
 
 interface infoCardProps{
@@ -27,8 +25,8 @@ interface infoCardProps{
 
 export default function InfoCard(props : infoCardProps){
     return(
-        <Card className={'flex h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl resize' + props.className}>
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900">
+        <Card className={'flex h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl resize content-evenly' + props.className}>
+            <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
                 {props.title}
             </h5>
 

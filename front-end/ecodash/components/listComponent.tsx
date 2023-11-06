@@ -14,16 +14,16 @@ import displayable from "@/app/classes/displayableClass";
 
 interface infoCardDataListProps<T>{
     items: displayable[],
-    url: string
+    onClick: (sub: string) => void
 }
 
-export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
+export default function ListComponentSingle<T extends {}>(props : infoCardDataListProps<T>){
     return(
         <div className="h-full">
             <ListGroup>
                 {props.items.map((item, i) => (
                     <ListGroup.Item key = {i} >
-                       {item.renderAsListItem(props.url)}
+                       {item.renderAsListItem(props.onClick)}
                     </ListGroup.Item>
                 ))}
             </ListGroup>

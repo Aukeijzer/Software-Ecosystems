@@ -9,7 +9,6 @@ interface ecosystemInformationDataProps{
 }
 
 export default function EcosystemInformationData(props : ecosystemInformationDataProps){
-    
     const data = (
         <div className="flex flex-col">
             <span> {props.ecosystem.description} </span>
@@ -19,8 +18,6 @@ export default function EcosystemInformationData(props : ecosystemInformationDat
     
     return(
         <InfoCard title={props.ecosystem.displayName!} className="w-1/3" data={data} />
-       
-
     )
 }
 

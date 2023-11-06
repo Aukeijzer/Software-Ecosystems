@@ -1,5 +1,5 @@
+import LayoutEcosystemPaged from "@/components/layoutEcosystemPaged";
 import LayoutEcosystem from "@/components/layoutEcosystem";
-import LayoutEcosystemSingle from "@/components/layoutEcosystemSingle";
 
 import { Metadata } from "next";
 //This page has a dynamic path. Meaning you can put everything after /ecosytem/.... and it will go to that site and pass the .... as props to the page
@@ -25,6 +25,6 @@ export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Me
 export default function ecosystemPage({params: {ecosystem}}: ecosystemPageProps){
     return( 
         
-        <LayoutEcosystemSingle ecosystem={ecosystem} />
+        <LayoutEcosystem ecosystem={ecosystem} />
     )
 }

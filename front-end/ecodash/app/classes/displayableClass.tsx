@@ -3,7 +3,7 @@ export default abstract class displayable{
 
     }
     
-    abstract renderAsListItem(url: string) : JSX.Element
+    abstract renderAsListItem(onClick: (sub: string) => void) : JSX.Element
        
     abstract renderAsTableItem() : JSX.Element
 

@@ -8,12 +8,11 @@ gridLayout exports:
 
 */
 
-
 import 'react-grid-layout/css/styles.css' 
 import 'react-resizable/css/styles.css' 
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { cardWrapper } from './layoutEcosystem';
+import { cardWrapper } from './layoutEcosystemPaged';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 interface InfoCardGridProps{

@@ -3,7 +3,7 @@ import {useEffect, useState} from "react"
 import { handleApi } from "./apiHandler"
 import { ecosystemModel } from "@/app/models/ecosystemModel"
 import GridLayout from "./gridLayout";
-import { cardWrapper } from "./layoutEcosystem";
+import { cardWrapper } from "./layoutEcosystemPaged";
 import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 
@@ -15,8 +15,7 @@ export default function LayoutHomePage(){
     })
 
     function transferData(data: ecosystemModel[]){
-        //No idea what this data should be?
-
+        //This data is still not finished. Not clear yet what needs to be displayed on homePage
         setDataLoaded(true);
     }
 
@@ -46,8 +45,4 @@ export default function LayoutHomePage(){
             </div>
         )
     }
-
-
-
-
 }

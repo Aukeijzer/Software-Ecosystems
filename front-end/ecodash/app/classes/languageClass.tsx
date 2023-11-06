@@ -1,6 +1,7 @@
 import { programmingLanguage } from "../enums/ProgrammingLanguage";
-import displayable from "./displayableClass";
+import displayable from "./displayableClassPaged";
 import { Cell } from "recharts";
+
 export default class languageClass extends displayable{
     language: programmingLanguage;
     percentage: number;

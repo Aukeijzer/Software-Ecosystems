@@ -1,6 +1,6 @@
 "use client"
 
-import subEcosystem from '@/app/classes/subEcosystemClass'
+import subEcosystem from '@/app/classes/subEcosystemClassPaged'
 /*
 ecosystemDescription exports:
 

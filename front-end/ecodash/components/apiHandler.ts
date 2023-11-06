@@ -30,28 +30,9 @@ export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {
     return result;
 }
 
-//Handles API calls for /ecosystem/[name]
-export async function handleApiNamed(endpoint : string) : Promise<ecosystemModel> {
-
-    const response : Response = await fetch(`http://localhost:5003/${endpoint}`)
-    const result : ecosystemModel = await response.json();
-   
-    return result;
-}
 //Handles API calls for /ecosystem/[name]/[subEcosystemName[]]
 // post on /ecosystems
-export async function apiCallSubEcosystem(ecosystem : string, domains : string[], numberOfTopLanguages: number, numberOfTopSubEcosystems: number, numberOfTopContributors: number ) : Promise<ecosystemModel> {
-
-    //Make post request with JSON object
-        // Eerste in list is ecosystem
-        // Verder list alle topics:
-        // topics
-        // Hoeveelheid top x : numberOfTopLanguages
-        // numberOfTopSubEcosystems
-        // numberOfTopContributors
-    
-    
-
+export async function apiCallSubEcosystem(ecosystem : string, domains : string[], numberOfTopLanguages: number, numberOfTopSubEcosystems: number, numberOfTopContributors: number ) : Promise<ecosystemModel> { 
     interface apiBodyInterface {
         topics: string[],
         numberOfTopLanguages: number,
@@ -59,7 +40,6 @@ export async function apiCallSubEcosystem(ecosystem : string, domains : string[]
         numberOfTopContributors: number
     }
     //Add ecosystem to the start of the array
-    //domains.unshift(ecosystem);
     var topics : string[] = [ecosystem , ...domains]
     
     //console.log(domains);

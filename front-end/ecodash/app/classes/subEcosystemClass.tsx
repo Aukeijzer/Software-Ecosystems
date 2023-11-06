@@ -1,7 +1,6 @@
 import displayable from "./displayableClass";
-import Link from "next/link";
 
-export default class subEcosystem extends displayable {
+export default class subEcosystemClass extends displayable {
     topic: string;
     projectCount: number;
     
@@ -11,17 +10,11 @@ export default class subEcosystem extends displayable {
         this.projectCount = projectCount;
     }
     
-    renderAsListItem(url: string): JSX.Element {
-        
-        var onClick = () => {
-            window.location.href = url + this.topic;
-        }
-        
+    renderAsListItem(onClick: (sub: string) => void): JSX.Element {    
         return(
-            <Link href={url + this.topic} onClick={onClick}>
+            <p onClick={() => onClick(this.topic)}>
                 {this.topic} with {this.projectCount} projects.
-            </Link>
-
+            </p>
         )
     }
     renderAsTableItem(): JSX.Element {

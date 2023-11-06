@@ -1,9 +1,9 @@
-export default abstract class displayableSingle{
+export default abstract class displayablePaged{
     constructor(){
 
     }
     
-    abstract renderAsListItem(onClick: (sub: string) => void) : JSX.Element
+    abstract renderAsListItem(url: string) : JSX.Element
        
     abstract renderAsTableItem() : JSX.Element
 

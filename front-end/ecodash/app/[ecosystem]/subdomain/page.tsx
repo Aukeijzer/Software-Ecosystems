@@ -1,6 +1,6 @@
 "use client"
 import { useSearchParams } from 'next/navigation'
-import LayoutEcosystem from '@/components/layoutEcosystem';
+import LayoutEcosystem from '@/components/layoutEcosystemPaged';
 
 export default function SubDomainPage(){
     const SearchParams = useSearchParams();
