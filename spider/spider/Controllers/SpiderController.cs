@@ -50,7 +50,7 @@ public class SpiderController : ControllerBase
         {
             if (spiderData != null)
             {
-                result = result.Concat(_graphqlDataConverter.SearchToProjects(spiderData)).ToList();
+                result.AddRange(_graphqlDataConverter.SearchToProjects(spiderData));
             }
         }
 
@@ -82,7 +82,7 @@ public class SpiderController : ControllerBase
         List<ProjectDto> result = new List<ProjectDto>();
         foreach (var topicSearchData in listResult)
         {
-            result = result.Concat(_graphqlDataConverter.TopicSearchToProjects(topicSearchData)).ToList();
+            result.AddRange(_graphqlDataConverter.TopicSearchToProjects(topicSearchData));
         }
         _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.", this, topic);
         return result;

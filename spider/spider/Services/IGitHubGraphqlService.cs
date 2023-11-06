@@ -12,7 +12,7 @@ public interface IGitHubGraphqlService
 
     public Task<List<TopicSearchData>> QueryRepositoriesByTopicHelper(String topic, int amount,
         string? startCursor = null);
-    public Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount = 10, string? cursor = null);
+    public Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount = 10, string? cursor = null, int tries = 3);
     
     public Task<RepositoryWrapper> QueryRepositoryByName(string repoName, string ownerName);
 

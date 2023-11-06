@@ -222,7 +222,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         return projects;
     }
     
-    public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount, string? cursor = null)
+    public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount, string? cursor = null, int tries = 3)
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()
         {
@@ -321,9 +321,48 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             Variables = new{_topic= topic, _amount = amount, _cursor = cursor}
         };
         
-        var response = await _client.SendQueryAsync(topicRepositoriesQuery,
+        
+        try
+        {
+          var response = await _client.SendQueryAsync(topicRepositoriesQuery,
             () => new TopicSearchData());
-        return response.Data;
+
+          if (response is GraphQLHttpResponse<TopicSearchData> httpResponse && httpResponse.Errors == null)
+          {
+            return response.Data;
+          }
+
+          foreach (var error in response.Errors)
+          {
+            _logger.LogError("{origin}.QueryRepositoriesByTopic with request: \"{topic}\" " +
+                             "has failed with graphql error" + error.Message, this,
+              topic);
+          }
+
+          return response.Data;
+        }
+        catch (Exception e)
+        {
+          switch (e)
+          {
+            case GraphQLHttpRequestException error:
+              _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
+              if (error.StatusCode == HttpStatusCode.BadGateway)
+              {
+                if (tries > 1)
+                {
+                  return await QueryRepositoriesByTopic(topic, amount, cursor, tries - 1);
+                }
+
+                throw new BadHttpRequestException(e.Message);
+              }
+              break;
+            default:
+              _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
+              break;
+          }
+          throw e;
+        }
     }
     
     public async Task<RepositoryWrapper> QueryRepositoryByName(string repositoryName, string ownerName)
