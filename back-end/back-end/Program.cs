@@ -4,6 +4,7 @@ using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Logging;
+using SECODashBackend.Services.Analysis;
 using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.ElasticSearch;
@@ -39,6 +40,7 @@ builder.Services.AddSingleton(
         new ApiKey(builder.Configuration.GetSection("ElasticSearch").GetSection("ApiKey").Value!)
         ));
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
+builder.Services.AddScoped<IAnalysisService, ElasticsearchAnalysisService>();
 builder.Services.AddElasticsearchClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
