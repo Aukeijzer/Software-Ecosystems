@@ -3,9 +3,7 @@ using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
-using SECODashBackend.Services.DataProcessor;
-using SECODashBackend.Services.ElasticSearch;
-using SECODashBackend.Services.Projects;
+using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
     
@@ -13,20 +11,14 @@ public class EcosystemsService : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
     private readonly EcosystemsContext _dbContext;
-    private readonly IDataProcessorService _dataProcessorService;
-    private readonly IProjectsService _projectsService;
-    private readonly IElasticsearchService _elasticsearchService;
+    private readonly IAnalysisService _analysisService;
 
     public EcosystemsService(
         EcosystemsContext dbContext,
-        IProjectsService projectsService,
-        IDataProcessorService dataProcessorService,
-        IElasticsearchService elasticsearchService)
+        IAnalysisService analysisService)
     {
         _dbContext = dbContext;
-        _projectsService = projectsService;
-        _dataProcessorService = dataProcessorService;
-        _elasticsearchService = elasticsearchService;
+        _analysisService = analysisService;
     }
     public async Task<List<EcosystemOverviewDto>> GetAllAsync()
     {
@@ -53,22 +45,24 @@ public class EcosystemsService : IEcosystemsService
     public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
-        
-        var ecosystemDto = await _elasticsearchService.GetEcosystemData(
+
+        var ecosystemDto = await _analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems);
 
+        // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
         if (dto.Topics.Count != 1) return ecosystemDto;
             
+        // Check if the database has additional data regarding this ecosystem
         var ecosystem = await GetByNameAsync(dto.Topics.First());
-            
-        if (ecosystem != null)
-        {
-            ecosystemDto.DisplayName = ecosystem.DisplayName;
-            ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
-            ecosystemDto.Description = ecosystem.Description;
-        }
+
+        // If it doesn't, return the dto as is, else add the additional data
+        if (ecosystem == null) return ecosystemDto;
+        ecosystemDto.DisplayName = ecosystem.DisplayName;
+        ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
+        ecosystemDto.Description = ecosystem.Description;
+        
         return ecosystemDto;
     }
 }
