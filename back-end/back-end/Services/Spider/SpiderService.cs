@@ -21,7 +21,7 @@ public class SpiderService : ISpiderService
     }
     public async Task<List<ProjectDto>> GetProjectsByTopicAsync(string topic)
     {
-        var request = new RestRequest("topic/" + topic);
+        var request = new RestRequest("topic/" + topic + "/100");
         // Throw an exception if the request cannot be deserialized into a List of Projects
         return await _spiderClient.GetAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
     }

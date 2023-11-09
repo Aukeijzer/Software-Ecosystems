@@ -10,7 +10,7 @@ namespace SECODashBackend.Services.ElasticSearch;
 public class ElasticsearchService : IElasticsearchService
 {
     // Name of the projects index in Elasticsearch
-    private const string ProjectIndex = "projects-01";
+    private const string ProjectIndex = "projects-timed-test";
 
     // Property of the Project document that contains the topics of the project 
     private const string TopicProperty = "topics.keyword";
@@ -33,7 +33,11 @@ public class ElasticsearchService : IElasticsearchService
     {
         var request = new BulkRequest(ProjectIndex);
         var indexOperations = 
-            projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p));
+            projectDtos.Select(p =>
+            {
+                p.Timestamp = DateTime.UtcNow;
+                return new BulkIndexOperation<ProjectDto>(p);
+            });
         request.Operations = new BulkOperationsCollection(indexOperations);
         var response = await _client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
