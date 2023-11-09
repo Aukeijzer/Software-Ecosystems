@@ -21,7 +21,7 @@ builder.Services.AddDbContext<EcosystemsContext>(
     );
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddScoped<ISpiderService, SpiderService>();
+builder.Services.AddScoped<ISpiderService>(provider => new SpiderService(builder.Configuration.GetConnectionString("Spider")));
 builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
 builder.Services.AddSingleton(
