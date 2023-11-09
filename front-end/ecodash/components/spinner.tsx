@@ -1,7 +1,5 @@
 "use client"
 
-import { Spinner } from 'flowbite-react'
-
 export default function SpinnerComponent(){
     return(
         <div className='text-center h-full align-middle leading-10'>

@@ -41,16 +41,16 @@ export async function apiCallSubEcosystem(ecosystem : string, domains : string[]
     }
     //Add ecosystem to the start of the array
     var topics : string[] = [ecosystem , ...domains]
-    
-    //console.log(domains);
-    console.log("The domains are " + topics + " end")
+
+    //Prepare post body
     const apiBody : apiBodyInterface = {topics : topics, 
                                         numberOfTopLanguages: numberOfTopLanguages,
                                         numberOfTopSubEcosystems: numberOfTopSubEcosystems,
                                         numberOfTopContributors: numberOfTopContributors,
                                         }
-    
+    //Convert body to JSON
     const apiBodyJson = JSON.stringify(apiBody);
+    //Send POST request to /ecosystems
     const response: Response = await fetch(`http://localhost:5003/ecosystems`, {
         method: 'POST',
         headers: {

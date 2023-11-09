@@ -14,6 +14,7 @@ import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLin
 import risingClass from "@/app/classes/risingClass"
 import GraphLine from "./graphLine"
 import SpinnerComponent from "./spinner"
+import { programmingLanguage } from "@/app/enums/ProgrammingLanguage"
 
 interface layoutEcosystemSingleProps{
     ecosystem: string,
@@ -48,10 +49,16 @@ export default function LayoutEcosystem(props: layoutEcosystemSingleProps){
         }
 
         //Instantiate language class for each language object
+        var total = 0;
         var languageList : languageClass[] = [];
         for(var i = 0; i < data.topLanguages.length; i++){
-            languageList.push(new languageClass(data.topLanguages[i].language, data.topLanguages[i].percentage))
+            languageList.push(new languageClass(data.topLanguages[i].language.toString(), data.topLanguages[i].percentage))
+            total+= data.topLanguages[i].percentage;
         }
+        var rest = 100 - total;
+        //push rest to language
+        languageList.push(new languageClass("Other", rest))
+
 
         //Instantiate rising class for each topic rising
 
@@ -129,7 +136,7 @@ export default function LayoutEcosystem(props: layoutEcosystemSingleProps){
 
         //Graph of languages
         const dataGraphLanguages = <GraphComponent items={languages!}/>
-        const cardGraph = <InfoCard title={"Graph: Top 5 languages"} data={dataGraphLanguages} />
+        const cardGraph = <InfoCard title={"Top 5 languages"} data={dataGraphLanguages} />
         const cardGraphWrapped : cardWrapper = {card: cardGraph, width:2, height:6, x: 0, y: 4, minH: 3, minW: 2}
 
         

@@ -53,7 +53,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps) {
         //Instantiate language class for each language object
         var languageList : languageClass[] = [];
         for(var i = 0; i < data.topLanguages.length; i++){
-            languageList.push(new languageClass(data.topLanguages[i].language, data.topLanguages[i].percentage))
+            languageList.push(new languageClass(data.topLanguages[i].language.toString(), data.topLanguages[i].percentage))
         }
 
 
