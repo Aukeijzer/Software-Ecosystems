@@ -1,7 +1,6 @@
 "use client"
 
 import { ecosystemModel } from "@/app/models/ecosystemModel";
-import { Card } from "flowbite-react";
 import InfoCard from "./infoCard";
 
 interface ecosystemInformationDataProps{
