@@ -11,7 +11,7 @@ ARG NODE_VERSION=18.15.0
 FROM node:${NODE_VERSION}-alpine as base
 
 # Set working directory for all build stages.
-WORKDIR /usr/src/app
+WORKDIR .
 
 
 ################################################################################
@@ -24,6 +24,7 @@ FROM base as deps
 # into this layer.
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=bind,source=tsconfig.json,target=tsconfig.json \
     --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
 
@@ -35,13 +36,14 @@ FROM deps as build
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=bind,source=tsconfig.json,target=tsconfig.json \
     --mount=type=cache,target=/root/.npm \
     npm ci
 
 # Copy the rest of the source files into the image.
 COPY . .
 # Run the build script.
-# RUN npm run build
+#RUN npm run build
 
 ################################################################################
 # Create a new stage to run the application with minimal runtime dependencies
@@ -49,18 +51,23 @@ COPY . .
 FROM base as final
 
 # Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV development
 
 # Run the application as a non-root user.
 USER node
 
 # Copy package.json so that package manager commands can be used.
 COPY package.json .
+#COPY package-lock.json .
+COPY tsconfig.json .
+
+#COPY next-env.d.ts .
+#COPY /.next /.next
 
 # Copy the production dependencies from the deps stage and also
 # the built application from the build stage into the image.
-COPY --from=deps /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/app ./app
+COPY --from=deps ./node_modules ./node_modules
+COPY --from=build ./app ./app
 
 
 # Expose the port that the application listens on.

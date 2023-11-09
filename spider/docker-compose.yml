@@ -6,7 +6,8 @@ services:
     - secodash-network
    environment:
     API_Token: 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
-
+   ports:
+     - 5205:80
 networks:
   secodash-network:
     name: secodash-network

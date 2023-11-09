@@ -11,10 +11,21 @@ services:
   server:
     build:
       context: .
-    environment:
-      NODE_ENV: production
+    volumes:
+      - /app
+      - /.next
+      - /node_modules
     ports:
       - 3000:3000
+    networks:
+      - secodash-network
+    restart: always
+
+networks:
+  secodash-network:
+    name: secodash-network
+    driver: bridge
+    external: true
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
