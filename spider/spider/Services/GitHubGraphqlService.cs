@@ -35,10 +35,6 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             {
                 var temp = await QueryRepositoriesByName(name, 25, cursor);
                 amount -= 25;
-                if (temp == null)
-                {
-                    break; 
-                }
                 projects.Add(temp);
                 if (temp.Search.PageInfo?.HasNextPage != true)
                 {
@@ -194,7 +190,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                     _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", this, repositoryName);
                     break;
             }
-            throw e;
+            throw;
         }
     }
     
@@ -361,7 +357,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
               _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
               break;
           }
-          throw e;
+          throw;
         }
     }
     

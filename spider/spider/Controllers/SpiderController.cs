@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using spider.Converter;
 using spider.Dtos;
@@ -44,18 +45,40 @@ public class SpiderController : ControllerBase
             WebUtility.UrlDecode(startCursor);
         }
         _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name);
-        var listResult = await _gitHubGraphqlService.QueryRepositoriesByNameHelper(name, amount, startCursor);
-        List<ProjectDto> result = new List<ProjectDto>();
-        foreach (var spiderData in listResult)
+        try
         {
-            if (spiderData != null)
+            var listResult = await _gitHubGraphqlService.QueryRepositoriesByNameHelper(name, amount, startCursor);
+            List<ProjectDto> result = new List<ProjectDto>();
+            foreach (var spiderData in listResult)
             {
                 result.AddRange(_graphqlDataConverter.SearchToProjects(spiderData));
             }
-        }
 
-        _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
-        return result;
+            _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
+            return result;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, name);
+            switch (e)
+            {
+                case JsonException:
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                }
+                case NullReferenceException :
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                } 
+                    
+                default:
+                    throw;
+            }
+        }
     }
     
     [HttpGet("topic/{topic}/{amount}")]
@@ -72,21 +95,51 @@ public class SpiderController : ControllerBase
 
     private async Task<ActionResult<List<ProjectDto>>> GetByTopicHelper(string topic, int amount, string? startCursor)
     {
-        topic = WebUtility.UrlDecode(topic);
-        if (startCursor != null)
+        try
         {
-            WebUtility.UrlDecode(startCursor);
+            topic = WebUtility.UrlDecode(topic);
+            if (startCursor != null)
+            {
+                WebUtility.UrlDecode(startCursor);
+            }
+
+            var listResult = await _gitHubGraphqlService.QueryRepositoriesByTopicHelper(topic, amount, startCursor);
+            _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
+            List<ProjectDto> result = new List<ProjectDto>();
+            foreach (var topicSearchData in listResult)
+            {
+                result.AddRange(_graphqlDataConverter.TopicSearchToProjects(topicSearchData));
+            }
+
+            _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.",
+                this, topic);
+            return result;
         }
-        var listResult = await _gitHubGraphqlService.QueryRepositoriesByTopicHelper(topic, amount, startCursor);
-        _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
-        List<ProjectDto> result = new List<ProjectDto>();
-        foreach (var topicSearchData in listResult)
+        catch (Exception e)
         {
-            result.AddRange(_graphqlDataConverter.TopicSearchToProjects(topicSearchData));
+            _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, topic);
+            switch (e)
+            {
+                case JsonException:
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                }
+                case NullReferenceException :
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                } 
+                    
+                default:
+                    throw;
+            }
         }
-        _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.", this, topic);
-        return result;
+
     }
+
 
     [HttpGet("repository/{name}/{ownerName}")]
     public async Task<ActionResult<ProjectDto>> GetByName(string name, string ownerName)
@@ -117,9 +170,34 @@ public class SpiderController : ControllerBase
         ownerName = WebUtility.UrlDecode(ownerName);
         _logger.LogInformation("{Origin}: Contributors requested by name and owner: {name}, {owner}.",
             this, name , ownerName );
-        var result = await _gitHubRestService.GetRepoContributors(name, ownerName, amount);     
-        _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
-            this, name , ownerName);
-        return result;
+        try
+        {
+            var result = await _gitHubRestService.GetRepoContributors(name, ownerName, amount);     
+            _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
+                this, name , ownerName);
+            return result;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.Message + " in {origin} with request: \"{name}/{ownerName}\"", this, name, ownerName);
+            switch (e)
+            {
+                case JsonException:
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                }
+                case NullReferenceException :
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                } 
+                    
+                default:
+                    throw;
+            }
+        }
     }
 }
