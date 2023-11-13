@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using spider.Converter;
 using spider.Dtos;
@@ -62,13 +63,24 @@ public class SpiderController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, name);
-            if (e is NullReferenceException)
+            switch (e)
             {
-                var exception = new HttpRequestException("An unexpected error occured", e,
-                    HttpStatusCode.InternalServerError);
-                throw exception;
+                case JsonException:
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                }
+                case NullReferenceException :
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                } 
+                    
+                default:
+                    throw;
             }
-            throw;
         }
     }
     
@@ -109,13 +121,24 @@ public class SpiderController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, topic);
-            if (e is NullReferenceException)
+            switch (e)
             {
-                var exception = new HttpRequestException("An unexpected error occured", e,
-                    HttpStatusCode.InternalServerError);
-                throw exception;
+                case JsonException:
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                }
+                case NullReferenceException :
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                } 
+                    
+                default:
+                    throw;
             }
-            throw;
         }
 
     }
@@ -149,9 +172,34 @@ public class SpiderController : ControllerBase
         ownerName = WebUtility.UrlDecode(ownerName);
         _logger.LogInformation("{Origin}: Contributors requested by name and owner: {name}, {owner}.",
             this, name , ownerName );
-        var result = await _gitHubRestService.GetRepoContributors(name, ownerName, amount);     
-        _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
-            this, name , ownerName);
-        return result;
+        try
+        {
+            var result = await _gitHubRestService.GetRepoContributors(name, ownerName, amount);     
+            _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
+                this, name , ownerName);
+            return result;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.Message + " in {origin} with request: \"{name}/{ownerName}\"", this, name, ownerName);
+            switch (e)
+            {
+                case JsonException:
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                }
+                case NullReferenceException :
+                {
+                    var exception = new HttpRequestException("An unexpected error occured", e,
+                        HttpStatusCode.InternalServerError);
+                    throw exception;
+                } 
+                    
+                default:
+                    throw;
+            }
+        }
     }
 }

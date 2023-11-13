@@ -194,7 +194,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                     _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", this, repositoryName);
                     break;
             }
-            throw e;
+            throw;
         }
     }
     
@@ -361,7 +361,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
               _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
               break;
           }
-          throw e;
+          throw;
         }
     }
     
