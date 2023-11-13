@@ -11,7 +11,7 @@ public class Tests
     public void Setup()
     {
 
-        _spiderGithubGraphqlService = new GitHubGraphqlService();
+        //_spiderGithubGraphqlService = new GitHubGraphqlService();
     }
 
     [Test]

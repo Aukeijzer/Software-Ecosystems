@@ -44,18 +44,32 @@ public class SpiderController : ControllerBase
             WebUtility.UrlDecode(startCursor);
         }
         _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name);
-        var listResult = await _gitHubGraphqlService.QueryRepositoriesByNameHelper(name, amount, startCursor);
-        List<ProjectDto> result = new List<ProjectDto>();
-        foreach (var spiderData in listResult)
+        try
         {
-            if (spiderData != null)
+            var listResult = await _gitHubGraphqlService.QueryRepositoriesByNameHelper(name, amount, startCursor);
+            List<ProjectDto> result = new List<ProjectDto>();
+            foreach (var spiderData in listResult)
             {
-                result.AddRange(_graphqlDataConverter.SearchToProjects(spiderData));
+                if (spiderData != null)
+                {
+                    result.AddRange(_graphqlDataConverter.SearchToProjects(spiderData));
+                }
             }
-        }
 
-        _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
-        return result;
+            _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
+            return result;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, name);
+            if (e is NullReferenceException)
+            {
+                var exception = new HttpRequestException("An unexpected error occured", e,
+                    HttpStatusCode.InternalServerError);
+                throw exception;
+            }
+            throw;
+        }
     }
     
     [HttpGet("topic/{topic}/{amount}")]
@@ -72,20 +86,38 @@ public class SpiderController : ControllerBase
 
     private async Task<ActionResult<List<ProjectDto>>> GetByTopicHelper(string topic, int amount, string? startCursor)
     {
-        topic = WebUtility.UrlDecode(topic);
-        if (startCursor != null)
+        try
         {
-            WebUtility.UrlDecode(startCursor);
+            topic = WebUtility.UrlDecode(topic);
+            if (startCursor != null)
+            {
+                WebUtility.UrlDecode(startCursor);
+            }
+
+            var listResult = await _gitHubGraphqlService.QueryRepositoriesByTopicHelper(topic, amount, startCursor);
+            _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
+            List<ProjectDto> result = new List<ProjectDto>();
+            foreach (var topicSearchData in listResult)
+            {
+                result.AddRange(_graphqlDataConverter.TopicSearchToProjects(topicSearchData));
+            }
+
+            _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.",
+                this, topic);
+            return result;
         }
-        var listResult = await _gitHubGraphqlService.QueryRepositoriesByTopicHelper(topic, amount, startCursor);
-        _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
-        List<ProjectDto> result = new List<ProjectDto>();
-        foreach (var topicSearchData in listResult)
+        catch (Exception e)
         {
-            result.AddRange(_graphqlDataConverter.TopicSearchToProjects(topicSearchData));
+            _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, topic);
+            if (e is NullReferenceException)
+            {
+                var exception = new HttpRequestException("An unexpected error occured", e,
+                    HttpStatusCode.InternalServerError);
+                throw exception;
+            }
+            throw;
         }
-        _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.", this, topic);
-        return result;
+
     }
 
     [HttpGet("repository/{name}/{ownerName}")]
