@@ -33,22 +33,4 @@ public class ProjectsService : IProjectsService
         // Save these projects to elasticsearch
         await _elasticsearchService.AddProjects(newDtos);
     }
-
-    public async Task MineByTopicAsync(string topic, int amount)
-    {
-        // Request the Spider for projects related to this topic.
-        var newDtos = await _spiderService.GetProjectsByTopicAsync(topic, amount);
-        
-        // Save these projects to elasticsearch
-        await _elasticsearchService.AddProjects(newDtos);
-    }
-    
-    public async Task MineByKeywordAsync(string keyword, int amount)
-    {
-        // Request the Spider for projects related to this topic.
-        var newDtos = await _spiderService.GetProjectsByKeywordAsync(keyword, amount);
-        
-        // Save these projects to elasticsearch
-        await _elasticsearchService.AddProjects(newDtos);
-    }
 }
