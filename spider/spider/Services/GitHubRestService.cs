@@ -6,15 +6,18 @@ namespace spider.Services;
 public class GitHubRestService : IGitHubRestService
 {
     private readonly RestClient _gitHubRestClient;
-    public GitHubRestService()
+    private readonly ILogger<GitHubGraphqlService> _logger;
+    public GitHubRestService(ILogger<GitHubGraphqlService> logger)
     {
         var options = new RestClientOptions("https://api.github.com");
         _gitHubRestClient = new RestClient(options);
-        _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable("API_Token"));
+        _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable(
+            "API_Token"));
         _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
+        _logger = logger;
     }
 
-    public async Task<List<ContributorDto>> GetRepoContributors(String ownerName, string repoName, int amount = 50)
+    public async Task<List<ContributorDto>> GetRepoContributors(string ownerName, string repoName, int amount = 50)
     {
         var result = new List<ContributorDto>();
         var request = new RestRequest("repos/" + repoName + "/" + ownerName + "/contributors");
@@ -25,11 +28,21 @@ public class GitHubRestService : IGitHubRestService
             if (amount > 50)
             {
                 request.AddQueryParameter("page", page);
-                var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
-                result.AddRange(temp);
-                if (temp.Count < 50)
+                try
                 {
-                    break;
+                    var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request)
+                                ?? throw new HttpRequestException();
+                    result.AddRange(temp);
+                    if (temp.Count < 50)
+                    {
+                        break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message + " in {origin} with request: \"{ownerName}/{repoName}\"",
+                        this, ownerName,repoName);
+                    throw;
                 }
                 page++;
                 amount -= 50;
@@ -37,13 +50,24 @@ public class GitHubRestService : IGitHubRestService
             else
             {
                 request.AddQueryParameter("page", page);
-                var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
-                if (temp.Count < amount)
+                try
                 {
-                    result.AddRange(temp);
-                    break;
+                    var temp = await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) 
+                               ?? throw new HttpRequestException();
+                    if (temp.Count < amount)
+                    {
+                        result.AddRange(temp);
+                        break;
+                    }
+
+                    result.AddRange(temp.GetRange(0, amount));
                 }
-                result.AddRange(temp.GetRange(0,amount));
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message + " in {origin} with request: \"{ownerName}/{repoName}\"",
+                        this, ownerName,repoName);
+                    throw;
+                }
                 amount = 0;
             }
         }
