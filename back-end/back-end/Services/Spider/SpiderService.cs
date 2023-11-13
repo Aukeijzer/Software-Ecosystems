@@ -33,7 +33,7 @@ public class SpiderService : ISpiderService
         return await _spiderClient.PostAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
     }
 
-    public async Task<List<ContributorDto>> GetContributors(ProjectRequestDto projectDto, int amount = 50)
+    public async Task<List<ContributorDto>> GetContributors(ProjectRequestDto projectDto, int amount)
     {
         var request = new RestRequest("contributors/" + projectDto.OwnerName + "/" + projectDto.RepoName + "/" + amount);
         return await _spiderClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
