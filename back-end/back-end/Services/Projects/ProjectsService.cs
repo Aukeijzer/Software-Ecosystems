@@ -26,11 +26,6 @@ public class ProjectsService : IProjectsService
 
     public async Task<IEnumerable<Project>> GetByTopicAsync(params string[] topics)
     {
-        // Request the Spider for new projects related to this ecosystem.
-        var newDtos = await _spiderService.GetProjectsByTopicAsync(topics.First());
-        
-        // Save these projects to elasticsearch
-        await _elasticsearchService.AddProjects(newDtos);
         
         // Retrieve all related projects from elasticsearch
         var dtos = await _elasticsearchService.GetProjectsByTopic(topics);
