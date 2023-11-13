@@ -3,7 +3,6 @@ using System.Text;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
-using Microsoft.AspNetCore.Mvc;
 using spider.Dtos;
 using spider.Models.Graphql;
 using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
