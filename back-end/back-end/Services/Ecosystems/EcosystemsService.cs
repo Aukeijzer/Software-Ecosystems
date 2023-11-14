@@ -3,28 +3,24 @@ using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
-using SECODashBackend.Services.DataProcessor;
-using SECODashBackend.Services.ProgrammingLanguages;
-using SECODashBackend.Services.Projects;
+using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
     
 public class EcosystemsService : IEcosystemsService
 {
+    private const int DefaultNumberOfTopItems = 10;
     private readonly EcosystemsContext _dbContext;
-    private readonly IDataProcessorService _dataProcessorService;
-    private readonly IProjectsService _projectsService;
+    private readonly IAnalysisService _analysisService;
 
     public EcosystemsService(
         EcosystemsContext dbContext,
-        IProjectsService projectsService,
-        IDataProcessorService dataProcessorService)
+        IAnalysisService analysisService)
     {
         _dbContext = dbContext;
-        _projectsService = projectsService;
-        _dataProcessorService = dataProcessorService;
+        _analysisService = analysisService;
     }
-    public async Task<List<EcosystemDto>> GetAllAsync()
+    public async Task<List<EcosystemOverviewDto>> GetAllAsync()
     {
         var ecosystems = await _dbContext.Ecosystems
             .AsNoTracking()
@@ -39,37 +35,33 @@ public class EcosystemsService : IEcosystemsService
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<EcosystemDto> GetByIdAsync(string id)
+    private async Task<Ecosystem?> GetByNameAsync(string name)
     {
-        var ecosystem = await _dbContext.Ecosystems
-            .AsNoTracking()
-            .SingleOrDefaultAsync(e => e.Id == id);
-        
-        if (ecosystem == null) throw new KeyNotFoundException();
-        
-        return EcosystemConverter.ToDto(ecosystem);
-    }
-
-    public async Task<EcosystemDto> GetByNameAsync(string name)
-    {
-        var ecosystem = await _dbContext.Ecosystems
+        return await _dbContext.Ecosystems
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
-        
-        if (ecosystem == null) throw new KeyNotFoundException();
+    }
 
-        var ecosystemDto = EcosystemConverter.ToDto(ecosystem);
-        
-        // Retrieve the projects belonging to the ecosystem
-        var projects = await _projectsService.GetByTopicAsync(ecosystem.Name);
-        var projectList = projects.ToList();
-        
-        // Get the most popular programming languages associated with the ecosystem
-        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(projectList);
-        
-        // Add the projects and languages to the ecosystem dto
-        ecosystemDto.Projects = projectList.Select(ProjectConverter.ToProjectDto);
-        ecosystemDto.TopLanguages = topLanguages;
+    public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
+    {
+        if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
+
+        var ecosystemDto = await _analysisService.AnalyzeEcosystemAsync(
+            dto.Topics,
+            dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
+            dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems);
+
+        // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
+        if (dto.Topics.Count != 1) return ecosystemDto;
+            
+        // Check if the database has additional data regarding this ecosystem
+        var ecosystem = await GetByNameAsync(dto.Topics.First());
+
+        // If it doesn't, return the dto as is, else add the additional data
+        if (ecosystem == null) return ecosystemDto;
+        ecosystemDto.DisplayName = ecosystem.DisplayName;
+        ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
+        ecosystemDto.Description = ecosystem.Description;
         
         return ecosystemDto;
     }

@@ -53,7 +53,7 @@ public class SpiderController : ControllerBase
         _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
         return await _spiderProjectService.GetByTopic(topic, amount, startCursor);
     }
-
+    
     [HttpGet("repository/{name}/{ownerName}")]
     public async Task<ActionResult<ProjectDto>> GetByName(string name, string ownerName)
     {
