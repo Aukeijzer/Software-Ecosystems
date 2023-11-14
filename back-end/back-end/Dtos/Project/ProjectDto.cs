@@ -37,5 +37,5 @@ public class ProjectDto
    public int NumberOfStars { get; set; }
    
    [DataMember(Name = "timestamp")]
-   public List<DateTime> Timestamp { get; set; } = new List<DateTime>();
+   public DateTime Timestamp { get; set; } 
 }
