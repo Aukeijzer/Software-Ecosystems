@@ -1,6 +1,7 @@
 "use client"
 
 export default function SpinnerComponent(){
+    //Spinner is from CSS flowbite: https://flowbite.com/docs/components/spinner/
     return(
         <div className='text-center h-full align-middle leading-10'>
             <div className='mt-40'>

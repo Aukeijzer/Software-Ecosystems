@@ -10,7 +10,7 @@ export default function SubDomainPage(){
     const url = "/subdomain?subdomain="+ domains +"," 
     return(
         <div>
-            {domains? <LayoutEcosystem  ecosystem='agriculture' url={url} subDomains={domains}  /> : <div> helaas </div> }
+            {domains? <LayoutEcosystem  ecosystem='agriculture' url={url} subDomains={domains}  /> : <div> No subdomains selected. Please select a sub-domain </div> }
         </div>
     )
 }
