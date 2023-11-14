@@ -1,5 +1,3 @@
-using SECODashBackend.DataConverters;
-using SECODashBackend.Models;
 using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Spider;
 
@@ -16,20 +14,6 @@ public class ProjectsService : IProjectsService
     {
         _elasticsearchService = elasticsearchService;
         _spiderService = spiderService;
-    }
-
-    // TODO: determine if we still need this functionality, if so, implement it using elasticsearch
-    public async Task<Project?> GetByIdAsync(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IEnumerable<Project>> GetByTopicAsync(params string[] topics)
-    {
-        
-        // Retrieve all related projects from elasticsearch
-        var dtos = await _elasticsearchService.GetProjectsByTopic(topics);
-        return dtos.Select(ProjectConverter.ToProject);
     }
 
     public async Task MineByTopicAsync(string topic, int amount)
