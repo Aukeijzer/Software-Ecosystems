@@ -75,7 +75,14 @@ public class SpiderProjectService : ISpiderProjectService
             List<ProjectDto> result = new List<ProjectDto>();
             foreach (var topicSearchData in listResult)
             {
-                result.AddRange(_graphqlDataConverter.TopicSearchToProjects(topicSearchData));
+                var temp = _graphqlDataConverter.TopicSearchToProjects(topicSearchData);
+                var tasks = temp.Select(async project =>
+                {
+                    var response = await GetContributorsByName(project.Name, project.Owner, 100);
+                    project.Contributors = response;
+                });
+                await Task.WhenAll(tasks);
+                result.AddRange(temp);
             }
             _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.",
                 this, topic);
