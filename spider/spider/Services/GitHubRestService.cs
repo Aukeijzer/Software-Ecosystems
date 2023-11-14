@@ -17,7 +17,7 @@ public class GitHubRestService : IGitHubRestService
         _logger = logger;
     }
 
-    public async Task<List<ContributorDto>> GetRepoContributors(string ownerName, string repoName, int amount = 50)
+    public async Task<List<ContributorDto>?> GetRepoContributors(string ownerName, string repoName, int amount = 50)
     {
         var result = new List<ContributorDto>();
         var request = new RestRequest("repos/" + repoName + "/" + ownerName + "/contributors");
@@ -30,8 +30,11 @@ public class GitHubRestService : IGitHubRestService
                 request.AddQueryParameter("page", page);
                 try
                 {
-                    var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request)
-                                ?? throw new HttpRequestException();
+                    var temp = await _gitHubRestClient.GetAsync<List<ContributorDto>>(request);
+                    if (temp == null)
+                    {
+                        return result;
+                    }
                     result.AddRange(temp);
                     if (temp.Count < 50)
                     {
@@ -52,8 +55,11 @@ public class GitHubRestService : IGitHubRestService
                 request.AddQueryParameter("page", page);
                 try
                 {
-                    var temp = await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) 
-                               ?? throw new HttpRequestException();
+                    var temp = await _gitHubRestClient.GetAsync<List<ContributorDto>>(request);
+                    if (temp == null)
+                    {
+                        return result;
+                    }
                     if (temp.Count < amount)
                     {
                         result.AddRange(temp);

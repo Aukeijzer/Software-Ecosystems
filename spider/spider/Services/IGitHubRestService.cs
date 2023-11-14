@@ -4,6 +4,6 @@ namespace spider.Services;
 
 public interface IGitHubRestService
 {
-    public Task<List<ContributorDto>> GetRepoContributors(String ownerName, string repoName, int amount = 50);
+    public Task<List<ContributorDto>?> GetRepoContributors(String ownerName, string repoName, int amount = 50);
     
 }

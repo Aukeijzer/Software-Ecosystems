@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using SECODashBackend.Dtos.ProgrammingLanguage;
+using spider.Dtos;
 
 namespace SECODashBackend.Dtos.Project;
 
@@ -34,4 +35,7 @@ public class ProjectDto
    
    [DataMember(Name = "numberOfStars")]
    public int NumberOfStars { get; set; }
+   
+   [DataMember(Name = "contributors")]
+   public List<ContributorDto>? Contributors { get; set; }
 }
