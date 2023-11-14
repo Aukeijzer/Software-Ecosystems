@@ -32,10 +32,12 @@ public class ElasticsearchService : IElasticsearchService
     public async Task AddProjects(IEnumerable<ProjectDto> projectDtos)
     {
         var request = new BulkRequest(ProjectIndex);
+        
         var indexOperations = 
             projectDtos.Select(p =>
             {
-                p.Timestamp = DateTime.UtcNow;
+                var timestamp = DateTime.UtcNow;
+                p.Timestamp.Add(timestamp);
                 return new BulkIndexOperation<ProjectDto>(p);
             });
         request.Operations = new BulkOperationsCollection(indexOperations);
