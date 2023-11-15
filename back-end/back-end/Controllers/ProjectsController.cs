@@ -1,7 +1,5 @@
-﻿using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.Services.Projects;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace SECODashBackend.Controllers;
 
@@ -17,43 +15,20 @@ public class ProjectsController : ControllerBase
         _logger = logger;
         _projectsService = projectsService;
     }
-   
-    [HttpGet]
-    [SwaggerOperation("GetAllProjects")]       
-    [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<List<Project>>> GetAllAsync()
+    
+    [HttpPost("mine/topic")]
+    public async Task<ActionResult> MineByTopic(string topic, int amount)
     {
-        _logger.LogInformation("{Origin}: All projects requested.", this);
-        var result = await _projectsService.GetAllAsync(); 
-        _logger.LogInformation("{Origin}: Returning all projects.", this);
-        return new ObjectResult(result);
+        _logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
+        await _projectsService.MineByTopicAsync(topic, amount);
+        return Accepted();
     }
-
-    [HttpGet("{id:long}")]
-    [SwaggerOperation("GetProjectById")]       
-    [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<Project>> GetByIdAsync(string id)
+    
+    [HttpPost("mine/search")]
+    public async Task<ActionResult> MineByKeyword(string keyword, int amount)
     {
-        _logger.LogInformation("{Origin}: Project requested by Id: '{Ecosystem}'.", this ,id);
-        var result = await _projectsService.GetByIdAsync(id); 
-        _logger.LogInformation("{Origin}: Returning project with Id: '{Ecosystem}'.", this ,id);
-        return result == null ? NotFound() : result;
-    }
-
-    [HttpPost]
-    public async Task<ActionResult> PostAsync(Project project)
-    {
-        _logger.LogInformation("{Origin}: Posting project with the name: '{Ecosystem}'.",
-            this, project.Name);
-        await _projectsService.AddAsync(project);
-        _logger.LogInformation("{Origin}: Project with the name: '{Ecosystem}' has been posted.",
-            this, project.Name);
-
-        
-        return CreatedAtAction(
-            // ReSharper disable once Mvc.ActionNotResolved
-            nameof(GetByIdAsync),
-            new { id = project.Id },
-            project);
+        _logger.LogInformation("{Origin}: Mining command received for topic: '{keyword}'.", this,keyword);
+        await _projectsService.MineByKeywordAsync(keyword, amount);
+        return Accepted();
     }
 }

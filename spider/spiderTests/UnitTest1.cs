@@ -6,18 +6,18 @@ namespace spiderTests;
 [TestFixture]
 public class Tests
 {
-    private GitHubService spiderGithubService;
+    private GitHubGraphqlService _spiderGithubGraphqlService;
     [SetUp]
     public void Setup()
     {
 
-        spiderGithubService = new GitHubService();
+        //_spiderGithubGraphqlService = new GitHubGraphqlService();
     }
 
     [Test]
     public async Task SearchResultTest()
     {
-        var result = await spiderGithubService.QueryRepositoriesByName("API_Test_Repo");
+        var result = await _spiderGithubGraphqlService.QueryRepositoriesByName("API_Test_Repo");
         Assert.IsNotNull(result.Search);
     }
 }

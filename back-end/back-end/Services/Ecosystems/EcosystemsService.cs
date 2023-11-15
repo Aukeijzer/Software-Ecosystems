@@ -1,76 +1,68 @@
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
+using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
-using SECODashBackend.Services.DataProcessor;
-using SECODashBackend.Services.ProgrammingLanguages;
-using SECODashBackend.Services.Spider;
+using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
     
 public class EcosystemsService : IEcosystemsService
 {
+    private const int DefaultNumberOfTopItems = 10;
     private readonly EcosystemsContext _dbContext;
-    private readonly ISpiderService _spiderService;
-    private readonly IDataProcessorService _dataProcessorService;
+    private readonly IAnalysisService _analysisService;
 
-    public EcosystemsService(EcosystemsContext dbContext, ISpiderService spiderService, IDataProcessorService dataProcessorService)
+    public EcosystemsService(
+        EcosystemsContext dbContext,
+        IAnalysisService analysisService)
     {
         _dbContext = dbContext;
-        _spiderService = spiderService;
-        _dataProcessorService = dataProcessorService;
+        _analysisService = analysisService;
     }
-    public async Task<List<Ecosystem>?> GetAllAsync()
+    public async Task<List<EcosystemOverviewDto>> GetAllAsync()
     {
-        return await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
+        var ecosystems = await _dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
+        return ecosystems.Select(EcosystemConverter.ToDto).ToList();
     }
 
+    // TODO: convert to accept a dto instead of an Ecosystem
     public async Task<int> AddAsync(Ecosystem ecosystem)
     {
         await _dbContext.Ecosystems.AddAsync(ecosystem);
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<Ecosystem?> GetByIdAsync(string id)
+    private async Task<Ecosystem?> GetByNameAsync(string name)
     {
         return await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
             .AsNoTracking()
-            .SingleOrDefaultAsync(e => e.Id == id);
+            .SingleOrDefaultAsync(e => e.Name == name);
     }
 
-    public async Task<Ecosystem?> GetByNameAsync(string name)
+    public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
     {
-        var ecosystem = await _dbContext.Ecosystems
-            .Include(e => e.Projects)
-            .ThenInclude(p => p.Languages)
-            .SingleOrDefaultAsync(e => e.Name == name);
-        if (ecosystem == null) return null;
-        
-        // Request the Spider for projects related to this ecosystem.
-        var dtos = await _spiderService.GetProjectsByTopicAsync(ecosystem.Name);
+        if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
 
-        // Check which projects are not already in the Projects list of the ecosystem
-        var newProjects = dtos
-            .Where(x => !ecosystem.Projects.Exists(y => y.Id == x.Id))
-            .Select(ProjectConverter.ToProject);
+        var ecosystemDto = await _analysisService.AnalyzeEcosystemAsync(
+            dto.Topics,
+            dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
+            dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems);
 
-        // Only add these projects to the database
-        ecosystem.Projects.AddRange(newProjects);
-        
-        // Make the changes persistent by saving them to the database
-        await _dbContext.SaveChangesAsync();
+        // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
+        if (dto.Topics.Count != 1) return ecosystemDto;
+            
+        // Check if the database has additional data regarding this ecosystem
+        var ecosystem = await GetByNameAsync(dto.Topics.First());
 
-        // Get the top languages associated with the ecosystem
-        var topLanguages = TopProgrammingLanguagesService.GetTopLanguagesForEcosystem(ecosystem);
-        // Add the top languages to the ecosystem
-        ecosystem.TopLanguages = topLanguages;
+        // If it doesn't, return the dto as is, else add the additional data
+        if (ecosystem == null) return ecosystemDto;
+        ecosystemDto.DisplayName = ecosystem.DisplayName;
+        ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
+        ecosystemDto.Description = ecosystem.Description;
         
-        return ecosystem;
+        return ecosystemDto;
     }
 }

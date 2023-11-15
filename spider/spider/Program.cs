@@ -10,8 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IGitHubService, GitHubService>();
+builder.Services.AddScoped<IGitHubGraphqlService, GitHubGraphqlService>();
 builder.Services.AddScoped<IGraphqlDataConverter, GraphqlDataConverter>();
+builder.Services.AddScoped<IGitHubRestService, GitHubRestService>();
 builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File")
     .GetSection("Options").Bind(options); });
 
