@@ -42,7 +42,7 @@ public class ElasticsearchAnalysisServiceTests
             {
                 Language = "JavaScript",
                 Percentage = 80
-            },
+            }
         };
         
         // Act
