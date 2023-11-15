@@ -10,7 +10,6 @@ public class ElasticsearchAnalysisServiceTests
     public void SortAndNormalizeLanguages_ReturnsCorrectList()
     {
         // Arrange
-        const int numberOfTopLanguages = 5;
         var programmingLanguageDtos = new List<ProgrammingLanguageDto>
         {
             new()
@@ -38,33 +37,16 @@ public class ElasticsearchAnalysisServiceTests
                 Language = "Java",
                 Percentage = 90
             },
-            new()
-            {
-                Language = "JavaScript",
-                Percentage = 80
-            },
-            new()
-            {
-                Language = "TypeScript",
-                Percentage = 70
-            },
-            new()
-            {
-                Language = "Shell",
-                Percentage = 60
-            },
         };
         
         // Act
         var result = ElasticsearchAnalysisService
-            .SortAndNormalizeLanguages(programmingLanguageDtos, numberOfTopLanguages);
+            .SortAndNormalizeLanguages(programmingLanguageDtos);
         
-        // Assert that the list contains the correct amount of languages
-        Assert.That(result, Has.Count.EqualTo(numberOfTopLanguages));
         // Assert that the total percentage is correct
-        Assert.That(result.Sum(l => l.Percentage), Is.EqualTo(79));
+        Assert.That(result.Sum(l => l.Percentage), Is.EqualTo(100));
         
-        // Assert that the whole list is ordered by percentage
+        // Assert that the list is ordered by descending percentage
         Assert.Multiple(() =>
         {
             Assert.That(result[0].Percentage, Is.GreaterThan(result[1].Percentage));
@@ -117,7 +99,7 @@ public class ElasticsearchAnalysisServiceTests
         
         // Act
         var result = ElasticsearchAnalysisService
-            .SortSubEcosystems(subEcosystemsDtos, topics,  numberOfTopSubEcosystems);
+            .SortSubEcosystems(subEcosystemsDtos, topics);
         
         // Assert
         
