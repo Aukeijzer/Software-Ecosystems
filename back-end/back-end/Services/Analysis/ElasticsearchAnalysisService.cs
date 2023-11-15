@@ -70,7 +70,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
                     {
                         new SumAggregation(SumAggregateName)
                         {
-                            Field = LanguagePercentageField,
+                            Field = LanguagePercentageField
                         },
                     }
                 },
@@ -82,7 +82,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {
             Field = TopicField,
-            Size = topics.Count + numberOfTopSubEcosystems,
+            Size = topics.Count + numberOfTopSubEcosystems
         };
 
         var searchRequest = new SearchRequest
