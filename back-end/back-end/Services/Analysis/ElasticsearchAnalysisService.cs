@@ -10,6 +10,10 @@ namespace SECODashBackend.Services.Analysis;
 
 public class ElasticsearchAnalysisService : IAnalysisService
 {
+    // Use the maximum bucket size supported by elasticsearch
+    // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
+    private const int MaxBucketSize = 10000;
+    
     // Minimum number of projects in sub-ecosystem for it to end up in the top x list\
     private const int MinimumNumberOfProjects = 2;
     
@@ -58,7 +62,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
                 new TermsAggregation(LanguageAggregateName)
                 {
                     Field = LanguageNameField,
-                    Size = numberOfTopLanguages,
+                    Size = MaxBucketSize,
                     
                     // Aggregation of the sum of the language.percentage field of all languages object with the same name
                     // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/sum-aggregation-usage.html
@@ -98,7 +102,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
         {
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics),
-            TopLanguages = GetTopXLanguages(result) 
+            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages) 
         };
     }
     
@@ -106,7 +110,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
     /// Retrieves the programming languages from the search response and converts them into a Top x list
     /// </summary>
     private static List<ProgrammingLanguageDto> GetTopXLanguages(
-        SearchResponse<ProjectDto> searchResponse)
+        SearchResponse<ProjectDto> searchResponse, int numberOfTopLanguages)
     {
         var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedAggregateName);
         var languagesAggregate = nestedAggregate?.GetStringTerms(LanguageAggregateName);
@@ -125,7 +129,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
                 })
             .ToList();
 
-        var topXLanguages = SortAndNormalizeLanguages(programmingLanguageDtos);
+        var topXLanguages = SortAndNormalizeLanguages(programmingLanguageDtos, numberOfTopLanguages);
         return topXLanguages;
     }
 
@@ -157,12 +161,14 @@ public class ElasticsearchAnalysisService : IAnalysisService
     /// all projects to a "Top x" list of x length in descending order of percentage with the percentages normalised.
     /// </summary>
     public static List<ProgrammingLanguageDto> SortAndNormalizeLanguages(
-        List<ProgrammingLanguageDto> programmingLanguageDtos)
+        List<ProgrammingLanguageDto> programmingLanguageDtos, int numberOfTopLanguages)
     {
         programmingLanguageDtos
             .Sort((x, y)  => y.Percentage.CompareTo(x.Percentage));
         var totalSum = programmingLanguageDtos.Sum(l => l.Percentage);
-        var topXLanguages = programmingLanguageDtos.ToList();
+        var topXLanguages = programmingLanguageDtos
+            .Take(numberOfTopLanguages)
+            .ToList();
         topXLanguages
             .ForEach(l => l.Percentage = float.Round(l.Percentage / totalSum * 100));
         return topXLanguages;
