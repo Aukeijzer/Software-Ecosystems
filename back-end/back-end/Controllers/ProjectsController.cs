@@ -1,9 +1,11 @@
-﻿using SECODashBackend.Models;
+﻿using Elastic.Clients.Elasticsearch;
+using SECODashBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Project;
 using SECODashBackend.Services.Projects;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
 
 namespace SECODashBackend.Controllers;
 
@@ -55,5 +57,24 @@ public class ProjectsController : ControllerBase
         _logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
         await _projectsService.MineByTopicAsync(topic);
         return Accepted();
+    }
+    
+    [HttpPost("searchbytimeframe")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByTimeFrameAsync(List<DateMath> times)
+    {
+        DateMath timeFrameMin = times.First();
+        DateMath timeFrameMax = times.Last();
+        
+        _logger.LogInformation("{Origin}: Projects requested with timeFrameMin: '{timeFrameMin}' and timeFrameMax: '{timeFrameMax}'.", this, timeFrameMin, timeFrameMax);
+        var dtos = await _projectsService.GetByTimeFrameAsync(timeFrameMin, timeFrameMax);
+        var projects = dtos.Select(ProjectConverter.ToProjectDto);
+        var projectDtos = projects.ToList();
+        if (!projectDtos.Any())
+        {
+            _logger.LogInformation("{Origin}: No projects found with timeFrameMin: '{timeFrameMin}' and timeFrameMax: '{timeFrameMax}'.", this, timeFrameMin, timeFrameMax);
+            return NotFound();
+        }
+        _logger.LogInformation("{Origin}: Returning projects with timeFrameMin: '{timeFrameMin}' and timeFrameMax: '{timeFrameMax}'.", this, timeFrameMin, timeFrameMax);
+        return projectDtos;
     }
 }

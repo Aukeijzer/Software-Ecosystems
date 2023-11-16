@@ -4,6 +4,7 @@ using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Dtos.Project;
 using SECODashBackend.Services.Analysis;
+using n = Nest;
 
 namespace SECODashBackend.Services.ElasticSearch;
 
@@ -44,7 +45,35 @@ public class ElasticsearchService : IElasticsearchService
         var response = await _client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
-    
+    /// <summary>
+    /// This method retrieves all projects from the Elasticsearch index that were created between the given timeframes.
+    /// </summary>
+    /// <param name="timeFrameMin"></param>
+    /// <param name="timeFrameMax"></param>
+    /// <returns></returns>
+    /// <exception cref="HttpRequestException"></exception>
+    public async Task<List<ProjectDto>> GetProjectsByDate(DateMath timeFrameMin, DateMath timeFrameMax)
+    {
+        var response = await _client.SearchAsync<ProjectDto>(search => search
+            .Index(ProjectIndex)
+            .From(0)
+            .Size(NumberOfRequestedProjects)
+            .Query(q => q
+                .Range(r => r
+                    .DateRange(dr => dr
+                        .Field(t => t.Timestamp)
+                        .Gte(timeFrameMin)
+                        .Lte(timeFrameMax)
+                    )
+                )
+            )
+        );
+        
+        if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
+
+        return response.Documents.ToList();
+    }
+
     public async Task<List<ProjectDto>> GetProjectsByTopic(List<string> topics)
     {
         var response = await _client.SearchAsync<ProjectDto>(search => search
