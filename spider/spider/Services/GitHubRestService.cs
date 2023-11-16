@@ -1,5 +1,7 @@
+using System.Text.Json;
 using spider.Dtos;
 using RestSharp;
+using RestSharp.Serializers.Json;
 
 namespace spider.Services;
 
@@ -7,6 +9,7 @@ public class GitHubRestService : IGitHubRestService
 {
     private readonly RestClient _gitHubRestClient;
     private readonly ILogger<GitHubGraphqlService> _logger;
+    private readonly SystemTextJsonSerializer _jsonSerializer;
     public GitHubRestService(ILogger<GitHubGraphqlService> logger)
     {
         var options = new RestClientOptions("https://api.github.com");
@@ -15,6 +18,7 @@ public class GitHubRestService : IGitHubRestService
             "API_Token"));
         _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
         _logger = logger;
+        _jsonSerializer = new SystemTextJsonSerializer();
     }
 
     public async Task<List<ContributorDto>?> GetRepoContributors(string ownerName, string repoName, int amount = 50)
@@ -30,23 +34,35 @@ public class GitHubRestService : IGitHubRestService
                 request.AddQueryParameter("page", page);
                 try
                 {
-                    var temp = await _gitHubRestClient.GetAsync<List<ContributorDto>>(request);
-                    if (temp == null)
+                    var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
+                    if (temp.IsSuccessful)
                     {
-                        return result;
+                        if (temp.Content == null)
+                        {
+                            return result;
+                        }
+                        
+                        List<ContributorDto> restResult =
+                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(temp);
+
+                        result.AddRange(restResult);
+                        if (restResult.Count < 50)
+                        {
+                            break;
+                        }
                     }
-                    result.AddRange(temp);
-                    if (temp.Count < 50)
+                    else
                     {
-                        break;
+                        HandleError(temp);
                     }
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e.Message + " in {origin} with request: \"{ownerName}/{repoName}\"",
-                        this, ownerName,repoName);
+                     _logger.LogError(e.Message + " in {origin} with request: \"{ownerName}/{repoName}\"",
+                         this, ownerName,repoName);
                     throw;
                 }
+
                 page++;
                 amount -= 50;
             }
@@ -55,18 +71,29 @@ public class GitHubRestService : IGitHubRestService
                 request.AddQueryParameter("page", page);
                 try
                 {
-                    var temp = await _gitHubRestClient.GetAsync<List<ContributorDto>>(request);
-                    if (temp == null)
+                    var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
+                    if (temp.IsSuccessful)
                     {
-                        return result;
-                    }
-                    if (temp.Count < amount)
-                    {
-                        result.AddRange(temp);
-                        break;
-                    }
+                        if (temp.Content == null)
+                        {
+                            return result;
+                        }
+                        
+                        List<ContributorDto> restResult =
+                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(temp);
 
-                    result.AddRange(temp.GetRange(0, amount));
+                        if (restResult.Count < amount)
+                        {
+                            result.AddRange(restResult);
+                            break;
+                        }
+
+                        result.AddRange(restResult.GetRange(0, amount));
+                    }
+                    else
+                    {
+                        HandleError(temp);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -79,5 +106,25 @@ public class GitHubRestService : IGitHubRestService
         }
 
         return result;
+    }
+
+    private static void HandleError(RestResponse temp)
+    {
+        var header = temp.Headers.First(x => x.Name == "X-RateLimit-Remaining");
+        if (header.Value == "0")
+        {
+            header = temp.Headers.First(x => x.Name == "X-RateLimit-Reset");
+
+            DateTime retryTime = DateTime.Parse(header.Value.ToString());
+            Thread.Sleep((int)(retryTime - DateTime.Now).TotalMilliseconds);
+        }
+
+        header = temp.Headers.FirstOrDefault(x => x.Name == "Retry-After");
+        if (header is not null)
+        {
+            Thread.Sleep(int.Parse(header.Value.ToString()) * 1000);
+        }
+
+        temp.ThrowIfError();
     }
 }

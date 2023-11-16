@@ -76,11 +76,11 @@ public class SpiderProjectService : ISpiderProjectService
             foreach (var topicSearchData in listResult)
             {
                 var temp = _graphqlDataConverter.TopicSearchToProjects(topicSearchData);
-                var tasks = temp.Select(async project =>
-                {
-                    var response = await GetContributorsByName(project.Name, project.Owner, 100);
-                    project.Contributors = response;
-                });
+                 var tasks = temp.Select(async project =>
+                 {
+                     var response = await GetContributorsByName(project.Name, project.Owner, 100);
+                     project.Contributors = response;
+                 });
                 await Task.WhenAll(tasks);
                 result.AddRange(temp);
             }
@@ -139,8 +139,8 @@ public class SpiderProjectService : ISpiderProjectService
         }
         catch (Exception e)
         {
-            _logger.LogError(e.Message + " in {origin} with request: \"{name}/{ownerName}\"", this,
-                name, ownerName);
+             _logger.LogError(e.Message + " in {origin} with request: \"{name}/{ownerName}\"", this,
+                 name, ownerName);
             switch (e)
             {
                 case JsonException:
