@@ -4,6 +4,7 @@ using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Logging;
+using SECODashBackend.Services.Analysis;
 using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.ElasticSearch;
@@ -11,7 +12,16 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+            policy =>
+            {
+                //policy.WithOrigins("http://localhost:3000", "http://argiculture.localhost:3000");
+                policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
+            });
+});
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
@@ -30,6 +40,7 @@ builder.Services.AddSingleton(
         new ApiKey(builder.Configuration.GetSection("ElasticSearch").GetSection("ApiKey").Value!)
         ));
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
+builder.Services.AddScoped<IAnalysisService, ElasticsearchAnalysisService>();
 builder.Services.AddElasticsearchClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -47,13 +58,8 @@ if ( true ) //app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// TODO: Remove this sleep when the database connection issues are resolved.
-if (!app.Environment.IsDevelopment())
-{ 
-    Thread.Sleep(3000);
-}
-
 //app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapControllers();

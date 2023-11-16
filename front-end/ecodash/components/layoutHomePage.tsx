@@ -1,43 +1,76 @@
-import { ecosystemModel } from "@/app/models/ecosystemModel";
-import { handleApi } from "./apiHandler";
-import EcosystemInformationData from "./ecosystemInformationData";
-import EcosystemDescription from "./ecosystemDescription";
+"use client"
+import {useEffect, useState} from "react"
+import { handleApi } from "./apiHandler"
+import { ecosystemModel } from "@/app/models/ecosystemModel"
+import GridLayout from "./gridLayout";
+import { cardWrapper } from "./layoutEcosystemPaged";
+import { totalInformation } from "@/mockData/mockEcosystems";
+import EcosystemButton from "./ecosystemButton";
 import InfoCard from "./infoCard";
-import ListComponent, { renderOrganization } from "./listComponent";
+import { useRouter } from "next/navigation";
 
-//Mock data
-import { totalInformation, topOrganizations, ogranization } from "@/mockData/mockEcosystems";
-import { cardWrapper } from "./layoutEcosytem";
-import  GridLayout  from "./gridLayout";
-
-export default async function LayoutHomePage(){
+export default function LayoutHomePage(){
+    const router = useRouter();
+    const [dataLoaded, setDataLoaded] = useState<boolean>(false);
     
-    const result : ecosystemModel[] = await handleApi(`ecosystems`);
-    console.log(result);
+    useEffect(() => {
+        handleApi("ecosystems").then(data => transferData(data))
+    })
 
-    ///General info about all ecosystems
+    function transferData(data: ecosystemModel[]){
+        //This data is still not finished. Not clear yet what needs to be displayed on homePage
+        setDataLoaded(true);
+    }
+
+    
+    function onClickEcosystem(ecosystem: string){
+        //Local host is now still fixed string
+        router.push("http://" + ecosystem + ".localhost:3000");
+    }
+
+
+    //General information about SECODash
     const info = (<div className="flex flex-col"> 
-                    <span> Total ecosystems: {totalInformation.totalEcosystems}</span>
-                    <span> Total projects: {totalInformation.totalProjects} </span>
-                    <span> Total topics: {totalInformation.totalTopics} </span>
-                </div>)
-    const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
-    const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 1, x: 0, y: 0}
-    //Top languages
+        <span> Total ecosystems: {totalInformation.totalEcosystems}</span>
+        <span> Total projects: {totalInformation.totalProjects} </span>
+        <span> Total topics: {totalInformation.totalTopics} </span>
+    </div>)
 
-    //Top organizations
-    const dataListTopOrganizations = <ListComponent items={topOrganizations} renderFunction={renderOrganization}/>
-    const cardTopOrganizations = <InfoCard title={"Top active organizations"} data={dataListTopOrganizations} alert="This is mock data!" />
-    const cardTopOrganizationsWrapped : cardWrapper = {card: cardTopOrganizations, width: 2, height: 2, x: 0, y: 2}
+    const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
+    const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0}
+
+
+    //Agriculture card
+    const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
+    const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem}/>
+    const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2}
+    //Quantum card
+    const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
+    const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} />
+    const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2}
+
+    //Artificial-intelligence card
+    const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
+    const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem}/>
+    const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2}
 
     //Add to card list
     var cards: cardWrapper[] = [];
-    cards.push(infoCardWrapped)
-    cards.push(cardTopOrganizationsWrapped)
 
-    return(
-        <div className="mt-10 ml-10 mr-10">
+    cards.push(infoCardWrapped)
+    cards.push(agricultureButtonCardWrapped);
+    cards.push(quantumButtonCardWrapped);
+    cards.push(aiButtonCardWrapped);
+
+    if(dataLoaded){
+        return(
             <GridLayout cards={cards} />
-        </div>
-    )
+        )
+    } else {
+        return(
+            <div>
+                loading...
+            </div>
+        )
+    }
 }

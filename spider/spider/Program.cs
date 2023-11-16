@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IGitHubGraphqlService, GitHubGraphqlService>();
 builder.Services.AddScoped<IGraphqlDataConverter, GraphqlDataConverter>();
-builder.Services.AddScoped<IGithubRestService, GithubRestService>();
+builder.Services.AddScoped<IGitHubRestService, GitHubRestService>();
 builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File")
     .GetSection("Options").Bind(options); });
 

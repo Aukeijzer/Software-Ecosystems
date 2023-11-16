@@ -8,12 +8,11 @@ gridLayout exports:
 
 */
 
-
 import 'react-grid-layout/css/styles.css' 
 import 'react-resizable/css/styles.css' 
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { cardWrapper } from './layoutEcosytem';
+import { cardWrapper } from './layoutEcosystemPaged';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 interface InfoCardGridProps{
@@ -39,7 +38,7 @@ export default function GridLayout(props: InfoCardGridProps){
     return(
         <ResponsiveGridLayout 
             layouts={{lg: layout}}  
-            rowHeight={160}
+            rowHeight={80}
             breakpoints ={{lg: 3, md:2}}
             cols ={{lg: 6, md:10}}
             autoSize

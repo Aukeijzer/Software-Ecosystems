@@ -1,31 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using SECODashBackend.Dtos.Project;
-using SECODashBackend.Models;
+﻿using System.Runtime.Serialization;
+using SECODashBackend.Dtos.ProgrammingLanguage;
 
 namespace SECODashBackend.Dtos.Ecosystem;
 
 public class EcosystemDto
 {
-   [DataMember(Name = "id")]
-   public required string Id { get; init; }
-   
-   [DataMember(Name = "name")]
-   public required string Name { get; init; }
-   
-   [DataMember(Name = "displayName")]
-   public string? DisplayName { get; init; }
-   
-   [DataMember(Name ="description")]
-   public string? Description { get; init; }
-
-   [Required]
-   [DataMember(Name = "projects")]
-   public IEnumerable<ProjectDto>? Projects { get; set; }
-   
-   [DataMember(Name = "numberOfStars")]
-   public int? NumberOfStars { get; init; }
-   
-   [DataMember(Name = "topLanguages")]
-   public List<EcosystemProgrammingLanguage> TopLanguages { get; set; } = new();
+    [DataMember(Name = "displayName")] public string? DisplayName { get; set; }
+    [DataMember(Name = "description")] public string? Description { get; set; }
+    [DataMember(Name = "numberOfStars")] public int? NumberOfStars { get; set; }
+    [DataMember(Name = "topics")] public required List<string> Topics { get; init; }
+    [DataMember(Name = "topLanguages")] public required List<ProgrammingLanguageDto> TopLanguages { get; init; }
+    [DataMember(Name = "subEcosystems")] public required List<SubEcosystemDto> SubEcosystems { get; init; }
 }
+   

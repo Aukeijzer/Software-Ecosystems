@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using SECODashBackend.Dtos.ProgrammingLanguage;
 
 namespace SECODashBackend.Models;
 
@@ -24,7 +25,7 @@ public class Project
 
     [DataMember(Name = "topics")] public List<string> Topics { get; set; } = new();
 
-    [DataMember(Name = "languages")] public List<ProjectProgrammingLanguage> Languages { get; set; } = new();
+    [DataMember(Name = "languages")] public List<ProgrammingLanguageDto> Languages { get; set; } = new();
    
     [DataMember(Name = "totalSize")]
     public int? TotalSize { get; set; }
