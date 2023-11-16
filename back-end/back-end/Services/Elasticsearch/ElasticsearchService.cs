@@ -46,14 +46,18 @@ public class ElasticsearchService : IElasticsearchService
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
     /// <summary>
-    /// This method retrieves all projects from the Elasticsearch index that were created between the given timeframes.
+    /// This method retrieves all projects from the Elasticsearch index that were created between the given dates.
     /// </summary>
-    /// <param name="timeFrameMin"></param>
-    /// <param name="timeFrameMax"></param>
+    /// <param name="time"></param>
     /// <returns></returns>
     /// <exception cref="HttpRequestException"></exception>
-    public async Task<List<ProjectDto>> GetProjectsByDate(DateMath timeFrameMin, DateMath timeFrameMax)
+    public async Task<List<ProjectDto>> GetProjectsByDate(DateTime time)
     {
+        // Assuming we want to include projects from the start of the given day
+        DateTime timeFrameMin = time.Date;  
+        // Assuming we want to include projects until the end of the given day
+        DateTime timeFrameMax = timeFrameMin.AddDays(1).AddTicks(-1);  
+
         var response = await _client.SearchAsync<ProjectDto>(search => search
             .Index(ProjectIndex)
             .From(0)

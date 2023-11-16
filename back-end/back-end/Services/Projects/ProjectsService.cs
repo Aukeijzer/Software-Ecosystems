@@ -31,10 +31,10 @@ public class ProjectsService : IProjectsService
         var dtos = await _elasticsearchService.GetProjectsByTopic(topics);
         return dtos.Select(ProjectConverter.ToProject);
     }
-    public async Task<IEnumerable<Project>> GetByTimeFrameAsync(DateMath timeFrameMin, DateMath timeFrameMax)
+    public async Task<IEnumerable<Project>> GetByTimeFrameAsync(DateTime time)
     {
         // Retrieve all related projects from elasticsearch
-        var dtos = await _elasticsearchService.GetProjectsByDate(timeFrameMin, timeFrameMax);
+        var dtos = await _elasticsearchService.GetProjectsByDate(time);
         return dtos.Select(ProjectConverter.ToProject);
     }
 

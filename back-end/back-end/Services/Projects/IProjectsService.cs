@@ -8,5 +8,5 @@ public interface IProjectsService
     public Task<Project?> GetByIdAsync(string id);
     public Task<IEnumerable<Project>> GetByTopicsAsync(List<string> topics);
     public Task MineByTopicAsync(string topic);
-    Task<IEnumerable<Project>> GetByTimeFrameAsync(DateMath timeFrameMin, DateMath timeFrameMax);
+    Task<IEnumerable<Project>> GetByTimeFrameAsync(DateTime time);
 }
