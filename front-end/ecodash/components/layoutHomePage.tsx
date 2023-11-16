@@ -3,7 +3,7 @@ import {useEffect, useState} from "react"
 import { handleApi } from "./apiHandler"
 import { ecosystemModel } from "@/app/models/ecosystemModel"
 import GridLayout from "./gridLayout";
-import { cardWrapper } from "./layoutEcosystemPaged";
+import { cardWrapper } from "@/app/models/cardWrapper";
 import { totalInformation } from "@/mockData/mockEcosystems";
 import EcosystemButton from "./ecosystemButton";
 import InfoCard from "./infoCard";
@@ -15,7 +15,7 @@ export default function LayoutHomePage(){
     
     useEffect(() => {
         handleApi("ecosystems").then(data => transferData(data))
-    })
+    }, [])
 
     function transferData(data: ecosystemModel[]){
         //This data is still not finished. Not clear yet what needs to be displayed on homePage
@@ -37,22 +37,22 @@ export default function LayoutHomePage(){
     </div>)
 
     const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
-    const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0}
+    const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0, static: false}
 
 
     //Agriculture card
     const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
     const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem}/>
-    const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2}
+    const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:true}
     //Quantum card
     const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
     const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} />
-    const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2}
+    const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: false}
 
     //Artificial-intelligence card
     const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
     const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem}/>
-    const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2}
+    const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: false}
 
     //Add to card list
     var cards: cardWrapper[] = [];

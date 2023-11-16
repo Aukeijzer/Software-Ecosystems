@@ -22,6 +22,7 @@ export default function ListComponentSingle<T extends {}>(props : infoCardDataLi
         <div className="h-full">
             <ListGroup>
                 {props.items.map((item, i) => (
+                    //Maybe move onClick to the box instead of the text
                     <ListGroup.Item key = {i} >
                        {item.renderAsListItem(props.onClick)}
                     </ListGroup.Item>

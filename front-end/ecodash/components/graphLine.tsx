@@ -27,7 +27,7 @@ function lineFunctionTopic(index : number, datakey: string, color: string ) : JS
     const topics = ["DAO", "protocols", "Wallets", "DApps", "Finance"]
     const newDataKey = datakey + index.toString();
     return(
-        <Line name={topics[index]} type="monotone" dataKey={newDataKey} stroke={color} />
+        <Line key={index} name={topics[index]} type="monotone" dataKey={newDataKey} stroke={color} />
     )
 }
 
