@@ -1,4 +1,3 @@
-import { projectModel } from "./projectModel"
 import { languageModel } from "./languageModel"
 
 export interface ecosystemModel{

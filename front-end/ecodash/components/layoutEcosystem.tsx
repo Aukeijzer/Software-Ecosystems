@@ -128,7 +128,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Width / height are still fixed for now
 
         //this should be auto generated later
-        const cardGraphWrapped : cardWrapper = {card: cardGraph, width:2, height:6, x: x, y: y, minH: 3, minW: 2, static:false}
+        const cardGraphWrapped : cardWrapper = {card: cardGraph, width:2, height:6, x: x, y: y, minH: 3, minW: 2, static:true}
         return cardGraphWrapped;
     }
 
@@ -139,7 +139,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         }//async (sub: string) => {await trigger({topics: sub, remove:false})}
         dataListTopic = <ListComponentSingle items={subEcosystemList} onClick={(sub : string) => onClickTopic(sub)}></ListComponentSingle>
         cardTopic = <InfoCard title={title} data={dataListTopic} />
-        const cardTopicWrapped: cardWrapper = {card: cardTopic, width: 1, height: 4, x: x, y: y, minH: 2, static:false}
+        const cardTopicWrapped: cardWrapper = {card: cardTopic, width: 1, height: 4, x: x, y: y, minH: 2, static:true}
         return cardTopicWrapped;
     }
 
@@ -150,7 +150,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         }
         const dataListTechnologies = <ListComponentSingle items={technology} onClick={async (sub: string) => {await trigger({topics: [sub], remove:false})}}/>
         const cardTechnologies = <InfoCard title={title} data={dataListTechnologies} alert="This is mock data" />
-        const carrdTechnologiesWrapped : cardWrapper = {card: cardTechnologies, width: 2, height: 4, x: x, y: y, static:false}
+        const carrdTechnologiesWrapped : cardWrapper = {card: cardTechnologies, width: 2, height: 4, x: x, y: y, static:true}
         return carrdTechnologiesWrapped;
     }
 
@@ -161,7 +161,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         }
         const dataListRising = <ListComponentSingle items={risingClassItems} onClick={async (sub: string) => {await trigger({topics: [sub], remove:false})}} />
         const cardRising = <InfoCard title={title} data={dataListRising} alert="This is mock data" />
-        const cardRisingWrapped : cardWrapper = {card: cardRising, width: width, height: 4, x: x, y : y, static:false}
+        const cardRisingWrapped : cardWrapper = {card: cardRising, width: width, height: 4, x: x, y : y, static:true}
         return cardRisingWrapped;
     }
 
@@ -170,7 +170,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //TODO: add conversion of real data to correct format once we have real data...
         const lineGraphTopicsGrowing = <GraphLine items={data} />
         const cardLineGraph = <InfoCard title={title} data={lineGraphTopicsGrowing} alert="This is mock data"/>
-        const cardLineGraphWrapped: cardWrapper = {card: cardLineGraph, x: x, y : y, width: 4, height: 6, static:false}
+        const cardLineGraphWrapped: cardWrapper = {card: cardLineGraph, x: x, y : y, width: 4, height: 6, static:true}
         return cardLineGraphWrapped;
     }
 

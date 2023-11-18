@@ -1,0 +1,48 @@
+{
+    "displayName": "agriculture",
+    "description": "software related to agriculture",
+    "numberOfStars": 100,
+    "topics": [
+      "agriculture",
+      "farming"
+    ],
+    "topLanguages": [
+      {
+        "language": "Python",
+        "percentage": 15
+      },
+      {
+        "language": "Java",
+        "percentage": 10
+      },
+      { "language": "HTML",
+        "percentage": 8
+     },
+     {
+        "language": "R",
+        "percentage": 4
+     },
+     {
+        "language": "CSS",
+        "percentage": 2
+     }
+    ],
+    "subEcosystems": [
+      {
+        "topic": "erp",
+        "projectCount": 5
+      },
+      {
+        "topic": "farm",
+        "projectCount": 5
+      },
+      {
+        "topic": "mobile-app",
+        "projectCount": 4
+      }, 
+      {
+        "topic": "android",
+        "projectCount": 2
+      }
+    ]
+  }
