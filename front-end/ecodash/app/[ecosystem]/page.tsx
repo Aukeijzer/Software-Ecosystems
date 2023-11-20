@@ -1,4 +1,3 @@
-
 import LayoutEcosystem from "@/components/layoutEcosystem";
 
 import { Metadata } from "next";
@@ -23,11 +22,6 @@ export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Me
 }
 
 export default function ecosystemPage({params: {ecosystem}}: ecosystemPageProps){
-
-    //URL for paged ecysostem
-    var url = "/subdomain?subdomain="
-
-    // <LayoutEcosystemPaged url={url} ecosystem={ecosystem} />
     return( 
         <div className="h-full">
             <LayoutEcosystem ecosystem={ecosystem} />
