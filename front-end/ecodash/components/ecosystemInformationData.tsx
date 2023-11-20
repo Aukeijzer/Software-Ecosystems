@@ -1,10 +1,10 @@
 "use client"
 
-import { ecosystemModel } from "@/app/models/ecosystemModel";
+import { ecosystemDTO } from "@/app/interfaces/DTOs/ecosystemDTO";
 import InfoCard from "./infoCard";
 
 interface ecosystemInformationDataProps{
-    ecosystem: ecosystemModel
+    ecosystem: ecosystemDTO
 }
 
 export default function EcosystemInformationData(props : ecosystemInformationDataProps){

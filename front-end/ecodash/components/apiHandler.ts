@@ -13,10 +13,10 @@ apiHandler exports:
 */
 
 
-import { ecosystemModel } from "@/app/models/ecosystemModel";
+import { ecosystemDTO } from "@/app/interfaces/DTOs/ecosystemDTO";
 
 //Handles API call for /ecosystems
-export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {
+export async function handleApi(endpoint : string) : Promise<ecosystemDTO[]> {
     console.log(`http://localhost:5003/${endpoint}`)
     const https = require('https');
     
@@ -25,14 +25,14 @@ export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {
       });
 
     const response : Response = await fetch(`http://localhost:5003/${endpoint}`, httpsAgent);
-    const result : ecosystemModel[] = await response.json();
+    const result : ecosystemDTO[] = await response.json();
    
     return result;
 }
 
 //Handles API calls for /ecosystem/[name]/[subEcosystemName[]]
 // post on /ecosystems
-export async function apiCallSubEcosystem(ecosystem : string, domains : string[], numberOfTopLanguages: number, numberOfTopSubEcosystems: number, numberOfTopContributors: number ) : Promise<ecosystemModel> { 
+export async function apiCallSubEcosystem(ecosystem : string, domains : string[], numberOfTopLanguages: number, numberOfTopSubEcosystems: number, numberOfTopContributors: number ) : Promise<ecosystemDTO> { 
     interface apiBodyInterface {
         topics: string[],
         numberOfTopLanguages: number,
@@ -59,6 +59,6 @@ export async function apiCallSubEcosystem(ecosystem : string, domains : string[]
         body: apiBodyJson
     })
     
-    const result : ecosystemModel = await response.json();
+    const result : ecosystemDTO = await response.json();
     return result;
 }
