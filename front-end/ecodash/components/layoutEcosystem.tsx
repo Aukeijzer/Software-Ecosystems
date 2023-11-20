@@ -1,22 +1,23 @@
 "use client"
 
-import subEcosystemClass from "@/app/classes/subEcosystemClass"
-import { ecosystemModel, subEcosystem } from "@/app/models/ecosystemModel"
+import { ecosystemDTO} from "@/app/interfaces/DTOs/ecosystemDTO"
 import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import ListComponentSingle from "./listComponent"
 import InfoCard from "./infoCard"
-import languageClass from "@/app/classes/languageClass"
 import GraphComponent from "./graphComponent"
 import GridLayout from "./gridLayout"
 import SpinnerComponent from "./spinner"
-import risingClass from "@/app/classes/risingClass"
-import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine, topTechnology } from "@/mockData/mockAgriculture"
+import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import GraphLine from "./graphLine"
 import EcosystemDescription from "./ecosystemDescription"
-import { languageModel } from "@/app/models/languageModel"
+import { listLanguageDTOConverter } from "@/app/interfaces/DTOs/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
-import { cardWrapper } from "@/app/models/cardWrapper"
+import { cardWrapper } from "@/app/interfaces/cardWrapper"
+import displayable from "@/app/classes/displayableClass"
+import listTechnologyDTOConverter from "@/app/interfaces/DTOs/Converters/technologyConverter"
+import { listRisingDTOConverter } from "@/app/interfaces/DTOs/Converters/risingConverter"
+import listSubEcosystemDTOConverter from "@/app/interfaces/DTOs/Converters/subEcosystemConverter"
 
 interface layoutEcosystemProps{
     ecosystem: string
@@ -68,7 +69,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //If no topic -> inital API call
         var apiPostBody;
         if(arg.remove){
-            //Ugly ass 0. This should maybe not be hardcoded this does not feel safe
+            //1st (0 index) item of topics is the to be removed topic
             //Body for removal of topic
             apiPostBody = { topics: selectedEcosystems.filter(n => n!= arg.topics![0]),
                 numberOfTopLanguages: numberOfTopLanguages,
@@ -97,7 +98,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Make fetch call to url that returns promise
         //Resolve promise by awaiting 
         //Then convert result to JSON
-        const result : ecosystemModel = await fetch(url, {
+        const result : ecosystemDTO = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -108,66 +109,28 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         return result;
     }
 
- 
-
-    //Functions that convert a data model into a class and then into a card
-    function dataToLanguageGraph(languages: languageModel[], title: string, x : number, y : number) : cardWrapper{
-        //Convert to class / count percentage to calculate other
-        var total = 0;
-        var languageList : languageClass[] = [];
-        for(var i = 0; i < languages.length; i++){
-            languageList.push(new languageClass(languages[i].language,languages[i].percentage))
-            total+= languages[i].percentage;
-        }
-        var rest = 100 - total;
-        //push rest to language
-        languageList.push(new languageClass("Other", rest))
-        //Putting language data in card
-        dataGraphLanguages = <GraphComponent items={languageList}/>
-        cardGraph = <InfoCard title={title} data={dataGraphLanguages} />
-        //Width / height are still fixed for now
-
-        //this should be auto generated later
-        const cardGraphWrapped : cardWrapper = {card: cardGraph, width:2, height:6, x: x, y: y, minH: 3, minW: 2, static:true}
+    function buildPieGraphCard(topics: displayable[], title: string, x : number, y : number) : cardWrapper{
+        var graphComponent = <GraphComponent items={topics}/>;
+        var cardGraph = <InfoCard title={title} data={graphComponent} />
+        //TODO: (min)Width / (min)height should be automatically detected here
+        var width = 2;
+        var height = 6;
+        var cardGraphWrapped : cardWrapper = {card : cardGraph, width: width, height: height, x : x, y : y, static: false}
         return cardGraphWrapped;
     }
 
-    function dataToTopicList(topics: subEcosystem[], title: string, x : number, y : number) : cardWrapper {
-        var subEcosystemList : subEcosystemClass[] = [];
-        for(var i = 0; i < topics.length; i++){
-            subEcosystemList.push(new subEcosystemClass(topics[i].topic, topics[i].projectCount));
-        }//async (sub: string) => {await trigger({topics: sub, remove:false})}
-        dataListTopic = <ListComponentSingle items={subEcosystemList} onClick={(sub : string) => onClickTopic(sub)}></ListComponentSingle>
-        cardTopic = <InfoCard title={title} data={dataListTopic} />
-        const cardTopicWrapped: cardWrapper = {card: cardTopic, width: 1, height: 4, x: x, y: y, minH: 2, static:true}
-        return cardTopicWrapped;
+    function buildListCard(topics: displayable[], title: string, x : number, y : number, width: number, height: number, alert?: string){
+        //Make list element
+        var listComponent = <ListComponentSingle items={topics} onClick={(sub : string) => onClickTopic(sub)}/>
+        //Make card element
+        var cardList = <InfoCard title={title} data={listComponent} alert={alert}/>
+        //Wrap card
+        //TODO: (min)Width / (min)height should be automatically detected here
+        const cardListWrapped: cardWrapper = {card: cardList, width: width, height: height, x: x, y: y, minH: 2, static:true}
+        return cardListWrapped
     }
 
-    function dataToTechnologyList(technologies: topTechnology[], title: string, x : number, y : number) : cardWrapper {
-        var technology : subEcosystemClass[] = [];
-        for(var i = 0; i < technologies.length; i++){
-            technology.push(new subEcosystemClass(technologies[i].name, technologies[i].percentage))
-        }
-        const dataListTechnologies = <ListComponentSingle items={technology} onClick={async (sub: string) => {await trigger({topics: [sub], remove:false})}}/>
-        const cardTechnologies = <InfoCard title={title} data={dataListTechnologies} alert="This is mock data" />
-        const carrdTechnologiesWrapped : cardWrapper = {card: cardTechnologies, width: 2, height: 4, x: x, y: y, static:true}
-        return carrdTechnologiesWrapped;
-    }
-
-    function dataToRisingList(risingItems: any, title: string, x : number, y : number, width : number) : cardWrapper {
-        var risingClassItems : risingClass[] = [];
-        for(var i = 0; i < risingItems.length; i++){
-            risingClassItems.push(new risingClass(risingItems[i].name, risingItems[i].percentage, risingItems[i].growth))
-        }
-        const dataListRising = <ListComponentSingle items={risingClassItems} onClick={async (sub: string) => {await trigger({topics: [sub], remove:false})}} />
-        const cardRising = <InfoCard title={title} data={dataListRising} alert="This is mock data" />
-        const cardRisingWrapped : cardWrapper = {card: cardRising, width: width, height: 4, x: x, y : y, static:true}
-        return cardRisingWrapped;
-    }
-
-    function dataToLineGraph(data: any, title: string, x: number, y : number) : cardWrapper{
-        //For now the data is already in the correct format
-        //TODO: add conversion of real data to correct format once we have real data...
+    function buildLineGraphCard(data: any, title: string, x: number, y : number) : cardWrapper{
         const lineGraphTopicsGrowing = <GraphLine items={data} />
         const cardLineGraph = <InfoCard title={title} data={lineGraphTopicsGrowing} alert="This is mock data"/>
         const cardLineGraphWrapped: cardWrapper = {card: cardLineGraph, x: x, y : y, width: 4, height: 6, static:true}
@@ -200,42 +163,49 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     }
 
     //Prepare variables before we have data so we can render before data
-
-    var dataListTopic;
-    var cardTopic;
-    var dataGraphLanguages;
-    var cardGraph;
     var cardWrappedList : cardWrapper[] = []
     if(data){
         //Real data
 
         //Top 5 topics
-        const cardTopicWrapped = dataToTopicList(data.subEcosystems, "Top 5 topics", 0, 2);
-        cardWrappedList.push(cardTopicWrapped);
+        //First Convert DTO's to Classes
+        const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
+        //Make list element
+   
+        const subEcosystemCard = buildListCard(subEcosystems, "Top 5 topics", 0, 2, 1, 4);
+        //Add card to list
+        cardWrappedList.push(subEcosystemCard);
 
         //Top 5 languages
-        const cardGraphWrapped = dataToLanguageGraph(data.topLanguages, "Top 5 languages", 0, 6);
-        cardWrappedList.push(cardGraphWrapped);
+        const languages = listLanguageDTOConverter(data.topLanguages);
+        //Make graph card
+        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6);
+        //Add card to list
+        cardWrappedList.push(languageCard);
 
         //Mock data
         //List of technologies
-        const carrdTechnologiesWrapped = dataToTechnologyList(topTechnologies, "Top 5 technologies", 6, 2)
-        cardWrappedList.push(carrdTechnologiesWrapped)
+        const technologies = listTechnologyDTOConverter(topTechnologies)
+        const technologyCard = buildListCard(technologies, "Top 5 technologies", 6, 2, 1, 4, "This is mock data");
+        cardWrappedList.push(technologyCard)
 
         //List of rising technologies
-        const cardTechnologiesGrowingWrapped = dataToRisingList(topTechnologyGrowing, "Top 5 rising technologies", 2, 2, 2)
-        cardWrappedList.push(cardTechnologiesGrowingWrapped)
+        const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
+        const risingTechnologiesCard = buildListCard(risingTechnologies, "Top 5 rising technologies", 3, 2, 2, 4, "This is mock data");
+        cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
-        const cardTopicsGrowingWrapped = dataToRisingList(topTopicsGrowing, "Top 5 rising topics", 1, 2, 1);
-        cardWrappedList.push(cardTopicsGrowingWrapped)
+        const risingTopics = listRisingDTOConverter(topTopicsGrowing);
+        const risingTopicsCard = buildListCard(risingTopics, "Top 5 rising topics", 1, 2, 2, 4, "This is mock data");
+        cardWrappedList.push(risingTopicsCard)
 
-        //Line graph topicsGrowing
-        const cardLineGraphWrapped = dataToLineGraph(topicGrowthLine, "Top 5 topics over time", 2, 6);
+        //Line graph topicsGrowing 
+        //For now no data conversion needed as Mock data is already in correct format 
+        //When working with real data there should be a conversion from DTO to dataLineGraphModel
+        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "Top 5 topics over time", 2, 6);
         cardWrappedList.push(cardLineGraphWrapped)
 
         //Ecosystem description
-        //Pull this out of the data field?
         //Remove main ecosystem from selected sub-ecosystem list to display
         const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem}   removeTopic={removeSubEcosystem} description={data.description ? data.description : "no description provided"}  subEcosystems={selectedEcosystems.filter(n => n!= props.ecosystem)} />
         const ecosystemDescriptionWrapped : cardWrapper = {card: ecosystemDescription, width: 6, height: 2, x: 0, y: 0, static:true}

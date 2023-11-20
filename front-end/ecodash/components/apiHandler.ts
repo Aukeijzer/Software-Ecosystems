@@ -13,7 +13,7 @@ apiHandler exports:
 */
 
 
-import { ecosystemModel } from "@/app/models/ecosystemModel";
+import { ecosystemModel } from "@/app/interfaces/DTOs/ecosystemDTO";
 
 //Handles API call for /ecosystems
 export async function handleApi(endpoint : string) : Promise<ecosystemModel[]> {

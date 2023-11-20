@@ -1,4 +1,4 @@
-import { ecosystemModel } from "@/app/models/ecosystemModel";
+import { ecosystemModel } from "@/app/interfaces/DTOs/ecosystemDTO";
 
 export interface totalInformation {
     totalProjects : number,

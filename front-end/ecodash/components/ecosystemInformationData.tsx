@@ -1,6 +1,6 @@
 "use client"
 
-import { ecosystemModel } from "@/app/models/ecosystemModel";
+import { ecosystemModel } from "@/app/interfaces/DTOs/ecosystemDTO";
 import InfoCard from "./infoCard";
 
 interface ecosystemInformationDataProps{

@@ -1,6 +1,6 @@
-import { languageModel } from "./languageModel"
+import { languageDTO } from "./languageDTO"
 
-export interface projectModel {
+export interface projectDTO {
     id: string,
     name: string,
     createdAt: string,
@@ -8,7 +8,7 @@ export interface projectModel {
     owner: string,
     description?: string,
     topics: string[],
-    languages: languageModel[],
+    languages: languageDTO[],
     totalSize?: number,
     readMe?: string,
     numberOfStars: number

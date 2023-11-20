@@ -17,7 +17,7 @@ interface infoCardDataListProps<T>{
     onClick: (sub: string) => void
 }
 
-export default function ListComponentSingle<T extends {}>(props : infoCardDataListProps<T>){
+export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
     return(
         <div className="h-full">
             <ListGroup>

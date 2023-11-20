@@ -1,9 +1,9 @@
 "use client"
 import {useEffect, useState} from "react"
 import { handleApi } from "./apiHandler"
-import { ecosystemModel } from "@/app/models/ecosystemModel"
+import { ecosystemModel } from "@/app/interfaces/DTOs/ecosystemDTO"
 import GridLayout from "./gridLayout";
-import { cardWrapper } from "@/app/models/cardWrapper";
+import { cardWrapper } from "@/app/interfaces/cardWrapper";
 import { totalInformation } from "@/mockData/mockEcosystems";
 import EcosystemButton from "./ecosystemButton";
 import InfoCard from "./infoCard";

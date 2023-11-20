@@ -1,5 +1,5 @@
 import { programmingLanguage } from "../enums/ProgrammingLanguage";
-import displayable from "./displayableClassPaged";
+import displayable from "./displayableClass";
 import { Cell } from "recharts";
 
 export default class languageClass extends displayable{
