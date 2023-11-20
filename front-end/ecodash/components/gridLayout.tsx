@@ -12,7 +12,7 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css' 
 
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { cardWrapper } from './layoutEcosystemPaged';
+import {cardWrapper} from "@/app/interfaces/cardWrapper";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 interface InfoCardGridProps{
