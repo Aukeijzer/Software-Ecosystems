@@ -1,4 +1,3 @@
-import { programmingLanguage } from "../enums/ProgrammingLanguage";
 import displayable from "./displayableClass";
 import { Cell } from "recharts";
 

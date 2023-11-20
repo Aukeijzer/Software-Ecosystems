@@ -1,4 +1,3 @@
-import subEcosystemClass from "@/app/classes/subEcosystemClass"
 import { languageDTO } from "./languageDTO"
 
 export interface ecosystemDTO{
