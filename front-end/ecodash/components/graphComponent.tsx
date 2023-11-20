@@ -15,9 +15,8 @@ infoCardDataGraph exports:
             - JSX.Element
 */
 
-import { languageModel } from '@/app/interfaces/DTOs/languageDTO';
 import dynamic from 'next/dynamic'
-import { Pie, Cell, Legend } from "recharts";
+import { Pie, Legend } from "recharts";
 import displayable from '@/app/classes/displayableClass';
 
 //This must be imported dynamicly so that SSR can be disabled
@@ -49,43 +48,3 @@ export default function GraphComponent<T extends {}>(props: infoCardDataGraphPro
         </div>
     );
 }  
-
-/*
-renderCustomLabel: function passed to Pie Element
-input = point passed by Pie element (Dont call this function yourself!)
-Output = a single label for a given data point
-*/
-
-/*
-const renderCustomLabel = ({cx , cy, midAngle, innerRadius, outerRadius, percent, index, payload, value} : LabelProps<ValueType, NameType> ) =>{
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const RADIAN = Math.PI / 180;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN) * 1.5;
-    const y = cy + radius * Math.sin(-midAngle * RADIAN) * 1.5;
-
-    const rotation : string = "rotate-180";
-    //console.log(rotation)
-    return(
-        <text className="" x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline={"central"}>
-            {payload.language + ": " + value + '%'}
-        </text>
-    );
-}
-*/
-
-export function renderPieGraph(items : languageModel[]){
-
-    return(
-        <div>
-            <PieChart width={400} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}}>
-                <Pie data={items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
-                    {items.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                </Pie>
-                <Legend align="left" layout="vertical" verticalAlign="middle" />
-           </PieChart>    
-
-        </div>  
-    )
-}

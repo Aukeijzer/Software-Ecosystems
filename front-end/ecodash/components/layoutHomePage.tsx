@@ -1,7 +1,7 @@
 "use client"
 import {useEffect, useState} from "react"
 import { handleApi } from "./apiHandler"
-import { ecosystemModel } from "@/app/interfaces/DTOs/ecosystemDTO"
+import { ecosystemDTO } from "@/app/interfaces/DTOs/ecosystemDTO"
 import GridLayout from "./gridLayout";
 import { cardWrapper } from "@/app/interfaces/cardWrapper";
 import { totalInformation } from "@/mockData/mockEcosystems";
@@ -17,7 +17,7 @@ export default function LayoutHomePage(){
         handleApi("ecosystems").then(data => transferData(data))
     }, [])
 
-    function transferData(data: ecosystemModel[]){
+    function transferData(data: ecosystemDTO[]){
         //This data is still not finished. Not clear yet what needs to be displayed on homePage
         setDataLoaded(true);
     }
