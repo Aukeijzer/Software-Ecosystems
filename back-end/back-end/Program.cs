@@ -22,6 +22,7 @@ builder.Services.AddCors(options =>
                 policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
             });
 });
+
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
@@ -31,13 +32,13 @@ builder.Services.AddDbContext<EcosystemsContext>(
     );
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddScoped<ISpiderService, SpiderService>();
+builder.Services.AddScoped<ISpiderService>(provider => new SpiderService(builder.Configuration.GetConnectionString("Spider")));
 builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
 builder.Services.AddSingleton(
     new ElasticsearchClient(
         builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value!,
-        new ApiKey(builder.Configuration.GetSection("ElasticSearch").GetSection("ApiKey").Value!)
+        new ApiKey(builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value!)
         ));
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
 builder.Services.AddScoped<IAnalysisService, ElasticsearchAnalysisService>();

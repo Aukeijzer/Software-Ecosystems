@@ -8,9 +8,9 @@ public class SpiderService : ISpiderService
 {
     private readonly RestClient _spiderClient;
 
-    public SpiderService()
+    public SpiderService(string connectionString)
     {
-        var options = new RestClientOptions("http://localhost:5205/Spider");
+        var options = new RestClientOptions(connectionString);
         options.MaxTimeout = 10000000;
         _spiderClient = new RestClient(options);
     }
