@@ -44,6 +44,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             //Convert params to string list
             const topics = params.split(',')
             trigger({topics: [...selectedEcosystems, ...topics ]})
+            setSelectedEcosystems([...selectedEcosystems, ...topics])
         } else {
             trigger({topics: selectedEcosystems})
         }
@@ -66,13 +67,14 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Function to remove sub-ecosystem from sub-ecosytem list
     async function removeSubEcosystem(subEcosystem: string){
-        var updatedList = selectedEcosystems.filter(n => n! = subEcosystem)
+        var updatedList = selectedEcosystems.filter(n => n != subEcosystem)
         await trigger({topics: updatedList})
         //Use shallow routing to update URL
         //Remove props.ecosystem
+        setSelectedEcosystems(selectedEcosystems.filter(n => n != subEcosystem));
         Router.push(`/?topics=${updatedList.filter(n => n != props.ecosystem)}`)
         //Update selected topics?
-        setSelectedEcosystems(updatedList);
+        
     }
 
     //If error we display error message
