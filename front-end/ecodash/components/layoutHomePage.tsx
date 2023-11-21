@@ -11,7 +11,7 @@ import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
 import GridLayout from "./gridLayout";
 
-export default function layoutHomePage(){
+export default function LayoutHomePage(){
     //Set up router?
     const Router = useRouter();
 

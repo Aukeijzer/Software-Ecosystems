@@ -1,4 +1,4 @@
-import NavBarTop from "./NavbarTop"
+import NavBarTop from "@/components/NavbarTop"
 
 
 describe('NavBar', () => {
