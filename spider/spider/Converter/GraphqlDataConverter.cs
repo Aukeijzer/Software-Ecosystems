@@ -33,6 +33,9 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         return projects;
     }
 
+    
+    //RepositoryToProject converts a repository return type from the graphql queries into a repositoryDto. This does not
+    //include contributors yet.
     public ProjectDto RepositoryToProject(Repository repository)
     {
         var topics = new string[repository.RepositoryTopics.Nodes.Length];

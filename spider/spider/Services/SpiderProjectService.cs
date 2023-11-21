@@ -22,6 +22,9 @@ public class SpiderProjectService : ISpiderProjectService
         _gitHubRestService = gitHubRestService;
     }
     
+    //GetByKeyword takes a keyword an amount and a start cursor and uses these to find the first amount of projects 
+    //after the start cursor with the keyword as search phrase. The result includes contributors. If startCursor
+    //null it returns from the start.
     public async Task<List<ProjectDto>> GetByKeyword(string name, int amount, string? startCursor)
     {
         try
@@ -67,6 +70,9 @@ public class SpiderProjectService : ISpiderProjectService
         }
     }
     
+    //GetByTopic takes the name of a topic, an amount and a start cursor and uses those to get the first amount of
+    //repositories after the start cursor which is part of the topic. The result includes contributors. If startCursor
+    //null it returns from the start.
     public async Task<List<ProjectDto>> GetByTopic(string topic, int amount, string? startCursor)
     {
         try
@@ -112,7 +118,8 @@ public class SpiderProjectService : ISpiderProjectService
         }
 
     }
-
+    
+    //GetByName gets a repository based on it's name and ownerName
     public async Task<ProjectDto> GetByName(string name, string ownerName)
     {
         var result = await _gitHubGraphqlService.QueryRepositoryByName(name, ownerName);        
@@ -121,6 +128,7 @@ public class SpiderProjectService : ISpiderProjectService
         return _graphqlDataConverter.RepositoryToProject(result.Repository);
     }
     
+    //GetByNames gets repositories by their name and ownerNames
     public async Task<List<ProjectDto>> GetByNames(List<ProjectRequestDto> repos)
     {
         var result = _graphqlDataConverter.SearchToProjects(await _gitHubGraphqlService
@@ -129,6 +137,7 @@ public class SpiderProjectService : ISpiderProjectService
         return result;
     }
     
+    //Get ContributorsByName gets the contributors of a repository based on the repositories name and ownerName.
     public async Task<List<ContributorDto>?> GetContributorsByName(string name, string ownerName, int amount)
     {
         try

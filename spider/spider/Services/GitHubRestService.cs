@@ -21,6 +21,9 @@ public class GitHubRestService : IGitHubRestService
         _jsonSerializer = new SystemTextJsonSerializer();
     }
 
+    
+    //GetRepoContributors sends a rest request to the github api and returns on success and otherwise handles the
+    //error and retries if necessary.
     public async Task<List<ContributorDto>?> GetRepoContributors(string ownerName, string repoName, int amount = 50)
     {
         var result = new List<ContributorDto>();
@@ -108,6 +111,8 @@ public class GitHubRestService : IGitHubRestService
         return result;
     }
 
+    
+    //HandleErrors checks if there is a rate-limit error and if there is, it retries
     private static void HandleError(RestResponse temp)
     {
         var header = temp.Headers.First(x => x.Name == "X-RateLimit-Remaining");
@@ -117,12 +122,14 @@ public class GitHubRestService : IGitHubRestService
 
             DateTime retryTime = DateTime.Parse(header.Value.ToString());
             Thread.Sleep((int)(retryTime - DateTime.Now).TotalMilliseconds);
+            return;
         }
 
         header = temp.Headers.FirstOrDefault(x => x.Name == "Retry-After");
         if (header is not null)
         {
             Thread.Sleep(int.Parse(header.Value.ToString()) * 1000);
+            return;
         }
 
         temp.ThrowIfError();
