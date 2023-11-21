@@ -1,5 +1,5 @@
 import subEcosystemClass from "@/app/classes/subEcosystemClass";
-import { subEcosystemDTO } from "../ecosystemDTO";
+import { subEcosystemDTO } from "../../interfaces/DTOs/ecosystemDTO";
 
 export function subEcosystemDTOConverter(subEcosystem: subEcosystemDTO){
     return new subEcosystemClass(subEcosystem.topic, subEcosystem.projectCount);

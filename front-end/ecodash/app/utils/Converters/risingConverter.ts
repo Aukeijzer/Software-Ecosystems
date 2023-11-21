@@ -1,5 +1,5 @@
 import risingClass from "@/app/classes/risingClass";
-import { risingDTO } from "../risingDTO";
+import { risingDTO } from "../../interfaces/DTOs/risingDTO";
 
 export function risingDTOConverter(rising: risingDTO){
     return new risingClass(rising.item, rising.percentage, rising.growth);

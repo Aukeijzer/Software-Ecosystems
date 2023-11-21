@@ -1,5 +1,5 @@
 import technologyClass from "@/app/classes/technologyClass";
-import { technologyDTO } from "../technologyDTO";
+import { technologyDTO } from "../../interfaces/DTOs/technologyDTO";
 
 export function technologyDTOConverter(technology: technologyDTO){
     return new technologyClass(technology.technology, technology.projectCount);

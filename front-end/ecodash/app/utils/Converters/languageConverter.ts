@@ -1,5 +1,5 @@
 import languageClass from "@/app/classes/languageClass";
-import { languageDTO } from "../languageDTO";
+import { languageDTO } from "../../interfaces/DTOs/languageDTO";
 
 export function languageDTOConverter(language: languageDTO){
     return new languageClass(language.language, language.percentage);
