@@ -59,7 +59,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         await trigger({topics: [...selectedEcosystems, topic]});
         //Use shallow routing
         //Dont display the props.ecosystem 
-        Router.push(`/?topics=${[...selectedEcosystems, topic].filter(n => n != props.ecosystem).toString()}`)
+        Router.push(`/?topics=${[...selectedEcosystems, topic].filter(n => n != props.ecosystem).toString()}`, {scroll: false})
         //Update selected topics?
         setSelectedEcosystems([...selectedEcosystems, topic]);
         
@@ -72,7 +72,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Use shallow routing to update URL
         //Remove props.ecosystem
         setSelectedEcosystems(selectedEcosystems.filter(n => n != subEcosystem));
-        Router.push(`/?topics=${updatedList.filter(n => n != props.ecosystem)}`)
+        Router.push(`/?topics=${updatedList.filter(n => n != props.ecosystem)}`, {scroll: false})
         //Update selected topics?
         
     }
