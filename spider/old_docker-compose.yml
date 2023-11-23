@@ -1,0 +1,16 @@
+services:
+ app:
+   build:
+     context: .
+   networks:
+    - secodash-network
+   environment:
+    API_Token: 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
+    ASPNETCORE_URLS: http://+:5205
+   ports:
+     - 5205:5205
+networks:
+  secodash-network:
+    name: secodash-network
+    driver: bridge
+    external: true
