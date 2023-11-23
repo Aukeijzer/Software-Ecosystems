@@ -113,7 +113,7 @@ public class ElasticsearchAnalysisServiceTests
         
         // Act
         var result = ElasticsearchAnalysisService
-            .SortSubEcosystems(subEcosystemsDtos, topics);
+            .SortSubEcosystems(subEcosystemsDtos, topics, numberOfTopSubEcosystems);
         
         // Assert
         
