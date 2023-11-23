@@ -27,7 +27,7 @@ public class GitHubRestService : IGitHubRestService
     public async Task<List<ContributorDto>?> GetRepoContributors(string ownerName, string repoName, int amount = 50)
     {
         var result = new List<ContributorDto>();
-        var request = new RestRequest("repos/" + repoName + "/" + ownerName + "/contributors");
+        var request = new RestRequest("repos/" + ownerName + "/" + repoName + "/contributors");
         request.AddQueryParameter("per_page", 50);
         int page = 1;
         while (amount > 0)
@@ -40,7 +40,7 @@ public class GitHubRestService : IGitHubRestService
                     var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
                     if (temp.IsSuccessful)
                     {
-                        if (temp.Content == null)
+                        if (temp.Content == null || temp.ContentLength == 0)
                         {
                             return result;
                         }
@@ -77,7 +77,7 @@ public class GitHubRestService : IGitHubRestService
                     var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
                     if (temp.IsSuccessful)
                     {
-                        if (temp.Content == null)
+                        if (temp.Content == null || temp.ContentLength == 0)
                         {
                             return result;
                         }
@@ -113,22 +113,23 @@ public class GitHubRestService : IGitHubRestService
 
     
     //HandleErrors checks if there is a rate-limit error and if there is, it retries
-    private static void HandleError(RestResponse temp)
+    private void HandleError(RestResponse temp)
     {
-        var header = temp.Headers.First(x => x.Name == "X-RateLimit-Remaining");
-        if (header.Value == "0")
+        var header = temp.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");
+        if (Convert.ToInt32(header.Value) == 0)
         {
-            header = temp.Headers.First(x => x.Name == "X-RateLimit-Reset");
-
-            DateTime retryTime = DateTime.Parse(header.Value.ToString());
-            Thread.Sleep((int)(retryTime - DateTime.Now).TotalMilliseconds);
+            header = temp.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Reset");
+            
+            DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
+            DateTime retryTime = utcTime.DateTime;
+            Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
             return;
         }
 
         header = temp.Headers.FirstOrDefault(x => x.Name == "Retry-After");
         if (header is not null)
         {
-            Thread.Sleep(int.Parse(header.Value.ToString()) * 1000);
+            Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
             return;
         }
 

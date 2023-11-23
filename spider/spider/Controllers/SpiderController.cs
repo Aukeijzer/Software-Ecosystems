@@ -71,7 +71,7 @@ public class SpiderController : ControllerBase
         return await _spiderProjectService.GetByNames(repos);
     }
     
-    [HttpGet("Contributors/{ownerName}/{name}/{amount}")]
+    [HttpGet("Contributors/{name}/{ownerName}/{amount}")]
     public async Task<ActionResult<List<ContributorDto>>> GetContributorsByName(string name, string ownerName,
         int amount)
     {

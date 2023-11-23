@@ -142,8 +142,8 @@ public class SpiderProjectService : ISpiderProjectService
     {
         try
         {
-            var result = await _gitHubRestService.GetRepoContributors(name,
-                ownerName, amount);     
+            var result = await _gitHubRestService.GetRepoContributors(ownerName,
+                name, amount);     
             return result;
         }
         catch (Exception e)
