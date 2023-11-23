@@ -38,9 +38,4 @@ public class ProjectDto
    
    [DataMember(Name = "timestamp")]
    public DateTime Timestamp { get; set; } 
-   
-   public ProjectDto()
-   {
-      Timestamp = DateTime.UtcNow;
-   }
 }

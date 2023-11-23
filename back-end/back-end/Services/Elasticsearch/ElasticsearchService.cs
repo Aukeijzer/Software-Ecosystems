@@ -46,7 +46,7 @@ public class ElasticsearchService : IElasticsearchService
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
     /// <summary>
-    /// This method retrieves all projects from the Elasticsearch index that were created between the given dates.
+    /// This method retrieves all projects from the Elasticsearch index that were created between the given date.
     /// </summary>
     /// <param name="time"></param>
     /// <returns></returns>
