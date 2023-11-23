@@ -101,7 +101,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
         return new EcosystemDto
         {
             Topics = topics,
-            SubEcosystems = GetTopXSubEcosystems(result, topics),
+            SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages) 
         };
     }
@@ -138,7 +138,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
     /// </summary>
     private static List<SubEcosystemDto> GetTopXSubEcosystems(
         SearchResponse<ProjectDto> searchResponse,
-        List<string> topics)
+        List<string> topics, int numberOfTopSubEcosystems)
     {
         var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
         if(topicsAggregate == null) throw new ArgumentException(
@@ -151,7 +151,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
                 ProjectCount = (int)topic.DocCount
             }).ToList();
 
-        var topSubEcosystems = SortSubEcosystems(subEcosystemDtos, topics);
+        var topSubEcosystems = SortSubEcosystems(subEcosystemDtos, topics, numberOfTopSubEcosystems);
 
         return topSubEcosystems;
     }
@@ -178,13 +178,14 @@ public class ElasticsearchAnalysisService : IAnalysisService
     /// Converts a list of all the sub-ecosystems/topics of an ecosystem into a "Top x" list of x length in descending
     /// order of project count. The topics that define the ecosystem are filtered out.
     /// </summary>
-    public static List<SubEcosystemDto> SortSubEcosystems(List<SubEcosystemDto> subEcosystemDtos, List<string> topics){
+    public static List<SubEcosystemDto> SortSubEcosystems(List<SubEcosystemDto> subEcosystemDtos, List<string> topics, int numberOfTopSubEcosystems){
         subEcosystemDtos
             .Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
         
         var topSubEcosystems = subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
+            .Take(numberOfTopSubEcosystems)
             .ToList();
         return topSubEcosystems;
     }
