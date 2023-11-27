@@ -21,7 +21,8 @@ public class EcosystemsController: ControllerBase
     [HttpGet]
     [SwaggerOperation("Get all ecosystems")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<List<Ecosystem>>> GetAllAsync()
+    
+    public async Task<ActionResult<List<EcosystemOverviewDto>>> GetAllAsync()
     {
         _logger.LogInformation("{Origin}: All ecosystems requested.", this);
         var result = await _ecosystemsService.GetAllAsync();
