@@ -11,7 +11,7 @@ public class SpiderService : ISpiderService
     public SpiderService(string connectionString)
     {
         var options = new RestClientOptions(connectionString);
-        options.MaxTimeout = 10000000;
+        options.MaxTimeout = 100000000;
         _spiderClient = new RestClient(options);
     }
     public async Task<List<ProjectDto>> GetProjectsByKeywordAsync(string keyword, int amount)
