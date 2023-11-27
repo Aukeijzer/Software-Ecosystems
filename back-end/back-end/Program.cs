@@ -12,13 +12,12 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
 
 var builder = WebApplication.CreateBuilder(args);
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(name: myAllowSpecificOrigins,
             policy =>
             {
-                //policy.WithOrigins("http://localhost:3000", "http://argiculture.localhost:3000");
                 policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
             });
 });
@@ -32,8 +31,9 @@ builder.Services.AddDbContext<EcosystemsContext>(
     );
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddScoped<ISpiderService>(provider => new SpiderService(builder.Configuration.GetConnectionString("Spider")));
+builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")));
 builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
+
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
 builder.Services.AddSingleton(
     new ElasticsearchClient(
@@ -58,8 +58,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
-app.UseCors(MyAllowSpecificOrigins);
+
+app.UseCors(myAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapControllers();
