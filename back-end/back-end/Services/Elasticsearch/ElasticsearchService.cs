@@ -6,9 +6,6 @@ namespace SECODashBackend.Services.ElasticSearch;
 
 public class ElasticsearchService : IElasticsearchService
 {
-    // Name of the projects index in Elasticsearch
-    private const string ProjectIndex = "projects-01";
-
     private readonly ElasticsearchClient _client;
     public ElasticsearchService(ElasticsearchClient client)
     {
@@ -17,7 +14,7 @@ public class ElasticsearchService : IElasticsearchService
 
     public async Task AddProjects(IEnumerable<ProjectDto> projectDtos)
     {
-        var request = new BulkRequest(ProjectIndex);
+        var request = new BulkRequest();
         var indexOperations = 
             projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p));
         request.Operations = new BulkOperationsCollection(indexOperations);
