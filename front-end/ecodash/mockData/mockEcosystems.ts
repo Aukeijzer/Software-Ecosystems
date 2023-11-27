@@ -1,4 +1,4 @@
-import { ecosystemModel } from "@/app/models/ecosystemModel";
+import { ecosystemDTO } from "@/app/interfaces/DTOs/ecosystemDTO";
 
 export interface totalInformation {
     totalProjects : number,
@@ -7,7 +7,7 @@ export interface totalInformation {
 }
 
 export interface risingEcosystems {
-    risingEcosystems : ecosystemModel[]
+    risingEcosystems : ecosystemDTO[]
 }
 
 export interface ogranization {

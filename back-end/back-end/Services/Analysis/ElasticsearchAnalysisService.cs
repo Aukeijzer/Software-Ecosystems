@@ -10,6 +10,10 @@ namespace SECODashBackend.Services.Analysis;
 
 public class ElasticsearchAnalysisService : IAnalysisService
 {
+    // Use the maximum bucket size supported by elasticsearch
+    // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
+    private const int MaxBucketSize = 10000;
+    
     // Minimum number of projects in sub-ecosystem for it to end up in the top x list\
     private const int MinimumNumberOfProjects = 2;
     
@@ -58,6 +62,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
                 new TermsAggregation(LanguageAggregateName)
                 {
                     Field = LanguageNameField,
+                    Size = MaxBucketSize,
                     
                     // Aggregation of the sum of the language.percentage field of all languages object with the same name
                     // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/sum-aggregation-usage.html
@@ -65,7 +70,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
                     {
                         new SumAggregation(SumAggregateName)
                         {
-                            Field = LanguagePercentageField,
+                            Field = LanguagePercentageField
                         },
                     }
                 },
@@ -76,7 +81,8 @@ public class ElasticsearchAnalysisService : IAnalysisService
         // Aggregation of all projects aggregated by topic
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {
-            Field = TopicField
+            Field = TopicField,
+            Size = topics.Count + numberOfTopSubEcosystems
         };
 
         var searchRequest = new SearchRequest
@@ -132,8 +138,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
     /// </summary>
     private static List<SubEcosystemDto> GetTopXSubEcosystems(
         SearchResponse<ProjectDto> searchResponse,
-        List<string> topics,
-        int numberOfTopSubEcosystems)
+        List<string> topics, int numberOfTopSubEcosystems)
     {
         var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
         if(topicsAggregate == null) throw new ArgumentException(
@@ -161,7 +166,9 @@ public class ElasticsearchAnalysisService : IAnalysisService
         programmingLanguageDtos
             .Sort((x, y)  => y.Percentage.CompareTo(x.Percentage));
         var totalSum = programmingLanguageDtos.Sum(l => l.Percentage);
-        var topXLanguages = programmingLanguageDtos.Take(numberOfTopLanguages).ToList();
+        var topXLanguages = programmingLanguageDtos
+            .Take(numberOfTopLanguages)
+            .ToList();
         topXLanguages
             .ForEach(l => l.Percentage = float.Round(l.Percentage / totalSum * 100));
         return topXLanguages;
@@ -171,16 +178,14 @@ public class ElasticsearchAnalysisService : IAnalysisService
     /// Converts a list of all the sub-ecosystems/topics of an ecosystem into a "Top x" list of x length in descending
     /// order of project count. The topics that define the ecosystem are filtered out.
     /// </summary>
-    public static List<SubEcosystemDto> SortSubEcosystems(List<SubEcosystemDto> subEcosystemDtos, List<string> topics,
-        int numberOfTopSubEcosystems)
-    {
+    public static List<SubEcosystemDto> SortSubEcosystems(List<SubEcosystemDto> subEcosystemDtos, List<string> topics, int numberOfTopSubEcosystems){
         subEcosystemDtos
             .Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
         
         var topSubEcosystems = subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
-            .Take(numberOfTopSubEcosystems)
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
+            .Take(numberOfTopSubEcosystems)
             .ToList();
         return topSubEcosystems;
     }

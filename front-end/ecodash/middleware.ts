@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
     if(subdomain){
         //subdomain available
         //rewriting to 
-        console.log(`>>> Rewriting: ${url.pathname} to ${subdomain}${url.pathname}`)
+        //console.log(`>>> Rewriting: ${url.pathname} to ${subdomain}${url.pathname}`)
         url.pathname = `${subdomain}${url.pathname}`
     }
    return NextResponse.rewrite(url)

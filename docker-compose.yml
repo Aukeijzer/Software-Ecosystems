@@ -1,0 +1,79 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker compose reference guide at
+# https://docs.docker.com/compose/compose-file/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+services:
+  # Frontend docker.
+  server:
+    build:
+      context: ./front-end/ecodash/
+      dockerfile: ./Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:3000
+    ports:
+      - 3000:3000
+    networks:
+      - secodash-network
+    restart: always
+    
+#####
+  # Spider docker.
+  spider-app:
+    build:
+      context: ./spider/
+      dockerfile: ./Dockerfile
+    networks:
+      - secodash-network
+    environment:
+      API_Token: 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
+      ASPNETCORE_URLS: http://+:5205
+    ports:
+      - 5205:5205
+
+#####
+  # Backend docker.
+  db:
+    image: postgres
+    networks:
+      - secodash-network
+    restart: always
+    environment:
+      POSTGRES_Username: postgres
+      POSTGRES_PASSWORD: SECODash
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - secodash-network
+    restart: always
+  backend-app:
+    build:
+      context: ./back-end/
+      dockerfile: ./Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:5003
+    ports:
+      - 5003:5003
+    networks:
+      - secodash-network
+    restart: always
+    depends_on:
+      - db
+    
+    
+volumes:
+  postgres-data:
+
+networks:
+  secodash-network:
+    name: secodash-network
+    driver: bridge
+    external: true

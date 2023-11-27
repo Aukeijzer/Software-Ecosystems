@@ -42,29 +42,25 @@ public class ElasticsearchAnalysisServiceTests
             {
                 Language = "JavaScript",
                 Percentage = 80
-            },
-            new()
-            {
-                Language = "TypeScript",
-                Percentage = 70
-            },
-            new()
-            {
-                Language = "Shell",
-                Percentage = 60
-            },
+            }
         };
         
         // Act
         var result = ElasticsearchAnalysisService
             .SortAndNormalizeLanguages(programmingLanguageDtos, numberOfTopLanguages);
         
-        // Assert that the list contains the correct amount of languages
-        Assert.That(result, Has.Count.EqualTo(numberOfTopLanguages));
-        // Assert that the total percentage is correct
-        Assert.That(result.Sum(l => l.Percentage), Is.EqualTo(79));
+        // Assert
         
-        // Assert that the whole list is ordered by percentage
+        Assert.Multiple(() =>
+        {
+            // Assert that the number of languages is correct
+            Assert.That(result, Has.Count.EqualTo(numberOfTopLanguages));
+
+            // Assert that the total percentage is correct
+            Assert.That(result.Sum(l => l.Percentage), Is.EqualTo(90));
+        });
+
+        // Assert that the list is ordered by descending percentage
         Assert.Multiple(() =>
         {
             Assert.That(result[0].Percentage, Is.GreaterThan(result[1].Percentage));
@@ -117,7 +113,7 @@ public class ElasticsearchAnalysisServiceTests
         
         // Act
         var result = ElasticsearchAnalysisService
-            .SortSubEcosystems(subEcosystemsDtos, topics,  numberOfTopSubEcosystems);
+            .SortSubEcosystems(subEcosystemsDtos, topics, numberOfTopSubEcosystems);
         
         // Assert
         

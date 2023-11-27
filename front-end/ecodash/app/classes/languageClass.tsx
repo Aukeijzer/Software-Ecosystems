@@ -1,12 +1,11 @@
-import { programmingLanguage } from "../enums/ProgrammingLanguage";
-import displayable from "./displayableClassPaged";
+import displayable from "./displayableClass";
 import { Cell } from "recharts";
 
 export default class languageClass extends displayable{
-    language: programmingLanguage;
+    language: String;
     percentage: number;
    
-    constructor(language: programmingLanguage, percentage: number){
+    constructor(language: String, percentage: number){
         super()
         this.language = language;
         this.percentage = percentage;
