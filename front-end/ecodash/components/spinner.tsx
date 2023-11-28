@@ -1,5 +1,8 @@
 "use client"
-
+/**
+ * A component that displays a spinner animation.
+ * @returns The SpinnerComponent JSX element.
+ */
 export default function SpinnerComponent(){
     //Spinner is from CSS flowbite: https://flowbite.com/docs/components/spinner/
     return(

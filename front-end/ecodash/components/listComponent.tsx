@@ -1,23 +1,32 @@
 "use client"
 
-/*
-infoCardDataList exports:
-- InfoCardDataList: JSX.Element containing a div that contains a rendered list
-    - input: 
-        - items: T[]: a list containing items of Type T
-        - renderFunction: (T) => JSX.Elemnent: a function that renders T items. (Must be same as list type)
-    - output: JSX.Element
-*/
 
 import { ListGroup } from "flowbite-react"
 import displayable from "@/app/classes/displayableClass";
 
-interface infoCardDataListProps<T>{
-    items: displayable[],
-    onClick: (sub: string) => void
-}
 
-export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
+interface infoCardDataListProps{
+    /**
+     * An array of displayable items.
+     */
+    items: displayable[];
+
+    /**
+     * A callback function triggered when an item is clicked.
+     *
+     * @param sub - The sub value associated with the clicked item.
+     */
+    onClick: (sub: string) => void;
+}
+/**
+ * Renders a list component.
+ *
+ * @template T - The type of items in the list.
+ * @param {infoCardDataListProps} props - The props for the list component.
+ * @returns {JSX.Element} The rendered list component.
+ */
+
+export default function ListComponent(props : infoCardDataListProps){
     return(
         <div className="h-full">
             <ListGroup>

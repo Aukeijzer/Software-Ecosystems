@@ -1,16 +1,7 @@
+
 "use client"
 
-/*
-ecosystemDescription exports:
 
- - EcosystemDescription: JSX.Element containing a provided description
-    - input:  
-            - ecosystem : string
-            - description: string
-    - output:
-            - JSX.Element
-
-*/
 import { Card } from 'flowbite-react'
 
 interface ecoSystemDescriptionProps{
@@ -19,6 +10,17 @@ interface ecoSystemDescriptionProps{
     subEcosystems?: string[],
     removeTopic?: (topic: string) => void
 }
+/**
+ * Renders a card component displaying information about an ecosystem.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.ecosystem - The name of the ecosystem.
+ * @param {string} props.description - The description of the ecosystem.
+ * @param {string[]} [props.subEcosystems] - The list of sub-ecosystems.
+ * @param {(topic: string) => void} [props.removeTopic] - The function to remove a topic.
+ * @returns {JSX.Element} The rendered EcosystemDescription component.
+ */
 
 export default function EcosystemDescription(props: ecoSystemDescriptionProps){
     return(

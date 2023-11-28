@@ -1,16 +1,15 @@
 "use client"
-/*
-NavBarTop exports:
-- NavBarTop: renders a NavBar with clickable links to the main ecosystems
-    - output: JSX.element
 
-*/
 import { Navbar } from 'flowbite-react';
 import logo from '../public/logo.png';
 import Image from 'next/image'
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/navigation';
 
+/**
+ * Renders a NavBar with clickable links to the main ecosystems.
+ * @returns {JSX.Element} The rendered NavBar component.
+ */
 
 export default function NavBarTop(){
     const router = useRouter();
