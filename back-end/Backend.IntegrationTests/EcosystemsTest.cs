@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -33,5 +34,26 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         ecosystemNames.Should().BeEquivalentTo(expectedNames);
+    }
+
+    [Fact]
+    public async Task Post_Ecosystems_ReturnsCorrectEcosystems()
+    {
+        // Arrange
+        var requestDto = new EcosystemRequestDto
+        {
+            Topics = new List<string> { "topic1" },
+            NumberOfTopLanguages = 2,
+            NumberOfTopSubEcosystems = 3
+        };
+        
+        // Act
+        var response = await _client.PostAsJsonAsync("/ecosystems", requestDto);
+        var stream = await response.Content.ReadAsStreamAsync();
+        var s = await response.Content.ReadAsStringAsync();
+        var ecosystems =
+            await JsonSerializer.DeserializeAsync<EcosystemDto>(stream, _serializerOptions);
+        
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }
