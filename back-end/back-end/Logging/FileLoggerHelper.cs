@@ -3,7 +3,7 @@
 namespace SECODashBackend.Logging;
 
 /// <summary>
-/// A helper class to handle async logging to a file by storing records in an intermediate collection.
+/// This static class handles async logging to a file by storing records in an intermediate collection.
 /// </summary>
 public static class FileLoggerHelper
 {

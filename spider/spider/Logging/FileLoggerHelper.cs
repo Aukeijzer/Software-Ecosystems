@@ -3,7 +3,7 @@
 namespace spider.Logging;
 
 /// <summary>
-/// A helper class to handle async logging to a file by storing records in an intermediate collection.
+/// This static class handles async logging to a file by storing records in an intermediate collection.
 /// </summary>
 public static class FileLoggerHelper
 {
@@ -29,7 +29,7 @@ public static class FileLoggerHelper
     /// <param name="filePath">Filepath as <see cref="string"/> for the location of the log file.</param>
     public static void AddRecord(string logMessage, string filePath)
     {
-        _logs.Add((logMessage, filePath));
+       _logs.Add((logMessage, filePath));
     }
 
     /// <summary>
