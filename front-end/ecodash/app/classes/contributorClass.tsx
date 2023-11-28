@@ -1,3 +1,4 @@
+import React from "react";
 import displayable from "./displayableClass";
 
 export default class contributorClass extends displayable {
@@ -9,21 +10,21 @@ export default class contributorClass extends displayable {
         this.contributions = contributions;
     }
 
-    renderAsListItem(onClick: (sub: string) => void): JSX.Element {
+    renderAsListItem(onClick: (sub: string) => void): React.JSX.Element {
         return(
             <div>
 
             </div>
         )
     }
-    renderAsTableItem(): JSX.Element {
+    renderAsTableItem(): React.JSX.Element {
         return(
             <div>
 
             </div>
         )
     }
-    renderAsGraph(index: number): JSX.Element {
+    renderAsGraph(index: number): React.JSX.Element {
         return(
             <div>
 

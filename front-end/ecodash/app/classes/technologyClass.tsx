@@ -1,3 +1,4 @@
+import React from "react";
 import displayable from "./displayableClass";
 
 export default class technologyClass extends displayable{
@@ -10,7 +11,7 @@ export default class technologyClass extends displayable{
         this.projectCount = projectCount;
     }
 
-    renderAsListItem(onClick: (sub: string) => void): JSX.Element {
+    renderAsListItem(onClick: (sub: string) => void): React.JSX.Element {
         return(
             <p onClick={() => onClick(this.technology)}>
                 <b>{this.technology}</b> with {this.projectCount} projects.
@@ -18,7 +19,7 @@ export default class technologyClass extends displayable{
         )
     }
 
-    renderAsTableItem(): JSX.Element {
+    renderAsTableItem(): React.JSX.Element {
         return(
             <div>
 
@@ -26,7 +27,7 @@ export default class technologyClass extends displayable{
         )
     }
 
-    renderAsGraph(index: number): JSX.Element {
+    renderAsGraph(index: number): React.JSX.Element {
         return(<div>
             
         </div>)

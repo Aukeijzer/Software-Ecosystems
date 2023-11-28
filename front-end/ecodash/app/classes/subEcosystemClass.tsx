@@ -1,3 +1,4 @@
+import React from "react";
 import displayable from "./displayableClass";
 
 export default class subEcosystemClass extends displayable {
@@ -10,21 +11,21 @@ export default class subEcosystemClass extends displayable {
         this.projectCount = projectCount;
     }
     
-    renderAsListItem(onClick: (sub: string) => void): JSX.Element {    
+    renderAsListItem(onClick: (sub: string) => void): React.JSX.Element {    
         return(
             <p onClick={() => onClick(this.topic)}>
                 <b>{this.topic}</b> with {this.projectCount} projects.
             </p>
         )
     }
-    renderAsTableItem(): JSX.Element {
+    renderAsTableItem(): React.JSX.Element {
         return(
             <div>
 
             </div>
         )
     }
-    renderAsGraph(index: number): JSX.Element {
+    renderAsGraph(index: number): React.JSX.Element {
         return(
             <div>
 
