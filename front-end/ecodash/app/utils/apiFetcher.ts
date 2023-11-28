@@ -1,4 +1,12 @@
 import { ecosystemDTO } from "../interfaces/DTOs/ecosystemDTO";
+
+/**
+ * Fetches ecosystem data by topic from the specified URL.
+ * @param url - The URL to fetch the data from.
+ * @param arg - An object containing the topics array.
+ * @param arg.topics - An array of topics to filter the ecosystem data.
+ * @returns A promise that resolves to the fetched ecosystem data.
+ */
 export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics: string[]}}){
     //Variables for post body
     const numberOfTopContributors = 5;
@@ -25,6 +33,11 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
     return result;
 }
 
+/**
+ * Fetches homepage ecosystem data from the specified URL.
+ * @param url - The URL to fetch the data from.
+ * @returns A promise that resolves to the fetched homepage ecosystem data.
+ */
 export async function fetcherHomePage(url: string){
     const result : ecosystemDTO[] = await fetch(url, {
         method: 'GET',
