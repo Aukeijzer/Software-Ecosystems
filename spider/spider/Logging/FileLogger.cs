@@ -34,9 +34,6 @@ public class FileLogger : ILogger
                 DateTime.Now.ToString("yyyyMMdd")));
         var logRecord = string.Format("{0} [{1}] {2} {3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             logLevel.ToString(), formatter(state, exception), (exception != null ? exception.StackTrace : ""));
-        using (var streamWriter = new StreamWriter(fullFilePath, true))
-        {
-           streamWriter.WriteLine(logRecord);
-        }
+        FileLoggerHelper.AddRecord(logRecord, fullFilePath);
     }
 }
