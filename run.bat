@@ -1,3 +1,3 @@
 docker network create secodash-network
-docker compose up
+docker compose up --build
 PAUSE

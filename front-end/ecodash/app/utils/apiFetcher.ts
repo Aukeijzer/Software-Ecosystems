@@ -21,7 +21,6 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
         },
         body: JSON.stringify(apiPostBody)
     }).then(res => res.json())
-    console.log(result);
     return result;
 }
 
