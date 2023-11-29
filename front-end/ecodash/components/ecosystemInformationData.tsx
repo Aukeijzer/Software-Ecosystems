@@ -13,7 +13,6 @@ interface ecosystemInformationDataProps{
 /**
  * Renders the data for an ecosystem information card.
  * 
- * @component
  * @param {Object} props - The props for the component.
  * @param {ecosystemDTO} props.ecosystem - The ecosystem object containing the information to be displayed.
  * @returns {JSX.Element} The rendered component.

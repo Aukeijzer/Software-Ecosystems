@@ -3,26 +3,29 @@ import dynamic from 'next/dynamic'
 import { CartesianGrid, XAxis, YAxis, Line, Legend, ResponsiveContainer, Tooltip} from 'recharts'
 import { lineData } from '@/mockData/mockAgriculture'
 
+//Need to import recharts dynamicly so that SSR can be disabled
 const LineChart = dynamic(() => import('recharts').then(mod => mod.LineChart), {
     ssr: false,
     loading: () => <p> loading Graph...</p>
 })
 
+/** Interface for the props of the graphLine component
+  * items: lineData[] - The data that should be displayed in the graph
+  */
 interface graphLineProps{
     items: lineData[],
 }
 
 const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
 
-//Data format//
-//name: 
-//topic1: 
-//topic2:
-//topic3:
-//topic4:
-//topic5:
-
-
+/**
+ * Renders a line element for a specific topic.
+ * 
+ * @param index - The index of the topic.
+ * @param datakey - The data key for the line.
+ * @param color - The color of the line.
+ * @returns The JSX element representing the line.
+ */
 function lineFunctionTopic(index : number, datakey: string, color: string ) : JSX.Element{
     const topics = ["DAO", "protocols", "Wallets", "DApps", "Finance"]
     const newDataKey = datakey + index.toString();
@@ -44,6 +47,12 @@ function drawLines(amount : number) : JSX.Element{
     )
 }
 
+
+/**
+ * Renders a graph component that displays data in a line chart.
+ * @param {graphLineProps} props - The props for the graph component.
+ * @returns {JSX.Element} The rendered graph component.
+ */
 export default function GraphLine(props: graphLineProps){
     return(
         <div className='grid w-full h-full'>

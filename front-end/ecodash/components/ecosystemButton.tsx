@@ -7,7 +7,7 @@ interface ecosystemButtonProps{
 }
 
 /**
- * Represents an Ecosystem Button component.
+ * Represents an Ecosystem Button component. When clicked go to corresponding ecosystem
  * @param {object} props - The component props.
  * @param {string} props.ecosystem - The name of the ecosystem.
  * @param {number} props.projectCount - The number of projects in the ecosystem.

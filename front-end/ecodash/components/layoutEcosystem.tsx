@@ -8,11 +8,11 @@ import SpinnerComponent from "./spinner"
 import { buildLineGraphCard, buildListCard, buildPieGraphCard } from "@/app/utils/cardBuilder"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
-import { listLanguageDTOConverter } from "@/app/utils/Converters/languageConverter"
+import  listLanguageDTOConverter  from "@/app/utils/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
 import { cardWrapper } from "@/app/interfaces/cardWrapper"
 import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConverter"
-import { listRisingDTOConverter } from "@/app/utils/Converters/risingConverter"
+import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
 interface layoutEcosystemProps{

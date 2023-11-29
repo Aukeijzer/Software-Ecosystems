@@ -1,7 +1,4 @@
-
 "use client"
-
-
 import { Card } from 'flowbite-react'
 
 interface ecoSystemDescriptionProps{
@@ -10,6 +7,7 @@ interface ecoSystemDescriptionProps{
     subEcosystems?: string[],
     removeTopic?: (topic: string) => void
 }
+
 /**
  * Renders a card component displaying information about an ecosystem.
  *
