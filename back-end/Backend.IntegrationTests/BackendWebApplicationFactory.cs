@@ -12,11 +12,12 @@ public class BackendWebApplicationFactory<TProgram> : WebApplicationFactory<TPro
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        // Replace the standard ElasticsearchClient by one that maps Project related requests to a dedicated test index
         var settings = new ElasticsearchClientSettings(
-                "Develop:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkNWYwNTY0ZDQ2YWRjNDUxMGFiNmQyZTM5MjI3ZDQzOTIkYzRkYTgyYTg0NmQwNGMxYTlkZmUxYzg0MTkyNmY4N2U=",
-                new ApiKey("ejZsWHpZc0JaeUkxNld5RVFDUzM6S21rT2tILW1UaEs3M0JGQWltdmJHUQ=="))
+                "Develop:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkMDJlNzkxNTY2MGRhNDAzMDk5NWE1OTFiNGVjNDgwYjgkZmYyNjk5MjI4YTZmNGM0M2E0OTM5NDUyYzc1YWZhODE=",
+                new ApiKey("R1B6Y0ZZd0JWakk3ZmtqR21PbDQ6cFo4SGxJcGxRLTJDUEFsTzhDam9YZw=="))
             .DefaultMappingFor<Project>(i => i
-                .IndexName("projects-01")
+                .IndexName("integration-test-01")
             );
         builder.ConfigureTestServices(services =>
         {

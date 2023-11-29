@@ -22,7 +22,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         _client.HttpClient.DefaultRequestHeaders.Add("X-Github-Next-Global-ID", "1");
         _logger = logger;
     }
-
+  
+    //QueryRepositoriesByNameHelper splits the incoming request into smaller parts.
     public async Task<List<SpiderData>> QueryRepositoriesByNameHelper(String name, int amount, string? startCursor)
     {
         var projects = new List<SpiderData>();
@@ -51,6 +52,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     }
 
     
+    //QueryRepositoriesByName sends a graphql request to the github api and returns on success and otherwise handles the
+    //error and retries if necessary.
     public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string? cursor = null, int tries = 3)
     {
         // GraphQL query to search the repositories with the given name.
@@ -193,6 +196,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         }
     }
     
+    //QueryRepositoriesByTopicHelper splits the incoming request into smaller parts.
     public async Task<List<TopicSearchData>> QueryRepositoriesByTopicHelper(String topic, int amount, string? startCursor)
     {
         var projects = new List<TopicSearchData>();
@@ -217,6 +221,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         return projects;
     }
     
+    //QueryRepositoriesByTopic sends a graphql request to the github api and returns on success and otherwise handles the
+    //error and retries if necessary.
     public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount, string? cursor = null, int tries = 3)
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()
@@ -360,6 +366,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         }
     }
     
+    //QueryRepositoryByName sends a graphql request to the github api and returns on success. Does not handle errors yet.
     public async Task<RepositoryWrapper> QueryRepositoryByName(string repositoryName, string ownerName)
     {
         // GraphQL query to search a repository with the given repository name and owner name.
@@ -454,6 +461,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         return response.Data;
     }
     
+    //ToQueryString converts ProjectRequestDtos into a format that can be inserted into a graphql search query.
     public async Task<SpiderData> ToQueryString(List<ProjectRequestDto> repos)
     {
         StringBuilder stringBuilder = new StringBuilder();
