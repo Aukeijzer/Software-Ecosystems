@@ -1,11 +1,9 @@
 import React from "react";
-import displayable from "./displayableClass";
 
-export default class contributorClass extends displayable {
+export default class contributorClass {
     name: string;
     contributions: number;
-    constructor(name: string, contributions: number){
-        super()
+    constructor(name: string, contributions: number) {
         this.name = name;
         this.contributions = contributions;
     }

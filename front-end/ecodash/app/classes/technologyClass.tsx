@@ -1,12 +1,11 @@
 import React from "react";
-import displayable from "./displayableClass";
+import displayableListItem from "./displayableListItem";
 
-export default class technologyClass extends displayable{
+export default class technologyClass implements displayableListItem {
     technology: string;
     projectCount: number;
 
-    constructor(technology: string, projectCount : number){
-        super()
+    constructor(technology: string, projectCount : number) {
         this.technology = technology;
         this.projectCount = projectCount;
     }
@@ -17,19 +16,5 @@ export default class technologyClass extends displayable{
                 <b>{this.technology}</b> with {this.projectCount} projects.
             </p>
         )
-    }
-
-    renderAsTableItem(): React.JSX.Element {
-        return(
-            <div>
-
-            </div>
-        )
-    }
-
-    renderAsGraph(index: number): React.JSX.Element {
-        return(<div>
-            
-        </div>)
     }
 }

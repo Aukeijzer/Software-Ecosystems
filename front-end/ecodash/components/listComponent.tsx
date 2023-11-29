@@ -2,14 +2,14 @@
 
 
 import { ListGroup } from "flowbite-react"
-import displayable from "@/app/classes/displayableClass";
+import displayableListItem from "@/app/classes/displayableListItem";
 
 
 interface infoCardDataListProps{
     /**
      * An array of displayable items.
      */
-    items: displayable[];
+    items: displayableListItem[];
 
     /**
      * A callback function triggered when an item is clicked.
