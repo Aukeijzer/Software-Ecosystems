@@ -5,6 +5,7 @@ import logo from '../public/logo.png';
 import Image from 'next/image'
 import React, {useState, useEffect} from 'react'
 import { useRouter } from 'next/navigation';
+import Link from 'next/link'
 
 /**
  * Renders a NavBar with clickable links to the main ecosystems.
@@ -12,12 +13,12 @@ import { useRouter } from 'next/navigation';
  */
 
 export default function NavBarTop(){
-    const router = useRouter();
     //For now has the basepath 
     return(
-        <Navbar fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
-            <Navbar.Brand onClick={() => router.push("http://localhost:3000")}>
+        <Navbar data-cy='navBar' fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
+            <Navbar.Brand as={Link} href="http://localhost:3000" >
                 <Image
+                    data-cy='navLogo'
                     src={logo}
                     alt="SECODash logo"
                     //className='mr-3 h-6 sm:h-9'

@@ -19,11 +19,11 @@ export default function EcosystemButton(props: ecosystemButtonProps){
     return(
         <div>
             <ul>
-                <li>
-                    <b>projects</b> : {props.projectCount}
+                <li data-cy='ecosystem-projects'>
+                    <b>projects</b>: {props.projectCount}
                 </li>
-                <li>
-                    <b> topics</b>: {props.topics} 
+                <li data-cy='ecosystem-topics'>
+                    <b>topics</b>: {props.topics} 
                 </li>
             </ul>
         </div>

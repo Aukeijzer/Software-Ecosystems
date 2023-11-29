@@ -22,14 +22,14 @@ interface ecoSystemDescriptionProps{
 
 export default function EcosystemDescription(props: ecoSystemDescriptionProps){
     return(
-        <div className='h-full'>
+        <div data-cy='ecosystem description' className='h-full'>
             <Card className='h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl '>
-                <h1 className='text-3xl'>
-                    Welcome to the <b> {props.ecosystem} </b> ecosystem page
+                <h1 data-cy='welcome ecosystem' className='text-3xl'>
+                    Welcome to the <b>{props.ecosystem}</b> ecosystem page
                 </h1>
                 {(props.subEcosystems != null && props.subEcosystems.length > 0) && <div>
                     The following sub-ecosystems have been selected:
-                    <ul className='flex flex-row gap-5'>
+                    <ul data-cy='subecosystems'className='flex flex-row gap-5'>
                         {props.subEcosystems.map((item, i) => (
                         <li key={i} className='flex flex-row gap-5 mb-1'>
                             <button onClick={() => props.removeTopic!(item)} className='bg-gray-300 rounded-md pl-1 pr-1'> X {item} 
@@ -38,7 +38,7 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                     </ul>
                 </div>
                 }
-                <p>
+                <p data-cy='description ecosystem'>
                     {props.description}
                 </p>
             </Card>
