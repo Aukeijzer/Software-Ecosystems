@@ -6,6 +6,11 @@ namespace spider.Converter;
 
 public class GraphqlDataConverter : IGraphqlDataConverter
 {
+    /// <summary>
+    /// SearchToProjects converts a SpiderData object to a list of ProjectDto objects.
+    /// </summary>
+    /// <param name="data">The SpiderData that needs to be converted</param>
+    /// <returns>The repositories from data in the form of List&lt;ProjectDto&gt;</returns>
     public List<ProjectDto> SearchToProjects(SpiderData data)
     {
         // Parser to parse the result from the search query to a C# data type.
@@ -13,12 +18,22 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         return projects;
     }
     
+    /// <summary>
+    /// TopicSearchToProjects converts a TopicSearchData object to a list of ProjectDto objects.
+    /// </summary>
+    /// <param name="data">The TopicSearchData that needs to be converted</param>
+    /// <returns>The repositories from data in the form of List&lt;ProjectDto&gt;</returns>
     public List<ProjectDto> TopicSearchToProjects(TopicSearchData data)
     {
         List<ProjectDto> projects = DataToProjectDtos(data.Topic.Repositories.Nodes);
         return projects;
     }
 
+    /// <summary>
+    /// DataToProjectDtos converts a Repository[] to a list of ProjectDto objects.
+    /// </summary>
+    /// <param name="nodes">The Repositories to convert</param>
+    /// <returns>The repositories from data in the form of List&lt;ProjectDto&gt;</returns>
     public List<ProjectDto> DataToProjectDtos(Repository[] nodes)
     {
         var projects = new List<ProjectDto>();
@@ -34,8 +49,11 @@ public class GraphqlDataConverter : IGraphqlDataConverter
     }
 
     
-    //RepositoryToProject converts a repository return type from the graphql queries into a repositoryDto. This does not
-    //include contributors yet.
+    /// <summary>
+    /// RepositoryToProject converts a single Repository to a ProjectDto object.
+    /// </summary>
+    /// <param name="repository">The repository to convert</param>
+    /// <returns>The repository in the form of ProjectDto</returns>
     public ProjectDto RepositoryToProject(Repository repository)
     {
         var topics = new string[repository.RepositoryTopics.Nodes.Length];
@@ -51,14 +69,14 @@ public class GraphqlDataConverter : IGraphqlDataConverter
             languages[i] = new ProgrammingLanguageDto(repository.Languages.Edges[i].Node.Name,percent);
         }
 
-        DateTime? mostrecentcommit;
+        DateTime? mostRecentCommit;
         try
         {
-            mostrecentcommit = repository.DefaultBranchRef.Target.History.Edges[0].Node.CommittedDate;
+            mostRecentCommit = repository.DefaultBranchRef.Target.History.Edges[0].Node.CommittedDate;
         }
         catch (Exception e)
         {
-            mostrecentcommit = null;
+            mostRecentCommit = null;
         }
 
         string? readme = repository.ReadmeCaps?.Text 
@@ -73,7 +91,7 @@ public class GraphqlDataConverter : IGraphqlDataConverter
             {
                 Name = repository.Name,
                 Id = repository.Id,
-                LatestDefaultBranchCommitDate = mostrecentcommit,
+                LatestDefaultBranchCommitDate = mostRecentCommit,
                 CreatedAt = repository.CreatedAt,
                 ReadMe = readme,
                 Owner = repository.Owner.Login,

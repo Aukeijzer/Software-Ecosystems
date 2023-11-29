@@ -2,6 +2,9 @@
 
 namespace spider.Dtos;
 
+/// <summary>
+/// A data transfer object for a contributor to a repository
+/// </summary>
 [DataContract]
 public class ContributorDto
 {

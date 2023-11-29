@@ -2,6 +2,9 @@
 
 namespace spider.Dtos;
 
+/// <summary>
+/// A data transfer object for a single repository
+/// </summary>
 [DataContract]
 public class ProjectDto
 {

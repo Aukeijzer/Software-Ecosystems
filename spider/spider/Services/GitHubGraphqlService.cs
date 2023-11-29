@@ -501,6 +501,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     /// </summary>
     /// <param name="repos">A list of repository names and owner names</param>
     /// <returns>list of repositories in the form of SpiderData</returns>
+    // todo only gets upto 1000 repositories
     public async Task<SpiderData> ToQueryString(List<ProjectRequestDto> repos)
     {
         StringBuilder stringBuilder = new StringBuilder();
