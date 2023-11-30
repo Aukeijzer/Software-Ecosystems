@@ -1,5 +1,4 @@
-using SECODashBackend.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Services.Ecosystems;
 using Swashbuckle.AspNetCore.Annotations;
@@ -29,21 +28,6 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     /// <summary>
     /// Returns an ecosystem defined by the topics in the dto
     /// </summary>
-    public async Task<ActionResult> PostAsync(Ecosystem ecosystem)
-    {
-        _logger.LogInformation("{Origin}: Posting ecosystem with the name: '{Ecosystem}'", this,
-            ecosystem.Name);
-        await _ecosystemsService.AddAsync(ecosystem);
-        _logger.LogInformation("{Origin}: Ecosystem with the name: '{Ecosystem}' has been posted.",
-            this, ecosystem.Name);
-        
-        return CreatedAtAction(
-            // ReSharper disable once Mvc.ActionNotResolved
-            nameof(SearchByTopics),
-            new { id = ecosystem.Id },
-            ecosystem);
-    }
-
     [HttpPost]
     public async Task<ActionResult<EcosystemDto>> SearchByTopics(EcosystemRequestDto dto)
     {
