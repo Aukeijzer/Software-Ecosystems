@@ -7,22 +7,19 @@ using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
     
-public class EcosystemsService : IEcosystemsService
+/// <summary>
+public class EcosystemsService(EcosystemsContext dbContext,
+        IAnalysisService analysisService)
+    : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
-    private readonly EcosystemsContext _dbContext;
-    private readonly IAnalysisService _analysisService;
 
-    public EcosystemsService(
-        EcosystemsContext dbContext,
-        IAnalysisService analysisService)
-    {
-        _dbContext = dbContext;
-        _analysisService = analysisService;
-    }
+    /// <summary>
+    /// Get all top-level ecosystems, i.e., Agriculture, Quantum, Artificial Intelligence.
+    /// </summary>
     public async Task<List<EcosystemOverviewDto>> GetAllAsync()
     {
-        var ecosystems = await _dbContext.Ecosystems
+        var ecosystems = await dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
         return ecosystems.Select(EcosystemConverter.ToDto).ToList();
@@ -37,7 +34,7 @@ public class EcosystemsService : IEcosystemsService
 
     private async Task<Ecosystem?> GetByNameAsync(string name)
     {
-        return await _dbContext.Ecosystems
+        return await dbContext.Ecosystems
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
     }
@@ -46,7 +43,7 @@ public class EcosystemsService : IEcosystemsService
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
 
-        var ecosystemDto = await _analysisService.AnalyzeEcosystemAsync(
+        var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems);

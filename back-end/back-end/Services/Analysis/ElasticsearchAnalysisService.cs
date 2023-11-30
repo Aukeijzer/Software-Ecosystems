@@ -1,4 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using SECODashBackend.Dtos.Ecosystem;
@@ -8,7 +8,8 @@ using SECODashBackend.Services.ElasticSearch;
 
 namespace SECODashBackend.Services.Analysis;
 
-public class ElasticsearchAnalysisService : IAnalysisService
+/// <summary>
+public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchService) : IAnalysisService
 {
     // Use the maximum bucket size supported by elasticsearch
     // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
@@ -31,14 +32,13 @@ public class ElasticsearchAnalysisService : IAnalysisService
     private const string SumAggregateName = "sum";
     private const string NestedAggregateName = "nested";
     private const string TopicAggregateName = "topics";
-    
-    private readonly IElasticsearchService _elasticSearchService;
 
-    public ElasticsearchAnalysisService(IElasticsearchService elasticsearchService)
-    {
-        _elasticSearchService = elasticsearchService;
-    }
-    
+    /// <summary>
+    /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
+    /// The analysis consists of two parts:
+    /// 1. Retrieving the top x programming languages
+    /// 2. Retrieving the top x sub-ecosystems/topics
+    /// </summary>
     public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems)
     {
         // Query that matches all projects that contain all topics in the topics list
@@ -96,7 +96,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
             Size = 0 // Do not request actual Project documents
         };
         
-        var result = await _elasticSearchService.QueryProjects(searchRequest);
+        var result = await elasticsearchService.QueryProjects(searchRequest);
         
         return new EcosystemDto
         {

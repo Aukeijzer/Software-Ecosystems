@@ -4,27 +4,27 @@ using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Services.ElasticSearch;
 
-public class ElasticsearchService : IElasticsearchService
+/// <summary>
+///  Service that is responsible for handling all Elasticsearch related requests.
+/// </summary>
+public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchService
 {
-    private readonly ElasticsearchClient _client;
-    public ElasticsearchService(ElasticsearchClient client)
-    {
-        _client = client;
-    }
-
+    /// <summary>
+    /// Adds the given projects to the Elasticsearch index. 
+    /// </summary>
     public async Task AddProjects(IEnumerable<ProjectDto> projectDtos)
     {
         var request = new BulkRequest();
         var indexOperations = 
             projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p));
         request.Operations = new BulkOperationsCollection(indexOperations);
-        var response = await _client.BulkAsync(request);
+        var response = await client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
     
     public async Task<SearchResponse<ProjectDto>> QueryProjects(SearchRequest searchRequest)
     {
-        var response = await _client
+        var response = await client
             .SearchAsync<ProjectDto>(searchRequest);
         return response.IsValidResponse ? response : throw new HttpRequestException(response.ToString());
     }
