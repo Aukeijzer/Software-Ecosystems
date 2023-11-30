@@ -1,4 +1,4 @@
-using Elastic.Clients.Elasticsearch;
+﻿using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using SECODashBackend.Dtos.Ecosystem;
@@ -9,6 +9,10 @@ using SECODashBackend.Services.ElasticSearch;
 namespace SECODashBackend.Services.Analysis;
 
 /// <summary>
+/// Service that analyses an ecosystem by querying the Elasticsearch index for projects that contain the given topics.
+/// The service is responsible for retrieving the relevant data from the search response and converting it to the
+/// correct format.
+/// </summary>
 public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchService) : IAnalysisService
 {
     // Use the maximum bucket size supported by elasticsearch

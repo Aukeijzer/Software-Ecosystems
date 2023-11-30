@@ -21,7 +21,10 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
         var response = await client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
-    
+   
+    /// <summary>
+    /// Queries the Elasticsearch index for projects that match the given search request. 
+    /// </summary>
     public async Task<SearchResponse<ProjectDto>> QueryProjects(SearchRequest searchRequest)
     {
         var response = await client

@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SECODashBackend.Models;
 
+/// <summary>
+/// This class represents an Ecosystem.
+/// An Ecosystem is a collection of projects that are related to each other.
+/// </summary>
 [Index(nameof(Name), IsUnique = true)]
 public class Ecosystem
 {  

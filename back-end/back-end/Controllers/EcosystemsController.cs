@@ -26,9 +26,9 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
         return new ObjectResult(result);
     }
 
-    [HttpPost("add")]
-    // Currently not in use
-    // TODO: convert to accept a dto instead of an Ecosystem
+    /// <summary>
+    /// Returns an ecosystem defined by the topics in the dto
+    /// </summary>
     public async Task<ActionResult> PostAsync(Ecosystem ecosystem)
     {
         _logger.LogInformation("{Origin}: Posting ecosystem with the name: '{Ecosystem}'", this,

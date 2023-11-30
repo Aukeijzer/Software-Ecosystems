@@ -1,9 +1,11 @@
 ﻿using System.Runtime.Serialization;
 using SECODashBackend.Dtos.ProgrammingLanguage;
-using spider.Dtos;
 
 namespace SECODashBackend.Dtos.Project;
 
+/// <summary>
+/// Represents a data transfer object for a Project.
+/// </summary>
 [DataContract]
 public class ProjectDto
 {

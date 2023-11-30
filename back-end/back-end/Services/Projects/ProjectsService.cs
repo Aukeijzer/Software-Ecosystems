@@ -21,7 +21,9 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         // Save these projects to elasticsearch
         await elasticsearchService.AddProjects(newDtos);
     }
-    
+    /// <summary>
+    /// Requests the Spider for projects related to the given keyword and saves them to Elasticsearch.
+    /// </summary>
     public async Task MineByKeywordAsync(string keyword, int amount)
     {
         // Request the Spider for projects related to this topic.
