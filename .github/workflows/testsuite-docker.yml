@@ -23,13 +23,13 @@ jobs:
       #     password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Spider Tests
         run: |
-          docker run --rm dotnet test ./spider/spiderTests
+          docker run --rm server dotnet test ./spider/spiderTests
       - name: Backend Tests
         run: |
-          docker run --rm dotnet test ./backend/BackendTests
+          docker run --rm server dotnet test ./backend/BackendTests
       - name: Frontend Tests
         run: |
-          docker run --rm npm run  test
+          docker run --rm server npm run  test
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
