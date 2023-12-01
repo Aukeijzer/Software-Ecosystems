@@ -3,6 +3,9 @@ using SECODashBackend.Dtos.ProgrammingLanguage;
 
 namespace SECODashBackend.Dtos.Ecosystem;
 
+/// <summary>
+/// Represents a data transfer object for an Ecosystem.
+/// </summary>
 public class EcosystemDto
 {
     [DataMember(Name = "displayName")] public string? DisplayName { get; set; }
