@@ -22,10 +22,10 @@ export default function NavBarTop(){
                     src={logo}
                     alt="SECODash logo"
                     //className='mr-3 h-6 sm:h-9'
-                    width={80}
-                    height={80}
+                    width={40}
+                    height={40}
                 />
-                <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                <span className="self-center whitespace-nowrap text-l font-semibold dark:text-white">
                     SECODash
                 </span>
             </Navbar.Brand>

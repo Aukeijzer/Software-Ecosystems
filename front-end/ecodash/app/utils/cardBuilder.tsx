@@ -1,9 +1,11 @@
-import displayable from "../classes/displayableClass";
+// import displayable from "../classes/displayableClass";
 import { cardWrapper } from "../interfaces/cardWrapper";
 import GraphComponent from "@/components/graphComponent";
 import InfoCard from "@/components/infoCard";
 import ListComponent from "@/components/listComponent";
 import GraphLine from "@/components/graphLine";
+import displayableGraphItem from "../classes/displayableGraphItem";
+import displayableListItem from "../classes/displayableListItem";
 
 /**
  * Builds a pie graph card.
@@ -13,7 +15,7 @@ import GraphLine from "@/components/graphLine";
  * @param y - The y-coordinate of the card.
  * @returns The wrapped card object.
  */
-export function buildPieGraphCard(topics: displayable[], title: string, x : number, y : number) : cardWrapper{
+export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number) : cardWrapper{
     var graphComponent = <GraphComponent items={topics}/>;
     var cardGraph = <InfoCard title={title} data={graphComponent} />
     //TODO: (min)Width / (min)height should be automatically detected here
@@ -35,7 +37,7 @@ export function buildPieGraphCard(topics: displayable[], title: string, x : numb
  * @param alert - Optional alert message for the card.
  * @returns The wrapped card object.
  */
-export function buildListCard(topics: displayable[], onClick: any, title: string, x : number, y : number, width: number, height: number, alert?: string){
+export function buildListCard(topics: displayableListItem[], onClick: any, title: string, x : number, y : number, width: number, height: number, alert?: string){
     //Make list element
     var listComponent = <ListComponent items={topics} onClick={(sub : string) => onClick(sub)}/>
     //Make card element

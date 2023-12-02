@@ -29,7 +29,7 @@ const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e
  */
 export default function GraphComponent(props: infoCardDataGraphProps){
     return(
-        <div>
+        <div data-cy='pie-chart'>
               <PieChart width={400} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}} >
                 <Pie data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
                     {props.items.map((entry, index) => (

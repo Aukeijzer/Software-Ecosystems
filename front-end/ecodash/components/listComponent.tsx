@@ -28,12 +28,12 @@ interface infoCardDataListProps{
 
 export default function ListComponent(props : infoCardDataListProps){
     return(
-        <div className="h-full">
-            <ListGroup>
+        <div data-cy='list component'className="h-full">
+            <ListGroup data-cy='list group' className="border-none bg-amber">
                 {props.items.map((item, i) => (
                     //Maybe move onClick to the box instead of the text
-                    <ListGroup.Item key = {i} >
-                       {item.renderAsListItem(props.onClick)}
+                    <ListGroup.Item data-cy='list item' key = {i} >
+                       {i + 1}. &nbsp; {item.renderAsListItem(props.onClick)}
                     </ListGroup.Item>
                 ))}
             </ListGroup>
