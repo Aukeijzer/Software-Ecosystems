@@ -2,6 +2,9 @@
 using SECODashBackend.Services.Spider;
 
 namespace BackendTests;
+/// <summary>
+/// This class contains unit tests for the SpiderService.
+/// </summary>
 [TestFixture]
 public class SpiderServiceUnitTests
 {
@@ -9,6 +12,8 @@ public class SpiderServiceUnitTests
     
     /// <summary>
     /// This tests the GetProjectsByTopicAsync method of the SpiderService.
+    /// It tests if the method returns the correct amount of projects.
+    /// Lastly it checks if the returned list contains projects with the given topic.
     /// </summary>
     [Test]
     public void GetProjectsByTopicAsync_ReturnsProjects()
@@ -30,6 +35,8 @@ public class SpiderServiceUnitTests
     
     /// <summary>
     /// This tests the GetProjectsByKeywordAsync method of the SpiderService.
+    /// It tests if the method returns the correct amount of projects.
+    /// Lastly it checks if the returned list contains projects with the given keyword.
     /// </summary>
     [Test]
     public void GetProjectsByKeywordAsync_ReturnsProjects()

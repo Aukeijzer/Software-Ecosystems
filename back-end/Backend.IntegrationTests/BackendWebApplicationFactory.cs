@@ -7,7 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using SECODashBackend.Models;
 
 namespace Backend.IntegrationTests;
-
+/// <summary>
+/// This method is used to create a WebApplicationFactory for the integration tests.
+/// </summary>
+/// <typeparam name="TProgram"></typeparam>
 public class BackendWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)

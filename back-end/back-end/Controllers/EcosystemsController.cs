@@ -4,7 +4,11 @@ using SECODashBackend.Services.Ecosystems;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SECODashBackend.Controllers;
-
+/// <summary>
+/// This controller is responsible for handling requests related to ecosystems.
+/// </summary>
+/// <param name="logger"></param>
+/// <param name="ecosystemsService"></param>
 [ApiController]
 [Route("[controller]")]
 public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosystemsService ecosystemsService)

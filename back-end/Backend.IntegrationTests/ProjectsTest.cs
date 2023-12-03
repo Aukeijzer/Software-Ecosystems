@@ -7,7 +7,7 @@ namespace Backend.IntegrationTests;
 public class ProjectsTest
 {
     /// <summary>
-    /// This method tests the Post method of the ProjectsController that mines projects based on topics.
+    /// This method tests the Post method of the ProjectsController that mines projects based on topics and keywords.
     /// </summary>
     [Fact]
     public async Task Post_Projects_ReturnTopicProjects()

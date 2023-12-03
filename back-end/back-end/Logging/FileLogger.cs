@@ -2,6 +2,10 @@
 
 namespace SECODashBackend.Logging;
 
+/// <summary>
+/// This class represents a logger that logs to a file.
+/// </summary>
+/// <param name="fileLoggerProvider"></param>
 public class FileLogger([NotNull] FileLoggerProvider fileLoggerProvider) : ILogger 
 {
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull

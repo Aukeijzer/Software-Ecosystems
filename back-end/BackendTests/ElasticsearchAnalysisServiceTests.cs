@@ -3,9 +3,21 @@ using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Services.Analysis;
 
 namespace BackendTests;
+/// <summary>
+/// This class contains unit tests for the ElasticsearchAnalysisService.
+/// </summary>
 [TestFixture]
 public class ElasticsearchAnalysisServiceTests
 {
+    /// <summary>
+    /// This tests the SortAndNormalizeLanguages method of the ElasticsearchAnalysisService.
+    /// It tests if the method returns the correct list of languages.
+    /// We test this by creating a list of ProgrammingLanguageDtos and passing it to the method.
+    /// After that we check if the returned list contains the correct amount of languages.
+    /// Secondly we check if the total percentage of the returned list is correct.
+    /// Thirdly we check if the returned list does not contain any languages with a percentage of 0.
+    /// Lastly we check if the returned list is ordered by descending percentage.
+    /// </summary>
     [Test]
     public void SortAndNormalizeLanguages_ReturnsCorrectList()
     {
@@ -69,7 +81,15 @@ public class ElasticsearchAnalysisServiceTests
             Assert.That(result[3].Percentage, Is.GreaterThan(result[4].Percentage));
         });
     }
-
+    
+    /// <summary>
+    /// This tests the SortSubEcosystems method of the ElasticsearchAnalysisService.
+    /// It tests if the method returns the correct list of sub-ecosystems.
+    /// We test this by creating a list of SubEcosystemDtos and passing it to the method.
+    /// After that we check if the returned list contains the correct amount of sub-ecosystems.
+    /// Also we check if the returned list does not contain any sub-ecosystems with a topic that is in the topics list.
+    /// Lastly we check if the returned list is ordered by descending number of projects.
+    /// </summary>
     [Test]
     public void SortSubEcosystems_ReturnsCorrectList()
     {
