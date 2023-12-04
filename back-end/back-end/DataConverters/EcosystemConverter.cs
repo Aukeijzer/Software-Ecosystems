@@ -5,6 +5,9 @@ namespace SECODashBackend.DataConverters;
 
 public static class EcosystemConverter
 {
+    /// <summary>
+    /// Converts an Ecosystem to a data transfer object.
+    /// </summary>
     public static EcosystemOverviewDto ToDto(Ecosystem ecosystem)
     {
         return new EcosystemOverviewDto

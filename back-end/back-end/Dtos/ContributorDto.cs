@@ -1,7 +1,10 @@
 ﻿using System.Runtime.Serialization;
 
-namespace spider.Dtos;
+namespace SECODashBackend.Dtos;
 
+/// <summary>
+/// REpresents a data transfer object for a Contributor of a Project.
+/// </summary>
 [DataContract]
 public class ContributorDto
 {

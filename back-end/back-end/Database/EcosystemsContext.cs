@@ -3,12 +3,8 @@ using SECODashBackend.Models;
 
 namespace SECODashBackend.Database;
 
-public class EcosystemsContext: DbContext
+public class EcosystemsContext(DbContextOptions<EcosystemsContext> options) : DbContext(options)
 {
-   public EcosystemsContext(DbContextOptions<EcosystemsContext> options) : base(options)
-   {
-   }
-
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
       modelBuilder.UseSerialColumns();
