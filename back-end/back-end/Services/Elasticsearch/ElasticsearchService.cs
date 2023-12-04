@@ -7,7 +7,7 @@ namespace SECODashBackend.Services.ElasticSearch;
 public class ElasticsearchService : IElasticsearchService
 {
     // Name of the projects index in Elasticsearch
-    private const string ProjectIndex = "projects-01";
+    private const string ProjectIndex = "projects-02";
 
     private readonly ElasticsearchClient _client;
     public ElasticsearchService(ElasticsearchClient client)
