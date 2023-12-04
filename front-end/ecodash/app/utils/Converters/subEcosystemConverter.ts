@@ -1,4 +1,4 @@
-import subEcosystemClass from "@/app/classes/subEcosystemClass";
+import subEcosystemClass from "../../classes/subEcosystemClass";
 import { subEcosystemDTO } from "../../interfaces/DTOs/ecosystemDTO";
 
 /**

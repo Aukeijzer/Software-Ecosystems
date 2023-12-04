@@ -1,4 +1,4 @@
-import risingClass from "@/app/classes/risingClass";
+import risingClass from "../../classes/risingClass";
 import { risingDTO } from "../../interfaces/DTOs/risingDTO";
 
 /**

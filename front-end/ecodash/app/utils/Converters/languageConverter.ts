@@ -1,4 +1,4 @@
-import languageClass from "@/app/classes/languageClass";
+import languageClass from "../../classes/languageClass";
 import { languageDTO } from "../../interfaces/DTOs/languageDTO";
 
 /**

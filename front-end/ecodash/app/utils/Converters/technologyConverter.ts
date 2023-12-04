@@ -1,4 +1,4 @@
-import technologyClass from "@/app/classes/technologyClass";
+import technologyClass from "../../classes/technologyClass";
 import { technologyDTO } from "../../interfaces/DTOs/technologyDTO";
 
 /**
