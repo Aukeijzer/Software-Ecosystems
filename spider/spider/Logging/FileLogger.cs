@@ -5,7 +5,7 @@ namespace spider.Logging;
 /// This class represents a logger that logs to a file.
 /// </summary>
 /// <param name="fileLoggerProvider"></param>
-public class FileLogger([NotNull] FileLoggerProvider fileLoggerProvider) : ILogger 
+public class FileLogger(FileLoggerProvider fileLoggerProvider) : ILogger 
 {
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
@@ -29,7 +29,7 @@ public class FileLogger([NotNull] FileLoggerProvider fileLoggerProvider) : ILogg
             fileLoggerProvider.Options.FolderPath, fileLoggerProvider.Options.FilePath.Replace(
                 "{date}",DateTime.Now.ToString("yyyyMMdd")));
         // Construct the string with format: yyyy-MM-dd HH:mm:ss [LogLevel] Message StackTrace
-        var logRecord = string.Format("{0} [{1}] {2} {3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+        var logRecord = string.Format("{0:yyyy-MM-dd HH:mm:ss} [{1}] {2} {3}", DateTime.Now,
             logLevel.ToString(), formatter(state, exception), (exception != null ? exception.StackTrace : ""));
         using (var streamWriter = new StreamWriter(fullFilePath, true))
         {
