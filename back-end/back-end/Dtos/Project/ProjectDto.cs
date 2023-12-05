@@ -4,6 +4,9 @@ using spider.Dtos;
 
 namespace SECODashBackend.Dtos.Project;
 
+/// <summary>
+/// Represents a data transfer object for a Project.
+/// </summary>
 [DataContract]
 public class ProjectDto
 {
@@ -22,7 +25,8 @@ public class ProjectDto
    [DataMember(Name = "description")]
    public string? Description { get; set; }
 
-   [DataMember(Name = "topics")] public List<string> Topics { get; set; } = new();
+   [DataMember(Name = "topics")] 
+   public List<string> Topics { get; set; } = new();
 
    [DataMember(Name = "languages")]
    public List<ProgrammingLanguageDto> Languages { get; set; } = new();

@@ -112,7 +112,7 @@ public class GitHubRestService : IGitHubRestService
     }
 
     
-    //HandleErrors checks if there is a rate-limit error and if there is, it retries
+    // HandleErrors checks if there is a rate-limit error and if there is, it retries
     private void HandleError(RestResponse temp)
     {
         var header = temp.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");

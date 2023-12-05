@@ -7,46 +7,46 @@ using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
     
-public class EcosystemsService : IEcosystemsService
+/// <summary>
+/// This service is responsible for handling all ecosystem-related requests.
+/// It uses the EcosystemsContext to interact with the database.
+/// It uses the AnalysisService to analyze ecosystems.
+/// </summary>
+public class EcosystemsService(EcosystemsContext dbContext,
+        IAnalysisService analysisService)
+    : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
-    private readonly EcosystemsContext _dbContext;
-    private readonly IAnalysisService _analysisService;
 
-    public EcosystemsService(
-        EcosystemsContext dbContext,
-        IAnalysisService analysisService)
-    {
-        _dbContext = dbContext;
-        _analysisService = analysisService;
-    }
+    /// <summary>
+    /// Get all top-level ecosystems, i.e., Agriculture, Quantum, Artificial Intelligence.
+    /// </summary>
     public async Task<List<EcosystemOverviewDto>> GetAllAsync()
     {
-        var ecosystems = await _dbContext.Ecosystems
+        var ecosystems = await dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
         return ecosystems.Select(EcosystemConverter.ToDto).ToList();
     }
 
-    // TODO: convert to accept a dto instead of an Ecosystem
-    public async Task<int> AddAsync(Ecosystem ecosystem)
-    {
-        await _dbContext.Ecosystems.AddAsync(ecosystem);
-        return await _dbContext.SaveChangesAsync();
-    }
-
+    /// <summary>
+    /// Get an ecosystem by its name.
+    /// </summary>
     private async Task<Ecosystem?> GetByNameAsync(string name)
     {
-        return await _dbContext.Ecosystems
+        return await dbContext.Ecosystems
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
     }
 
+    /// <summary>
+    /// Get an ecosystem by its topics.
+    /// </summary>
     public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
 
-        var ecosystemDto = await _analysisService.AnalyzeEcosystemAsync(
+        var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems);
