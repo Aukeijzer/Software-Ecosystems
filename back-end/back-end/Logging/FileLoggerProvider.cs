@@ -13,10 +13,10 @@ namespace SECODashBackend.Logging
         /// <summary>
         /// This constructor uses the <see cref="FileLoggerOptions"/> to create a directory for storing log files if this folder does not yet exist.
         /// </summary>
-        /// <param name="_options">Represents the file location the <see cref="FileLogger"/> should write to.</param>
-        public FileLoggerProvider(IOptions<FileLoggerOptions> _options)
+        /// <param name="options">Represents the file location the <see cref="FileLogger"/> should write to.</param>
+        public FileLoggerProvider(IOptions<FileLoggerOptions> options)
         {
-            Options = _options.Value;
+            Options = options.Value;
             if (!Directory.Exists(Options.FolderPath))
             {
                 Directory.CreateDirectory((Options.FolderPath));

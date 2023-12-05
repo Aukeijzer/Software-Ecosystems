@@ -25,10 +25,11 @@ public class FileLogger([NotNull] FileLoggerProvider fileLoggerProvider) : ILogg
         {
             return;
         }
-
+        // Construct the file path from options and using the current date for the file name
         var fullFilePath = string.Format("{0}/{1}",
             fileLoggerProvider.Options.FolderPath, fileLoggerProvider.Options.FilePath.Replace(
                 "{date}",DateTime.Now.ToString("yyyyMMdd")));
+        // Construct the string with format: yyyy-MM-dd HH:mm:ss [LogLevel] Message StackTrace
         var logRecord = string.Format("{0} [{1}] {2} {3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             logLevel.ToString(), formatter(state, exception), (exception != null ? exception.StackTrace : ""));
         using (var streamWriter = new StreamWriter(fullFilePath, true))

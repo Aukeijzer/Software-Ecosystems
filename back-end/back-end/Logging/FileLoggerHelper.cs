@@ -7,11 +7,11 @@ namespace SECODashBackend.Logging;
 /// </summary>
 public static class FileLoggerHelper
 {
-    private static BlockingCollection<(string, string)> _logs;
+    private static readonly BlockingCollection<(string, string)> Logs;
     
     static FileLoggerHelper()
     {
-        _logs = new BlockingCollection<(string, string)>();
+        Logs = new BlockingCollection<(string, string)>();
         InitialiseLogging();
     }
     /// <summary>
@@ -29,7 +29,7 @@ public static class FileLoggerHelper
     /// <param name="filePath">Filepath as <see cref="string"/> for the location of the log file.</param>
     public static void AddRecord(string logMessage, string filePath)
     {
-       _logs.Add((logMessage, filePath));
+       Logs.Add((logMessage, filePath));
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public static class FileLoggerHelper
     {
         while (true)
         {
-            var record = _logs.Take();
+            var record = Logs.Take();
             using var streamWriter = new StreamWriter(record.Item2, true);
             streamWriter.WriteLine(record.Item1);
         }

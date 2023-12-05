@@ -1,6 +1,5 @@
 ﻿using System.Runtime.Serialization;
 using SECODashBackend.Dtos.ProgrammingLanguage;
-using spider.Dtos;
 
 namespace SECODashBackend.Dtos.Project;
 
