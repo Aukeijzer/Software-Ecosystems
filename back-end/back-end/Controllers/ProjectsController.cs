@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SECODashBackend.Dtos.Project;
 using SECODashBackend.Services.Projects;
 
 namespace SECODashBackend.Controllers;
@@ -40,19 +41,16 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
         return Accepted();
     }
     
+    /// <summary>
+    /// This method returns a list of projects based on the given time.
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     [HttpPost("searchbytimeframe")]
     public async Task<ActionResult<List<ProjectDto>>> GetByTimeFrameAsync(DateTime time)
     {
-        _logger.LogInformation("{Origin}: Projects requested with time: '{time}' '.", this, time);
-        var dtos = await _projectsService.GetByTimeFrameAsync(time);
-        var projects = dtos.Select(ProjectConverter.ToProjectDto);
-        var projectDtos = projects.ToList();
-        if (!projectDtos.Any())
-        {
-            _logger.LogInformation("{Origin}: No projects found with time: '{time}' '.", this, time);
-            return NotFound();
-        }
-        _logger.LogInformation("{Origin}: Returning projects with time: '{time}' '.", this, time);
-        return projectDtos;
+        logger.LogInformation("{Origin}: Projects requested with time: '{time}' '.", this, time);
+        await projectsService.GetByTimeFrameAsync(time);
+        return Accepted();
     }
 }

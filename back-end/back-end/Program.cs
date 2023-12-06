@@ -41,7 +41,7 @@ var settings = new ElasticsearchClientSettings(
         new ApiKey(builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value!))
     // set default index for Projects
     .DefaultMappingFor<Project>(i => i
-        .IndexName("projects-01")
+        .IndexName("projects-timed-test")
     );
 
 builder.Services.AddSingleton(

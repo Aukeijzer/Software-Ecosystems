@@ -10,5 +10,5 @@ public interface IProjectsService
 {
     public Task MineByTopicAsync(string topic, int amount);
     public Task MineByKeywordAsync(string topic, int amount);
-    Task<IEnumerable<Project>> GetByTimeFrameAsync(DateTime time);
+    Task GetByTimeFrameAsync(DateTime time);
 }

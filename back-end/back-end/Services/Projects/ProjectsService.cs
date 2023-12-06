@@ -36,10 +36,12 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         await elasticsearchService.AddProjects(newDtos);
     }
     
-    public async Task<IEnumerable<Project>> GetByTimeFrameAsync(DateTime time)
+    /// <summary>
+    /// Requests Elasticsearch for projects related to the given time.
+    /// </summary>
+    /// <param name="time"></param>
+    public async Task GetByTimeFrameAsync(DateTime time)
     {
-        // Retrieve all related projects from elasticsearch
-        var dtos = await _elasticsearchService.GetProjectsByDate(time);
-        return dtos.Select(ProjectConverter.ToProject);
+        await elasticsearchService.GetProjectsByDate(time);
     }
 }

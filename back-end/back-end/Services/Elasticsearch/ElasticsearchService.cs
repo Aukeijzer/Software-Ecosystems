@@ -1,5 +1,7 @@
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Core.Bulk;
+using Elastic.Clients.Elasticsearch.QueryDsl;
+using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Services.ElasticSearch;
@@ -26,7 +28,25 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
         var response = await client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
-   
+    
+    /// <summary>
+    /// Retrieve all related projects from elasticsearch falling in the given time frame.
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
+    /// <exception cref="HttpRequestException"></exception>
+    public async Task<List<ProjectDto>> GetProjectsByDate(DateTime time)
+    {
+        // Make the time frame a bit bigger to account for the time it takes to mine the projects.
+        time = time.AddDays(1);
+        SearchResponse<ProjectDto> response = await client.SearchAsync<ProjectDto>(s => s
+            .Query(q => q.Term(r => r.Timestamp, time)));
+        
+        if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
+        
+        return response.Documents.ToList();
+    }
+
     /// <summary>
     /// Queries the Elasticsearch index for projects that match the given search request. 
     /// </summary>
