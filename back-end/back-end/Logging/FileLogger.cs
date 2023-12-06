@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace SECODashBackend.Logging;
+﻿namespace SECODashBackend.Logging;
 
 /// <summary>
 /// This class represents a logger that logs to a file.
@@ -32,9 +30,6 @@ public class FileLogger(FileLoggerProvider fileLoggerProvider) : ILogger
         // Construct the string with format: yyyy-MM-dd HH:mm:ss [LogLevel] Message StackTrace
         var logRecord = string.Format("{0:yyyy-MM-dd HH:mm:ss} [{1}] {2} {3}", DateTime.Now,
             logLevel.ToString(), formatter(state, exception), (exception != null ? exception.StackTrace : ""));
-        using (var streamWriter = new StreamWriter(fullFilePath, true))
-        {
-           streamWriter.WriteLine(logRecord);
-        }
+        FileLoggerHelper.AddRecord(logRecord, fullFilePath);
     }
 }
