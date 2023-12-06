@@ -3,6 +3,9 @@ using SECODashBackend.Dtos.ProgrammingLanguage;
 
 namespace SECODashBackend.Dtos.Project;
 
+/// <summary>
+/// Represents a data transfer object for a Project.
+/// </summary>
 [DataContract]
 public class ProjectDto
 {
@@ -38,4 +41,6 @@ public class ProjectDto
    
    [DataMember(Name = "timestamp")]
    public DateTime Timestamp { get; set; } 
+   [DataMember(Name = "contributors")]
+   public List<ContributorDto>? Contributors { get; set; }
 }

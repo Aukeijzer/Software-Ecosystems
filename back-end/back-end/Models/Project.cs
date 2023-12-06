@@ -2,7 +2,10 @@ using System.Runtime.Serialization;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 
 namespace SECODashBackend.Models;
-
+/// <summary>
+/// This class represents a Project.
+/// A Project is a repository on GitHub.
+/// </summary>
 public class Project
 {
     [DataMember(Name = "id")]

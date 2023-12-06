@@ -1,12 +1,14 @@
-﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
 using SECODashBackend.Models;
 
 namespace SECODashBackend.Services.Projects;
 
+/// <summary>
+/// Interface for a service that is responsible for requesting the Spider for projects and saving them to Elasticsearch.
+/// </summary>
 public interface IProjectsService
 {
-    public Task<Project?> GetByIdAsync(string id);
-    public Task<IEnumerable<Project>> GetByTopicsAsync(List<string> topics);
-    public Task MineByTopicAsync(string topic);
+    public Task MineByTopicAsync(string topic, int amount);
+    public Task MineByKeywordAsync(string topic, int amount);
     Task<IEnumerable<Project>> GetByTimeFrameAsync(DateTime time);
 }

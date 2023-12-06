@@ -17,11 +17,12 @@ interface infoCardDataListProps<T>{
     onClick: (sub: string) => void
 }
 
-export default function ListComponentSingle<T extends {}>(props : infoCardDataListProps<T>){
+export default function ListComponent<T extends {}>(props : infoCardDataListProps<T>){
     return(
         <div className="h-full">
             <ListGroup>
                 {props.items.map((item, i) => (
+                    //Maybe move onClick to the box instead of the text
                     <ListGroup.Item key = {i} >
                        {item.renderAsListItem(props.onClick)}
                     </ListGroup.Item>

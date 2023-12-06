@@ -1,4 +1,3 @@
-import LayoutEcosystemPaged from "@/components/layoutEcosystemPaged";
 import LayoutEcosystem from "@/components/layoutEcosystem";
 
 import { Metadata } from "next";
@@ -13,7 +12,7 @@ interface ecosystemPageProps{
 export const dynamicParams = false;
 // Define static params
 export function generateStaticParams() {
-    return ["agriculture", "artificial-intelligence", "quantum", "ruby"].map(ecosystem => ({ ecosystem }));
+    return ["agriculture", "artificial-intelligence", "quantum"].map(ecosystem => ({ ecosystem }));
 }                           
 //Set title 
 export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Metadata {

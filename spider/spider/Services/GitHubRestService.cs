@@ -1,23 +1,33 @@
+using System.Text.Json;
 using spider.Dtos;
 using RestSharp;
+using RestSharp.Serializers.Json;
 
 namespace spider.Services;
 
 public class GitHubRestService : IGitHubRestService
 {
     private readonly RestClient _gitHubRestClient;
-    public GitHubRestService()
+    private readonly ILogger<GitHubGraphqlService> _logger;
+    private readonly SystemTextJsonSerializer _jsonSerializer;
+    public GitHubRestService(ILogger<GitHubGraphqlService> logger)
     {
         var options = new RestClientOptions("https://api.github.com");
         _gitHubRestClient = new RestClient(options);
-        _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable("API_Token"));
+        _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable(
+            "API_Token"));
         _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
+        _logger = logger;
+        _jsonSerializer = new SystemTextJsonSerializer();
     }
 
-    public async Task<List<ContributorDto>> GetRepoContributors(String ownerName, string repoName, int amount = 50)
+    
+    //GetRepoContributors sends a rest request to the github api and returns on success and otherwise handles the
+    //error and retries if necessary.
+    public async Task<List<ContributorDto>?> GetRepoContributors(string ownerName, string repoName, int amount = 50)
     {
         var result = new List<ContributorDto>();
-        var request = new RestRequest("repos/" + repoName + "/" + ownerName + "/contributors");
+        var request = new RestRequest("repos/" + ownerName + "/" + repoName + "/contributors");
         request.AddQueryParameter("per_page", 50);
         int page = 1;
         while (amount > 0)
@@ -25,29 +35,104 @@ public class GitHubRestService : IGitHubRestService
             if (amount > 50)
             {
                 request.AddQueryParameter("page", page);
-                var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
-                result = result.Concat(temp).ToList();
-                if (temp.Count < 50)
+                try
                 {
-                    break;
+                    var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
+                    if (temp.IsSuccessful)
+                    {
+                        if (temp.Content == null || temp.ContentLength == 0)
+                        {
+                            return result;
+                        }
+                        
+                        List<ContributorDto> restResult =
+                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(temp);
+
+                        result.AddRange(restResult);
+                        if (restResult.Count < 50)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        HandleError(temp);
+                    }
                 }
+                catch (Exception e)
+                {
+                     _logger.LogError(e.Message + " in {origin} with request: \"{ownerName}/{repoName}\"",
+                         this, ownerName,repoName);
+                    throw;
+                }
+
                 page++;
                 amount -= 50;
             }
             else
             {
                 request.AddQueryParameter("page", page);
-                var temp =  await _gitHubRestClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
-                if (temp.Count < amount)
+                try
                 {
-                    result = result.Concat(temp).ToList();
-                    break;
+                    var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
+                    if (temp.IsSuccessful)
+                    {
+                        if (temp.Content == null || temp.ContentLength == 0)
+                        {
+                            return result;
+                        }
+                        
+                        List<ContributorDto> restResult =
+                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(temp);
+
+                        if (restResult.Count < amount)
+                        {
+                            result.AddRange(restResult);
+                            break;
+                        }
+
+                        result.AddRange(restResult.GetRange(0, amount));
+                    }
+                    else
+                    {
+                        HandleError(temp);
+                    }
                 }
-                result = result.Concat(temp.GetRange(0,amount)).ToList();
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message + " in {origin} with request: \"{ownerName}/{repoName}\"",
+                        this, ownerName,repoName);
+                    throw;
+                }
                 amount = 0;
             }
         }
 
         return result;
+    }
+
+    
+    // HandleErrors checks if there is a rate-limit error and if there is, it retries
+    private void HandleError(RestResponse temp)
+    {
+        var header = temp.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");
+        if (Convert.ToInt32(header.Value) == 0)
+        {
+            header = temp.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Reset");
+            
+            DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
+            DateTime retryTime = utcTime.DateTime;
+            Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
+            return;
+        }
+
+        header = temp.Headers.FirstOrDefault(x => x.Name == "Retry-After");
+        if (header is not null)
+        {
+            Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
+            return;
+        }
+
+        temp.ThrowIfError();
     }
 }

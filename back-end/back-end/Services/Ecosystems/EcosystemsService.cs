@@ -3,72 +3,66 @@ using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
-using SECODashBackend.Services.DataProcessor;
-using SECODashBackend.Services.ElasticSearch;
-using SECODashBackend.Services.Projects;
+using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
     
-public class EcosystemsService : IEcosystemsService
+/// <summary>
+/// This service is responsible for handling all ecosystem-related requests.
+/// It uses the EcosystemsContext to interact with the database.
+/// It uses the AnalysisService to analyze ecosystems.
+/// </summary>
+public class EcosystemsService(EcosystemsContext dbContext,
+        IAnalysisService analysisService)
+    : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
-    private readonly EcosystemsContext _dbContext;
-    private readonly IDataProcessorService _dataProcessorService;
-    private readonly IProjectsService _projectsService;
-    private readonly IElasticsearchService _elasticsearchService;
 
-    public EcosystemsService(
-        EcosystemsContext dbContext,
-        IProjectsService projectsService,
-        IDataProcessorService dataProcessorService,
-        IElasticsearchService elasticsearchService)
-    {
-        _dbContext = dbContext;
-        _projectsService = projectsService;
-        _dataProcessorService = dataProcessorService;
-        _elasticsearchService = elasticsearchService;
-    }
+    /// <summary>
+    /// Get all top-level ecosystems, i.e., Agriculture, Quantum, Artificial Intelligence.
+    /// </summary>
     public async Task<List<EcosystemOverviewDto>> GetAllAsync()
     {
-        var ecosystems = await _dbContext.Ecosystems
+        var ecosystems = await dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
         return ecosystems.Select(EcosystemConverter.ToDto).ToList();
     }
 
-    // TODO: convert to accept a dto instead of an Ecosystem
-    public async Task<int> AddAsync(Ecosystem ecosystem)
-    {
-        await _dbContext.Ecosystems.AddAsync(ecosystem);
-        return await _dbContext.SaveChangesAsync();
-    }
-
+    /// <summary>
+    /// Get an ecosystem by its name.
+    /// </summary>
     private async Task<Ecosystem?> GetByNameAsync(string name)
     {
-        return await _dbContext.Ecosystems
+        return await dbContext.Ecosystems
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
     }
 
+    /// <summary>
+    /// Get an ecosystem by its topics.
+    /// </summary>
     public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
-        
-        var ecosystemDto = await _elasticsearchService.GetEcosystemData(
+
+        var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems);
 
+        // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
         if (dto.Topics.Count != 1) return ecosystemDto;
             
+        // Check if the database has additional data regarding this ecosystem
         var ecosystem = await GetByNameAsync(dto.Topics.First());
-            
-        if (ecosystem != null)
-        {
-            ecosystemDto.DisplayName = ecosystem.DisplayName;
-            ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
-            ecosystemDto.Description = ecosystem.Description;
-        }
+
+        // If it doesn't, return the dto as is, else add the additional data
+        if (ecosystem == null) return ecosystemDto;
+        ecosystemDto.DisplayName = ecosystem.DisplayName;
+        ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
+        ecosystemDto.Description = ecosystem.Description;
+        
         return ecosystemDto;
     }
 }
