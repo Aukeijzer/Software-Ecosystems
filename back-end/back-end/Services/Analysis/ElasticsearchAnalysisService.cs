@@ -37,6 +37,56 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string NestedAggregateName = "nested";
     private const string TopicAggregateName = "topics";
 
+    // Dictionary of topics that are programming languages and need to be filtered out
+    private static readonly HashSet<string> ProgrammingLanguageTopics = new()
+    {
+        "c#",
+        "c++",
+        "java",
+        "javascript",
+        "python",
+        "ruby",
+        "rust",
+        "typescript",
+        "go",
+        "php",
+        "swift",
+        "kotlin",
+        "scala",
+        "dart",
+        "elixir",
+        "haskell",
+        "r",
+        "clojure",
+        "erlang",
+        "f#",
+        "groovy",
+        "julia",
+        "lua",
+        "ocaml",
+        "perl",
+        "powershell",
+        "racket",
+        "shell",
+        "sql",
+        "visual basic",
+        "assembly",
+        "matlab",
+        "objective-c",
+        "delphi",
+        "cobol",
+        "fortran",
+        "lisp",
+        "pascal",
+        "prolog",
+        "scheme",
+        "smalltalk",
+        "abap",
+        "apex",
+        "coffeescript",
+        "crystal"
+    };
+
     /// <summary>
     /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
     /// The analysis consists of two parts:
@@ -86,7 +136,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {
             Field = TopicField,
-            Size = topics.Count + numberOfTopSubEcosystems
+            Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count
         };
 
         var searchRequest = new SearchRequest
@@ -153,11 +203,15 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             {
                 Topic = topic.Key.ToString(),
                 ProjectCount = (int)topic.DocCount
-            }).ToList();
+            });
 
-        var topSubEcosystems = SortSubEcosystems(subEcosystemDtos, topics, numberOfTopSubEcosystems);
+        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
+        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
+        var topXSubEcosystems = sortedSubEcosystems
+            .Take(numberOfTopSubEcosystems)
+            .ToList();
 
-        return topSubEcosystems;
+        return topXSubEcosystems;
     }
 
     /// <summary>
@@ -179,18 +233,25 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     }
 
     /// <summary>
-    /// Converts a list of all the sub-ecosystems/topics of an ecosystem into a "Top x" list of x length in descending
-    /// order of project count. The topics that define the ecosystem are filtered out.
+    /// Sorts a list of sub-ecosystems in descending order of the number of projects and returns the sorted list.
     /// </summary>
-    public static List<SubEcosystemDto> SortSubEcosystems(List<SubEcosystemDto> subEcosystemDtos, List<string> topics, int numberOfTopSubEcosystems){
-        subEcosystemDtos
+    public static IEnumerable<SubEcosystemDto> SortSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos)
+    {
+        var subEcosystemsList = subEcosystemDtos.ToList();
+        subEcosystemsList
             .Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
-        
-        var topSubEcosystems = subEcosystemDtos
+        return subEcosystemsList;
+    }
+
+    /// <summary>
+    ///  Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects
+    ///  or are programming languages.
+    /// </summary>
+    public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
+    {
+        return subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
-            .Take(numberOfTopSubEcosystems)
-            .ToList();
-        return topSubEcosystems;
+            .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
     }
 }
