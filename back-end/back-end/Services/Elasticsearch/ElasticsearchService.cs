@@ -16,14 +16,9 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     {
         var request = new BulkRequest();
         var indexOperations = 
-            projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p)
-            {
-                // Set the index to the one that is used for projects
-                Index = "projects-02"
-            });
+            projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p));
         request.Operations = new BulkOperationsCollection(indexOperations);
         var response = await client.BulkAsync(request);
-        
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
     }
    

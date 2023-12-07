@@ -1,15 +1,22 @@
 ﻿using Microsoft.Extensions.Options;
 
 namespace SECODashBackend.Logging
-{
+{   
+    /// <summary>
+    /// Can create an instance of the <see cref="FileLogger"/>.
+    /// </summary>
     [ProviderAlias("File")]
     public class FileLoggerProvider : ILoggerProvider
     {
         public readonly FileLoggerOptions Options;
-
-        public FileLoggerProvider(IOptions<FileLoggerOptions> _options)
+        
+        /// <summary>
+        /// This constructor uses the <see cref="FileLoggerOptions"/> to create a directory for storing log files if this folder does not yet exist.
+        /// </summary>
+        /// <param name="options">Represents the file location the <see cref="FileLogger"/> should write to.</param>
+        public FileLoggerProvider(IOptions<FileLoggerOptions> options)
         {
-            Options = _options.Value;
+            Options = options.Value;
             if (!Directory.Exists(Options.FolderPath))
             {
                 Directory.CreateDirectory((Options.FolderPath));
