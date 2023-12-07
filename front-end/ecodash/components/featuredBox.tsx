@@ -1,96 +1,65 @@
 "use client"
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-interface inputFieldProps{
-    index: number,
+
+interface featuredBoxProps{
     options: string[]
 }
-
-interface itemFieldProps{
-    index: number,
-    item: string,
-    description?: string
-}
-
-export default function FeaturedBox(){
+export default function FeaturedBox(props: featuredBoxProps){
    
     const [editMode, setEditMode] = useState(false);
-    const [numberOfItems, setNumberOfItems] = useState(1);
-    const [items, setItems] = useState([""]);
-    const [descriptions, setDescriptions] = useState([""]);
+    const [hasData, setHasData] = useState(false);
     
-    function onChangeSelect(index : number, selected : string){
-        let tempArr = items;
-        console.log(selected);
-        tempArr[index] = selected;
-        setItems(tempArr);
-    }
-    
-    function onChangeDescription(value: string, index: number){
-        let tempArr = descriptions;
-        tempArr[index] = value;
-        setDescriptions(tempArr);
-        console.log(descriptions)
-    }
+    const[inputFields, setInputFields] = useState([
+        {topic: '', description: ''}
+    ])
 
-    function onSubmit(){
-        //Gather all data
-        //Display confirmation?
-        //Send post to backend
-        let data = {items, descriptions};
-        console.log("submitting to backend");
-        console.log(items);
-        console.log(descriptions);
+    function handleFormChangeSelect(index : number, event: ChangeEvent<HTMLSelectElement>){
+        let data = [...inputFields];
+        data[index]= { ...data[index], [event.target.name]: event.target.value }
+        setInputFields(data);
+
+    }
+    function handleFormChangeText(index: number, event: ChangeEvent<HTMLInputElement>){
+        let data = [...inputFields];
+        data[index]= { ...data[index], [event.target.name]: event.target.value }
+        setInputFields(data);
+    }
+    function addField(){
+        let newField = {topic: '', description: ''};
+        setInputFields([...inputFields, newField]);
+    }
+    function submit(e: any){
+        e.preventDefault();
+        console.log(inputFields)
         setEditMode(false);
-    }
-    function InputField(props: inputFieldProps){
-       console.log(descriptions[props.index]);
-        return(
-           <div>
-               <span> {props.index + 1} : </span>
-               <select  onChange={(val) => onChangeSelect(props.index, val.target.value )} >
-                    {props.options.map(item => <option value={item} >
-                        {item}
-                    </option>)}
-               </select>
-               <input type="text"  placeholder="Optional extra infromation about topic" onChange={(ev) => onChangeDescription(ev.target.value, props.index)} /> 
-           </div>
-        )
-    }
-
-    function ItemField(props: itemFieldProps){
-        return(
-            <div className="flex flex-row gap-2  ">
-                <span> {props.index + 1} :  </span>
-                <div className="flex flex-col">
-                    <h1 className="text-3xl"> {props.item}  </h1>
-                    <p> {props.description} </p>
-                </div>
-               
-            </div>
-        )
+        setHasData(true);
     }
 
     if(editMode){
-        const rows = [];
-
-        for(let i = 0; i < numberOfItems; i++){
-            rows.push(
-                <li key={i}> 
-                    <InputField index={i} options={["test1", "test2", "test3"]}/>
-                </li>)
-        }
         return(
             <div className="w-fit p-10 border-2 border-black ml-10 mt-10 bg-gray-300">
-                <form>
-                    <ul>
-                        {rows}
-                    </ul>
+                <form onSubmit={submit}>
+                    {inputFields.map((input, index) => {
+                       return(
+                        <div key={index + "blub"}>
+                             <select name="topic"  required={true} value={input.topic} onChange={(event) => handleFormChangeSelect(index, event) } >
+                                <option disabled selected> -- select an option -- </option>
+                                {props.options.map(item => <option key={item} value={item} >
+                                    {item}
+                                </option>)}
+                            </select>
+
+                            <input name="description" type="text" value={input.description} placeholder="Optional extra infromation about topic" onChange={(event) => handleFormChangeText(index, event)} /> 
+                        </div>
+
+                       )
+                    })}
                     
                 </form>
                 <div className="bg-gray-500 flex flex-col">
-                    <button className="bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => setNumberOfItems(numberOfItems + 1)}> + </button>
-                    <button className="bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => onSubmit()}> Submit </button>
+                    <button className="bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => addField()}> + </button>
+                    <button className="bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={submit}> Submit </button>
                 </div>
               
             </div>
@@ -100,25 +69,55 @@ export default function FeaturedBox(){
         //Get rows from DB
         //Get options from DB
         //FOr now just use current rows
-        const finalRows = [];
-        for(let i = 0; i < numberOfItems; i++){
-            if(numberOfItems == 1){
-                break;
-            }
-            finalRows.push( 
-                <li key={i*2}> 
-                    <ItemField index={i} item={items[i]} description={descriptions[i]}/>
-                </li>)
+
+        let rows : JSX.Element[] = [];
+        
+        {inputFields.map((input, index) => {
+            rows.push(
+                <li key={index*2}> 
+                    <ItemField index={index} item={input.topic} description={input.description}/>
+                </li>
+            )
+        })}  
+  
+        if(hasData){
+            return(
+                <div className="w-fit p-10 border-2 border-black ml-10 mt-10 bg-gray-300" >
+                    <ul>
+                        {rows}
+                    </ul>
+                    <button className="bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => setEditMode(true)}> edit mode </button>
+                </div>
+            )   
+        } else {
+            return(
+                <div className="w-fit p-10 border-2 border-black ml-10 mt-10 bg-gray-300" >
+                    <h1 className="text-xl"> <b>Add featured topics. </b></h1>
+                    <h1> These will be displayed to all users visiting this dashboard </h1>
+                    <button className="bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => setEditMode(true)}> edit mode </button>
+                </div>
+            )
         }
-        return(
-            <div className="w-fit p-10 border-2 border-black ml-10 mt-10 bg-gray-300" >
-                <button className="bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => setEditMode(true)}> edit mode </button>
-                <ul>
-                    {finalRows}
-                </ul>
-            </div>
-        )
+
     }
     
 }
 
+interface itemFieldProps{
+    index: number,
+    item: string,
+    description?: string
+}
+
+function ItemField(props: itemFieldProps){
+    return(
+        <div className="flex flex-row gap-2  ">
+            <span> {props.index + 1} :  </span>
+            <div className="flex flex-col">
+                <h1 className="text-3xl"> {props.item}  </h1>
+                <p> {props.description} </p>
+            </div>
+           
+        </div>
+    )
+}
