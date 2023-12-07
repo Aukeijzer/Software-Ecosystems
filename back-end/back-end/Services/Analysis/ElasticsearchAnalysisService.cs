@@ -8,7 +8,12 @@ using SECODashBackend.Services.ElasticSearch;
 
 namespace SECODashBackend.Services.Analysis;
 
-public class ElasticsearchAnalysisService : IAnalysisService
+/// <summary>
+/// Service that analyses an ecosystem by querying the Elasticsearch index for projects that contain the given topics.
+/// The service is responsible for retrieving the relevant data from the search response and converting it to the
+/// correct format.
+/// </summary>
+public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchService) : IAnalysisService
 {
     // Use the maximum bucket size supported by elasticsearch
     // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
@@ -31,14 +36,63 @@ public class ElasticsearchAnalysisService : IAnalysisService
     private const string SumAggregateName = "sum";
     private const string NestedAggregateName = "nested";
     private const string TopicAggregateName = "topics";
-    
-    private readonly IElasticsearchService _elasticSearchService;
 
-    public ElasticsearchAnalysisService(IElasticsearchService elasticsearchService)
+    // Dictionary of topics that are programming languages and need to be filtered out
+    private static readonly HashSet<string> ProgrammingLanguageTopics = new()
     {
-        _elasticSearchService = elasticsearchService;
-    }
-    
+        "c#",
+        "c++",
+        "java",
+        "javascript",
+        "python",
+        "ruby",
+        "rust",
+        "typescript",
+        "go",
+        "php",
+        "swift",
+        "kotlin",
+        "scala",
+        "dart",
+        "elixir",
+        "haskell",
+        "r",
+        "clojure",
+        "erlang",
+        "f#",
+        "groovy",
+        "julia",
+        "lua",
+        "ocaml",
+        "perl",
+        "powershell",
+        "racket",
+        "shell",
+        "sql",
+        "visual basic",
+        "assembly",
+        "matlab",
+        "objective-c",
+        "delphi",
+        "cobol",
+        "fortran",
+        "lisp",
+        "pascal",
+        "prolog",
+        "scheme",
+        "smalltalk",
+        "abap",
+        "apex",
+        "coffeescript",
+        "crystal"
+    };
+
+    /// <summary>
+    /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
+    /// The analysis consists of two parts:
+    /// 1. Retrieving the top x programming languages
+    /// 2. Retrieving the top x sub-ecosystems/topics
+    /// </summary>
     public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems)
     {
         // Query that matches all projects that contain all topics in the topics list
@@ -82,7 +136,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {
             Field = TopicField,
-            Size = topics.Count + numberOfTopSubEcosystems
+            Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count
         };
 
         var searchRequest = new SearchRequest
@@ -96,7 +150,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
             Size = 0 // Do not request actual Project documents
         };
         
-        var result = await _elasticSearchService.QueryProjects(searchRequest);
+        var result = await elasticsearchService.QueryProjects(searchRequest);
         
         return new EcosystemDto
         {
@@ -149,11 +203,15 @@ public class ElasticsearchAnalysisService : IAnalysisService
             {
                 Topic = topic.Key.ToString(),
                 ProjectCount = (int)topic.DocCount
-            }).ToList();
+            });
 
-        var topSubEcosystems = SortSubEcosystems(subEcosystemDtos, topics, numberOfTopSubEcosystems);
+        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
+        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
+        var topXSubEcosystems = sortedSubEcosystems
+            .Take(numberOfTopSubEcosystems)
+            .ToList();
 
-        return topSubEcosystems;
+        return topXSubEcosystems;
     }
 
     /// <summary>
@@ -175,18 +233,25 @@ public class ElasticsearchAnalysisService : IAnalysisService
     }
 
     /// <summary>
-    /// Converts a list of all the sub-ecosystems/topics of an ecosystem into a "Top x" list of x length in descending
-    /// order of project count. The topics that define the ecosystem are filtered out.
+    /// Sorts a list of sub-ecosystems in descending order of the number of projects and returns the sorted list.
     /// </summary>
-    public static List<SubEcosystemDto> SortSubEcosystems(List<SubEcosystemDto> subEcosystemDtos, List<string> topics, int numberOfTopSubEcosystems){
-        subEcosystemDtos
+    public static IEnumerable<SubEcosystemDto> SortSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos)
+    {
+        var subEcosystemsList = subEcosystemDtos.ToList();
+        subEcosystemsList
             .Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
-        
-        var topSubEcosystems = subEcosystemDtos
+        return subEcosystemsList;
+    }
+
+    /// <summary>
+    ///  Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects
+    ///  or are programming languages.
+    /// </summary>
+    public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
+    {
+        return subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
-            .Take(numberOfTopSubEcosystems)
-            .ToList();
-        return topSubEcosystems;
+            .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
     }
 }

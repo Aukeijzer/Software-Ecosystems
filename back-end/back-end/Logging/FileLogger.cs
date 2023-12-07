@@ -2,15 +2,12 @@
 
 namespace SECODashBackend.Logging;
 
-public class FileLogger : ILogger 
+/// <summary>
+/// This class represents a logger that logs to a file.
+/// </summary>
+/// <param name="fileLoggerProvider"></param>
+public class FileLogger([NotNull] FileLoggerProvider fileLoggerProvider) : ILogger 
 {
-    protected readonly FileLoggerProvider _fileLoggerProvider;
-
-    public FileLogger([NotNull] FileLoggerProvider fileLoggerProvider)
-    {
-        _fileLoggerProvider = fileLoggerProvider;
-    }
-
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
         return null;
@@ -30,7 +27,7 @@ public class FileLogger : ILogger
         }
 
         var fullFilePath = string.Format("{0}/{1}",
-            _fileLoggerProvider.Options.FolderPath, _fileLoggerProvider.Options.FilePath.Replace(
+            fileLoggerProvider.Options.FolderPath, fileLoggerProvider.Options.FilePath.Replace(
                 "{date}",DateTime.Now.ToString("yyyyMMdd")));
         var logRecord = string.Format("{0} [{1}] {2} {3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             logLevel.ToString(), formatter(state, exception), (exception != null ? exception.StackTrace : ""));
