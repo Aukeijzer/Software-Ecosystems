@@ -23,6 +23,9 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
                 p.Timestamp = DateTime.UtcNow;
                 return new BulkIndexOperation<ProjectDto>(p);
                 
+            projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p)
+            {
+                Index = "testtest"
             });
         request.Operations = new BulkOperationsCollection(indexOperations);
         var response = await client.BulkAsync(request);
