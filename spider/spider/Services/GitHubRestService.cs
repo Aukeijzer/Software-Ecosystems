@@ -8,16 +8,16 @@ namespace spider.Services;
 public class GitHubRestService : IGitHubRestService
 {
     private readonly RestClient _gitHubRestClient;
-    private readonly ILogger<GitHubGraphqlService> _logger;
+    private readonly ILogger<GitHubRestService> _logger;
     private readonly SystemTextJsonSerializer _jsonSerializer;
-    public GitHubRestService(ILogger<GitHubGraphqlService> logger)
+    public GitHubRestService()
     {
         var options = new RestClientOptions("https://api.github.com");
         _gitHubRestClient = new RestClient(options);
         _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable(
             "API_Token"));
         _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
-        _logger = logger;
+        _logger = new Logger<GitHubRestService>(new LoggerFactory());
         _jsonSerializer = new SystemTextJsonSerializer();
     }
 

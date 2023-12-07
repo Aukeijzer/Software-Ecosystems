@@ -14,13 +14,13 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     private readonly GraphQLHttpClient _client;
     private readonly ILogger<GitHubGraphqlService> _logger;
     
-    public GitHubGraphqlService(ILogger<GitHubGraphqlService> logger)
+    public GitHubGraphqlService()
     {
         _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
         var token = Environment.GetEnvironmentVariable("API_Token");
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
         _client.HttpClient.DefaultRequestHeaders.Add("X-Github-Next-Global-ID", "1");
-        _logger = logger;
+        _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
     }
   
     /// <summary>

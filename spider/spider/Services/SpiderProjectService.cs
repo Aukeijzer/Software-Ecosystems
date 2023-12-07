@@ -8,15 +8,15 @@ namespace spider.Services;
 
 public class SpiderProjectService : ISpiderProjectService
 {
-    private readonly ILogger<SpiderController> _logger;
+    private readonly ILogger<SpiderProjectService> _logger;
     private readonly IGitHubGraphqlService _gitHubGraphqlService;
     private readonly IGraphqlDataConverter _graphqlDataConverter;
     private readonly IGitHubRestService _gitHubRestService;
     
     public SpiderProjectService(IGitHubGraphqlService gitHubGraphqlService, IGraphqlDataConverter graphqlDataConverter,
-        IGitHubRestService gitHubRestService, ILogger<SpiderController> logger)
+        IGitHubRestService gitHubRestService)
     {
-        _logger = logger;
+        _logger = new Logger<SpiderProjectService>(new LoggerFactory());
         _gitHubGraphqlService = gitHubGraphqlService;
         _graphqlDataConverter = graphqlDataConverter;
         _gitHubRestService = gitHubRestService;

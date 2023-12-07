@@ -12,9 +12,9 @@ public class SpiderController : ControllerBase
     private readonly ILogger<SpiderController> _logger;
     private readonly ISpiderProjectService _spiderProjectService;
 
-    public SpiderController(ILogger<SpiderController> logger, ISpiderProjectService spiderProjectService)
+    public SpiderController(ISpiderProjectService spiderProjectService)
     {
-        _logger = logger;
+        _logger = new Logger<SpiderController>(new LoggerFactory());
         _spiderProjectService = spiderProjectService;
     }
     //http:localhost:Portnumberhere/spider/...
