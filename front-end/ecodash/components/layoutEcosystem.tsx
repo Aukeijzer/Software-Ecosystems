@@ -112,18 +112,28 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //If error we display error message
     if(error){
         return(
-            <p>
-                Error making API call:
-                {error}
-            </p>
+            <>
+                
+                <h2 className='text-3xl m-5'>Something went wrong!</h2>
+                <div className='flex flex-col gap-3 p-5 bg-gray-300 border-2 m-5 border-gray-900 rounded-sm'>
+                    <p>
+                        {error.message}
+                    </p>
+                    <p>
+                        {error.stack}
+                    </p>
+                   
+                </div>
+            </>
         )
     }
+  
 
     //Prepare variables before we have data so we can render before data
     var cardWrappedList : cardWrapper[] = []
     if(data){
         //Real data
-
+    
         //Top 5 topics
         //First Convert DTO's to Classes
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
