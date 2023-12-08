@@ -3,8 +3,8 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
+using SECODashBackend.Dtos.Project;
 using SECODashBackend.Logging;
-using SECODashBackend.Models;
 using SECODashBackend.Services.Analysis;
 using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Ecosystems;
@@ -32,13 +32,25 @@ builder.Services.AddDbContext<EcosystemsContext>(
     );
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")));
+
+var spiderConnectionString = builder.Configuration.GetConnectionString("Spider");
+if (string.IsNullOrEmpty(spiderConnectionString))
+{
+    throw new InvalidOperationException("Missing configuration for Spider");
+}
+
+builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")!));
+
 builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
 
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
-var settings = new ElasticsearchClientSettings(
-        builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value!,
-        new ApiKey(builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value!))
+var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
+{
+    throw new InvalidOperationException("Missing configuration for Elasticsearch");
+}
+var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
         .IndexName("projects-01")
