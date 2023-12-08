@@ -53,7 +53,7 @@ if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
 var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
-        .IndexName("projects-01")
+        .IndexName("projects-02")
     );
 
 builder.Services.AddSingleton(
