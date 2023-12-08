@@ -85,43 +85,21 @@ public class GraphqlDataConverter : IGraphqlDataConverter
                          ?? repository.ReadmerstCaps?.Text
                          ?? repository.ReadmerstLower?.Text
                          ?? repository.ReadmerstFstCaps?.Text;
-        try
-        {
-            var project = new ProjectDto
-            {
-                Name = repository.Name,
-                Id = repository.Id,
-                LatestDefaultBranchCommitDate = mostRecentCommit,
-                CreatedAt = repository.CreatedAt,
-                ReadMe = readme,
-                Owner = repository.Owner.Login,
-                NumberOfStars = repository.StargazerCount,
-                Description = repository.Description,
-                Topics = topics,
-                TotalSize = repository.Languages.TotalSize,
-                Languages = languages
-            };
-            return project;
 
-        }
-        catch (Exception e)
+        var project = new ProjectDto
         {
-            Console.WriteLine(e);
-            if (e is NullReferenceException)
-            {
-                Console.WriteLine(repository.Name);
-                Console.WriteLine(repository.Id);
-                Console.WriteLine(repository.DefaultBranchRef.Target.History.Edges[0].Node.CommittedDate.ToString());
-                Console.WriteLine(repository.CreatedAt);
-                Console.WriteLine(readme);
-                Console.WriteLine(repository.Owner.Login);
-                Console.WriteLine(repository.StargazerCount.ToString());
-                Console.WriteLine(topics.ToString());
-                Console.WriteLine(repository.Languages.TotalSize.ToString());
-                Console.WriteLine(languages.ToString());
-                
-            }
-            throw;
-        }
+            Name = repository.Name,
+            Id = repository.Id,
+            LatestDefaultBranchCommitDate = mostRecentCommit,
+            CreatedAt = repository.CreatedAt,
+            ReadMe = readme,
+            Owner = repository.Owner.Login,
+            NumberOfStars = repository.StargazerCount,
+            Description = repository.Description,
+            Topics = topics,
+            TotalSize = repository.Languages.TotalSize,
+            Languages = languages
+        };
+        return project;
     }
 }
