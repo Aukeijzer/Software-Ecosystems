@@ -11,7 +11,10 @@ export async function middleware(req: NextRequest) {
     // Skip public files
     if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('_next')) return;
 
+    //Host is full adress
     const host = req.headers.get('host');
+    //Adress of server is: (secodash.science.uu.nl)
+    console.log(host);
     const subdomain = getValidSubdomain(host);
 
     if(subdomain){
