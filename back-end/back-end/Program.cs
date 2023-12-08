@@ -39,8 +39,8 @@ builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
 var settings = new ElasticsearchClientSettings(
         builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value!,
         new ApiKey(builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value!))
-    // set default index for Projects
-    .DefaultMappingFor<Project>(i => i
+    // set default index for ProjectDtos
+    .DefaultMappingFor<ProjectDto>(i => i
         .IndexName("projects-01")
     );
 

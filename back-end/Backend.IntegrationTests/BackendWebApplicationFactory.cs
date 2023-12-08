@@ -1,4 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -19,7 +19,7 @@ public class BackendWebApplicationFactory<TProgram> : WebApplicationFactory<TPro
         var settings = new ElasticsearchClientSettings(
                 "Develop:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkMDJlNzkxNTY2MGRhNDAzMDk5NWE1OTFiNGVjNDgwYjgkZmYyNjk5MjI4YTZmNGM0M2E0OTM5NDUyYzc1YWZhODE=",
                 new ApiKey("R1B6Y0ZZd0JWakk3ZmtqR21PbDQ6cFo4SGxJcGxRLTJDUEFsTzhDam9YZw=="))
-            .DefaultMappingFor<Project>(i => i
+            .DefaultMappingFor<ProjectDto>(i => i
                 .IndexName("integration-test-01")
             );
         builder.ConfigureTestServices(services =>
