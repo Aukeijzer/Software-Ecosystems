@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Text.Json;
-using spider.Controllers;
 using spider.Converter;
 using spider.Dtos;
 
@@ -133,6 +132,7 @@ public class SpiderProjectService : ISpiderProjectService
 
     }
     
+    //todo: add contributors to the result
     /// <summary>
     /// GetByName gets a repository based on it's name and ownerName
     /// </summary>
@@ -147,6 +147,7 @@ public class SpiderProjectService : ISpiderProjectService
         return _graphqlDataConverter.RepositoryToProject(result.Repository);
     }
     
+    //todo: add contributors to the result
     /// <summary>
     /// GetByNames gets repositories by their name and ownerNames
     /// </summary>
@@ -160,6 +161,7 @@ public class SpiderProjectService : ISpiderProjectService
         return result;
     }
     
+    //todo: add contributors to the result
     /// <summary>
     /// Get ContributorsByName gets the contributors of a repository based on the repositories name and ownerName
     /// </summary>
