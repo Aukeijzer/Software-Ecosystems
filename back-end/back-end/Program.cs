@@ -46,7 +46,6 @@ var settings = new ElasticsearchClientSettings(
 
 builder.Services.AddSingleton(
     new ElasticsearchClient(settings));
-builder.Services.AddElasticsearchClient();
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
 builder.Services.AddScoped<IAnalysisService, ElasticsearchAnalysisService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
