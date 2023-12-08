@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 
 namespace SECODashBackend.Dtos;
 
@@ -12,8 +12,8 @@ public class ContributorDto
     public required string Login { get; init; }
     [DataMember(Name = "id")]
     public required int Id { get; init; }
-    [DataMember(Name = "NodeId")]
-    public string? Node_id { get; init; }
+    [DataMember(Name = "nodeId")]
+    public string? NodeId { get; init; }
     [DataMember(Name = "contributions")]
     public int? Contributions { get; init; }
     [DataMember(Name = "type")]
