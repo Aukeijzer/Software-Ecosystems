@@ -2,33 +2,41 @@ using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.Services.Projects;
 
 namespace SECODashBackend.Controllers;
-
+/// <summary>
+/// This controller is responsible for handling requests related to projects.
+/// </summary>
+/// <param name="logger"></param>
+/// <param name="projectsService"></param>
 [ApiController]
 [Route("[controller]")]
-public class ProjectsController : ControllerBase
+public class ProjectsController(ILogger<ProjectsController> logger, IProjectsService projectsService)
+    : ControllerBase
 {
-    private readonly ILogger<ProjectsController> _logger;
-    private readonly IProjectsService _projectsService;
-
-    public ProjectsController(ILogger<ProjectsController> logger, IProjectsService projectsService)
-    {
-        _logger = logger;
-        _projectsService = projectsService;
-    }
-    
+    /// <summary>
+    /// This method returns a list of projects based on the given topic and amount.
+    /// </summary>
+    /// <param name="topic"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
     [HttpPost("mine/topic")]
     public async Task<ActionResult> MineByTopic(string topic, int amount)
     {
-        _logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
-        await _projectsService.MineByTopicAsync(topic, amount);
+        logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
+        await projectsService.MineByTopicAsync(topic, amount);
         return Accepted();
     }
     
+    /// <summary>
+    /// This method returns a list of projects based on the given keyword and amount.
+    /// </summary>
+    /// <param name="keyword"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
     [HttpPost("mine/search")]
     public async Task<ActionResult> MineByKeyword(string keyword, int amount)
     {
-        _logger.LogInformation("{Origin}: Mining command received for topic: '{keyword}'.", this,keyword);
-        await _projectsService.MineByKeywordAsync(keyword, amount);
+        logger.LogInformation("{Origin}: Mining command received for topic: '{keyword}'.", this,keyword);
+        await projectsService.MineByKeywordAsync(keyword, amount);
         return Accepted();
     }
 }

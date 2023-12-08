@@ -12,7 +12,7 @@ namespace spider.Services;
 public class GitHubGraphqlService : IGitHubGraphqlService
 {
     private readonly GraphQLHttpClient _client;
-    private readonly ILogger<GitHubGraphqlService> _logger;
+    private readonly ILogger<GitHubGraphqlService>? _logger;
     
     public GitHubGraphqlService()
     {

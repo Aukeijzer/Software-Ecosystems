@@ -1,7 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
 namespace SECODashBackend.Models;
-[DataContract]
+
+/// <summary>
+/// This class represents a Topic.
+/// A Topic is a keyword that is related to a project and is used to define ecosystems.
+/// </summary>
 public class Topic
 {
     [DataMember(Name ="id")]
