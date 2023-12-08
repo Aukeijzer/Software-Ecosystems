@@ -63,7 +63,7 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
             {
                 new()
                 {
-                    ProjectCount = 17,
+                    ProjectCount = 10,
                     Topic = topic2
                 },
                 new()
