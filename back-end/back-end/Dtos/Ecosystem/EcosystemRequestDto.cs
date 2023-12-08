@@ -2,6 +2,9 @@
 
 namespace SECODashBackend.Dtos.Ecosystem;
 
+/// <summary>
+/// Represents a data transfer object for an Ecosystem request by the front-end.
+/// </summary>
 public class EcosystemRequestDto
 {
     [DataMember(Name = "topics")] public required List<string> Topics { get; init; }

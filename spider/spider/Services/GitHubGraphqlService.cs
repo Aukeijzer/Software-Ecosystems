@@ -12,9 +12,9 @@ namespace spider.Services;
 public class GitHubGraphqlService : IGitHubGraphqlService
 {
     private readonly GraphQLHttpClient _client;
-    private readonly ILogger<GitHubGraphqlService> _logger;
+    private readonly ILogger<GitHubGraphqlService>? _logger;
     
-    public GitHubGraphqlService(ILogger<GitHubGraphqlService> logger)
+    public GitHubGraphqlService(ILogger<GitHubGraphqlService>? logger)
     {
         _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
         var token = Environment.GetEnvironmentVariable("API_Token");
