@@ -5,6 +5,7 @@ import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import GridLayout from "./gridLayout"
 import SpinnerComponent from "./spinner"
+import { useSession} from "next-auth/react";
 import { buildLineGraphCard, buildListCard, buildPieGraphCard } from "@/app/utils/cardBuilder"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
@@ -15,6 +16,7 @@ import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConvert
 import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
+import { ExtendedUser } from "@/app/utils/authOptions"
 interface layoutEcosystemProps{
     ecosystem: string
 }
@@ -57,6 +59,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Set up search params
     const searchParams = useSearchParams();
+
+    //Set up session
+    const { data: session } = useSession();
+    const user = session?.user as ExtendedUser;
 
     //Keep track of selected (sub)Ecosystems. start with ecosystem provided
     const [selectedEcosystems, setSelectedEcosystems] = useState<string[]>([props.ecosystem])
@@ -131,45 +137,50 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Prepare variables before we have data so we can render before data
     var cardWrappedList : cardWrapper[] = []
+    let staticProp = true;
+   
+
     if(data){
         //Real data
-    
+        if(user){
+            staticProp = !user.isAdmin;
+        }
         //Top 5 topics
         //First Convert DTO's to Classes
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
         //Make list element
    
-        const subEcosystemCard = buildListCard(subEcosystems, onClickTopic, "Top 5 topics", 0, 2, 1, 4);
+        const subEcosystemCard = buildListCard(subEcosystems, onClickTopic, "Top 5 topics", 0, 2, 1, 4, staticProp);
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6);
+        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6, staticProp);
         //Add card to list
         cardWrappedList.push(languageCard);
 
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildListCard(technologies, onClickTopic, "Top 5 technologies", 6, 2, 1, 4, "This is mock data");
+        const technologyCard = buildListCard(technologies, onClickTopic, "Top 5 technologies", 6, 2, 1, 4, staticProp, "This is mock data");
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildListCard(risingTechnologies, onClickTopic, "Top 5 rising technologies", 3, 2, 2, 4, "This is mock data");
+        const risingTechnologiesCard = buildListCard(risingTechnologies, onClickTopic, "Top 5 rising technologies", 3, 2, 2, 4, staticProp, "This is mock data");
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildListCard(risingTopics, onClickTopic, "Top 5 rising topics", 1, 2, 2, 4, "This is mock data");
+        const risingTopicsCard = buildListCard(risingTopics, onClickTopic, "Top 5 rising topics", 1, 2, 2, 4, staticProp, "This is mock data");
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 
         //For now no data conversion needed as Mock data is already in correct format 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "Top 5 topics over time", 2, 6);
+        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "Top 5 topics over time", 2, 6, staticProp);
         cardWrappedList.push(cardLineGraphWrapped)
 
         //Ecosystem description
