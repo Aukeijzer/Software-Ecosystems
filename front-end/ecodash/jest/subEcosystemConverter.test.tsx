@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
-import subEcosystemClass from "../classes/subEcosystemClass";
-import { subEcosystemDTO } from "../interfaces/DTOs/ecosystemDTO";
-import listSubEcosystemDTOConverter, { subEcosystemDTOConverter } from "../utils/Converters/subEcosystemConverter";
+import subEcosystemClass from "../app/classes/subEcosystemClass";
+import { subEcosystemDTO } from "../app/interfaces/DTOs/ecosystemDTO";
+import listSubEcosystemDTOConverter, { subEcosystemDTOConverter } from "../app/utils/Converters/subEcosystemConverter";
 
 const inputSubEcosystemDTO: subEcosystemDTO = Object.assign({
     topic: "Ethereum",

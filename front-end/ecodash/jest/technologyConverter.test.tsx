@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
-import technologyClass from "../classes/technologyClass";
-import { technologyDTO } from "../interfaces/DTOs/technologyDTO";
-import listTechnologyDTOConverter, { technologyDTOConverter } from "../utils/Converters/technologyConverter";
+import technologyClass from "../app/classes/technologyClass";
+import { technologyDTO } from "../app/interfaces/DTOs/technologyDTO";
+import listTechnologyDTOConverter, { technologyDTOConverter } from "../app/utils/Converters/technologyConverter";
 
 const inputTechnologyDTO: technologyDTO = Object.assign({
     technology: "Ethereum",

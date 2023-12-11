@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
-import languageClass from "../classes/languageClass";
-import { languageDTO } from "../interfaces/DTOs/languageDTO";
-import listLanguageDTOConverter, { languageDTOConverter } from "../utils/Converters/languageConverter";
+import languageClass from "../app/classes/languageClass";
+import { languageDTO } from "../app/interfaces/DTOs/languageDTO";
+import listLanguageDTOConverter, { languageDTOConverter } from "../app/utils/Converters/languageConverter";
 
 const inputLanguageDTO: languageDTO = Object.assign({
     language: "Python",

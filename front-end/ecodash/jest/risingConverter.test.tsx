@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
-import risingClass from "../classes/risingClass";
-import { risingDTO } from "../interfaces/DTOs/risingDTO";
-import listRisingDTOConverter, { risingDTOConverter } from "../utils/Converters/risingConverter";
+import risingClass from "../app/classes/risingClass";
+import { risingDTO } from "../app/interfaces/DTOs/risingDTO";
+import listRisingDTOConverter, { risingDTOConverter } from "../app/utils/Converters/risingConverter";
 
 const inputRisingDTO: risingDTO = Object.assign({
     item: "Ethereum",

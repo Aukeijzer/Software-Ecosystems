@@ -1,5 +1,5 @@
 import { expect } from "@jest/globals";
-import { getValidSubdomain } from "../utils/subdomain";
+import { getValidSubdomain } from "../app/utils/subdomain";
 
 test("should return null when no valid subdomain is found", () => {
     expect(getValidSubdomain()).toBeNull();
