@@ -8,7 +8,7 @@ const cookiePrefix = useSecureCookies ? "__Secure-": "";
 const hostName = new URL(process.env.NEXTAUTH_URL!).hostname;
 console.log(hostName);
 
-interface ExtendedUser extends User {
+export interface ExtendedUser extends User {
     isAdmin: boolean;
     userId: string;
 }
@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-            checks: ['none']
+            
 
         }),
         GitHubProvider({
