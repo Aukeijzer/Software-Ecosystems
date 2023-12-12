@@ -51,40 +51,43 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         // Arrange
         var requestDto = new EcosystemRequestDto
         {
-            Topics = new List<string> { topic1 },
+            Topics = [topic1],
             NumberOfTopLanguages = 2,
             NumberOfTopSubEcosystems = 3
         };
         
         var expectedResponse = new EcosystemDto
         {
-            Topics = new List<string> { topic1 },
-            SubEcosystems = new List<SubEcosystemDto>
-            {
-                new()
+            Topics = [topic1],
+            SubEcosystems =
+            [
+                new SubEcosystemDto
                 {
                     ProjectCount = 10,
                     Topic = topic2
                 },
-                new()
+
+                new SubEcosystemDto
                 {
                     ProjectCount = 3,
                     Topic = topic3
                 },
-                new()
+
+                new SubEcosystemDto
                 {
                     ProjectCount = 2,
                     Topic = topic4
                 }
-            },
-            TopLanguages = new List<ProgrammingLanguageDto>
-            {
-               new()
-               {
-                   Language = "Java",
-                   Percentage = 100
-               } 
-            }
+            ],
+            TopLanguages =
+            [
+                new ProgrammingLanguageDto
+                {
+                    Language = "Java",
+                    Percentage = 100
+                }
+            ],
+            TopContributors = []
         };
         
         // Act
