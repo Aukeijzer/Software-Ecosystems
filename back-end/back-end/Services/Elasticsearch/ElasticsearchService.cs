@@ -23,7 +23,7 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
         var indexOperations = 
             projectDtos.Select(p =>
             {
-                p.Timestamp = p.CreatedAt;
+                p.Timestamp = p.LatestDefaultBranchCommitDate;
                 return new BulkIndexOperation<ProjectDto>(p);
             });
         
