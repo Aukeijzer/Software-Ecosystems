@@ -1,4 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using SECODashBackend.Dtos.Contributors;
@@ -182,6 +182,17 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         };
     }
     
+    /// <summary>
+    /// Retrieves the top contributors from the search response and converts them into a Top x list.
+    /// The method first gets the nested aggregation for contributors from the search response.
+    /// Then, it creates a list of TopContributorDto objects from the buckets of the contributors aggregate.
+    /// Each TopContributorDto object contains the login and the total number of contributions of a contributor.
+    /// The method then sorts the list of TopContributorDto objects in descending order of contributions.
+    /// Finally, it returns the top x contributors from the sorted list.
+    /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <returns>A list of the top x contributors.</returns>
     private static List<TopContributorDto> GetTopXContributors(SearchResponse<ProjectDto> searchResponse, int numberOfTopContributors)
     {
         var nestedAggregate = searchResponse.Aggregations?.GetNested("nested_contributors");
