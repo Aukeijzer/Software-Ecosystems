@@ -3,6 +3,7 @@ const nextConfig = {
     output: 'standalone',
     experimental: {
         serverActions: true,
+        forceSwcTransforms: true,
     },
     async headers(){
         return[
@@ -29,3 +30,4 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+

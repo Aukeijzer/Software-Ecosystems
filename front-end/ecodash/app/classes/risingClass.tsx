@@ -1,20 +1,19 @@
-import displayable from "./displayableClass";
+import React from "react";
+import displayableListItem from "./displayableListItem";
 
 
-export default class risingClass extends displayable {
+export default class risingClass implements displayableListItem {
     topic: string;
     percentage: number;
     growth: number;
 
     constructor(topic: string, percentage: number, growth: number) {
-        super()
         this.topic = topic;
         this.percentage = percentage;
         this.growth = growth;
     }
 
-
-    renderAsListItem(onClick: (sub: string) => void): JSX.Element {
+    renderAsListItem(onClick: (sub: string) => void): React.JSX.Element {
         return(
             <p className="flex flex-row gap-1"onClick={() => onClick(this.topic)}>
                 <b>{this.topic}</b>  {this.percentage}% : {this.growth}  %
@@ -23,18 +22,5 @@ export default class risingClass extends displayable {
                 </svg>
         </p>
         )
-    }
-
-    renderAsTableItem(): JSX.Element {
-        return(
-            <div>
-
-            </div>
-        )
-    }
-    renderAsGraph(index: number): JSX.Element {
-        return(<div>
-
-        </div>)
     }
 }
