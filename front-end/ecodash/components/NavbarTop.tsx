@@ -39,16 +39,15 @@ export default function NavBarTop(){
             
             </Navbar.Brand>
            {session && <div>
-                            <div className='flex flex-row'>
-                                Logged in as: <b>  {session.user!.email} </b>
+                            <div className='flex flex-col'>
                                 <Image src={session.user!.image!} 
                                     className='rounded-full ml-2'
                                     width={30}
                                     height={30}
                                     alt="Profile picture"
                                 />
-                                {user.isAdmin && <p> is admin whoop</p>}
-                                {!user.isAdmin && <p> is not admin whoop</p>}
+                                {user.isAdmin && <p> <b> Admin </b> </p>}
+                                {!user.isAdmin && <p> <b> User </b> </p>}
                             </div>            
                             <button className="bg-gray-500 rounded-md p-1" onClick={() => Router.push('/api/auth/signout')}>Sign out</button>
                           

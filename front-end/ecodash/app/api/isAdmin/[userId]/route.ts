@@ -10,14 +10,14 @@ import { NextResponse } from 'next/server';
 
 // Array of admin usernames
 const admins: string[] = ['109254255966692302362', 'admin2', 'admin3'];
-
+//userId, email, userAccount
 export async function GET(req : NextApiRequest, context: { params : any }) : Promise<NextResponse<{isAdmin: boolean}>>{
    // if(!context.params){
     //    return NextResponse.json({ isAdmin: false }, {status: 403});
     //}
     
     const { userId } = context.params;
-    
+    console.log("HALLOOO?")
     // Check if the user is an admin
     const isAdmin = admins.includes(userId as string);
     if (isAdmin) {

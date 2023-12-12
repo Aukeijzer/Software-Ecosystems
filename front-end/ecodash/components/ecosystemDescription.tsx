@@ -1,9 +1,14 @@
 "use client"
+import { ExtendedUser } from '@/app/utils/authOptions';
 import { Card } from 'flowbite-react'
+import { useSession } from 'next-auth/react';
+import { useEffect, useState} from "react"
 
 interface ecoSystemDescriptionProps{
     ecosystem: string,
     description: string,
+    editMode: boolean,
+    changeDescription: (description: string) => void,
     subEcosystems?: string[],
     removeTopic?: (topic: string) => void
 }
@@ -21,6 +26,12 @@ interface ecoSystemDescriptionProps{
  */
 
 export default function EcosystemDescription(props: ecoSystemDescriptionProps){
+
+    //Moeten we hier opnieuw de sessie vragen of is doorgeven dat we in edit mode zitten genoeg?
+    //Retreive session
+    const {data: session} = useSession();
+    const user = session?.user as ExtendedUser;
+
     return(
         <div data-cy='ecosystem description' className='h-full'>
             <Card className='h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl '>
@@ -38,9 +49,16 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                     </ul>
                 </div>
                 }
-                <p data-cy='description ecosystem'>
-                    {props.description}
-                </p>
+                {props.editMode && 
+                    <form>
+                        <label> edit description: </label>
+                        <input name="description" type='text' value={props.description} onChange={(e) => props.changeDescription(e.target.value)} />
+                    </form>}
+                {!props.editMode && 
+                    <p data-cy='description ecosystem'>
+                        {props.description}
+                    </p>
+                }       
             </Card>
         </div>
     )

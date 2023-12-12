@@ -67,6 +67,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Keep track of selected (sub)Ecosystems. start with ecosystem provided
     const [selectedEcosystems, setSelectedEcosystems] = useState<string[]>([props.ecosystem])
 
+    //Keep track of edit mode
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [description, setDescription] = useState<string>('');
+    
     //Trigger = function to manually trigger fetcher function in SWR mutation. 
     //Data = data received from API. updates when trigger is called. causes update
     const { data, trigger, error, isMutating } = useSWRMutation(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', fetcherEcosystemByTopic)
@@ -74,6 +78,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Triggers upon page load once. Calls trigger function with no argument that calls api backend with selected ecosystem
     //Triggers twice in dev mode. Not once build tho / and npm run start. 
     
+
     useEffect(() => {
         //Check if URL has additional parameters
         const params = searchParams.get('topics');
@@ -115,6 +120,50 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         
     }
 
+    async function saveLayout(e : any){
+        console.log("saving layout");
+        //get description
+        console.log(description);
+        //Get topics
+        console.log(selectedEcosystems);
+        //Get gridLayout position
+            //TODO
+        //Get user id 
+        let userId = user.id;
+        //Prepare post body
+
+
+        var apiPostBody = {
+            description: description
+        }
+        console.log(apiPostBody)
+
+        //Send to backend
+
+        const response : Response = await fetch(`http://secodash.com:3000/api/saveEdit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=UTF-8',
+            },
+            body: JSON.stringify(apiPostBody)
+
+        })
+        
+        console.log(response);
+        if (response.status == 500){
+            console.log("helaas");
+            throw new Error(response.statusText)
+        }
+        const convertedReponse = await response.json();
+        console.log(convertedReponse)
+        
+        
+    }
+
+    async function saveDescription(description: string){
+        setDescription(description);
+    }
+
     //If error we display error message
     if(error){
         return(
@@ -137,55 +186,51 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Prepare variables before we have data so we can render before data
     var cardWrappedList : cardWrapper[] = []
-    let staticProp = true;
    
 
     if(data){
-        //Real data
-        if(user){
-            staticProp = !user.isAdmin;
-        }
         //Top 5 topics
         //First Convert DTO's to Classes
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
         //Make list element
    
-        const subEcosystemCard = buildListCard(subEcosystems, onClickTopic, "Top 5 topics", 0, 2, 1, 4, staticProp);
+        const subEcosystemCard = buildListCard(subEcosystems, onClickTopic, "Top 5 topics", 0, 2, 1, 4, !editMode);
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6, staticProp);
+        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6, !editMode);
         //Add card to list
         cardWrappedList.push(languageCard);
 
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildListCard(technologies, onClickTopic, "Top 5 technologies", 6, 2, 1, 4, staticProp, "This is mock data");
+        const technologyCard = buildListCard(technologies, onClickTopic, "Top 5 technologies", 6, 2, 1, 4, !editMode, "This is mock data");
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildListCard(risingTechnologies, onClickTopic, "Top 5 rising technologies", 3, 2, 2, 4, staticProp, "This is mock data");
+        const risingTechnologiesCard = buildListCard(risingTechnologies, onClickTopic, "Top 5 rising technologies", 3, 2, 2, 4, !editMode, "This is mock data");
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildListCard(risingTopics, onClickTopic, "Top 5 rising topics", 1, 2, 2, 4, staticProp, "This is mock data");
+        const risingTopicsCard = buildListCard(risingTopics, onClickTopic, "Top 5 rising topics", 1, 2, 2, 4, !editMode, "This is mock data");
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 
         //For now no data conversion needed as Mock data is already in correct format 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "Top 5 topics over time", 2, 6, staticProp);
+        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "Top 5 topics over time", 2, 6, !editMode);
         cardWrappedList.push(cardLineGraphWrapped)
 
         //Ecosystem description
         //Remove main ecosystem from selected sub-ecosystem list to display
-        const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem}   removeTopic={removeSubEcosystem} description={data.description ? data.description : "no description provided"}  subEcosystems={selectedEcosystems.filter(n => n!= props.ecosystem)} />
+       
+        const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem} changeDescription={saveDescription} editMode={editMode}  removeTopic={removeSubEcosystem} description={description ? description : data.description}  subEcosystems={selectedEcosystems.filter(n => n!= props.ecosystem)} />
         const ecosystemDescriptionWrapped : cardWrapper = {card: ecosystemDescription, width: 6, height: 2, x: 0, y: 0, static:true}
         cardWrappedList.push(ecosystemDescriptionWrapped)
     
@@ -201,6 +246,18 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Normal render (No error)
     return(
         <div>
+            {user && user.isAdmin && 
+                <div className="m-3 rounded-sm border-2 p-3 text-yellow-700 bg-yellow-100 border-yellow-500">
+                    <form className="flex flex-col">
+                        <div className="flex flex-row gap-3">
+                            <label> edit mode:</label>
+                            <input type="checkbox" name="editMode" onChange={() => setEditMode(!editMode)}/> 
+                        </div>
+                       <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={(e) => saveLayout(e)}> save changes</button>
+                    </form>
+                </div>
+               
+            }
             <GridLayout cards={cardWrappedList} />
         </div>      
     )

@@ -79,6 +79,13 @@ export default function LayoutHomePage(){
         if(user){
             //If user is admin, make cards draggable
            staticProp = !user.isAdmin;
+           if(user.isAdmin){
+                //Create new dashboard card
+                const newDashboardButton = <div  onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton}/>
+                const newDashboardButtonWrapped : cardWrapper = {card: newDashboardButtonCard, width: 2, height: 3, x: 2, y: 5, static:true}
+                cardWrappedList.push(newDashboardButtonWrapped);
+            }
         }
 
         //General information about SECODash

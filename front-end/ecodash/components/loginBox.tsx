@@ -37,7 +37,9 @@ export default function LoginBox(){
                 <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => onClickFunc("google")} >
                     Login with Google
                 </button>
-                
+                <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => onClickFunc("linkedin")} >
+                    Login with Linkedin
+                </button>
             </div>
         </div>
     )

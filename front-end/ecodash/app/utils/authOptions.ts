@@ -63,6 +63,7 @@ export const authOptions: NextAuthOptions = {
             if(user){
                 token.id = user.id;
                 token.isAdmin = await fetchIsAdmin(user.id);
+                token.userName = await fetchUserName(user.id);
             }
             return token;
         },
@@ -74,6 +75,7 @@ export const authOptions: NextAuthOptions = {
                 const user = session.user as ExtendedUser;
                 // Cast token.isAdmin to boolean
                 user.isAdmin = token.isAdmin as boolean;
+                user.id = token.id as string;
             }
             return session;
         }
@@ -93,3 +95,7 @@ async function fetchIsAdmin(userId: string) : Promise<boolean> {
     return data.isAdmin;
 }
 
+async function fetchUserName(userId: string)
+{
+
+}
