@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 
@@ -53,7 +54,8 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         {
             Topics = [topic1],
             NumberOfTopLanguages = 2,
-            NumberOfTopSubEcosystems = 3
+            NumberOfTopSubEcosystems = 3,
+            NumberOfTopContributors = 2,
         };
         
         var expectedResponse = new EcosystemDto
@@ -87,7 +89,20 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
                     Percentage = 100
                 }
             ],
-            TopContributors = []
+            TopContributors = 
+            [
+                
+                new TopContributorDto
+                {
+                    Contributions = 500, 
+                    Login = "user1"
+                }, 
+                new TopContributorDto
+                {
+                    Contributions = 200, 
+                    Login = "user2"
+                }
+            ]
         };
         
         // Act
