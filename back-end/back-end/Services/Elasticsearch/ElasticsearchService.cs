@@ -3,6 +3,7 @@ using Elastic.Clients.Elasticsearch.Core.Bulk;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.Project;
+using Index = Microsoft.EntityFrameworkCore.Metadata.Internal.Index;
 
 namespace SECODashBackend.Services.ElasticSearch;
 
@@ -11,22 +12,21 @@ namespace SECODashBackend.Services.ElasticSearch;
 /// </summary>
 public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchService
 {
+    private const string ProjectIndex = "testtest";
+   
     /// <summary>
     /// Adds the given projects to the Elasticsearch index. 
     /// </summary>
     public async Task AddProjects(IEnumerable<ProjectDto> projectDtos)
     {
-        var request = new BulkRequest();
+        var request = new BulkRequest(ProjectIndex);
         var indexOperations = 
             projectDtos.Select(p =>
             {
-                p.Timestamp = DateTime.UtcNow;
+                p.Timestamp = p.CreatedAt;
                 return new BulkIndexOperation<ProjectDto>(p);
-                
-            projectDtos.Select(p => new BulkIndexOperation<ProjectDto>(p)
-            {
-                Index = "testtest"
             });
+        
         request.Operations = new BulkOperationsCollection(indexOperations);
         var response = await client.BulkAsync(request);
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
