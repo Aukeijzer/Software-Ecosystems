@@ -1,4 +1,4 @@
-using Elastic.Clients.Elasticsearch;
+﻿using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using SECODashBackend.Dtos.Contributors;
@@ -28,15 +28,21 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string LanguagesPropertyPath = "languages";
     private const string LanguageNameField = "languages.language.keyword";
     private const string LanguagePercentageField = "languages.percentage";
+    private const string ContributorsPath = "contributors";
+    private const string ContributorLoginField = "contributors.login.keyword";
+    private const string ContributorContributionsField = "contributors.contributions";
 
     // Instructs elasticsearch to match using all terms of a term set
     private const string MatchAllParametersScript = "params.num_terms";
 
     // Used to create and retrieve aggregates in the Elasticsearch queries
     private const string LanguageAggregateName = "languages";
-    private const string SumAggregateName = "sum";
+    private const string PercentageSumAggregateName = "sum_percentage";
     private const string NestedLanguagesAggregateName = "nested_languages";
     private const string TopicAggregateName = "topics";
+    private const string NestedContributorsAggregateName = "nested_contributors";
+    private const string TermsContributorsAggregateName = "contributors";
+    private const string ContributionsSumAggregateName = "sum_contributions";
 
     // Dictionary of topics that are programming languages and need to be filtered out
     private static readonly HashSet<string> ProgrammingLanguageTopics = new()
@@ -123,7 +129,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                     // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/sum-aggregation-usage.html
                     Aggregations = new AggregationDictionary
                     {
-                        new SumAggregation(SumAggregateName)
+                        new SumAggregation(PercentageSumAggregateName)
                         {
                             Field = LanguagePercentageField
                         },
@@ -132,20 +138,21 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             }
         };
         
-        var nestedContributorsAggregation = new NestedAggregation("nested_contributors")
+        // Aggregation of the nested Contributor documents in the Project documents 
+        var nestedContributorsAggregation = new NestedAggregation(NestedContributorsAggregateName)
         {
-            Path = "contributors",
+            Path = ContributorsPath,
             Aggregations = new AggregationDictionary
             {
-                new TermsAggregation("contributors")
+                new TermsAggregation(TermsContributorsAggregateName)
                 {
-                    Field = "contributors.login.keyword",
+                    Field = ContributorLoginField,
                     Size = MaxBucketSize,
                     Aggregations = new AggregationDictionary
                     {
-                        new SumAggregation("sum_contributions")
+                        new SumAggregation(ContributionsSumAggregateName)
                         {
-                            Field = "contributors.contributions"
+                            Field = ContributorContributionsField
                         }
                     }
                 }
@@ -195,8 +202,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <returns>A list of the top x contributors.</returns>
     private static List<TopContributorDto> GetTopXContributors(SearchResponse<ProjectDto> searchResponse, int numberOfTopContributors)
     {
-        var nestedAggregate = searchResponse.Aggregations?.GetNested("nested_contributors");
-        var contributorsAggregate = nestedAggregate?.GetStringTerms("contributors");
+        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedContributorsAggregateName);
+        var contributorsAggregate = nestedAggregate?.GetStringTerms(TermsContributorsAggregateName);
 
         if (contributorsAggregate == null)
             throw new ArgumentException(
@@ -208,7 +215,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 new TopContributorDto
                 {
                     Login = b.Key.ToString(),
-                    Contributions = (int)b.GetSum("sum_contributions")!.Value!
+                    Contributions = (int)b.GetSum(ContributionsSumAggregateName)!.Value!
                 })
             .ToList();
         
@@ -240,7 +247,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 new ProgrammingLanguageDto
                 {
                     Language = b.Key.ToString(),
-                    Percentage = (float)b.GetSum(SumAggregateName)!.Value!
+                    Percentage = (float)b.GetSum(PercentageSumAggregateName)!.Value!
                 })
             .ToList();
 
