@@ -17,6 +17,6 @@ public class EcosystemDto
     [DataMember(Name = "subEcosystems")] public required List<SubEcosystemDto> SubEcosystems { get; init; }
     
     // TODO: make non-nullable
-    [DataMember(Name = "topContributors")] public List<TopContributorDto>? TopContributors { get; init; }
+    [DataMember(Name = "topContributors")] public required List<TopContributorDto> TopContributors { get; init; }
 }
    
