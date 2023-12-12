@@ -1,10 +1,10 @@
 "use client"
-import { useState } from "react";
+import { Children, useState } from "react";
 import LoginBox from "./loginBox";
 
 interface PopUpBoxProps{
-    children: React.JSX.Element,
     buttonText: string,
+    children: React.ReactNode[]
 }
 export default function PopUpBox(props: PopUpBoxProps){
     const [show, setShow] = useState(false);

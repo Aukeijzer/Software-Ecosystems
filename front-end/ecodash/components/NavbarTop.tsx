@@ -28,7 +28,6 @@ export default function NavBarTop(){
                     data-cy='navLogo'
                     src={logo}
                     alt="SECODash logo"
-                    //className='mr-3 h-6 sm:h-9'
                     width={40}
                     height={40}
                 />
@@ -54,10 +53,8 @@ export default function NavBarTop(){
                         </div>}
             {!session && <div className='flex flex-col'> 
                             <span> Not logged in: </span>
-                            <PopUpBox children={<LoginBox/>} buttonText='Login'/>
+                            <PopUpBox buttonText='Login'> <LoginBox/> </PopUpBox>
                         </div>}
         </Navbar>
     )   
 }
-
-//                            <button className="bg-gray-500 rounded-sm" onClick={() => Router.push('http://localhost:3000/login')}>Sign in</button>

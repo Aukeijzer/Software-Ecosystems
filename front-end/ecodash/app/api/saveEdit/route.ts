@@ -1,14 +1,13 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextResponse , NextRequest} from "next/server";
 type ResponseData = {
     description: string
 }
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     //Get description from body
     console.log("ahlloas?")
     //const  messages  = await req.json()
     //console.log(messages);
-    return new Response("hoi", {
+    return new NextResponse("hoi", {
         status: 200,
     })
 }

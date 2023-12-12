@@ -9,12 +9,16 @@ export const mockEcosystem = {ecosystem: 'quantum', projectCount:1000, topics:16
 
 export const mockEcosystemDescription1 = {
     ecosystem: 'quantum', 
-    description:'Ecosystem about quantum software'
+    description:'Ecosystem about quantum software',
+    editMode: false,
+    changeDescription: (topic: string) => {}
 };
 
 export const mockEcosystemDescription2 = {
     ecosystem: 'agriculture', 
     description:'Ecosystem about agriculture software', 
+    editMode: false,
+    changeDescription: (topic: string) => {},
     subEcosystems: ['farming', 'machine-learning']
 };
 
@@ -22,6 +26,8 @@ export const mockEcosystemDescription3 = {
     ecosystem: 'agriculture',
     description: 'Ecosystem about agriculture software',
     subEcosystems: ['farming', 'machine-learning'],
+    editMode: false,
+    changeDescription: (topic: string) => {},
     removeTopic: (topic : string) => {
         mockEcosystemDescription3.subEcosystems = mockEcosystemDescription3.subEcosystems.filter(item => item != topic);
     }

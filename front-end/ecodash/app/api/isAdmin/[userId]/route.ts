@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextResponse } from 'next/server';
+import { NextApiRequest,  NextApiResponse } from 'next';
+import { NextResponse, NextRequest } from 'next/server';
 
 /**
  * Handles the GET request to check if a user is an admin.
@@ -11,7 +11,7 @@ import { NextResponse } from 'next/server';
 // Array of admin usernames
 const admins: string[] = ['109254255966692302362', 'admin2', 'admin3'];
 //userId, email, userAccount
-export async function GET(req : NextApiRequest, context: { params : any }) : Promise<NextResponse<{isAdmin: boolean}>>{
+export async function GET(req : NextRequest, context: { params : any }) : Promise<NextResponse<{isAdmin: boolean}>>{
    // if(!context.params){
     //    return NextResponse.json({ isAdmin: false }, {status: 403});
     //}
