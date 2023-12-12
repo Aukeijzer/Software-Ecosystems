@@ -1,4 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using SECODashBackend.Dtos.Contributors;
@@ -144,12 +144,16 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Path = ContributorsPath,
             Aggregations = new AggregationDictionary
             {
+                // Aggregation of the unique values of the contributor.login field
                 new TermsAggregation(TermsContributorsAggregateName)
                 {
                     Field = ContributorLoginField,
                     Size = MaxBucketSize,
+                    
+                    // Aggregation of the projects that contain the contributor
                     Aggregations = new AggregationDictionary
                     {
+                        // Aggregation of the sum of the contributor.contributions field of all contributors objects with the same login
                         new SumAggregation(ContributionsSumAggregateName)
                         {
                             Field = ContributorContributionsField
