@@ -3,10 +3,10 @@ import technologyClass from "../app/classes/technologyClass";
 import { technologyDTO } from "../app/interfaces/DTOs/technologyDTO";
 import listTechnologyDTOConverter, { technologyDTOConverter } from "../app/utils/Converters/technologyConverter";
 
-const inputTechnologyDTO: technologyDTO = Object.assign({
+const inputTechnologyDTO: technologyDTO = {
     technology: "Ethereum",
     projectCount: 31
-});
+};
 
 const outputTechnologyClass = new technologyClass("Ethereum", 31);
 
@@ -15,14 +15,14 @@ test('converts a single technologyDTO to a single technologyClass', () => {
 });
 
 const inputTechnologyDTOList: technologyDTO[] = [
-    Object.assign({
+    {
         technology: "Ethereum",
         projectCount: 31
-    }),
-    Object.assign({
+    },
+    {
         technology: "Blockchain",
         projectCount: 22
-    })
+    }
 ];
 
 const outputTechnologyClassList = [

@@ -3,11 +3,11 @@ import risingClass from "../app/classes/risingClass";
 import { risingDTO } from "../app/interfaces/DTOs/risingDTO";
 import listRisingDTOConverter, { risingDTOConverter } from "../app/utils/Converters/risingConverter";
 
-const inputRisingDTO: risingDTO = Object.assign({
+const inputRisingDTO: risingDTO = {
     item: "Ethereum",
     percentage: 31,
     growth: 5
-});
+};
 
 const outputRisingClass = new risingClass("Ethereum", 31, 5);
 
@@ -16,16 +16,16 @@ test('converts a single risingDTO to a single risingClass', () => {
 });
 
 const inputRisingDTOList: risingDTO[] = [
-    Object.assign({
+    {
         item: "Ethereum",
         percentage: 31,
         growth: 5
-    }),
-    Object.assign({
+    },
+    {
         item: "Blockchain",
         percentage: 22,
         growth: 3
-    })
+    }
 ];
 
 const outputRisingClassList = [

@@ -3,10 +3,10 @@ import languageClass from "../app/classes/languageClass";
 import { languageDTO } from "../app/interfaces/DTOs/languageDTO";
 import listLanguageDTOConverter, { languageDTOConverter } from "../app/utils/Converters/languageConverter";
 
-const inputLanguageDTO: languageDTO = Object.assign({
+const inputLanguageDTO: languageDTO = {
     language: "Python",
     percentage: 50
-});
+};
 
 const outputLanguageClass = new languageClass("Python", 50);
 
@@ -15,14 +15,14 @@ test('converts a single languageDTO to a single languageClass', () => {
 });
 
 const inputLanguageDTOList: languageDTO[] = [
-    Object.assign({
+    {
         language: "Python",
         percentage: 50
-    }),
-    Object.assign({
+    },
+    {
         language: "Ruby",
         percentage: 40
-    })
+    }
 ];
 
 const outputLanguageClassList = [
