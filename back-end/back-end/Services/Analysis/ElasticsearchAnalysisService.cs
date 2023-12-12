@@ -1,4 +1,4 @@
-using Elastic.Clients.Elasticsearch;
+﻿using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using SECODashBackend.Dtos.Contributors;
@@ -35,7 +35,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     // Used to create and retrieve aggregates in the Elasticsearch queries
     private const string LanguageAggregateName = "languages";
     private const string SumAggregateName = "sum";
-    private const string NestedAggregateName = "nested";
+    private const string NestedLanguagesAggregateName = "nested_languages";
     private const string TopicAggregateName = "topics";
 
     // Dictionary of topics that are programming languages and need to be filtered out
@@ -94,7 +94,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 1. Retrieving the top x programming languages
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems)
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors)
     {
         // Query that matches all projects that contain all topics in the topics list
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
@@ -106,7 +106,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
 
         // Aggregation of the nested Language documents in the Project documents
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
-        var nestedAggregation = new NestedAggregation(NestedAggregateName)
+        var nestedLanguagesAggregation = new NestedAggregation(NestedLanguagesAggregateName)
         {
             Path = LanguagesPropertyPath,
             
@@ -129,7 +129,26 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                         },
                     }
                 },
-
+            }
+        };
+        
+        var nestedContributorsAggregation = new NestedAggregation("nested_contributors")
+        {
+            Path = "contributors",
+            Aggregations = new AggregationDictionary
+            {
+                new TermsAggregation("contributors")
+                {
+                    Field = "contributors.login.keyword",
+                    Size = MaxBucketSize,
+                    Aggregations = new AggregationDictionary
+                    {
+                        new SumAggregation("sum_contributions")
+                        {
+                            Field = "contributors.contributions"
+                        }
+                    }
+                }
             }
         };
 
@@ -145,7 +164,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Query = termsSetQuery,
             Aggregations = new AggregationDictionary
             { 
-                nestedAggregation,
+                nestedLanguagesAggregation,
+                nestedContributorsAggregation,
                 topicAggregation
             },
             Size = 0 // Do not request actual Project documents
@@ -157,8 +177,37 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         {
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
-            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages) 
+            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
+            TopContributors = GetTopXContributors(result, numberOfTopContributors)
         };
+    }
+    
+    private static List<TopContributorDto> GetTopXContributors(SearchResponse<ProjectDto> searchResponse, int numberOfTopContributors)
+    {
+        var nestedAggregate = searchResponse.Aggregations?.GetNested("nested_contributors");
+        var contributorsAggregate = nestedAggregate?.GetStringTerms("contributors");
+
+        if (contributorsAggregate == null)
+            throw new ArgumentException(
+                "Elasticsearch aggregate not found in search response");
+        
+        var contributorDtos = contributorsAggregate
+            .Buckets
+            .Select(b => 
+                new TopContributorDto
+                {
+                    Login = b.Key.ToString(),
+                    Contributions = (int)b.GetSum("sum_contributions")!.Value!
+                })
+            .ToList();
+        
+        var sortedContributors = contributorDtos
+            .OrderByDescending(c => c.Contributions);
+
+        var topXContributors = sortedContributors
+            .Take(numberOfTopContributors)
+            .ToList();
+        return topXContributors;
     }
     
     /// <summary>
@@ -167,7 +216,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private static List<ProgrammingLanguageDto> GetTopXLanguages(
         SearchResponse<ProjectDto> searchResponse, int numberOfTopLanguages)
     {
-        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedAggregateName);
+        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedLanguagesAggregateName);
         var languagesAggregate = nestedAggregate?.GetStringTerms(LanguageAggregateName);
 
         if (languagesAggregate == null)
