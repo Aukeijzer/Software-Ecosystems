@@ -15,7 +15,7 @@ public class SpiderWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         // This is the new service that will be used instead of the default GitHubGraphqlService.
-        var service = new GitHubGraphqlService(null);
+        var service = new GitHubGraphqlService();
         
         builder.ConfigureTestServices(services =>
         {
