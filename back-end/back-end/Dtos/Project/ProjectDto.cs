@@ -18,6 +18,9 @@ public class ProjectDto
    [DataMember(Name = "createdAt")]
    public DateTime CreatedAt { get; set; }
    
+   [DataMember(Name = "latestDefaultBranchCommitDate")]
+   public DateTime? LatestDefaultBranchCommitDate { get; set; }
+   
    [DataMember(Name = "owner")]
    public required string Owner { get; set; }
    

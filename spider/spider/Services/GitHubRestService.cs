@@ -8,22 +8,28 @@ namespace spider.Services;
 public class GitHubRestService : IGitHubRestService
 {
     private readonly RestClient _gitHubRestClient;
-    private readonly ILogger<GitHubGraphqlService> _logger;
+    private readonly ILogger<GitHubRestService> _logger;
     private readonly SystemTextJsonSerializer _jsonSerializer;
-    public GitHubRestService(ILogger<GitHubGraphqlService> logger)
+    public GitHubRestService()
     {
         var options = new RestClientOptions("https://api.github.com");
         _gitHubRestClient = new RestClient(options);
         _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable(
             "API_Token"));
         _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
-        _logger = logger;
+        _logger = new Logger<GitHubRestService>(new LoggerFactory());
         _jsonSerializer = new SystemTextJsonSerializer();
     }
 
     
-    //GetRepoContributors sends a rest request to the github api and returns on success and otherwise handles the
-    //error and retries if necessary.
+    /// <summary>
+    /// GetRepoContributors sends a rest request to the github api and returns on success and otherwise handles the
+    /// error and retries if necessary.
+    /// </summary>
+    /// <param name="ownerName">Name of the repository owner</param>
+    /// <param name="repoName">Name of the repository</param>
+    /// <param name="amount">amount of contributors to return</param>
+    /// <returns>A list of contributors in the form of List&lt;ContributorDto&gt;?</returns>
     public async Task<List<ContributorDto>?> GetRepoContributors(string ownerName, string repoName, int amount = 50)
     {
         var result = new List<ContributorDto>();
@@ -112,13 +118,16 @@ public class GitHubRestService : IGitHubRestService
     }
 
     
-    // HandleErrors checks if there is a rate-limit error and if there is, it retries
-    private void HandleError(RestResponse temp)
+    /// <summary>
+    /// HandleErrors checks if there is a rate-limit error and if there is, it retries
+    /// </summary>
+    /// <param name="restResponse">The restResponse that includes the necessary headers</param>
+    private void HandleError(RestResponse restResponse)
     {
-        var header = temp.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");
+        var header = restResponse.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");
         if (Convert.ToInt32(header.Value) == 0)
         {
-            header = temp.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Reset");
+            header = restResponse.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Reset");
             
             DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
             DateTime retryTime = utcTime.DateTime;
@@ -126,13 +135,13 @@ public class GitHubRestService : IGitHubRestService
             return;
         }
 
-        header = temp.Headers.FirstOrDefault(x => x.Name == "Retry-After");
+        header = restResponse.Headers.FirstOrDefault(x => x.Name == "Retry-After");
         if (header is not null)
         {
             Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
             return;
         }
 
-        temp.ThrowIfError();
+        restResponse.ThrowIfError();
     }
 }
