@@ -108,10 +108,10 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         // Act
         var response = await _client.PostAsJsonAsync("/ecosystems", requestDto);
         var stream = await response.Content.ReadAsStreamAsync();
-        var ecosystems =
+        var ecosystem =
             await JsonSerializer.DeserializeAsync<EcosystemDto>(stream, _serializerOptions);
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        ecosystems.Should().BeEquivalentTo(expectedResponse);
+        ecosystem.Should().BeEquivalentTo(expectedResponse);
     }
 }
