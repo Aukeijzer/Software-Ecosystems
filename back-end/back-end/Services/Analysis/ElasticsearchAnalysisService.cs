@@ -27,6 +27,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string LanguagesPropertyPath = "languages";
     private const string LanguageNameField = "languages.language.keyword";
     private const string LanguagePercentageField = "languages.percentage";
+    private const string TimestampField = "timestamp";
 
     // Instructs elasticsearch to match using all terms of a term set
     private const string MatchAllParametersScript = "params.num_terms";
@@ -36,6 +37,10 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string SumAggregateName = "sum";
     private const string NestedAggregateName = "nested";
     private const string TopicAggregateName = "topics";
+    private const string TimedAggregateName = "timed";
+    
+    // Used to create the timed aggregation
+    private const string TimedInterval = "30d";
 
     // Dictionary of topics that are programming languages and need to be filtered out
     private static readonly HashSet<string> ProgrammingLanguageTopics = new()
@@ -138,6 +143,13 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Field = TopicField,
             Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count
         };
+        
+        // Aggregation of all projects aggregated by timestamp
+        var timedAggregation = new DateHistogramAggregation(TimedAggregateName)
+        {
+            Field = TimestampField,
+            FixedInterval = TimedInterval
+        };
 
         var searchRequest = new SearchRequest
         {
@@ -145,7 +157,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Aggregations = new AggregationDictionary
             { 
                 nestedAggregation,
-                topicAggregation
+                topicAggregation,
+                timedAggregation
             },
             Size = 0 // Do not request actual Project documents
         };
@@ -156,8 +169,30 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         {
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
-            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages) 
+            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
+            TimedData = GetTimedData(result)
         };
+    }
+    
+    /// <summary>
+    /// This method retrieves the timed data from the search response and converts it into a list of TimedDateDtos
+    /// </summary>
+    /// <param name="searchResponse"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private static List<TimedDateDto> GetTimedData(SearchResponse<ProjectDto> searchResponse)
+    {
+        var timedAggregate = searchResponse.Aggregations?.GetDateHistogram(TimedAggregateName);
+        if (timedAggregate == null) throw new ArgumentException(
+            "Elasticsearch aggregate not found in search response");
+        
+        var timedData = timedAggregate.Buckets.Select(b => new TimedDateDto
+        {
+            Date = b.KeyAsString,
+            ProjectCount = (int)b.DocCount
+        }).ToList();
+
+        return timedData;
     }
     
     /// <summary>
