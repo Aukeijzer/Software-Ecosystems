@@ -17,8 +17,8 @@ public class BackendWebApplicationFactory<TProgram> : WebApplicationFactory<TPro
     {
         // Replace the standard ElasticsearchClient by one that maps Project related requests to a dedicated test index
         var settings = new ElasticsearchClientSettings(
-                "Develop:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkMDJlNzkxNTY2MGRhNDAzMDk5NWE1OTFiNGVjNDgwYjgkZmYyNjk5MjI4YTZmNGM0M2E0OTM5NDUyYzc1YWZhODE=",
-                new ApiKey("ZmYxaFJJd0JWakk3ZmtqRzF6clM6ZUFCbHAxZ2dRbWljM3c5UmxpbkZ5Zw=="))
+                "Develop:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkM2QwZGFhYmZhOGY2NGQ3OGE1OTJmOTU3NDI5NzNmZWUkZTliYjUyNjlkNGRmNGY3NWEwM2Q4MjM3NTg2MjRmOTg=",
+                new ApiKey("Ni02TlhZd0JuZ29nblB4eWEtTFI6elYxYjc1YThTa202VFZoZGZHRUZRQQ=="))
             .DefaultMappingFor<ProjectDto>(i => i
                 .IndexName("integration-test-01")
             );
