@@ -19,9 +19,6 @@ interface infoCardDataGraphProps{
     items: displayableGraphItem[],
 }
 
-//Green Blue Orange Yellow
-const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
-
 /**
  * Renders a graph component that displays data in a pie chart.
  * @param {infoCardDataGraphProps<T>} props - The props for the graph component.
