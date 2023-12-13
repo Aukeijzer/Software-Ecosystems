@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SECODashBackend.Dtos;
+namespace SECODashBackend.Dtos.Contributors;
 
 /// <summary>
 /// Represents a data transfer object for a Contributor of a Project.

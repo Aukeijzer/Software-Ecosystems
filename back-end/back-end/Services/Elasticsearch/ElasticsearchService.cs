@@ -12,7 +12,7 @@ namespace SECODashBackend.Services.ElasticSearch;
 /// </summary>
 public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchService
 {
-    private const string ProjectIndex = "testtest";
+    private const string ProjectIndex = "projects-timed-test-02";
    
     /// <summary>
     /// Adds the given projects to the Elasticsearch index. 
@@ -40,7 +40,7 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     /// <exception cref="HttpRequestException"></exception>
     public async Task<List<ProjectDto>> GetProjectsByDate(DateTime time)
     {
-        // Make the time frame a bit bigger to account for the time it takes to mine the projects.
+        // Make the time frame bigger to account for the time it takes to mine the projects.
         time = time.AddDays(1);
         SearchResponse<ProjectDto> response = await client.SearchAsync<ProjectDto>(s => s
             .Query(q => q.Term(r => r.Timestamp, time)));
@@ -59,4 +59,5 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
             .SearchAsync<ProjectDto>(searchRequest);
         return response.IsValidResponse ? response : throw new HttpRequestException(response.ToString());
     }
+   
 }
