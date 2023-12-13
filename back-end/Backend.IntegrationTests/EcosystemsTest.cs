@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 
@@ -51,49 +52,66 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         // Arrange
         var requestDto = new EcosystemRequestDto
         {
-            Topics = new List<string> { topic1 },
+            Topics = [topic1],
             NumberOfTopLanguages = 2,
-            NumberOfTopSubEcosystems = 3
+            NumberOfTopSubEcosystems = 3,
+            NumberOfTopContributors = 2,
         };
         
         var expectedResponse = new EcosystemDto
         {
-            Topics = new List<string> { topic1 },
-            SubEcosystems = new List<SubEcosystemDto>
-            {
-                new()
+            Topics = [topic1],
+            SubEcosystems =
+            [
+                new SubEcosystemDto
                 {
                     ProjectCount = 10,
                     Topic = topic2
                 },
-                new()
+
+                new SubEcosystemDto
                 {
                     ProjectCount = 3,
                     Topic = topic3
                 },
-                new()
+
+                new SubEcosystemDto
                 {
                     ProjectCount = 2,
                     Topic = topic4
                 }
-            },
-            TopLanguages = new List<ProgrammingLanguageDto>
-            {
-               new()
-               {
-                   Language = "Java",
-                   Percentage = 100
-               } 
-            }
+            ],
+            TopLanguages =
+            [
+                new ProgrammingLanguageDto
+                {
+                    Language = "Java",
+                    Percentage = 100
+                }
+            ],
+            TopContributors = 
+            [
+                
+                new TopContributorDto
+                {
+                    Contributions = 500, 
+                    Login = "user1"
+                }, 
+                new TopContributorDto
+                {
+                    Contributions = 200, 
+                    Login = "user2"
+                }
+            ]
         };
         
         // Act
         var response = await _client.PostAsJsonAsync("/ecosystems", requestDto);
         var stream = await response.Content.ReadAsStreamAsync();
-        var ecosystems =
+        var ecosystem =
             await JsonSerializer.DeserializeAsync<EcosystemDto>(stream, _serializerOptions);
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        ecosystems.Should().BeEquivalentTo(expectedResponse);
+        ecosystem.Should().BeEquivalentTo(expectedResponse);
     }
 }

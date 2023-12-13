@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 
 namespace SECODashBackend.Dtos.Project;
