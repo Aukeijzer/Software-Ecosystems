@@ -45,6 +45,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     
     // Used to create the timed aggregation
     private const string TimedInterval = "30d";
+    
     private const string NestedContributorsAggregateName = "nested_contributors";
     private const string TermsContributorsAggregateName = "contributors";
     private const string ContributionsSumAggregateName = "sum_contributions";
@@ -187,12 +188,10 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Query = termsSetQuery,
             Aggregations = new AggregationDictionary
             { 
-                nestedAggregation,
                 topicAggregation,
-                timedAggregation
+                timedAggregation,
                 nestedLanguagesAggregation,
                 nestedContributorsAggregation,
-                topicAggregation
             },
             Size = 0 // Do not request actual Project documents
         };
@@ -208,7 +207,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             TopContributors = GetTopXContributors(result, numberOfTopContributors)
         };
     }
-    
+
     /// <summary>
     /// This method retrieves the timed data from the search response and converts it into a list of TimedDateDtos
     /// </summary>
@@ -218,17 +217,20 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private static List<TimedDateDto> GetTimedData(SearchResponse<ProjectDto> searchResponse)
     {
         var timedAggregate = searchResponse.Aggregations?.GetDateHistogram(TimedAggregateName);
-        if (timedAggregate == null) throw new ArgumentException(
-            "Elasticsearch aggregate not found in search response");
-        
+        if (timedAggregate == null)
+            throw new ArgumentException(
+                "Elasticsearch aggregate not found in search response");
+
         var timedData = timedAggregate.Buckets.Select(b => new TimedDateDto
         {
             Date = b.KeyAsString,
             ProjectCount = (int)b.DocCount
         }).ToList();
-
-        return timedData;
         
+        
+        return timedData;
+    }
+
     /// <summary>
     /// Retrieves the top contributors from the search response and converts them into a Top x list.
     /// The method first gets the nested aggregation for contributors from the search response.
@@ -362,4 +364,5 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
     }
+    
 }
