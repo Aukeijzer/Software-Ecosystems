@@ -1,4 +1,5 @@
 using Elastic.Clients.Elasticsearch;
+using SECODashBackend.Dtos.Project;
 using SECODashBackend.Models;
 
 namespace SECODashBackend.Services.Projects;
@@ -10,5 +11,5 @@ public interface IProjectsService
 {
     public Task MineByTopicAsync(string topic, int amount);
     public Task MineByKeywordAsync(string topic, int amount);
-    Task GetByTimeFrameAsync(DateTime time);
+    public Task<List<ProjectDto>> GetByTimeFrameAsync(DateTime time);
 }

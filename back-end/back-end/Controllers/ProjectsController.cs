@@ -50,7 +50,7 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     public async Task<ActionResult<List<ProjectDto>>> GetByTimeFrameAsync(DateTime time)
     {
         logger.LogInformation("{Origin}: Projects requested with time: '{time}' '.", this, time);
-        await projectsService.GetByTimeFrameAsync(time);
-        return Accepted();
+        var result = await projectsService.GetByTimeFrameAsync(time);
+        return new ObjectResult(result);
     }
 }

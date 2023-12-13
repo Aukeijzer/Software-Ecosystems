@@ -1,5 +1,6 @@
 using Elastic.Clients.Elasticsearch;
 using SECODashBackend.DataConverters;
+using SECODashBackend.Dtos.Project;
 using SECODashBackend.Models;
 using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Spider;
@@ -40,8 +41,9 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// Requests Elasticsearch for projects related to the given time.
     /// </summary>
     /// <param name="time"></param>
-    public async Task GetByTimeFrameAsync(DateTime time)
+    public async Task<List<ProjectDto>> GetByTimeFrameAsync(DateTime time)
     {
-        await elasticsearchService.GetProjectsByDate(time);
+        var result = await elasticsearchService.GetProjectsByDate(time);
+        return result;
     }
 }
