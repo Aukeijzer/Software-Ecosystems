@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.SystemTextJson;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +16,9 @@ public class SpiderWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        
         // This is the new service that will be used instead of the default GitHubGraphqlService.
-        var service = new GitHubGraphqlService();
+        var service = new GitHubGraphqlService(new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer()));
         
         builder.ConfigureTestServices(services =>
         {

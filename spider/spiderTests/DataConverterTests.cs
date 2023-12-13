@@ -32,7 +32,8 @@ public class DataConverterTests
                 , It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<int>()))
             .ReturnsAsync(JsonConvert.DeserializeObject<SpiderData>(SearchReturn));
 
-        var result = await _mockSpiderGithubGraphqlService.Object.QueryRepositoriesByName("Agriculture", 10, null, 1);
+        var result = await _mockSpiderGithubGraphqlService.Object.QueryRepositoriesByName("Agriculture",
+            10, null, 1);
         Assert.NotNull(result.Search);
         var converted = _graphqlDataConverter.SearchToProjects(result);
         Assert.That(converted.Count(), Is.EqualTo(5));
@@ -47,7 +48,8 @@ public class DataConverterTests
                 , It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<int>()))
             .ReturnsAsync(JsonConvert.DeserializeObject<TopicSearchData>(TopicSearchReturn));
         
-        var result = await _mockSpiderGithubGraphqlService.Object.QueryRepositoriesByTopic("Agriculture", 10, null, 1);
+        var result = await _mockSpiderGithubGraphqlService.Object.QueryRepositoriesByTopic("Agriculture",
+            10, null, 1);
         Assert.NotNull(result.Topic);
         var converted = _graphqlDataConverter.TopicSearchToProjects(result);
         Assert.That(converted.Count(), Is.EqualTo(5));
@@ -63,7 +65,8 @@ public class DataConverterTests
                 , It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<int>()))
             .ReturnsAsync(JsonConvert.DeserializeObject<SpiderData>(EmptyReturn));
         
-        var result = await _mockSpiderGithubGraphqlService.Object.QueryRepositoriesByName("Agriculture", 10, null, 1);
+        var result = await _mockSpiderGithubGraphqlService.Object.QueryRepositoriesByName("Agriculture",
+            10, null, 1);
         Assert.That(result.Search, Is.Not.EqualTo(null));
         var converted = _graphqlDataConverter.SearchToProjects(result);
         Assert.That(converted[0].LatestDefaultBranchCommitDate, Is.EqualTo(null));

@@ -97,7 +97,7 @@ public class SpiderControllerTests
         string name = "agriculture";
         string owner = "Seco";
         int amount = 60;
-        
+
         await _spiderController.GetContributorsByName(name, owner, amount);
         _mockSpiderProjectService.Verify(x => x.GetContributorsByName(
             name, owner, amount), Times.Once);

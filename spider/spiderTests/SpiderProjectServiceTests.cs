@@ -24,8 +24,8 @@ public class SpiderProjectServiceTests
     {
         _mockGitHubGraphqlService = new Mock<IGitHubGraphqlService>();
         _mockGitHubRestService = new Mock<IGitHubRestService>();
-        _mockGitHubRestService.Setup(x => x.GetRepoContributors(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
-            .ReturnsAsync(new List<ContributorDto>());
+        _mockGitHubRestService.Setup(x => x.GetRepoContributors(It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<int>())).ReturnsAsync(new List<ContributorDto>());
         _graphqlDataConverter = new GraphqlDataConverter();
         
         keywordOutput = new SpiderData();

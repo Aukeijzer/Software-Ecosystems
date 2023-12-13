@@ -1,26 +1,22 @@
 using System.Net;
 using System.Text;
-using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.SystemTextJson;
 using spider.Dtos;
 using spider.Models.Graphql;
+using spider.Wrappers;
 using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
 
 namespace spider.Services;
 
 public class GitHubGraphqlService : IGitHubGraphqlService
 {
-    private readonly GraphQLHttpClient _client;
+    private readonly IClientWrapper _client;
     private readonly ILogger<GitHubGraphqlService>? _logger;
     
-    public GitHubGraphqlService()
+    public GitHubGraphqlService(IClientWrapper clientWrapper)
     {
-        _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
-        var token = Environment.GetEnvironmentVariable("API_Token");
-        _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-        _client.HttpClient.DefaultRequestHeaders.Add("X-Github-Next-Global-ID", "1");
-        _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
+      _client = clientWrapper;
+      _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
     }
   
     /// <summary>
@@ -170,7 +166,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         
         try
         {
-            var response = await _client.SendQueryAsync(repositoriesQuery,  () => new SpiderData());
+            var response = await _client.SendQueryAsync<SpiderData>(repositoriesQuery);
 
             if (response is GraphQLHttpResponse<SpiderData> httpResponse && httpResponse.Errors == null)
             {
@@ -353,8 +349,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         
         try
         {
-          var response = await _client.SendQueryAsync(topicRepositoriesQuery,
-            () => new TopicSearchData());
+          var response = await _client.SendQueryAsync<TopicSearchData>(topicRepositoriesQuery);
 
           if (response is GraphQLHttpResponse<TopicSearchData> httpResponse && httpResponse.Errors == null)
           {
@@ -491,7 +486,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             Variables = new{name= repositoryName, _ownerName = ownerName}
         };
 
-        var response = await _client.SendQueryAsync(repositoriesQuery,  () => new RepositoryWrapper());
+        var response = await _client.SendQueryAsync<RepositoryWrapper>(repositoriesQuery);
         return response.Data;
     }
     
