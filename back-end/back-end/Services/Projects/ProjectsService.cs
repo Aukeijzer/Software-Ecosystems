@@ -3,34 +3,33 @@ using SECODashBackend.Services.Spider;
 
 namespace SECODashBackend.Services.Projects;
 
-public class ProjectsService : IProjectsService
-{
-    private readonly IElasticsearchService _elasticsearchService;
-    private readonly ISpiderService _spiderService;
-
-    public ProjectsService(
-        IElasticsearchService elasticsearchService,
+/// <summary>
+/// This service is responsible for requesting the Spider for projects and saving them to Elasticsearch.
+/// </summary>
+public class ProjectsService(IElasticsearchService elasticsearchService,
         ISpiderService spiderService)
-    {
-        _elasticsearchService = elasticsearchService;
-        _spiderService = spiderService;
-    }
-
+    : IProjectsService
+{
+    /// <summary>
+    /// Requests the Spider for projects related to the given topic and saves them to Elasticsearch.
+    /// </summary>
     public async Task MineByTopicAsync(string topic, int amount)
     {
         // Request the Spider for projects related to this topic.
-        var newDtos = await _spiderService.GetProjectsByTopicAsync(topic, amount);
+        var newDtos = await spiderService.GetProjectsByTopicAsync(topic, amount);
         
         // Save these projects to elasticsearch
-        await _elasticsearchService.AddProjects(newDtos);
+        await elasticsearchService.AddProjects(newDtos);
     }
-    
+    /// <summary>
+    /// Requests the Spider for projects related to the given keyword and saves them to Elasticsearch.
+    /// </summary>
     public async Task MineByKeywordAsync(string keyword, int amount)
     {
         // Request the Spider for projects related to this topic.
-        var newDtos = await _spiderService.GetProjectsByKeywordAsync(keyword, amount);
+        var newDtos = await spiderService.GetProjectsByKeywordAsync(keyword, amount);
         
         // Save these projects to elasticsearch
-        await _elasticsearchService.AddProjects(newDtos);
+        await elasticsearchService.AddProjects(newDtos);
     }
 }

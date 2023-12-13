@@ -1,8 +1,12 @@
+using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Project;
-using spider.Dtos;
 
 namespace SECODashBackend.Services.Spider;
 
+/// <summary>
+/// Interface for a service that is responsible for requesting the Spider for projects.
+/// </summary>
 public interface ISpiderService
 {
     public Task<List<ProjectDto>> GetProjectsByTopicAsync(string topic, int amount);

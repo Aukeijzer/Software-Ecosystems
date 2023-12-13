@@ -1,5 +1,8 @@
 ﻿namespace spider.Dtos;
 
+/// <summary>
+/// A data transfer object for a programming language
+/// </summary>
 public struct ProgrammingLanguageDto
 {
     public ProgrammingLanguageDto(string language, float percentage)

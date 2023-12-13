@@ -12,18 +12,24 @@ namespace spider.Services;
 public class GitHubGraphqlService : IGitHubGraphqlService
 {
     private readonly GraphQLHttpClient _client;
-    private readonly ILogger<GitHubGraphqlService> _logger;
+    private readonly ILogger<GitHubGraphqlService>? _logger;
     
-    public GitHubGraphqlService(ILogger<GitHubGraphqlService> logger)
+    public GitHubGraphqlService()
     {
         _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
         var token = Environment.GetEnvironmentVariable("API_Token");
         _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
         _client.HttpClient.DefaultRequestHeaders.Add("X-Github-Next-Global-ID", "1");
-        _logger = logger;
+        _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
     }
   
-    //QueryRepositoriesByNameHelper splits the incoming request into smaller parts.
+    /// <summary>
+    /// QueryRepositoriesByNameHelper splits the incoming request into smaller parts
+    /// </summary>
+    /// <param name="name">Keyword to search by</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="startCursor">The cursor to start the search from</param>
+    /// <returns>list of repositories in the form of List&lt;SpiderData&gt;</returns>
     public async Task<List<SpiderData>> QueryRepositoriesByNameHelper(String name, int amount, string? startCursor)
     {
         var projects = new List<SpiderData>();
@@ -52,8 +58,16 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     }
 
     
-    //QueryRepositoriesByName sends a graphql request to the github api and returns on success and otherwise handles the
-    //error and retries if necessary.
+    /// <summary>
+    /// QueryRepositoriesByName sends a graphql request to the github api and returns on success and otherwise handles
+    /// the error and retries if necessary.
+    /// </summary>
+    /// <param name="repositoryName">Keyword to search by</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="cursor">The cursor to start the search from</param>
+    /// <param name="tries">amount of retries before failing</param>
+    /// <returns>list of repositories in the form of SpiderData</returns>
+    /// <exception cref="BadHttpRequestException">If it fails after tries amount of retries throw</exception>
     public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string? cursor = null, int tries = 3)
     {
         // GraphQL query to search the repositories with the given name.
@@ -196,7 +210,13 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         }
     }
     
-    //QueryRepositoriesByTopicHelper splits the incoming request into smaller parts.
+    /// <summary>
+    /// QueryRepositoriesByTopicHelper splits the incoming request into smaller parts
+    /// </summary>
+    /// <param name="topic">topic to search for</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="startCursor">The cursor to start the search from</param>
+    /// <returns>list of repositories in the form of List&lt;TopicSearchData&gt;</returns>
     public async Task<List<TopicSearchData>> QueryRepositoriesByTopicHelper(String topic, int amount, string? startCursor)
     {
         var projects = new List<TopicSearchData>();
@@ -221,8 +241,16 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         return projects;
     }
     
-    //QueryRepositoriesByTopic sends a graphql request to the github api and returns on success and otherwise handles the
-    //error and retries if necessary.
+    /// <summary>
+    /// QueryRepositoriesByTopic sends a graphql request to the github api and returns on success and otherwise handles
+    /// the error and retries if necessary.
+    /// </summary>
+    /// <param name="topic">topic to search for</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="cursor">The cursor to start the search from</param>
+    /// <param name="tries">amount of retries before failing</param>
+    /// <returns>list of repositories in the form of TopicSearchData</returns>
+    /// <exception cref="BadHttpRequestException">If it fails after tries amount of retries throw</exception>
     public async Task<TopicSearchData> QueryRepositoriesByTopic(string topic, int amount, string? cursor = null, int tries = 3)
     {
         var topicRepositoriesQuery = new GraphQLHttpRequest()
@@ -366,7 +394,13 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         }
     }
     
-    //QueryRepositoryByName sends a graphql request to the github api and returns on success. Does not handle errors yet.
+    /// <summary>
+    /// QueryRepositoryByName sends a graphql request to the github api and returns on success. Does not handle errors
+    /// yet
+    /// </summary>
+    /// <param name="repositoryName">Name of the repository</param>
+    /// <param name="ownerName">Name of the repository owner</param>
+    /// <returns>repository in the form of RepositoryWrapper</returns>
     public async Task<RepositoryWrapper> QueryRepositoryByName(string repositoryName, string ownerName)
     {
         // GraphQL query to search a repository with the given repository name and owner name.
@@ -461,7 +495,13 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         return response.Data;
     }
     
-    //ToQueryString converts ProjectRequestDtos into a format that can be inserted into a graphql search query.
+    /// <summary>
+    /// ToQueryString converts ProjectRequestDtos into a format that can be inserted into a graphql search query and
+    /// sends the query using QueryRepositoriesByName
+    /// </summary>
+    /// <param name="repos">A list of repository names and owner names</param>
+    /// <returns>list of repositories in the form of SpiderData</returns>
+    // todo only gets upto 1000 repositories
     public async Task<SpiderData> ToQueryString(List<ProjectRequestDto> repos)
     {
         StringBuilder stringBuilder = new StringBuilder();

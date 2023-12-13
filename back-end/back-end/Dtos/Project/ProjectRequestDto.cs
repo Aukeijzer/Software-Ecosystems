@@ -2,6 +2,9 @@
 
 namespace SECODashBackend.Dtos.Project;
 
+/// <summary>
+/// Represents a data transfer object for a Project requested from the Spider.
+/// </summary>
 [DataContract]
 public class ProjectRequestDto
 {
