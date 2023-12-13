@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState} from "react"
@@ -7,17 +8,48 @@ import SpinnerComponent from "./spinner"
 import { buildLineGraphCard, buildListCard, buildPieGraphCard } from "@/app/utils/cardBuilder"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
-import { listLanguageDTOConverter } from "@/app/utils/Converters/languageConverter"
+import  listLanguageDTOConverter  from "@/app/utils/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
 import { cardWrapper } from "@/app/interfaces/cardWrapper"
 import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConverter"
-import { listRisingDTOConverter } from "@/app/utils/Converters/risingConverter"
+import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
 interface layoutEcosystemProps{
     ecosystem: string
 }
 
+/**
+ * 
+ * Renders the layout for the ecosystem page.
+ * 
+ * @component
+ * @param {string} props.ecosystem - The name of the ecosystem.
+ * @returns {JSX.Element} The rendered layout component.
+ *  The LayoutEcosystem component accepts a single prop: ecosystem, 
+ *  which is a string representing the name of the ecosystem.
+ *
+ *   The useRouter hook is used to get the Router object, 
+ *   which is used to navigate between pages. 
+ *   The useSearchParams hook is used to get the searchParams object, 
+ *   which is used to access the search parameters in the current URL.
+ *
+ *   The useState hook from React is used to create a state variable selectedEcosystems and its setter function setSelectedEcosystems. 
+ *   The initial value of selectedEcosystems is an array containing the ecosystem prop. 
+ *   This state variable is used to keep track of the selected ecosystems.
+ *
+ *   The useSWRMutation hook is used to fetch data from the /ecosystems endpoint of the API. 
+ *   The data, trigger, error, and isMutating variables are destructured from the hook. 
+ *   The trigger function is used to manually fetch the data, 
+ *   data holds the fetched data, error holds any error that occurred during fetching, 
+ *   and isMutating indicates whether a fetch is in progress.
+ *
+ *   The useEffect hook is used to call the trigger function when the component mounts, 
+ *   causing the data to be fetched from the API. 
+ *   If the URL has additional parameters, these are added to the selectedEcosystems state 
+ *   and the trigger function is called with these parameters. If there are no additional parameters, 
+ *   the trigger function is called with the current selectedEcosystems state.
+ */
 
 export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Set up router
@@ -80,18 +112,28 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //If error we display error message
     if(error){
         return(
-            <p>
-                Error making API call:
-                {error}
-            </p>
+            <>
+                
+                <h2 className='text-3xl m-5'>Something went wrong!</h2>
+                <div className='flex flex-col gap-3 p-5 bg-gray-300 border-2 m-5 border-gray-900 rounded-sm'>
+                    <p>
+                        {error.message}
+                    </p>
+                    <p>
+                        {error.stack}
+                    </p>
+                   
+                </div>
+            </>
         )
     }
+  
 
     //Prepare variables before we have data so we can render before data
     var cardWrappedList : cardWrapper[] = []
     if(data){
         //Real data
-
+    
         //Top 5 topics
         //First Convert DTO's to Classes
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
