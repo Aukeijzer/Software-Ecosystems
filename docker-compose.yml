@@ -9,7 +9,7 @@
 # https://github.com/docker/awesome-compose
 services:
   # Frontend docker.
-  server:
+  nextjs:
     build:
       context: ./front-end/ecodash/
       dockerfile: ./Dockerfile
@@ -20,7 +20,17 @@ services:
     networks:
       - secodash-network
     restart: always
-    
+  nginx:
+    build:
+      context: ./front-end/nginx/
+      dockerfile: ./Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/ssl:/etc/nginx/ssl:ro
+    networks:
+      - secodash-network
 #####
   # Spider docker.
   spider-app:
