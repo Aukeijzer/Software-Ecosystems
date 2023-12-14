@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SECODashBackend.Dtos.users;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Users;
+using Swashbuckle.AspNetCore.Annotations;
+
 
 namespace SECODashBackend.Controllers;
 /// <summary>
@@ -39,9 +42,16 @@ public class UsersController(ILogger<UsersController> logger, UsersService users
     }
 
     [HttpPost("LoginRequest")]
-    public async Task<string> LoginRequest(string id, string userName)
+    [SwaggerOperation("Return user type")]
+    [SwaggerResponse(statusCode: 200, description: "successful operation")]
+    public async Task<ActionResult<userTypeDto>> LoginRequest(userTypeRequestDto req)
     {
-        return await usersService.LoginRequest(id, userName);
+        var result = await usersService.LoginRequest(req.Id, req.Username);
+        var final = new userTypeDto
+        {
+            UserType = result
+        };
+    return new ObjectResult(final);
     }
     
 }

@@ -62,7 +62,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({token , user }) {
             if(user){
                 token.id = user.id;
-                token.isAdmin = await fetchIsAdmin(user.id);
+                token.isAdmin = await fetchIsAdmin(user.id, user.email!);
                 token.userName = await fetchUserName(user.id);
             }
             return token;
@@ -88,11 +88,30 @@ export const authOptions: NextAuthOptions = {
  * @returns A Promise that resolves to a boolean indicating whether the user is an admin or not.
  */
 
-async function fetchIsAdmin(userId: string) : Promise<boolean> {
-    const response = await fetch(`http://secodash.com:3000/api/isAdmin/${userId}`);
-    const data = await response.json();
-    console.log(data.isAdmin);
-    return data.isAdmin;
+async function fetchIsAdmin(userId: string, username: string) {
+    const apiPostBody = {
+        id: userId,
+        userName: username
+    }
+
+    console.log(apiPostBody)
+    
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS! + '/users/loginrequest', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(apiPostBody)
+    });
+   
+    const convertedResponse = await response.json();
+    console.log("dit is de response")
+    console.log(convertedResponse);
+    if(convertedResponse.userType == "Admin"){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 async function fetchUserName(userId: string)
