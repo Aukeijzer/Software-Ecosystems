@@ -28,7 +28,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /etc/ssl:/etc/nginx/ssl:ro
+      - ./front-end/certs:/etc/nginx/ssl:ro #certs on local
+      - /local/certs:/etc/nginx/ssl:ro #certs on server
     networks:
       - secodash-network
 #####
