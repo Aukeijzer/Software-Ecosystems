@@ -246,7 +246,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Normal render (No error)
     return(
         <div>
-            {user && user.isAdmin && 
+            {user && user.userType === "Admin" || user.userType === "RootAdmin" && 
                 <div className="m-3 rounded-sm border-2 p-3 text-yellow-700 bg-yellow-100 border-yellow-500">
                     <form className="flex flex-col">
                         <div className="flex flex-row gap-3">

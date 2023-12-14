@@ -9,7 +9,7 @@ const hostName = new URL(process.env.NEXTAUTH_URL!).hostname;
 console.log(hostName);
 
 export interface ExtendedUser extends User {
-    isAdmin: boolean;
+    userType: string;
 }
 
 /**
@@ -62,8 +62,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({token , user }) {
             if(user){
                 token.id = user.id;
-                token.isAdmin = await fetchIsAdmin(user.id, user.email!);
-                token.userName = await fetchUserName(user.id);
+                token.userType = await fetchIsAdmin(user.id, user.email!);
             }
             return token;
         },
@@ -74,7 +73,7 @@ export const authOptions: NextAuthOptions = {
             if (session.user) {
                 const user = session.user as ExtendedUser;
                 // Cast token.isAdmin to boolean
-                user.isAdmin = token.isAdmin as boolean;
+                user.userType = token.userType as string;
                 user.id = token.id as string;
             }
             return session;
@@ -85,6 +84,7 @@ export const authOptions: NextAuthOptions = {
 /**
  * Fetches the isAdmin status for a given user.
  * @param userId - The ID of the user.
+ * @param username - The username of the user
  * @returns A Promise that resolves to a boolean indicating whether the user is an admin or not.
  */
 
@@ -93,8 +93,6 @@ async function fetchIsAdmin(userId: string, username: string) {
         id: userId,
         userName: username
     }
-
-    console.log(apiPostBody)
     
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS! + '/users/loginrequest', {
         method: 'POST',
@@ -105,16 +103,7 @@ async function fetchIsAdmin(userId: string, username: string) {
     });
    
     const convertedResponse = await response.json();
-    console.log("dit is de response")
-    console.log(convertedResponse);
-    if(convertedResponse.userType == "Admin"){
-        return true;
-    } else {
-        return false;
-    }
+    let userType = convertedResponse.userType;
+    return  userType;
 }
 
-async function fetchUserName(userId: string)
-{
-
-}

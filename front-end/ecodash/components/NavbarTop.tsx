@@ -45,8 +45,7 @@ export default function NavBarTop(){
                                     height={30}
                                     alt="Profile picture"
                                 />
-                                {user.isAdmin && <p> <b> Admin </b> </p>}
-                                {!user.isAdmin && <p> <b> User </b> </p>}
+                               {user.userType}
                             </div>            
                             <button className="bg-gray-500 rounded-md p-1" onClick={() => Router.push('/api/auth/signout')}>Sign out</button>
                           
