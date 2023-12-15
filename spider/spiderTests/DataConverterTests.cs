@@ -24,7 +24,13 @@ public class DataConverterTests
         _mockSpiderGithubGraphqlService = new Moq.Mock<IGitHubGraphqlService>();
         _graphqlDataConverter = new GraphqlDataConverter();
     }
-
+    
+    /// <summary>
+    /// This tests if the method SearchToProjects correctly converts the data to a list of projects.
+    /// We do this by creating a mock GitHubGraphqlService that returns a mock SpiderData object.
+    /// The SpiderData object contains a search object that contains a list of nodes containing the necessary data.
+    /// We then call the SearchToProjects method and check if the returned list of projects contains the correct data.
+    /// </summary>
     [Test]
     public async Task SuccessfullyConvertSearchResultToProjects()
     {
@@ -41,6 +47,12 @@ public class DataConverterTests
         Assert.That(converted[0].Id, Is.EqualTo("R_kgDOBqzb0A"));
     }
     
+    /// <summary>
+    /// This tests if the method TopicSearchToProjects correctly converts the data to a list of projects.
+    /// We do this by creating a mock GitHubGraphqlService that returns a mock TopicSearchData object.
+    /// The TopicSearchData object contains a search object that contains a list of nodes containing the necessary data.
+    /// We then call the TopicSearchToProjects method and check if the returned list of projects contains the correct data.
+    /// </summary>
     [Test]
     public async Task SuccessfullyConvertTopicSearchResultToProjects()
     {
@@ -57,6 +69,14 @@ public class DataConverterTests
         Assert.That(converted[0].Id, Is.EqualTo("MDEwOlJlcG9zaXRvcnkxMzEwMTI4NzA="));
     }
     
+    /// <summary>
+    /// This tests if the method SearchToProjects correctly converts a repository with no recent commit date.
+    /// We do this by creating a mock GitHubGraphqlService that returns a mock TopicSearchData object with no recent
+    /// commit date.
+    /// The TopicSearchData object contains a search object that contains a list of nodes containing the necessary data.
+    /// We then call the SearchToProjects method and check if the returned list of projects contains the correct
+    /// data.
+    /// </summary>
     [Test]
     public async Task NullDate()
     {

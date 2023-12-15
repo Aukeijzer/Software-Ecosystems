@@ -53,6 +53,13 @@ public class SpiderProjectServiceTests
         }}};
     }
 
+    /// <summary>
+    /// This tests the GetByKeyword method of the SpiderProjectService.
+    /// It tests if the method calls the correct services.
+    /// We test this by creating a mock of the GitHubGraphqlService and the GitHubRestService.
+    /// After that we call the GetByKeyword method in the SpiderProjectService.
+    /// Lastly we check if the correct methods have been called the correct amount of times.
+    /// </summary>
     [Test]
     public async Task KeywordTest()
     {
@@ -74,6 +81,13 @@ public class SpiderProjectServiceTests
             , It.IsAny<string>(), It.IsAny<int>()), Times.Exactly(50));
     }
 
+    /// <summary>
+    /// This tests the GetByKeyword method of the SpiderProjectService.
+    /// It tests if the method handles the errors correctly.
+    /// We test this by creating a mock of the GitHubGraphqlService and the GitHubRestService.
+    /// After that we call the GetByKeyword method in the SpiderProjectService.
+    /// Lastly we check if the correct errors are thrown.
+    /// </summary>
     [Test]
     public async Task KeywordErrorTests()
     {
@@ -81,6 +95,7 @@ public class SpiderProjectServiceTests
         int amount = 50;
         string cursor = "Y3Vyc29yOjE=";
         
+        //Test with JsonException
         _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByNameHelper(It.IsAny<string>(),
                 50, It.IsAny<string?>()))
             .Throws(new JsonException());
@@ -90,6 +105,7 @@ public class SpiderProjectServiceTests
         Assert.ThrowsAsync<HttpRequestException>(async () => 
             await _spiderProjectService.GetByKeyword(name, amount, cursor));
         
+        //Test with NullReferenceException
         _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByNameHelper(It.IsAny<string>(),
                 50, It.IsAny<string?>()))
             .Throws(new NullReferenceException());
@@ -99,6 +115,7 @@ public class SpiderProjectServiceTests
         Assert.ThrowsAsync<HttpRequestException>(async () => 
             await _spiderProjectService.GetByKeyword(name, amount, cursor));
         
+        //Test with Exception
         _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByNameHelper(It.IsAny<string>(),
                 50, It.IsAny<string?>()))
             .Throws(new Exception());
@@ -109,6 +126,13 @@ public class SpiderProjectServiceTests
             await _spiderProjectService.GetByKeyword(name, amount, cursor));
     }
 
+    /// <summary>
+    /// This tests the GetByTopic method of the SpiderProjectService.
+    /// It tests if the method calls the correct services.
+    /// We test this by creating a mock of the GitHubGraphqlService and the GitHubRestService.
+    /// After that we call the GetByTopic method in the SpiderProjectService.
+    /// Lastly we check if the correct methods have been called the correct amount of times.
+    /// </summary>
     [Test]
     public async Task TopicTests()
     {
@@ -130,6 +154,13 @@ public class SpiderProjectServiceTests
             , It.IsAny<string>(), It.IsAny<int>()), Times.Exactly(50));
     }
     
+    /// <summary>
+    /// This tests the GetByTopic method of the SpiderProjectService.
+    /// It tests if the method handles the errors correctly.
+    /// We test this by creating a mock of the GitHubGraphqlService and the GitHubRestService.
+    /// After that we call the GetByTopic method in the SpiderProjectService.
+    /// Lastly we check if the correct errors are thrown.
+    /// </summary>
     [Test]
     public async Task TopicErrorTests()
     {
@@ -137,6 +168,7 @@ public class SpiderProjectServiceTests
         int amount = 50;
         string cursor = "Y3Vyc29yOjE=";
         
+        //Test with JsonException
         _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByTopicHelper(It.IsAny<string>(),
                 50, It.IsAny<string?>()))
             .Throws(new JsonException());
@@ -146,6 +178,7 @@ public class SpiderProjectServiceTests
         Assert.ThrowsAsync<HttpRequestException>(async () => 
             await _spiderProjectService.GetByTopic(topic, amount, cursor));
         
+        //Test with NullReferenceException
         _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByTopicHelper(It.IsAny<string>(),
                 50, It.IsAny<string?>()))
             .Throws(new NullReferenceException());
@@ -155,6 +188,7 @@ public class SpiderProjectServiceTests
         Assert.ThrowsAsync<HttpRequestException>(async () => 
             await _spiderProjectService.GetByTopic(topic, amount, cursor));
         
+        //Test with Exception
         _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByTopicHelper(It.IsAny<string>(),
                 50, It.IsAny<string?>()))
             .Throws(new Exception());
@@ -165,6 +199,13 @@ public class SpiderProjectServiceTests
             await _spiderProjectService.GetByTopic(topic, amount, cursor));
     }
 
+    /// <summary>
+    /// This tests the GetByName method of the SpiderProjectService.
+    /// It tests if the method calls the correct services.
+    /// We test this by creating a mock of the GitHubGraphqlService.
+    /// After that we call the GetByName method in the SpiderProjectService.
+    /// Lastly we check if the correct methods have been called the correct amount of times.
+    /// </summary>
     [Test]
     public async Task NameTests()
     {
@@ -179,6 +220,13 @@ public class SpiderProjectServiceTests
         _mockGitHubGraphqlService.Verify(x => x.QueryRepositoryByName(name, owner), Times.Once);
     }
 
+    /// <summary>
+    /// This tests the GetByName method of the SpiderProjectService.
+    /// It tests if the method calls the correct services.
+    /// We test this by creating a mock of the GitHubGraphqlService.
+    /// After that we call the GetByName method in the SpiderProjectService.
+    /// Lastly we check if the correct methods have been called the correct amount of times.
+    /// </summary>
     [Test]
     public async Task NamesTests()
     {
@@ -195,6 +243,13 @@ public class SpiderProjectServiceTests
         _mockGitHubGraphqlService.Verify(x => x.ToQueryString(It.IsAny<List<ProjectRequestDto>>()), Times.Once);
     }
     
+    /// <summary>
+    /// This tests the GetContributorsByName method of the SpiderProjectService.
+    /// It tests if the method calls the correct services.
+    /// We test this by creating a mock of the GitHubRestService.
+    /// After that we call the GetContributorsByName method in the SpiderProjectService.
+    /// Lastly we check if the correct methods have been called the correct amount of times.
+    /// </summary>
     [Test]
     public async Task ContributorTests()
     {
@@ -211,12 +266,21 @@ public class SpiderProjectServiceTests
             repoName, amount), Times.Once);
     }
 
+    /// <summary>
+    /// This tests the GetContributorsByName method of the SpiderProjectService.
+    /// It tests if the method handles the errors correctly.
+    /// We test this by creating a mock of the GitHubRestService.
+    /// After that we call the GetContributorsByName method in the SpiderProjectService.
+    /// Lastly we check if the correct errors are thrown.
+    /// </summary>
     [Test]
     public async Task ContributorErrorTests()
     {
         string repoName = "agriculture";
         string ownerName = "Seco";
         int amount = 50;
+        
+        //Test with JsonException
         _mockGitHubRestService.Setup(x => x.GetRepoContributors(It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<int>())).Throws(new JsonException());
         _spiderProjectService = new SpiderProjectService(_mockGitHubGraphqlService.Object, _graphqlDataConverter,
@@ -224,6 +288,7 @@ public class SpiderProjectServiceTests
         Assert.ThrowsAsync<HttpRequestException>(async () => await _spiderProjectService.GetContributorsByName(
             repoName, ownerName, amount));
 
+        //Test with NullReferenceException
         _mockGitHubRestService.Setup(x => x.GetRepoContributors(It.IsAny<string>(),
             It.IsAny<string>(), It.IsAny<int>())).Throws(new NullReferenceException());
         _spiderProjectService = new SpiderProjectService(_mockGitHubGraphqlService.Object, _graphqlDataConverter,
@@ -231,6 +296,7 @@ public class SpiderProjectServiceTests
         Assert.ThrowsAsync<HttpRequestException>(async () => await _spiderProjectService.GetContributorsByName(
             repoName, ownerName, amount));
         
+        //Test with Exception
         _mockGitHubRestService.Setup(x => x.GetRepoContributors(It.IsAny<string>(),
             It.IsAny<string>(), It.IsAny<int>())).Throws(new Exception());
         _spiderProjectService = new SpiderProjectService(_mockGitHubGraphqlService.Object, _graphqlDataConverter,

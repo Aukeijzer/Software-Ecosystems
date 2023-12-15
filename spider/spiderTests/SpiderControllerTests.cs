@@ -17,6 +17,14 @@ public class SpiderControllerTests
         _mockSpiderProjectService = new Moq.Mock<ISpiderProjectService>();
     }
     
+    /// <summary>
+    /// This tests the GetByKeyword method of the SpiderController.
+    /// It tests if the method calls the GetByKeyword method of the SpiderProjectService.
+    /// We test this by setting up a mock SpiderProjectService and calling the GetByKeyword method of the SpiderController.
+    /// After that we verify if the GetByKeyword method of the SpiderProjectService has been called.
+    /// Lastly we call the GetByKeyword method of the SpiderController with an additional cursor parameter.
+    /// After that we verify if the GetByKeyword method of the SpiderProjectService has been called again.
+    /// </summary>
     [Test]
     public async Task ControllerSearchTest()
     {
@@ -35,6 +43,14 @@ public class SpiderControllerTests
             It.IsAny<int>(), It.IsAny<string?>()), Times.Exactly(2));
     }
 
+    /// <summary>
+    /// This tests the GetByTopic method of the SpiderController.
+    /// It tests if the method calls the GetByTopic method of the SpiderProjectService.
+    /// We test this by setting up a mock SpiderProjectService and calling the GetByTopic method of the SpiderController.
+    /// After that we verify if the GetByTopic method of the SpiderProjectService has been called.
+    /// Lastly we call the GetByTopic method of the SpiderController with an additional cursor parameter.
+    /// After that we verify if the GetByTopic method of the SpiderProjectService has been called again.
+    /// </summary>
     [Test]
     public async Task ControllerTopicSearchTest()
     {
@@ -57,6 +73,12 @@ public class SpiderControllerTests
             amount, cursor), Times.Once);
     }
     
+    /// <summary>
+    /// This tests the GetByName method of the SpiderController.
+    /// It tests if the method calls the GetByName method of the SpiderProjectService.
+    /// We test this by setting up a mock SpiderProjectService and calling the GetByName method of the SpiderController.
+    /// After that we verify if the GetByName method of the SpiderProjectService has been called.
+    /// </summary>
     [Test]
     public async Task ControllerNameTest()
     {
@@ -73,6 +95,12 @@ public class SpiderControllerTests
             owner), Times.Once);
     }
 
+    /// <summary>
+    /// This tests the GetByNames method of the SpiderController.
+    /// It tests if the method calls the GetByNames method of the SpiderProjectService.
+    /// We test this by setting up a mock SpiderProjectService and calling the GetByNames method of the SpiderController.
+    /// After that we verify if the GetByNames method of the SpiderProjectService has been called.
+    /// </summary>
     [Test]
     public async Task ControllerNamesTest()
     {
@@ -87,6 +115,12 @@ public class SpiderControllerTests
             input), Times.Once);
     }
     
+    /// <summary>
+    /// This tests the GetContributorsByName method of the SpiderController.
+    /// It tests if the method calls the GetContributorsByName method of the SpiderProjectService.
+    /// We test this by setting up a mock SpiderProjectService and calling the GetContributorsByName method of the SpiderController.
+    /// After that we verify if the GetContributorsByName method of the SpiderProjectService has been called.
+    /// </summary>
     [Test]
     public async Task ControllerContributorsTest()
     {
@@ -103,6 +137,13 @@ public class SpiderControllerTests
             name, owner, amount), Times.Once);
     }
 
+    /// <summary>
+    /// This tests the GetContributorsByName method of the SpiderController.
+    /// It tests if the method calls the GetContributorsByName method of the SpiderProjectService.
+    /// We test this by setting up a mock SpiderProjectService that returns null and calling the GetContributorsByName
+    /// method of the SpiderController.
+    /// After that we verify if the GetContributorsByName method of the SpiderProjectService has been called.
+    /// </summary>
     [Test]
     public async Task ControllerContributorsNullTest()
     {

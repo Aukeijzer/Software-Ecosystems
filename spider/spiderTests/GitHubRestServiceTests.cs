@@ -22,9 +22,18 @@ public class GitHubRestServiceTests
         _restResult = "[\n  {\n    \"login\": \"burisu\",\n    \"id\": 240595,\n    \"node_id\": \"U_kgDOAAOr0w\",\n    \"avatar_url\": \"https://avatars.githubusercontent.com/u/240595?v\\u003d4\",\n    \"gravatar_id\": \"\",\n    \"url\": \"https://api.github.com/users/burisu\",\n    \"html_url\": \"https://github.com/burisu\",\n    \"followers_url\": \"https://api.github.com/users/burisu/followers\",\n    \"following_url\": \"https://api.github.com/users/burisu/following{/other_user}\",\n    \"gists_url\": \"https://api.github.com/users/burisu/gists{/gist_id}\",\n    \"starred_url\": \"https://api.github.com/users/burisu/starred{/owner}{/repo}\",\n    \"subscriptions_url\": \"https://api.github.com/users/burisu/subscriptions\",\n    \"organizations_url\": \"https://api.github.com/users/burisu/orgs\",\n    \"repos_url\": \"https://api.github.com/users/burisu/repos\",\n    \"events_url\": \"https://api.github.com/users/burisu/events{/privacy}\",\n    \"received_events_url\": \"https://api.github.com/users/burisu/received_events\",\n    \"type\": \"User\",\n    \"site_admin\": false,\n    \"contributions\": 3447\n  },\n  {\n    \"login\": \"ionosphere\",\n    \"id\": 1838491,\n    \"node_id\": \"U_kgDOABwNmw\",\n    \"avatar_url\": \"https://avatars.githubusercontent.com/u/1838491?v\\u003d4\",\n    \"gravatar_id\": \"\",\n    \"url\": \"https://api.github.com/users/ionosphere\",\n    \"html_url\": \"https://github.com/ionosphere\",\n    \"followers_url\": \"https://api.github.com/users/ionosphere/followers\",\n    \"following_url\": \"https://api.github.com/users/ionosphere/following{/other_user}\",\n    \"gists_url\": \"https://api.github.com/users/ionosphere/gists{/gist_id}\",\n    \"starred_url\": \"https://api.github.com/users/ionosphere/starred{/owner}{/repo}\",\n    \"subscriptions_url\": \"https://api.github.com/users/ionosphere/subscriptions\",\n    \"organizations_url\": \"https://api.github.com/users/ionosphere/orgs\",\n    \"repos_url\": \"https://api.github.com/users/ionosphere/repos\",\n    \"events_url\": \"https://api.github.com/users/ionosphere/events{/privacy}\",\n    \"received_events_url\": \"https://api.github.com/users/ionosphere/received_events\",\n    \"type\": \"User\",\n    \"site_admin\": false,\n    \"contributions\": 3348\n  },\n  {\n    \"login\": \"Aquaj\",\n    \"id\": 2871879,\n    \"node_id\": \"U_kgDOACvSRw\",\n    \"avatar_url\": \"https://avatars.githubusercontent.com/u/2871879?v\\u003d4\",\n    \"gravatar_id\": \"\",\n    \"url\": \"https://api.github.com/users/Aquaj\",\n    \"html_url\": \"https://github.com/Aquaj\",\n    \"followers_url\": \"https://api.github.com/users/Aquaj/followers\",\n    \"following_url\": \"https://api.github.com/users/Aquaj/following{/other_user}\",\n    \"gists_url\": \"https://api.github.com/users/Aquaj/gists{/gist_id}\",\n    \"starred_url\": \"https://api.github.com/users/Aquaj/starred{/owner}{/repo}\",\n    \"subscriptions_url\": \"https://api.github.com/users/Aquaj/subscriptions\",\n    \"organizations_url\": \"https://api.github.com/users/Aquaj/orgs\",\n    \"repos_url\": \"https://api.github.com/users/Aquaj/repos\",\n    \"events_url\": \"https://api.github.com/users/Aquaj/events{/privacy}\",\n    \"received_events_url\": \"https://api.github.com/users/Aquaj/received_events\",\n    \"type\": \"User\",\n    \"site_admin\": false,\n    \"contributions\": 2022\n  }]";
     }
 
+    /// <summary>
+    /// Tests the GetRepoContributors method of the GitHubRestService.
+    /// Checks that the method returns the correct number of contributors and that it makes the correct number of
+    /// requests to the GitHub API.
+    /// We test this by mocking the client and setting up the response to return a list of contributors.
+    /// This test includes a lot of similar tests with slightly different inputs to test the different paths in the
+    /// GetRepoContributors method.
+    /// </summary>
     [Test]
     public async Task GetRepoContributorsTests()
     {
+        //Tests where the client returns 3 contributors
         _restClient.Setup(x =>
                 x.ExecuteAsync(It.IsAny<RestRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new RestResponse
@@ -50,6 +59,7 @@ public class GitHubRestServiceTests
             It.IsAny<CancellationToken>()), Times.Exactly(3));
         Assert.AreEqual(3, result.Count);
         
+        //Tests where the client returns 50 contributors
         _restClient.Setup(x =>
                 x.ExecuteAsync(It.IsAny<RestRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new RestResponse
@@ -71,6 +81,7 @@ public class GitHubRestServiceTests
             It.IsAny<CancellationToken>()), Times.Exactly(6));
         Assert.AreEqual(100, result.Count);
 
+        //Tests where the client returns 0 contributors
         _restClient.Setup(x => x.ExecuteAsync(It.IsAny<RestRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new RestResponse
             {
@@ -93,9 +104,15 @@ public class GitHubRestServiceTests
         Assert.AreEqual(new List<ContributorDto>(), result);
     }
     
+    /// <summary>
+    /// Tests the GetRepoContributors method of the GitHubRestService.
+    /// Checks that the method handles errors correctly.
+    /// We test this by mocking the client and setting up the response to return an error.
+    /// </summary>
     [Test]
     public async Task GetRepoContributorsErrorTests()
     {
+        //Tests where the rate limit is exceeded
         List<HeaderParameter> headers = new List<HeaderParameter>();
         headers.Add(new HeaderParameter("X-RateLimit-Remaining", "0"));
         headers.Add(new HeaderParameter("X-RateLimit-Reset",
@@ -118,6 +135,7 @@ public class GitHubRestServiceTests
             It.IsAny<CancellationToken>()), Times.Once);
         Assert.AreEqual(new List<ContributorDto>(), result);
         
+        //Tests where the secondary rate limit is exceeded
         headers = new List<HeaderParameter>();
         headers.Add(new HeaderParameter("X-RateLimit-Remaining", "1"));
         headers.Add(new HeaderParameter("Retry-After", "1"));
@@ -143,6 +161,7 @@ public class GitHubRestServiceTests
             It.IsAny<CancellationToken>()), Times.Exactly(4));
         Assert.AreEqual(new List<ContributorDto>(), result);
         
+        //Tests where the client returns an error
         headers = new List<HeaderParameter>();
         headers.Add(new HeaderParameter("X-RateLimit-Remaining", "1"));
         
