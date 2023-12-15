@@ -7,16 +7,12 @@ namespace spider.Services;
 
 public class GitHubRestService : IGitHubRestService
 {
-    private readonly RestClient _gitHubRestClient;
+    private readonly IRestClient _gitHubRestClient;
     private readonly ILogger<GitHubRestService> _logger;
     private readonly SystemTextJsonSerializer _jsonSerializer;
-    public GitHubRestService()
+    public GitHubRestService(IRestClient gitHubRestClient)
     {
-        var options = new RestClientOptions("https://api.github.com");
-        _gitHubRestClient = new RestClient(options);
-        _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable(
-            "API_Token"));
-        _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
+        _gitHubRestClient = gitHubRestClient;
         _logger = new Logger<GitHubRestService>(new LoggerFactory());
         _jsonSerializer = new SystemTextJsonSerializer();
     }
@@ -43,16 +39,16 @@ public class GitHubRestService : IGitHubRestService
                 request.AddQueryParameter("page", page);
                 try
                 {
-                    var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
-                    if (temp.IsSuccessful)
+                    var restResponse = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
+                    if (restResponse.IsSuccessful)
                     {
-                        if (temp.Content == null || temp.ContentLength == 0)
+                        if (restResponse.Content == null || restResponse.ContentLength == 0)
                         {
                             return result;
                         }
                         
                         List<ContributorDto> restResult =
-                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(temp);
+                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(restResponse);
 
                         result.AddRange(restResult);
                         if (restResult.Count < 50)
@@ -62,7 +58,7 @@ public class GitHubRestService : IGitHubRestService
                     }
                     else
                     {
-                        HandleError(temp);
+                        HandleError(restResponse);
                     }
                 }
                 catch (Exception e)

@@ -202,7 +202,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                     _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", this, repositoryName);
                     break;
             }
-            throw;
+            throw; 
         }
     }
     
@@ -225,6 +225,10 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                 var temp = await QueryRepositoriesByTopic(topic, 25, cursor);
                 amount -= 25;
                 projects.Add(temp);
+                if (temp.Topic.Repositories.PageInfo?.HasNextPage != true)
+                {
+                  break;
+                }
                 cursor = temp.Topic?.Repositories.PageInfo?.EndCursor;
             }
             else
@@ -390,7 +394,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     }
     
     /// <summary>
-    /// QueryRepositoryByName sends a graphql request to the github api and returns on success. Does not handle errors
+    /// QueryRepositoryByName sends a graphql request to the github api and returns a repository on success. Does not handle errors
     /// yet
     /// </summary>
     /// <param name="repositoryName">Name of the repository</param>
