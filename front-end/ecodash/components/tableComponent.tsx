@@ -22,21 +22,22 @@ interface infoCardDataTableProps<T>{
 export default function TableComponent<T extends {}>(props: infoCardDataTableProps<T>){
     return(
         <div>
-            <Table>
-                <Table.Head>
-                    {props.headers.map((header) => (
-                        <Table.HeadCell key={header}>
-                            {header}
-                        </Table.HeadCell>
-                    ))}
-                </Table.Head>
-
-                <Table.Body className="divide-y">
+            <table className="w-full text-left text-gray-500">
+                <thead className="text-gray-700 uppercase bg-gray-200">
+                    <tr>
+                        {props.headers.map((header) => (
+                            <th key={header} className="px-6 py-3">
+                                {header}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
                     {props.items.map((item) => (
                         item.renderAsTableItem()
                     ))}
-                </Table.Body>
-            </Table>
+                </tbody>
+            </table>
         </div>
     )
 }

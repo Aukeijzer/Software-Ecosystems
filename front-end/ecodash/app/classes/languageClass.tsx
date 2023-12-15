@@ -19,6 +19,19 @@ export default class languageClass implements displayableListItem, displayableGr
             </div>
         )
     }
+    
+    renderAsTableItem(): React.JSX.Element {
+        return(
+            <tr className="bg-white border-b hover:bg-gray-100">
+                <th className="px-6 py-4 font-medium text-gray-900">
+                    {this.language.valueOf()}
+                </th>
+                <td className="px-6 py-4">
+                    {this.percentage}%
+                </td>
+            </tr>
+        )
+    }
 
     renderAsGraphItem(index: number): React.JSX.Element {
         const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
