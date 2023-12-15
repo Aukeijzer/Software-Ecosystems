@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using spider.Services;
+using spider.Wrappers;
 
 namespace spiderIntegrationTests;
 
@@ -18,7 +19,8 @@ public class SpiderWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
     {
         
         // This is the new service that will be used instead of the default GitHubGraphqlService.
-        var service = new GitHubGraphqlService(new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer()));
+        var service = new GitHubGraphqlService(new ClientWrapper(new GraphQLHttpClient(
+            "https://api.github.com/graphql", new SystemTextJsonSerializer())));
         
         builder.ConfigureTestServices(services =>
         {
