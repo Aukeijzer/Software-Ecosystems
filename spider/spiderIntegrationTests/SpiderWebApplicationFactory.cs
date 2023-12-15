@@ -1,4 +1,4 @@
-﻿using GraphQL.Client.Http;
+using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
