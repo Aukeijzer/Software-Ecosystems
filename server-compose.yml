@@ -1,12 +1,6 @@
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Docker compose reference guide at
-# https://docs.docker.com/compose/compose-file/
-
-# Here the instructions define your application as a service called "server".
-# This service is built from the Dockerfile in the current directory.
-# You can add other services your application may depend on here, such as a
-# database or a cache. For examples, see the Awesome Compose repository:
-# https://github.com/docker/awesome-compose
+#
+# This file should be identical to the docker-compose file aside from the certificates
+#
 services:
 ####
   # Frontend
@@ -29,7 +23,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./front-end/nginx/certs:/certs:ro #certs on local
+      - /local/certs:/certs:ro #certs on server
     networks:
       - secodash-network
 #####
