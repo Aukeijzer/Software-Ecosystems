@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Certificate;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using System.Security.Claims;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
-using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Dtos.Project;
 using SECODashBackend.Logging;
@@ -22,6 +24,39 @@ builder.Services.AddCors(options =>
                 policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
             });
 });
+
+
+//TODO: configure authentication below to only accept certain urls/certs.
+builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+    .AddCertificate(options =>
+    {
+        options.Events = new CertificateAuthenticationEvents
+        {
+            OnCertificateValidated = context =>
+            {
+                var claims = new[]
+                {
+                    new Claim(
+                        ClaimTypes.NameIdentifier,
+                        context.ClientCertificate.Subject,
+                        ClaimValueTypes.String, context.Options.ClaimsIssuer),
+                    new Claim(
+                        ClaimTypes.Name,
+                        context.ClientCertificate.Subject,
+                        ClaimValueTypes.String, context.Options.ClaimsIssuer)
+                };
+
+                context.Principal = new ClaimsPrincipal(
+                    new ClaimsIdentity(claims, context.Scheme.Name));
+                context.Success();
+
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+
+
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);

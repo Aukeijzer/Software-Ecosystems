@@ -15,7 +15,7 @@ services:
       context: ./front-end/ecodash/
       dockerfile: ./Dockerfile
     environment:
-      ASPNETCORE_URLS: http://+:3000
+      ASPNETCORE_URLS: https://+:3000;http://*:3000
     ports:
       - 3000:3000
     networks:
@@ -42,9 +42,14 @@ services:
       - secodash-network
     environment:
       API_Token: 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
-      ASPNETCORE_URLS: http://+:5205
+      ASPNETCORE_URLS: https://+:7167;http://*:5205
+      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: ./certs/privkey.pem
+      ASPNETCORE_Kestrel__Certificates__Default__Path: ./certs/fullchain.pem
     ports:
       - 5205:5205
+      - 7167:7167
+    volumes:
+      - ./front-end/nginx/certs:/publish/certs:ro
 
 #####
   # Backend 
@@ -70,14 +75,19 @@ services:
       context: ./back-end/
       dockerfile: ./Dockerfile
     environment:
-      ASPNETCORE_URLS: http://+:5003
+      ASPNETCORE_URLS: https://+:7260;http://*:5003
+      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: ./certs/privkey.pem
+      ASPNETCORE_Kestrel__Certificates__Default__Path: ./certs/fullchain.pem
     ports:
       - 5003:5003
+      - 7260:7260
     networks:
       - secodash-network
     restart: always
     depends_on:
       - db
+    volumes:
+      - ./front-end/nginx/certs:/publish/certs:ro
     
 ####
   # Volumes and networks 
