@@ -293,7 +293,7 @@ public class GitHubGraphqlServiceTests
     /// times.
     /// </summary>
     [Test]
-    public async Task ToQueryStringTest()
+    public async Task GetByNamesTests()
     {
         var client = new Mock<IClientWrapper>();
         client.Setup<Task<GraphQLResponse<SpiderData>>>(x => x.SendQueryAsync<SpiderData>(
@@ -312,10 +312,9 @@ public class GitHubGraphqlServiceTests
             HttpStatusCode.Accepted));
         _gitHubGraphqlService = new GitHubGraphqlService(client.Object);
         
-        var test = new List<ProjectRequestDto> { new() {RepoName = "test", OwnerName = "test"} };
-        await _gitHubGraphqlService.ToQueryString(test);
-        
-        client.Verify(x => x.SendQueryAsync<SpiderData>(It.IsAny<GraphQLHttpRequest>()),
+        var test = new List<ProjectRequestDto> { new() {RepoName = "agriculture", OwnerName = "seco"} };
+        await _gitHubGraphqlService.GetByNames(test);
+        client.Verify(x => x.SendQueryAsync<SpiderData>(It.Is<GraphQLHttpRequest>(y => y.Variables.ToString().Contains("repo:seco/agriculture"))),
             Times.Once);
     }
 }

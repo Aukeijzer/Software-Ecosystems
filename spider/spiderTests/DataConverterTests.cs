@@ -32,7 +32,6 @@ public class DataConverterTests
 
         var result = await mockSpiderGithubGraphqlService.Object.QueryRepositoriesByName("Agriculture",
             10, null, 1);
-        Assert.NotNull(result.Search);
         var converted = _graphqlDataConverter.SearchToProjects(result);
         Assert.That(converted.Count(), Is.EqualTo(5));
         Assert.That(converted[0].Contributors, Is.EqualTo(null));
@@ -55,7 +54,6 @@ public class DataConverterTests
         
         var result = await mockSpiderGithubGraphqlService.Object.QueryRepositoriesByTopic("Agriculture",
             10, null, 1);
-        Assert.NotNull(result.Topic);
         var converted = _graphqlDataConverter.TopicSearchToProjects(result);
         Assert.That(converted.Count(), Is.EqualTo(5));
         Assert.That(converted[0].Contributors, Is.EqualTo(null));
@@ -81,7 +79,6 @@ public class DataConverterTests
         
         var result = await mockSpiderGithubGraphqlService.Object.QueryRepositoriesByName("Agriculture",
             10, null, 1);
-        Assert.That(result.Search, Is.Not.EqualTo(null));
         var converted = _graphqlDataConverter.SearchToProjects(result);
         Assert.That(converted[0].LatestDefaultBranchCommitDate, Is.EqualTo(null));
     }

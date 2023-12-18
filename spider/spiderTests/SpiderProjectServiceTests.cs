@@ -237,12 +237,12 @@ public class SpiderProjectServiceTests
             RepoName = "agriculture",
             OwnerName = "Seco"
         };
-        _mockGitHubGraphqlService.Setup(x => x.ToQueryString(It.IsAny<List<ProjectRequestDto>>()))
+        _mockGitHubGraphqlService.Setup(x => x.GetByNames(It.IsAny<List<ProjectRequestDto>>()))
             .ReturnsAsync(_keywordOutput);
         _spiderProjectService = new SpiderProjectService(_mockGitHubGraphqlService.Object, _graphqlDataConverter,
             _mockGitHubRestService.Object);
         await _spiderProjectService.GetByNames([input]);
-        _mockGitHubGraphqlService.Verify(x => x.ToQueryString(It.IsAny<List<ProjectRequestDto>>()), Times.Once);
+        _mockGitHubGraphqlService.Verify(x => x.GetByNames(It.IsAny<List<ProjectRequestDto>>()), Times.Once);
     }
     
     /// <summary>
