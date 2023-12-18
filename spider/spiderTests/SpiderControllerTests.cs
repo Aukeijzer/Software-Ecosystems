@@ -8,14 +8,6 @@ namespace spiderTests;
 [TestFixture]
 public class SpiderControllerTests
 {
-    private SpiderController _spiderController;
-    private Mock<ISpiderProjectService> _mockSpiderProjectService;
-
-    [SetUp]
-    public void Setup()
-    {
-        _mockSpiderProjectService = new Moq.Mock<ISpiderProjectService>();
-    }
     
     /// <summary>
     /// This tests the GetByKeyword method of the SpiderController.
@@ -28,18 +20,19 @@ public class SpiderControllerTests
     [Test]
     public async Task ControllerSearchTest()
     {
-        _mockSpiderProjectService.Setup(x => x.GetByKeyword(It.IsAny<string>(),
+        var mockSpiderProjectService = new Mock<ISpiderProjectService>();
+        mockSpiderProjectService.Setup(x => x.GetByKeyword(It.IsAny<string>(),
                 It.IsAny<int>(), It.IsAny<string?>()))
             .ReturnsAsync(new List<ProjectDto>());
         
-        _spiderController = new SpiderController(_mockSpiderProjectService.Object);
+        var spiderController = new SpiderController(mockSpiderProjectService.Object);
         
-        await _spiderController.GetByKeyword("agriculture", 110);
-        _mockSpiderProjectService.Verify(x => x.GetByKeyword(It.IsAny<string>(),
+        await spiderController.GetByKeyword("agriculture", 110);
+        mockSpiderProjectService.Verify(x => x.GetByKeyword(It.IsAny<string>(),
             It.IsAny<int>(), It.IsAny<string?>()), Times.Once);
         
-        await _spiderController.GetByKeyword("agriculture", 110, "Y3Vyc29yOjE=");
-        _mockSpiderProjectService.Verify(x => x.GetByKeyword(It.IsAny<string>(),
+        await spiderController.GetByKeyword("agriculture", 110, "Y3Vyc29yOjE=");
+        mockSpiderProjectService.Verify(x => x.GetByKeyword(It.IsAny<string>(),
             It.IsAny<int>(), It.IsAny<string?>()), Times.Exactly(2));
     }
 
@@ -54,22 +47,23 @@ public class SpiderControllerTests
     [Test]
     public async Task ControllerTopicSearchTest()
     {
-        _mockSpiderProjectService.Setup(x => x.GetByTopic(It.IsAny<string>(),
+        var mockSpiderProjectService = new Mock<ISpiderProjectService>();
+        mockSpiderProjectService.Setup(x => x.GetByTopic(It.IsAny<string>(),
                 It.IsAny<int>(), It.IsAny<string?>()))
             .ReturnsAsync(new List<ProjectDto>());
         
-        _spiderController = new SpiderController(_mockSpiderProjectService.Object);
+        var spiderController = new SpiderController(mockSpiderProjectService.Object);
 
         string topic = "agriculture";
         int amount = 110;
         string cursor = "Y3Vyc29yOjE=";
         
-        await _spiderController.GetByTopic(topic, amount);
-        _mockSpiderProjectService.Verify(x => x.GetByTopic(topic,
+        await spiderController.GetByTopic(topic, amount);
+        mockSpiderProjectService.Verify(x => x.GetByTopic(topic,
             amount, null), Times.Once);
         
-        await _spiderController.GetByTopic(topic, amount, cursor);
-        _mockSpiderProjectService.Verify(x => x.GetByTopic(topic,
+        await spiderController.GetByTopic(topic, amount, cursor);
+        mockSpiderProjectService.Verify(x => x.GetByTopic(topic,
             amount, cursor), Times.Once);
     }
     
@@ -82,16 +76,17 @@ public class SpiderControllerTests
     [Test]
     public async Task ControllerNameTest()
     {
-        _mockSpiderProjectService.Setup(x => x.GetByName(It.IsAny<string>(),
+        var mockSpiderProjectService = new Mock<ISpiderProjectService>();
+        mockSpiderProjectService.Setup(x => x.GetByName(It.IsAny<string>(),
                 It.IsAny<string>()))
             .ReturnsAsync(new ProjectDto() {Name = "agriculture", Owner = "Seco", Id = "123"});
-        _spiderController = new SpiderController(_mockSpiderProjectService.Object);
+        var spiderController = new SpiderController(mockSpiderProjectService.Object);
         
         string name = "agriculture";
         string owner = "Seco";
         
-        await _spiderController.GetByName(name, owner);
-        _mockSpiderProjectService.Verify(x => x.GetByName(name,
+        await spiderController.GetByName(name, owner);
+        mockSpiderProjectService.Verify(x => x.GetByName(name,
             owner), Times.Once);
     }
 
@@ -104,14 +99,18 @@ public class SpiderControllerTests
     [Test]
     public async Task ControllerNamesTest()
     {
-        _mockSpiderProjectService.Setup(x => x.GetByNames(
+        var mockSpiderProjectService = new Mock<ISpiderProjectService>();
+        mockSpiderProjectService.Setup(x => x.GetByNames(
                 It.IsAny<List<ProjectRequestDto>>())).ReturnsAsync(new List<ProjectDto>());
-        _spiderController = new SpiderController(_mockSpiderProjectService.Object);
-        List<ProjectRequestDto> input = new List<ProjectRequestDto>();
-        input.Add(new ProjectRequestDto() {OwnerName = "Seco", RepoName = "agriculture"});
-        
-        await _spiderController.GetByNames(input);
-        _mockSpiderProjectService.Verify(x => x.GetByNames(
+        var spiderController = new SpiderController(mockSpiderProjectService.Object);
+        List<ProjectRequestDto> input =
+        [
+            new ProjectRequestDto() { OwnerName = "Seco", RepoName = "agriculture" }
+
+        ];
+
+        await spiderController.GetByNames(input);
+        mockSpiderProjectService.Verify(x => x.GetByNames(
             input), Times.Once);
     }
     
@@ -124,16 +123,17 @@ public class SpiderControllerTests
     [Test]
     public async Task ControllerContributorsTest()
     {
-        _mockSpiderProjectService.Setup(x => x.GetContributorsByName(
+        var mockSpiderProjectService = new Mock<ISpiderProjectService>();
+        mockSpiderProjectService.Setup(x => x.GetContributorsByName(
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).ReturnsAsync(new List<ContributorDto>());
-        _spiderController = new SpiderController(_mockSpiderProjectService.Object);
+        var spiderController = new SpiderController(mockSpiderProjectService.Object);
         
         string name = "agriculture";
         string owner = "Seco";
         int amount = 60;
 
-        await _spiderController.GetContributorsByName(name, owner, amount);
-        _mockSpiderProjectService.Verify(x => x.GetContributorsByName(
+        await spiderController.GetContributorsByName(name, owner, amount);
+        mockSpiderProjectService.Verify(x => x.GetContributorsByName(
             name, owner, amount), Times.Once);
     }
 
@@ -148,16 +148,17 @@ public class SpiderControllerTests
     public async Task ControllerContributorsNullTest()
     {
         List<ContributorDto>? output = null;
-        _mockSpiderProjectService.Setup(x => x.GetContributorsByName(
+        var mockSpiderProjectService = new Mock<ISpiderProjectService>();
+        mockSpiderProjectService.Setup(x => x.GetContributorsByName(
             It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).ReturnsAsync(output);
-        _spiderController = new SpiderController(_mockSpiderProjectService.Object);
+        var spiderController = new SpiderController(mockSpiderProjectService.Object);
         
         string name = "agriculture";
         string owner = "Seco";
         int amount = 60;
         
-        await _spiderController.GetContributorsByName(name, owner, amount);
-        _mockSpiderProjectService.Verify(x => x.GetContributorsByName(
+        await spiderController.GetContributorsByName(name, owner, amount);
+        mockSpiderProjectService.Verify(x => x.GetContributorsByName(
             name, owner, amount), Times.Once);
     }
 }
