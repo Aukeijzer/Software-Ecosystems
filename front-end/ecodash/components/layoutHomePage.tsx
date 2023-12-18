@@ -75,11 +75,12 @@ export default function LayoutHomePage(){
     let staticProp = true;
     var cardWrappedList : cardWrapper[] = [];
     if(data){
-
         if(user){
             //If user is admin, make cards draggable
-           staticProp = !user.isAdmin;
-           if(user.isAdmin){
+            if(user.userType === "Admin" || user.userType === "RootAdmin"){
+                staticProp = false;
+            
+          
                 //Create new dashboard card
                 const newDashboardButton = <div  onClick={() => Router.push('/newDashboard')}>Create </div>
                 const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton}/>

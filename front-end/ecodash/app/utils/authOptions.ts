@@ -62,6 +62,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({token , user }) {
             if(user){
                 token.id = user.id;
+                //For now we use, email as username, talk to client about this.
                 token.userType = await fetchIsAdmin(user.id, user.email!);
             }
             return token;
@@ -85,7 +86,7 @@ export const authOptions: NextAuthOptions = {
  * Fetches the isAdmin status for a given user.
  * @param userId - The ID of the user.
  * @param username - The username of the user
- * @returns A Promise that resolves to a boolean indicating whether the user is an admin or not.
+ * @returns A Promise that resolves to string of userType (Options are: User, Admin, RootAdmin).
  */
 
 async function fetchIsAdmin(userId: string, username: string) {
