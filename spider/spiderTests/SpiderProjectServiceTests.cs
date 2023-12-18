@@ -188,7 +188,7 @@ public class SpiderProjectServiceTests
             OwnerName = "Seco"
         };
         _mockGitHubGraphqlService.Setup(x => x.ToQueryString(It.IsAny<List<ProjectRequestDto>>()))
-            .ReturnsAsync(keywordOutput);
+            .ReturnsAsync([keywordOutput, keywordOutput]);
         _spiderProjectService = new SpiderProjectService(_mockGitHubGraphqlService.Object, _graphqlDataConverter,
             _mockGitHubRestService.Object);
         _spiderProjectService.GetByNames(new List<ProjectRequestDto>() {input});

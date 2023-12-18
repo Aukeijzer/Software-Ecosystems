@@ -132,36 +132,46 @@ public class SpiderProjectService : ISpiderProjectService
 
     }
     
-    //todo: add contributors to the result
     /// <summary>
-    /// GetByName gets a repository based on it's name and ownerName
+    /// GetByName gets a repository based on it's name and ownerName. The result includes contributors.
     /// </summary>
     /// <param name="name">Repository name</param>
     /// <param name="ownerName">repository owner name</param>
     /// <returns>A single repository in the form of ProjectDto</returns>
     public async Task<ProjectDto> GetByName(string name, string ownerName)
     {
-        var result = await _gitHubGraphqlService.QueryRepositoryByName(name, ownerName);        
+        var repo = await _gitHubGraphqlService.QueryRepositoryByName(name, ownerName);
+        var result = _graphqlDataConverter.RepositoryToProject(repo.Repository);
+        result.Contributors = await GetContributorsByName(name, ownerName, 100);
         _logger.LogInformation("{Origin}: Returning repository {name} owned by: {owner}.",
             this, name , ownerName);
-        return _graphqlDataConverter.RepositoryToProject(result.Repository);
+        return result;
     }
     
-    //todo: add contributors to the result
     /// <summary>
-    /// GetByNames gets repositories by their name and ownerNames
+    /// GetByNames gets repositories by their name and ownerNames. The result includes contributors.
     /// </summary>
     /// <param name="repos">A list of projectRequestDtos with at least a repoName and ownerName</param>
     /// <returns>Returns the list of requested repositories in the form of List&lt;ProjectDto&gt;</returns>
     public async Task<List<ProjectDto>> GetByNames(List<ProjectRequestDto> repos)
     {
-        var result = _graphqlDataConverter.SearchToProjects(await _gitHubGraphqlService
-            .ToQueryString(repos));
+        var listResult = await _gitHubGraphqlService.ToQueryString(repos);
+        List<ProjectDto> result = new List<ProjectDto>();
+        foreach (var spiderData in listResult)
+        {
+            var temp = _graphqlDataConverter.SearchToProjects(spiderData);
+            var tasks = temp.Select(async project =>
+            {
+                var response = await GetContributorsByName(project.Name, project.Owner, 100);
+                project.Contributors = response;
+            });
+            await Task.WhenAll(tasks);
+            result.AddRange(temp);
+        }
         _logger.LogInformation("{Origin}: Returning all requested repositories.", this);
         return result;
     }
     
-    //todo: add contributors to the result
     /// <summary>
     /// Get ContributorsByName gets the contributors of a repository based on the repositories name and ownerName
     /// </summary>

@@ -502,20 +502,31 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     /// <param name="repos">A list of repository names and owner names</param>
     /// <returns>list of repositories in the form of SpiderData</returns>
     // todo only gets upto 1000 repositories
-    public async Task<SpiderData> ToQueryString(List<ProjectRequestDto> repos)
+    public async Task<List<SpiderData>> ToQueryString(List<ProjectRequestDto> repos)
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        foreach (var repo in repos)
+      Queue<ProjectRequestDto> queue = new Queue<ProjectRequestDto>(repos);
+      StringBuilder stringBuilder = new StringBuilder();
+      List<SpiderData> data = new List<SpiderData>();
+      while (queue.Count > 0)
+      {
+        for (int i = 0; i < 25; i++)
         {
-            stringBuilder.Append("repo:");
-            stringBuilder.Append(repo.OwnerName);
-            stringBuilder.Append('/');
-            stringBuilder.Append(repo.RepoName);
-            stringBuilder.Append(' ');
+          if (queue.Count == 0)
+          {
+            break;
+          }
+          var repo = queue.Dequeue();
+          stringBuilder.Append("repo:");
+          stringBuilder.Append(repo.OwnerName);
+          stringBuilder.Append('/');
+          stringBuilder.Append(repo.RepoName);
+          stringBuilder.Append(' ');
         }
-
-        string query = stringBuilder.ToString();
         
-        return (await QueryRepositoriesByName(query, repos.Count));
+        string query = stringBuilder.ToString();
+        data.Add(await QueryRepositoriesByName(query, repos.Count)); 
+      }
+      
+      return (data);
     }
 }
