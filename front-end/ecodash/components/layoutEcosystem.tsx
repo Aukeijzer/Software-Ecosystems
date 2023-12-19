@@ -186,9 +186,9 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Prepare variables before we have data so we can render before data
     var cardWrappedList : cardWrapper[] = []
-   
-
     if(data){
+        //Real data
+    
         //Top 5 topics
         //First Convert DTO's to Classes
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);

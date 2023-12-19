@@ -1,6 +1,9 @@
 import React from "react";
+import displayableListItem from "./displayableListItem";
+import displayableTableItem from "./displayableTableItem";
+import displayableGraphItem from "./displayableGraphItem";
 
-export default class contributorClass {
+export default class contributorClass implements displayableListItem, displayableTableItem, displayableGraphItem {
     name: string;
     contributions: number;
     constructor(name: string, contributions: number) {
@@ -22,7 +25,7 @@ export default class contributorClass {
             </div>
         )
     }
-    renderAsGraph(index: number): React.JSX.Element {
+    renderAsGraphItem(index: number): React.JSX.Element {
         return(
             <div>
 

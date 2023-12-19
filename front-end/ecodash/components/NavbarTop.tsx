@@ -28,6 +28,7 @@ export default function NavBarTop(){
                     data-cy='navLogo'
                     src={logo}
                     alt="SECODash logo"
+                    //className='mr-3 h-6 sm:h-9'
                     width={40}
                     height={40}
                 />

@@ -2,7 +2,6 @@
 import { ExtendedUser } from '@/app/utils/authOptions';
 import { Card } from 'flowbite-react'
 import { useSession } from 'next-auth/react';
-import { useEffect, useState} from "react"
 
 interface ecoSystemDescriptionProps{
     ecosystem: string,

@@ -6,7 +6,7 @@ import ListComponent from "@/components/listComponent";
 import GraphLine from "@/components/graphLine";
 import displayableGraphItem from "../classes/displayableGraphItem";
 import displayableListItem from "../classes/displayableListItem";
-import { stat } from "fs";
+
 
 /**
  * Builds a pie graph card.
