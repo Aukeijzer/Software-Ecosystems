@@ -33,7 +33,7 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     }
     
     /// <summary>
-    /// Returns a list of projects that were created in the given DateRange and contain the given topic.
+    /// Returns a list of projects that were created in the given DateRange and contain all the given topics
     /// </summary>
     /// <param name="st"></param>
     /// <param name="et"></param>
