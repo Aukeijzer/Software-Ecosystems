@@ -156,7 +156,7 @@ public class SpiderProjectService : ISpiderProjectService
     public async Task<List<ProjectDto>> GetByNames(List<ProjectRequestDto> repos)
     {
         var result = _graphqlDataConverter.SearchToProjects(await _gitHubGraphqlService
-            .ToQueryString(repos));
+            .GetByNames(repos));
         _logger.LogInformation("{Origin}: Returning all requested repositories.", this);
         return result;
     }

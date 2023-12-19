@@ -1,15 +1,31 @@
+using GraphQL.Client.Abstractions.Websocket;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.SystemTextJson;
+using RestSharp;
 using spider.Converter;
 using spider.Logging;
 using spider.Services;
+using spider.Wrappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
+var token = Environment.GetEnvironmentVariable("API_Token");
+_client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+_client.HttpClient.DefaultRequestHeaders.Add("X-Github-Next-Global-ID", "1");
+
+var options = new RestClientOptions("https://api.github.com");
+var _gitHubRestClient = new RestClient(options);
+_gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + token);
+_gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IRestClient>(_gitHubRestClient);
+builder.Services.AddSingleton<IClientWrapper>(new ClientWrapper(_client));
 builder.Services.AddScoped<IGitHubGraphqlService, GitHubGraphqlService>();
 builder.Services.AddScoped<IGraphqlDataConverter, GraphqlDataConverter>();
 builder.Services.AddScoped<IGitHubRestService, GitHubRestService>();
