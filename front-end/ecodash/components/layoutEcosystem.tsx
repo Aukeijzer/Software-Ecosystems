@@ -145,7 +145,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         cardWrappedList.push(subEcosystemCard);
 
         const contributors = listContributorDTOConverter(data.topContributors);
-        const contributorCard = buildTableCard(['username', 'contributions'], contributors, "Top 5 contributors", 0, 12, 2, 5);
+        const contributorCard = buildTableCard(contributors, "", 0, 12, 1.5, 4.5);
         cardWrappedList.push(contributorCard);
 
         //Top 5 languages
