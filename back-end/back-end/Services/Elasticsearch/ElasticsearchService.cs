@@ -33,26 +33,25 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     }
     
     /// <summary>
-    /// Retrieve all related projects from elasticsearch falling in the given time frame.
+    /// Returns a list of projects that were created in the given DateRange and contain the given topic.
     /// </summary>
-    /// <param name="time"></param>
+    /// <param name="st"></param>
+    /// <param name="et"></param>
+    /// <param name="topic"></param>
     /// <returns></returns>
     /// <exception cref="HttpRequestException"></exception>
-    public async Task<List<ProjectDto>> GetProjectsByDate(DateTime st, DateTime et, string topic)
+    public async Task<List<ProjectDto>> GetProjectsByDate(DateTime st, DateTime et, List<string> topic)
     {
-        // Make the time frame bigger to account for the time it takes to mine the projects.
-        //time = time.AddDays(frame);
-        
         // Create a query that searches for projects in the given DateRange. 
         string endTime = et.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
-            startTime = st.AddMonths(-1).ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
+            startTime = st.ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
         var response = await client.SearchAsync<ProjectDto>(s => s
             .Index("projects-timed-test-02")
             .Query(q => q
                 .Range(r => r
                     .DateRange( dr => dr
                         .Field(f => f.Timestamp)
-                        .Lt(endTime)
+                        .Lte(endTime)
                         .Gte(startTime)
                         .TimeZone("+00:00")
                         .Format("yyyy-MM-dd'T'HH:mm:ss.SS")
@@ -62,7 +61,8 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
         );
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
         
-        return response.Documents.ToList().FindAll(p => p.Topics.Contains(topic));
+        return response.Documents.Where(p => topic.All(t => p.Topics.Contains(t))).ToList();
+       // return response.Documents.ToList().FindAll(p => p.Topics.Intersect(topic).Any());
     }
 
     /// <summary>
