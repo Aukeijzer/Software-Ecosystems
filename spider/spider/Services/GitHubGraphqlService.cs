@@ -500,7 +500,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     /// </summary>
     /// <param name="repos">A list of repository names and owner names</param>
     /// <returns>list of repositories in the form of SpiderData</returns>
-    public async Task<SpiderData> GetByNames(List<ProjectRequestDto> repos)
+    public async Task<List<SpiderData>> GetByNames(List<ProjectRequestDto> repos)
     {
       Queue<ProjectRequestDto> queue = new Queue<ProjectRequestDto>(repos);
       StringBuilder stringBuilder = new StringBuilder();

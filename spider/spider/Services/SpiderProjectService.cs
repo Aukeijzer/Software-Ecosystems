@@ -155,7 +155,7 @@ public class SpiderProjectService : ISpiderProjectService
     /// <returns>Returns the list of requested repositories in the form of List&lt;ProjectDto&gt;</returns>
     public async Task<List<ProjectDto>> GetByNames(List<ProjectRequestDto> repos)
     {
-        var listResult = await _gitHubGraphqlService.ToQueryString(repos);
+        var listResult = await _gitHubGraphqlService.GetByNames(repos);
         List<ProjectDto> result = new List<ProjectDto>();
         foreach (var spiderData in listResult)
         {
