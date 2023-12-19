@@ -47,10 +47,11 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <param name="time"></param>
     /// <returns></returns>
     [HttpPost("searchbytimeframe")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByTimeFrameAsync(DateTime time)
+    public async Task<ActionResult<List<ProjectDto>>> GetByTimeFrameAsync(DateTime st, DateTime et, string topic)
     {
-        logger.LogInformation("{Origin}: Projects requested with time: '{time}' '.", this, time);
-        var result = await projectsService.GetByTimeFrameAsync(time);
+        logger.LogInformation("{Origin}: Projects requested with time: '{starttime}' '.", this, st);
+        var result = await projectsService.GetByTimeFrameAsync(st, et, topic);
         return new ObjectResult(result);
     }
+    
 }

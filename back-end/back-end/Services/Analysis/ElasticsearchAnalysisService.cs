@@ -203,7 +203,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TimedData = GetTimedData(result),
+            TimedData = GetTimedData(result, topics),
             TopContributors = GetTopXContributors(result, numberOfTopContributors)
         };
     }
@@ -214,17 +214,23 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="searchResponse"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    private static List<TimedDateDto> GetTimedData(SearchResponse<ProjectDto> searchResponse)
+    private static List<TimedDateDto> GetTimedData(SearchResponse<ProjectDto> searchResponse,  List<string> giventopics)
     {
+        // Filter the projects that contain any of the specified topics
+        var filteredProjects = searchResponse.Documents.Where(s => s.Topics.Intersect(giventopics).Any());
+        
         var timedAggregate = searchResponse.Aggregations?.GetDateHistogram(TimedAggregateName);
         if (timedAggregate == null)
             throw new ArgumentException(
                 "Elasticsearch aggregate not found in search response");
 
-        var timedData = timedAggregate.Buckets.Select(b => new TimedDateDto
+        var timedData = timedAggregate.Buckets.Select(b =>
         {
-            Date = b.KeyAsString,
-            ProjectCount = (int)b.DocCount
+            return new TimedDateDto
+            {
+                Date = b.KeyAsString,
+                ProjectCount = (int)b.DocCount
+            };
         }).ToList();
         
         

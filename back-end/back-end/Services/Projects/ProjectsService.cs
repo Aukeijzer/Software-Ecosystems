@@ -41,9 +41,9 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// Requests Elasticsearch for projects related to the given time.
     /// </summary>
     /// <param name="time"></param>
-    public async Task<List<ProjectDto>> GetByTimeFrameAsync(DateTime time)
+    public async Task<List<ProjectDto>> GetByTimeFrameAsync(DateTime st, DateTime et, string topic)
     {
-        var result = await elasticsearchService.GetProjectsByDate(time);
+        var result = await elasticsearchService.GetProjectsByDate(st, et, topic);
         return result;
     }
 }

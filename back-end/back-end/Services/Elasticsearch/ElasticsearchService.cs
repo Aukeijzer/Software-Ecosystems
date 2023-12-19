@@ -38,18 +38,14 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     /// <param name="time"></param>
     /// <returns></returns>
     /// <exception cref="HttpRequestException"></exception>
-    public async Task<List<ProjectDto>> GetProjectsByDate(DateTime time)
+    public async Task<List<ProjectDto>> GetProjectsByDate(DateTime st, DateTime et, string topic)
     {
         // Make the time frame bigger to account for the time it takes to mine the projects.
-        time = time.AddDays(1);
+        //time = time.AddDays(frame);
         
-        //SearchResponse<ProjectDto> response = await client.SearchAsync<ProjectDto>(s => s
-        //     .Query(q => q.Term(r => r.Timestamp, time)));
-        
-
         // Create a query that searches for projects in the given DateRange. 
-        string endTime = time.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
-            startTime = time.AddMonths(-1).ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
+        string endTime = et.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
+            startTime = st.AddMonths(-1).ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
         var response = await client.SearchAsync<ProjectDto>(s => s
             .Index("projects-timed-test-02")
             .Query(q => q
@@ -66,7 +62,7 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
         );
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
         
-        return response.Documents.ToList();
+        return response.Documents.ToList().FindAll(p => p.Topics.Contains(topic));
     }
 
     /// <summary>
