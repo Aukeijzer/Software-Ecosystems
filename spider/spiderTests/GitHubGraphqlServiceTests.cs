@@ -316,5 +316,12 @@ public class GitHubGraphqlServiceTests
         await _gitHubGraphqlService.GetByNames(test);
         client.Verify(x => x.SendQueryAsync<SpiderData>(It.Is<GraphQLHttpRequest>(
                 y => y.Variables.ToString().Contains("repo:seco/agriculture"))), Times.Once);
+        for (int i = 0; i < 30; i++)
+        {
+            test.Add(new ProjectRequestDto {RepoName = "agriculture", OwnerName = "seco"});
+        }
+        await _gitHubGraphqlService.GetByNames(test);
+        client.Verify(x => x.SendQueryAsync<SpiderData>(It.Is<GraphQLHttpRequest>(
+            y => y.Variables.ToString().Contains("repo:seco/agriculture"))), Times.Exactly(3));
     }
 }
