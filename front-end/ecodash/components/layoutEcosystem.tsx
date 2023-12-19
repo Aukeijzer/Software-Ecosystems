@@ -120,38 +120,27 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         
     }
 
-    async function saveLayout(e : any){
-        console.log("saving layout");
-        //get description
-        console.log(description);
-        //Get topics
-        console.log(selectedEcosystems);
-        //Get gridLayout position
-            //TODO
-        //Get user id 
-        let userId = user.id;
-        //Prepare post body
-
-
+    async function saveDescription(){
+       
         var apiPostBody = {
-            description: description
+            description: description,
+            ecosystem: props.ecosystem
         }
         console.log(apiPostBody)
 
         //Send to backend
 
-        const response : Response = await fetch(`http://secodash.com:3000/api/saveEdit`, {
+        const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/ecosystems/descriptionupdate", {
             method: 'POST',
             headers: {
-                'Content-Type': 'text/plain;charset=UTF-8',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(apiPostBody)
-
         })
+    
         
-        console.log(response);
         if (response.status == 500){
-            console.log("helaas");
+            console.log("Failed to update description");
             throw new Error(response.statusText)
         }
         const convertedReponse = await response.json();
@@ -160,9 +149,14 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         
     }
 
-    async function saveDescription(description: string){
+    function changeDescription(description: string){
+        console.log(description);
         setDescription(description);
     }
+
+  
+
+
 
     //If error we display error message
     if(error){
@@ -230,7 +224,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Ecosystem description
         //Remove main ecosystem from selected sub-ecosystem list to display
        
-        const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem} changeDescription={saveDescription} editMode={editMode}  removeTopic={removeSubEcosystem} description={description ? description : data.description}  subEcosystems={selectedEcosystems.filter(n => n!= props.ecosystem)} />
+        const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem} changeDescription={changeDescription} editMode={editMode}  removeTopic={removeSubEcosystem} description={description ? description : data.description}  subEcosystems={selectedEcosystems.filter(n => n!= props.ecosystem)} />
         const ecosystemDescriptionWrapped : cardWrapper = {card: ecosystemDescription, width: 6, height: 2, x: 0, y: 0, static:true}
         cardWrappedList.push(ecosystemDescriptionWrapped)
     
@@ -246,15 +240,16 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Normal render (No error)
     return(
         <div>
-            {user && user.userType === "Admin" || user.userType === "RootAdmin" && 
+            {user !== undefined && 
                 <div className="m-3 rounded-sm border-2 p-3 text-yellow-700 bg-yellow-100 border-yellow-500">
                     <form className="flex flex-col">
                         <div className="flex flex-row gap-3">
                             <label> edit mode:</label>
                             <input type="checkbox" name="editMode" onChange={() => setEditMode(!editMode)}/> 
                         </div>
-                       <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={(e) => saveLayout(e)}> save changes</button>
+                       
                     </form>
+                    <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={(e) => saveDescription()}> save changes</button>
                 </div>
                
             }

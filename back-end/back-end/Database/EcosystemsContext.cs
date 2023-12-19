@@ -10,4 +10,5 @@ public class EcosystemsContext(DbContextOptions<EcosystemsContext> options) : Db
       modelBuilder.UseSerialColumns();
    }
    public DbSet<Ecosystem> Ecosystems { get; set; }
+   
 }

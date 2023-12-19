@@ -6,7 +6,7 @@ using SECODashBackend.Models;
 using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
-    
+
 /// <summary>
 /// This service is responsible for handling all ecosystem-related requests.
 /// It uses the EcosystemsContext to interact with the database.
@@ -52,9 +52,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems);
 
-        // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
-        if (dto.Topics.Count != 1) return ecosystemDto;
-            
         // Check if the database has additional data regarding this ecosystem
         var ecosystem = await GetByNameAsync(dto.Topics.First());
 
@@ -63,7 +60,25 @@ public class EcosystemsService(EcosystemsContext dbContext,
         ecosystemDto.DisplayName = ecosystem.DisplayName;
         ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
         ecosystemDto.Description = ecosystem.Description;
-        
+
         return ecosystemDto;
+    }
+
+    public async Task<string> UpdateDescription(descriptionRequestDto dto)
+    {
+        //Update description for ecosystem with given description
+        //To lower is because all names are without capital letters
+        var ecosystemToUpdate = dbContext.Ecosystems.FirstOrDefault(ecosystem => ecosystem.Name == dto.Ecosystem.ToLower());
+        if (ecosystemToUpdate != null)
+        {
+            ecosystemToUpdate.Description = dto.Description;
+            dbContext.SaveChanges();
+            return "updated successfully";
+        }
+        else
+        {
+            throw new Exception("Ecosystem not found");
+
+        }
     }
 }

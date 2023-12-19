@@ -17,7 +17,6 @@ export async function GET(req : NextRequest, context: { params : any }) : Promis
     //}
     
     const { userId } = context.params;
-    console.log("HALLOOO?")
     // Check if the user is an admin
     const isAdmin = admins.includes(userId as string);
     if (isAdmin) {
