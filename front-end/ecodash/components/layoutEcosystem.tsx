@@ -5,7 +5,7 @@ import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import GridLayout from "./gridLayout"
 import SpinnerComponent from "./spinner"
-import { buildLineGraphCard, buildListCard, buildPieGraphCard } from "@/app/utils/cardBuilder"
+import { buildLineGraphCard, buildListCard, buildPieGraphCard, buildTableCard } from "@/app/utils/cardBuilder"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
 import  listLanguageDTOConverter  from "@/app/utils/Converters/languageConverter"
@@ -15,6 +15,7 @@ import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConvert
 import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
+import listContributorDTOConverter from "@/app/utils/Converters/contributorConverter"
 interface layoutEcosystemProps{
     ecosystem: string
 }
@@ -142,6 +143,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const subEcosystemCard = buildListCard(subEcosystems, onClickTopic, "Top 5 topics", 0, 2, 1, 4);
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
+
+        const contributors = listContributorDTOConverter(data.topContributors);
+        const contributorCard = buildTableCard(['username', 'contributions'], contributors, "Top 5 contributors", 0, 12, 2, 5);
+        cardWrappedList.push(contributorCard);
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);

@@ -22,7 +22,7 @@ export default class languageClass implements displayableListItem, displayableGr
     
     renderAsTableItem(): React.JSX.Element {
         return(
-            <tr className="bg-white border-b hover:bg-gray-100">
+            <tr className="bg-white border-b hover:bg-amber">
                 <th className="px-6 py-4 font-medium text-gray-900">
                     {this.language.valueOf()}
                 </th>
