@@ -1,11 +1,11 @@
 from preprocessing import preprocessDocs
-from topicModel import extractTopics
-
+from topicModel import extractTopicsLDA
+from mapTopic import map_topics
 
 # Extracts the documents and ids from json data
 def getData(data):
     docs = []
-    ids = []
+    ids = [] 
     for dto in data: 
         doc = ""
         if dto.get("id"):
@@ -20,20 +20,19 @@ def getData(data):
     return ids, docs
 
 
-class dataService:
+class topicService:
     def __init__(self, data):
-        self.data = data  # data should be a list of JSON objects
+        self.data = data  # data should be a list of projects 
 
     def extractTopics(self):
         ids, docs = getData(self.data)
         preprocessed_docs = preprocessDocs(docs)
-        topics = extractTopics(preprocessed_docs)
+        topics = extractTopicsLDA(preprocessed_docs)
+        map_topics(topics, 'taxonomy')
+
         response = []
-        for id, topic in zip(ids, topics): 
+        for id, topic in zip(ids, topics):
             dict = {"projectId": id}
             dict.update(topic)
             response.append(dict)
         return response
-
-    def getTop5Topics(self, ecosystem):
-        return ""
