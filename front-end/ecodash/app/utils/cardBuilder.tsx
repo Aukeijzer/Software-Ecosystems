@@ -6,7 +6,8 @@ import ListComponent from "@/components/listComponent";
 import GraphLine from "@/components/graphLine";
 import displayableGraphItem from "../classes/displayableGraphItem";
 import displayableListItem from "../classes/displayableListItem";
-
+import TableComponent from "@/components/tableComponent";
+import displayableTableItem from "../classes/displayableTableItem";
 
 /**
  * Builds a pie graph card.
@@ -64,5 +65,17 @@ export  function buildLineGraphCard(data: any, title: string, x: number, y : num
     return cardLineGraphWrapped;
 }
 
+/**
+ * Builds a table card.
+ */
+export function buildTableCard(headers: string[], items: displayableTableItem[], title: string, x : number, y : number, width: number, height: number, alert?: string){
+    //Make table element
+    var tableComponent = <TableComponent headers={headers} items={items}/>
+    //Make card element
+    var cardTable = <InfoCard title={title} data={tableComponent} alert={alert}/>
+    //Wrap card
+    const cardTableWrapped: cardWrapper = {card: cardTable, width: width, height: height, x: x, y: y, minH: 2, static:true}
+    return cardTableWrapped
+}
 
 

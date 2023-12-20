@@ -5,18 +5,19 @@ import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import GridLayout from "./gridLayout"
 import SpinnerComponent from "./spinner"
-import { useSession} from "next-auth/react";
-import { buildLineGraphCard, buildListCard, buildPieGraphCard } from "@/app/utils/cardBuilder"
+import { buildLineGraphCard, buildListCard, buildPieGraphCard, buildTableCard } from "@/app/utils/cardBuilder"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
 import  listLanguageDTOConverter  from "@/app/utils/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useSession} from "next-auth/react"
 import { cardWrapper } from "@/app/interfaces/cardWrapper"
 import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConverter"
 import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
 import { ExtendedUser } from "@/app/utils/authOptions"
+import listContributorDTOConverter from "@/app/utils/Converters/contributorConverter"
 interface layoutEcosystemProps{
     ecosystem: string
 }
@@ -192,10 +193,14 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
 
+        const contributors = listContributorDTOConverter(data.topContributors);
+        const contributorCard = buildTableCard(['username', 'contributions'], contributors, "", 0, 12, 2, 5);
+        cardWrappedList.push(contributorCard);
+
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6, !editMode);
+        const languageCard = buildPieGraphCard(languages, "", 0, 6, !editMode);
         //Add card to list
         cardWrappedList.push(languageCard);
 
@@ -218,7 +223,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Line graph topicsGrowing 
         //For now no data conversion needed as Mock data is already in correct format 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "Top 5 topics over time", 2, 6, !editMode);
+        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 2, 6, !editMode);
         cardWrappedList.push(cardLineGraphWrapped)
 
         //Ecosystem description
@@ -240,8 +245,8 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Normal render (No error)
     return(
         <div>
-            {user !== undefined && 
-                <div className="m-3 rounded-sm border-2 p-3 text-yellow-700 bg-yellow-100 border-yellow-500">
+            {user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") &&
+                <div className="m-3 rounded-sm  p-3 text-yellow-700 bg-red-200">
                     <form className="flex flex-col">
                         <div className="flex flex-row gap-3">
                             <label> edit mode:</label>

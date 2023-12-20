@@ -1,35 +1,25 @@
 import React from "react";
-import displayableListItem from "./displayableListItem";
 import displayableTableItem from "./displayableTableItem";
-import displayableGraphItem from "./displayableGraphItem";
 
-export default class contributorClass implements displayableListItem, displayableTableItem, displayableGraphItem {
-    name: string;
+export default class contributorClass implements displayableTableItem {
+    username: string;
     contributions: number;
-    constructor(name: string, contributions: number) {
-        this.name = name;
+    
+    constructor(login: string, contributions: number) {
+        this.username = login;
         this.contributions = contributions;
     }
 
-    renderAsListItem(onClick: (sub: string) => void): React.JSX.Element {
-        return(
-            <div>
-
-            </div>
-        )
-    }
     renderAsTableItem(): React.JSX.Element {
         return(
-            <div>
-
-            </div>
-        )
-    }
-    renderAsGraphItem(index: number): React.JSX.Element {
-        return(
-            <div>
-
-            </div>
+            <tr className="bg-white border-b hover:bg-amber">
+                <th className="px-6 py-4 font-medium text-gray-900">
+                    {this.username}
+                </th>
+                <td className="px-6 py-4">
+                    {this.contributions}
+                </td>
+            </tr>
         )
     }
 }

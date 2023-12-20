@@ -22,7 +22,7 @@ export default function NavBarTop(){
     const Router = useRouter();
     //For now has the basepath 
     return(
-        <Navbar data-cy='navBar' fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
+        <Navbar data-cy='navBar' fluid rounded className=' ' >
             <Navbar.Brand as={Link} href={process.env.NEXT_PUBLIC_LOCAL_ADRESS} >
                 <Image
                     data-cy='navLogo'

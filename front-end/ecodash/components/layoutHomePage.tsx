@@ -67,6 +67,33 @@ import { ExtendedUser } from '@/app/utils/authOptions';
  *  The InfoCard component likely represents a card in a card-based layout, and the cardWrapper object is used to control its layout properties.
  */
 
+/**
+ * Renders the layout for the home page.
+ * 
+ * @returns The rendered layout component.
+ * 
+ *  The useSWRMutation hook is used to fetch data from the /ecosystems endpoint of the API. 
+ *  The data, trigger, error, and isMutating variables are destructured from the hook. 
+ *  The trigger function is used to manually fetch the data, data holds the fetched data, 
+ *  error holds any error that occurred during fetching, and isMutating indicates whether a fetch is in progress.
+ * 
+ *  The useEffect hook is used to call the trigger function when the component mounts, 
+ *  causing the data to be fetched from the API.
+ *  
+ *  If an error occurs during fetching, the component renders a paragraph with an error message.
+ *  
+ *  The onClickEcosystem function is a handler for click events. 
+ *  It constructs a URL using the ecosystem argument and the NEXT_PUBLIC_LOCAL_ADRESS environment variable, and then navigates to that URL using the Router.push method.
+ *  
+ *  The cardWrappedList variable is an array that will hold cardWrapper objects.
+ *  If the data variable is truthy (i.e., if data has been fetched successfully), the code creates a div with some information about "SECODash", wraps it in an InfoCard component, and then wraps that in a cardWrapper object.
+ *  The cardWrapper object is then pushed into the cardWrappedList array.
+ *  
+ *  The cardWrapper object has properties for the card component (card), its dimensions (width and height), 
+ *  its position (x and y), and whether it's static (static). 
+ *  The InfoCard component likely represents a card in a card-based layout, and the cardWrapper object is used to control its layout properties.
+ */
+
 export default function LayoutHomePage(){
     //Set up router
     const Router = useRouter();
