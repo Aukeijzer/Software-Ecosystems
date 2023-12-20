@@ -1,6 +1,6 @@
+using System.Text.Json;
 using spider.Dtos;
 using RestSharp;
-using RestSharp.Serializers.Json;
 
 namespace spider.Services;
 
@@ -8,15 +8,19 @@ public class GitHubRestService : IGitHubRestService
 {
     private readonly IRestClient _gitHubRestClient;
     private readonly ILogger<GitHubRestService> _logger;
-    private readonly SystemTextJsonSerializer _jsonSerializer;
+    private readonly JsonSerializerOptions _deserializerOptions;
     public GitHubRestService(IRestClient gitHubRestClient)
     {
         _gitHubRestClient = gitHubRestClient;
         _logger = new Logger<GitHubRestService>(new LoggerFactory());
-        _jsonSerializer = new SystemTextJsonSerializer();
+        
+        // Set the deserializer options to expect snake_case in order to be able to parse the node_id property of the contributors
+        _deserializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
     }
 
-    
     /// <summary>
     /// GetRepoContributors sends a rest request to the github api and returns on success and otherwise handles the
     /// error and retries if necessary.
@@ -47,7 +51,7 @@ public class GitHubRestService : IGitHubRestService
                         }
                         
                         List<ContributorDto> restResult =
-                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(restResponse);
+                            JsonSerializer.Deserialize<List<ContributorDto>>(restResponse.Content, _deserializerOptions);
 
                         result.AddRange(restResult);
                         if (restResult.Count < 50)
@@ -84,7 +88,7 @@ public class GitHubRestService : IGitHubRestService
                         }
                         
                         List<ContributorDto> restResult =
-                            _jsonSerializer.Deserializer.Deserialize<List<ContributorDto>>(temp);
+                            JsonSerializer.Deserialize<List<ContributorDto>>(temp.Content, _deserializerOptions);
 
                         if (restResult.Count < amount)
                         {
@@ -112,7 +116,6 @@ public class GitHubRestService : IGitHubRestService
         return result;
     }
 
-    
     /// <summary>
     /// HandleErrors checks if there is a rate-limit error and if there is, it retries
     /// </summary>

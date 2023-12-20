@@ -2,7 +2,7 @@ using GraphQL.Client.Abstractions.Websocket;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using RestSharp;
-using spider.Converter;
+using spider.Converters;
 using spider.Logging;
 using spider.Services;
 using spider.Wrappers;

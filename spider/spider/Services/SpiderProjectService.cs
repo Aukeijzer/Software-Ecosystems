@@ -1,6 +1,6 @@
 using System.Net;
 using System.Text.Json;
-using spider.Converter;
+using spider.Converters;
 using spider.Dtos;
 
 namespace spider.Services;
