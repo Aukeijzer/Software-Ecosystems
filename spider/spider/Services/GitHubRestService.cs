@@ -6,17 +6,12 @@ namespace spider.Services;
 
 public class GitHubRestService : IGitHubRestService
 {
-    private readonly RestClient _gitHubRestClient;
+    private readonly IRestClient _gitHubRestClient;
     private readonly ILogger<GitHubRestService> _logger;
     private readonly JsonSerializerOptions _deserializerOptions;
-    
-    public GitHubRestService()
+    public GitHubRestService(IRestClient gitHubRestClient)
     {
-        var options = new RestClientOptions("https://api.github.com");
-        _gitHubRestClient = new RestClient(options);
-        _gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + Environment.GetEnvironmentVariable(
-            "API_Token"));
-        _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
+        _gitHubRestClient = gitHubRestClient;
         _logger = new Logger<GitHubRestService>(new LoggerFactory());
         
         // Set the deserializer options to expect snake_case in order to be able to parse the node_id property of the contributors
@@ -47,16 +42,16 @@ public class GitHubRestService : IGitHubRestService
                 request.AddQueryParameter("page", page);
                 try
                 {
-                    var temp = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
-                    if (temp.IsSuccessful)
+                    var restResponse = await _gitHubRestClient.ExecuteAsync(request).ConfigureAwait(false);
+                    if (restResponse.IsSuccessful)
                     {
-                        if (temp.Content == null || temp.ContentLength == 0)
+                        if (restResponse.Content == null || restResponse.ContentLength == 0)
                         {
                             return result;
                         }
                         
                         List<ContributorDto> restResult =
-                            JsonSerializer.Deserialize<List<ContributorDto>>(temp.Content, _deserializerOptions);
+                            JsonSerializer.Deserialize<List<ContributorDto>>(restResponse.Content, _deserializerOptions);
 
                         result.AddRange(restResult);
                         if (restResult.Count < 50)
@@ -66,7 +61,7 @@ public class GitHubRestService : IGitHubRestService
                     }
                     else
                     {
-                        HandleError(temp);
+                        HandleError(restResponse);
                     }
                 }
                 catch (Exception e)
@@ -135,6 +130,7 @@ public class GitHubRestService : IGitHubRestService
             DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
             DateTime retryTime = utcTime.DateTime;
             Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
+            _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
             return;
         }
 
@@ -142,6 +138,7 @@ public class GitHubRestService : IGitHubRestService
         if (header is not null)
         {
             Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
+            _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", header.Value);
             return;
         }
 
