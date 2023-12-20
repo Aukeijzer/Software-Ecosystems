@@ -522,7 +522,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         }
         
         string query = stringBuilder.ToString();
-        data.Add(await QueryRepositoriesByName(query, 25)); 
+        data.AddRange(await QueryRepositoriesByNameHelper(query, 25, null));
       }
       
       return (data);
