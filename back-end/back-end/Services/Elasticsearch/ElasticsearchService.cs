@@ -40,7 +40,7 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     /// <param name="topic"></param>
     /// <returns></returns>
     /// <exception cref="HttpRequestException"></exception>
-    public async Task<List<ProjectDto>> GetProjectsByDate(DateTime st, DateTime et, List<string> topic)
+    public async Task<int> GetProjectsByDate(DateTime st, DateTime et, string topic)
     {
         // Create a query that searches for projects in the given DateRange. 
         string endTime = et.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
@@ -59,10 +59,12 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
                 )
             )
         );
-        if (!response.IsValidResponse) throw new HttpRequestException(response.ToString());
+        if (!response.IsValidResponse) throw new HttpRequestException(response.ToString()); 
         
-        return response.Documents.Where(p => topic.All(t => p.Topics.Contains(t))).ToList();
-       // return response.Documents.ToList().FindAll(p => p.Topics.Intersect(topic).Any());
+        var result = response.Documents.ToList().FindAll(p => p.Topics.Contains(topic));
+        
+        return result.Count;
+        // return response.Documents.Where(p => topic.All(t => p.Topics.Contains(t))).ToList();
     }
 
     /// <summary>

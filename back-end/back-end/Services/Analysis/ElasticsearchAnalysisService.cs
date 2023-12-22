@@ -43,9 +43,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string TopicAggregateName = "topics";
     private const string TimedAggregateName = "timed";
     
-    // Used to create the timed aggregation
-    private const string TimedInterval = "30d";
-    
     private const string NestedContributorsAggregateName = "nested_contributors";
     private const string TermsContributorsAggregateName = "contributors";
     private const string ContributionsSumAggregateName = "sum_contributions";
@@ -175,13 +172,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Field = TopicField,
             Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count
         };
-        
-        // Aggregation of all projects aggregated by timestamp
-        var timedAggregation = new DateHistogramAggregation(TimedAggregateName)
-        {
-            Field = TimestampField,
-            FixedInterval = TimedInterval
-        };
 
         var searchRequest = new SearchRequest
         {
@@ -189,7 +179,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Aggregations = new AggregationDictionary
             { 
                 topicAggregation,
-                timedAggregation,
                 nestedLanguagesAggregation,
                 nestedContributorsAggregation,
             },
@@ -197,44 +186,39 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         };
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
+        DateTime st = DateTime.Today.AddDays(-365);
+        int timeFrame = 30;
         
-        return new EcosystemDto
+        var ecoResponse = new EcosystemDto
         {
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TimedData = GetTimedData(result, topics),
-            TopContributors = GetTopXContributors(result, numberOfTopContributors)
+            TopContributors = GetTopXContributors(result, numberOfTopContributors),
+            TimedData = GetTimedData(st, timeFrame, elasticsearchService, result, topics)
         };
+        
+        return ecoResponse;
     }
-
-    /// <summary>
-    /// This method retrieves the timed data from the search response and converts it into a list of TimedDateDtos
-    /// </summary>
-    /// <param name="searchResponse"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    private static List<TimedDateDto> GetTimedData(SearchResponse<ProjectDto> searchResponse,  List<string> giventopics)
+    
+    private static List<TimedDateDto> GetTimedData(DateTime st, int timeFrame, IElasticsearchService elasticsearchService, SearchResponse<ProjectDto> searchResponse, List<string> topics)
     {
-        // Filter the projects that contain any of the specified topics
-        var filteredProjects = searchResponse.Documents.Where(s => s.Topics.Intersect(giventopics).Any());
-        
-        var timedAggregate = searchResponse.Aggregations?.GetDateHistogram(TimedAggregateName);
-        if (timedAggregate == null)
-            throw new ArgumentException(
-                "Elasticsearch aggregate not found in search response");
-
-        var timedData = timedAggregate.Buckets.Select(b =>
+        var response = new List<TimedDateDto>();
+        DateTime et = st.AddDays(timeFrame);
+        var subEcosystems = GetAllSubEcosystems(searchResponse, topics);
+        foreach (var t in subEcosystems)
         {
-            return new TimedDateDto
+            var timedTopics =  elasticsearchService.GetProjectsByDate(st, et, t.Topic);
+            var timedDate = new TimedDateDto
             {
-                Date = b.KeyAsString,
-                ProjectCount = (int)b.DocCount
+                Topic = t.Topic,
+                TimeBucket = st,
+                ProjectCount = timedTopics.Result
             };
-        }).ToList();
+            response.Add(timedDate);
+        }
         
-        
-        return timedData;
+        return response;
     }
 
     /// <summary>
@@ -302,17 +286,20 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var topXLanguages = SortAndNormalizeLanguages(programmingLanguageDtos, numberOfTopLanguages);
         return topXLanguages;
     }
-
     /// <summary>
-    /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
+    /// Retrieves all the sub-ecosystems/topics from the search response 
     /// </summary>
-    private static List<SubEcosystemDto> GetTopXSubEcosystems(
-        SearchResponse<ProjectDto> searchResponse,
-        List<string> topics, int numberOfTopSubEcosystems)
+    /// <param name="searchResponse"></param>
+    /// <param name="topics"></param>
+    /// <param name="numberOfTopSubEcosystems"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private static List<SubEcosystemDto> GetAllSubEcosystems(
+        SearchResponse<ProjectDto> searchResponse, List<string> topics)
     {
         var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
         if(topicsAggregate == null) throw new ArgumentException(
-                "Elasticsearch aggregate not found in search response");
+            "Elasticsearch aggregate not found in search response");
 
         var subEcosystemDtos = topicsAggregate
             .Buckets.Select(topic => new SubEcosystemDto
@@ -323,6 +310,17 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
 
         var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
         var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
+        return sortedSubEcosystems.ToList();
+    }
+    
+    /// <summary>
+    /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
+    /// </summary>
+    private static List<SubEcosystemDto> GetTopXSubEcosystems(
+        SearchResponse<ProjectDto> searchResponse,
+        List<string> topics, int numberOfTopSubEcosystems)
+    {
+        var sortedSubEcosystems = GetAllSubEcosystems(searchResponse, topics);
         var topXSubEcosystems = sortedSubEcosystems
             .Take(numberOfTopSubEcosystems)
             .ToList();
