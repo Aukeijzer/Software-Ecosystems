@@ -1,3 +1,4 @@
+using System.Net;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
@@ -28,7 +29,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string LanguagesPropertyPath = "languages";
     private const string LanguageNameField = "languages.language.keyword";
     private const string LanguagePercentageField = "languages.percentage";
-    private const string TimestampField = "timestamp";
     private const string ContributorsPath = "contributors";
     private const string ContributorLoginField = "contributors.login.keyword";
     private const string ContributorContributionsField = "contributors.contributions";
@@ -41,7 +41,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string PercentageSumAggregateName = "sum_percentage";
     private const string NestedLanguagesAggregateName = "nested_languages";
     private const string TopicAggregateName = "topics";
-    private const string TimedAggregateName = "timed";
     
     private const string NestedContributorsAggregateName = "nested_contributors";
     private const string TermsContributorsAggregateName = "contributors";
@@ -103,7 +102,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 1. Retrieving the top x programming languages
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors)
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, DateTime startTime, DateTime endTime, int timeBucket)
     {
         // Query that matches all projects that contain all topics in the topics list
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
@@ -186,8 +185,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         };
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
-        DateTime st = DateTime.Today.AddDays(-365);
-        int timeFrame = 30;
         
         var ecoResponse = new EcosystemDto
         {
@@ -195,29 +192,72 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
             TopContributors = GetTopXContributors(result, numberOfTopContributors),
-            TimedData = GetTimedData(st, timeFrame, elasticsearchService, result, topics)
+            TimedData = GetAllTimedData(startTime, endTime, timeBucket, elasticsearchService, result, topics)
         };
         
         return ecoResponse;
     }
-    
-    private static List<TimedDateDto> GetTimedData(DateTime st, int timeFrame, IElasticsearchService elasticsearchService, SearchResponse<ProjectDto> searchResponse, List<string> topics)
+    /// <summary>
+    /// This method retrieves the timed data for all time frames between the start and end time which is given.
+    /// It does this by first retrieving all the sub-ecosystems/topics from the search response.
+    /// Then, it creates a list of lists of TimedDateDto objects for every time frame between the start and end time.
+    /// Lastly, it returns the list of lists of TimedDateDto objects.
+    /// </summary>
+    /// <param name="startTime"></param>
+    /// <param name="endTime"></param>
+    /// <param name="timeBucket"></param>
+    /// <param name="elasticsearchService"></param>
+    /// <param name="searchResponse"></param>
+    /// <param name="topics"></param>
+    /// <returns> List<List<TimedDateDto>> </returns>
+    private static List<List<TimedDateDto>> GetAllTimedData(DateTime startTime, DateTime endTime, int timeBucket, IElasticsearchService elasticsearchService, 
+        SearchResponse<ProjectDto> searchResponse, List<string> topics)
     {
-        var response = new List<TimedDateDto>();
-        DateTime et = st.AddDays(timeFrame);
         var subEcosystems = GetAllSubEcosystems(searchResponse, topics);
-        foreach (var t in subEcosystems)
+        var response = new List<List<TimedDateDto>>();
+        var timeFrame = startTime;
+        
+        while (timeFrame < endTime)
         {
-            var timedTopics =  elasticsearchService.GetProjectsByDate(st, et, t.Topic);
-            var timedDate = new TimedDateDto
-            {
-                Topic = t.Topic,
-                TimeBucket = st,
-                ProjectCount = timedTopics.Result
-            };
-            response.Add(timedDate);
+            var test = GetTimedData(startTime, timeFrame, elasticsearchService, subEcosystems);
+            response.Add(test);
+            timeFrame = timeFrame.AddDays(timeBucket);
         }
         
+        return response;
+    }
+    
+    /// <summary>
+    /// This method retrieves the timed data for a specific time frame.
+    /// For every topic in the sub-ecosystems/topics list, it retrieves the number of projects that contain that topic.
+    /// Then it creates a TimedDateDto object with the topic, the time bucket and the number of projects.
+    /// Lastly, it adds the TimedDateDto object to the response list.
+    /// </summary>
+    /// <param name="st"></param>
+    /// <param name="et"></param>
+    /// <param name="elasticsearchService"></param>
+    /// <returns> List<TimedDateDto> </returns>
+    private static List<TimedDateDto> GetTimedData(DateTime st, DateTime et, IElasticsearchService elasticsearchService, 
+        List<SubEcosystemDto> subEcosystems)
+    {
+        var response = new List<TimedDateDto>();
+        var tempResult = new List<TimedDateDto>();
+        
+        // To improve performance, we use Parallel.ForEach to run the queries in parallel.
+        // This is safe because the queries are independent of each other.
+        Parallel.ForEach(subEcosystems, async t =>
+        {
+            var timedTopics = elasticsearchService.GetProjectsByDate(st, et, t.Topic);
+            var timedDate = new TimedDateDto()
+            {
+                Topic = t.Topic,
+                TimeBucket = et.ToString(),
+                ProjectCount = timedTopics.Result
+
+            };
+            tempResult.Add(timedDate);
+        });
+        response.AddRange(tempResult);
         return response;
     }
 
@@ -291,7 +331,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// </summary>
     /// <param name="searchResponse"></param>
     /// <param name="topics"></param>
-    /// <param name="numberOfTopSubEcosystems"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
     private static List<SubEcosystemDto> GetAllSubEcosystems(
