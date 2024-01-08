@@ -17,9 +17,9 @@ import displayableTableItem from "../classes/displayableTableItem";
  * @param y - The y-coordinate of the card.
  * @returns The wrapped card object.
  */
-export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number, staticProp: boolean) : cardWrapper{
+export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number, staticProp: boolean, color?: string) : cardWrapper{
     var graphComponent = <GraphComponent items={topics}/>;
-    var cardGraph = <InfoCard title={title} data={graphComponent} />
+    var cardGraph = <InfoCard title={title} data={graphComponent} Color={color}/>
     //TODO: (min)Width / (min)height should be automatically detected here
     var width = 2;
     var height = 6;
@@ -39,11 +39,11 @@ export function buildPieGraphCard(topics: displayableGraphItem[], title: string,
  * @param alert - Optional alert message for the card.
  * @returns The wrapped card object.
  */
-export function buildListCard(topics: displayableListItem[], onClick: any, title: string, x : number, y : number, width: number, height: number, staticProp: boolean, alert?: string) : cardWrapper{
+export function buildListCard(topics: displayableListItem[], onClick: any, title: string, x : number, y : number, width: number, height: number, staticProp: boolean, alert?: string, color?: string) : cardWrapper{
     //Make list element
     var listComponent = <ListComponent items={topics} onClick={(sub : string) => onClick(sub)}/>
     //Make card element
-    var cardList = <InfoCard title={title} data={listComponent} alert={alert}/>
+    var cardList = <InfoCard title={title} data={listComponent} alert={alert} Color={color}/>
     //Wrap card
     //TODO: (min)Width / (min)height should be automatically detected here
     const cardListWrapped: cardWrapper = {card: cardList, width: width, height: height, x: x, y: y, minH: 2, static:staticProp}
@@ -58,9 +58,9 @@ export function buildListCard(topics: displayableListItem[], onClick: any, title
  * @param y - The y-coordinate of the card.
  * @returns The wrapped card object.
  */
-export  function buildLineGraphCard(data: any, title: string, x: number, y : number, staticProp: boolean) : cardWrapper{
+export  function buildLineGraphCard(data: any, title: string, x: number, y : number, staticProp: boolean, color?: string) : cardWrapper{
     const lineGraphTopicsGrowing = <GraphLine items={data} />
-    const cardLineGraph = <InfoCard title={title} data={lineGraphTopicsGrowing} alert="This is mock data"/>
+    const cardLineGraph = <InfoCard title={title} data={lineGraphTopicsGrowing} alert="This is mock data" Color={color}/>
     const cardLineGraphWrapped: cardWrapper = {card: cardLineGraph, x: x, y : y, width: 4, height: 6, static:staticProp}
     return cardLineGraphWrapped;
 }
@@ -68,11 +68,11 @@ export  function buildLineGraphCard(data: any, title: string, x: number, y : num
 /**
  * Builds a table card.
  */
-export function buildTableCard(headers: string[], items: displayableTableItem[], title: string, x : number, y : number, width: number, height: number, alert?: string){
+export function buildTableCard(headers: string[], items: displayableTableItem[], title: string, x : number, y : number, width: number, height: number, alert?: string, color?: string){
     //Make table element
     var tableComponent = <TableComponent headers={headers} items={items}/>
     //Make card element
-    var cardTable = <InfoCard title={title} data={tableComponent} alert={alert}/>
+    var cardTable = <InfoCard title={title} data={tableComponent} alert={alert} Color={color}/>
     //Wrap card
     const cardTableWrapped: cardWrapper = {card: cardTable, width: width, height: height, x: x, y: y, minH: 2, static:true}
     return cardTableWrapped

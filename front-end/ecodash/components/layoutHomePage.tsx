@@ -203,17 +203,7 @@ export default function LayoutHomePage(){
         cardWrappedList.push(aiButtonCardWrapped);
         
 
-        //Small boxes
-        const smallBoxes = ( <div className="flex flex-row  ml-10 mr-10 mb-5 justify-evenly">
-                <SmallDataBox item={"Topics"} count={100} increase={5}  />
-                <SmallDataBox item={"Projects"} count={100} increase={5} />
-                <SmallDataBox item={"Contributors"} count={100} increase={5} />
-                <SmallDataBox item={"Contributions"} count={100} increase={5} />
-            </div>
-        )
-
-        const smallBoxesWrapped: cardWrapper = {card: smallBoxes, width: 6, height: 2, x: 0, y : 2, static: true}
-        cardWrappedList.push(smallBoxesWrapped);
+  
 
     } else {
         //When still loading display spinner
