@@ -30,7 +30,7 @@ export default function PopUpBox(props: PopUpBoxProps){
     } else {
         return(
          <div>
-                <button onClick={() => setShow(true)} className="bg-gray-500 border-2 p-2 border-gray-900">{props.buttonText}</button>
+                <button data-cy="loginButton" onClick={() => setShow(true)} className="bg-gray-500 border-2 p-2 border-gray-900">{props.buttonText}</button>
          </div>)
     }
 }

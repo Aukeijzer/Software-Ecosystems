@@ -23,7 +23,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # If using npm comment out above and use below instead
-RUN npm run build
+RUN npm run build --hostname secodash.com
 
 # Production image, copy all the files and run next
 FROM base AS runner

@@ -64,6 +64,7 @@ export const authOptions: NextAuthOptions = {
                 token.id = user.id;
                 //For now we use, email as username, talk to client about this.
                 token.userType = await fetchIsAdmin(user.id, user.email!);
+                
             }
             return token;
         },
