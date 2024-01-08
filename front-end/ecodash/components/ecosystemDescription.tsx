@@ -30,6 +30,7 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
     //Retreive session
     const {data: session} = useSession();
     const user = session?.user as ExtendedUser;
+    const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
     return(
         <div data-cy='ecosystem description' className='h-full'>
@@ -42,6 +43,8 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                     <ul data-cy='subecosystems'className='flex flex-row gap-5'>
                         {props.subEcosystems.map((item, i) => (
                         <li key={i} className='flex flex-row gap-5 mb-1'>
+                            <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: COLORS[i] }}></div>
+
                             <button onClick={() => props.removeTopic!(item)} className='bg-gray-300 rounded-md pl-1 pr-1'> X {item} 
                             </button>
                         </li>) )}

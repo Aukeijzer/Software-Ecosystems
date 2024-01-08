@@ -22,7 +22,7 @@ export default function NavBarTop(){
     const Router = useRouter();
     //For now has the basepath 
     return(
-        <Navbar data-cy='navBar' fluid rounded className=' ' >
+        <Navbar data-cy='navBar' fluid  className='bg-navBar shadow-sm mb-10 pl-36 pr-36' >
             <Navbar.Brand as={Link} href={process.env.NEXT_PUBLIC_LOCAL_ADRESS} >
                 <Image
                     data-cy='navLogo'
@@ -32,7 +32,7 @@ export default function NavBarTop(){
                     width={40}
                     height={40}
                 />
-                <span className="self-center whitespace-nowrap text-l font-semibold dark:text-white">
+                <span className="self-center whitespace-nowrap text-l font-semibold ">
                     SECODash
                 </span>
 

@@ -27,6 +27,7 @@ interface InfoCardProps {
     alert?: string,
     className?: string,
     onClick?: any,
+    Color?: string
 }
 
 export default function InfoCard(props: InfoCardProps) {
@@ -37,12 +38,15 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'flex h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl resize content-evenly' + props.className}>
+        <Card onClick={() => func(props.title)} className={'flex h-full p-5   resize content-evenly' + props.className}>
+            
+            <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}></div>
+
             <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
                 {props.title}
             </h5>
 
-            {props.alert && <Alert color="green" icon={HiInformationCircle} rounded className='mb-2 text-yellow-700 bg-yellow-100 border-yellow-500 dark:bg-yellow-200 dark:text-yellow-800'> <p>{props.alert}  </p></Alert>}
+            {props.alert && <Alert color="green" icon={HiInformationCircle} rounded className='mb-2 text-yellow-700 bg-red-200 border-yellow-500 dark:bg-yellow-200 dark:text-yellow-800'> <p>{props.alert}  </p></Alert>}
 
             {props.data}
 

@@ -12,6 +12,7 @@ import SpinnerComponent from "./spinner";
 import GridLayout from "./gridLayout";
 import { useSession} from "next-auth/react";
 import { ExtendedUser } from '@/app/utils/authOptions';
+import SmallDataBox from "./smallDataBox";
 
 /**
  * Renders the layout for the home page.
@@ -105,6 +106,7 @@ export default function LayoutHomePage(){
     const { data: session } = useSession();
     const user = session?.user as ExtendedUser;
 
+    const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
     //Trigger useEffect on load component. 
     useEffect(() => {
         trigger();
@@ -137,7 +139,7 @@ export default function LayoutHomePage(){
           
                 //Create new dashboard card
                 const newDashboardButton = <div  onClick={() => Router.push('/newDashboard')}>Create </div>
-                const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton}/>
+                const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton} data-cy="adminCreateBoard"/>
                 const newDashboardButtonWrapped : cardWrapper = {card: newDashboardButtonCard, width: 2, height: 3, x: 2, y: 5, static:true}
                 cardWrappedList.push(newDashboardButtonWrapped);
             }
@@ -151,26 +153,26 @@ export default function LayoutHomePage(){
             </div>
         )
 
-        const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
+        const infoCard = <InfoCard title="Information about SECODash" data={info} />
         const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0, static: false}
         cardWrappedList.push(infoCardWrapped);
 
          //Agriculture card
         const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
-        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem}/>
+        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem} Color={COLORS[0]}/>
         const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:staticProp}
         cardWrappedList.push(agricultureButtonCardWrapped)
         
         //Quantum card
         const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
-        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} />
-        const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: staticProp}
+        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} Color={COLORS[1]}/>
+        const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: staticProp }
         cardWrappedList.push(quantumButtonCardWrapped)
         
         //Artificial-intelligence card
         const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem}/>
-        const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: staticProp}
+        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem} Color={COLORS[2]}/>
+        const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4 , y : 2, static: staticProp}
         cardWrappedList.push(aiButtonCardWrapped);
     } else {
         //When still loading display spinner
@@ -182,7 +184,14 @@ export default function LayoutHomePage(){
     }
 
     return(
-        <div>
+        <div className="w-5/6 ml-36 ">
+            <div className="flex flex-row  ml-10 mr-10 mb-5 justify-evenly">
+                <SmallDataBox item={"Topics"} count={100} increase={5}  />
+                <SmallDataBox item={"Projects"} count={100} increase={5} />
+                <SmallDataBox item={"Contributors"} count={100} increase={5} />
+                <SmallDataBox item={"Contributions"} count={100} increase={5} />
+
+            </div>
             <GridLayout cards={cardWrappedList} />
         </div>
     )

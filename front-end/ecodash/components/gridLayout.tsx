@@ -35,15 +35,18 @@ export default function GridLayout(props: InfoCardGridProps){
     }
     
     return(
-        <ResponsiveGridLayout 
-            rowHeight={80}
-            breakpoints ={{lg: 3, md:2}}
-            cols ={{lg: 6, md:10}}
-            autoSize
-        > 
-           {props.cards.map((card, i) => (
-                createElement(card, i)
-            ))}
-        </ResponsiveGridLayout>
+        <div>
+            <ResponsiveGridLayout 
+                rowHeight={80}
+                breakpoints ={{lg: 3, md:2}}
+                cols ={{lg: 6, md:10}}
+                autoSize
+            > 
+               {props.cards.map((card, i) => (
+                    createElement(card, i)
+                ))}
+            </ResponsiveGridLayout>
+        </div>
+   
     )
 }

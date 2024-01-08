@@ -9,8 +9,11 @@ import LoginBox from "@/components/loginBox";
 export default function Home() {
   const Router = useRouter()
   return(
-    <div>
+    <div className="">
+      <div className="">
         <LayoutHomePage /> 
+      </div>
+        
     </div>
   
   )
