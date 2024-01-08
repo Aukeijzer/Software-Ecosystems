@@ -23,4 +23,36 @@ export default class risingClass implements displayableListItem {
         </p>
         )
     }
+
+    renderTableHeaders(): React.JSX.Element {
+        return(
+            <tr>
+                <th key={'topic'} className="px-6 py-3">
+                    topic
+                </th>
+                <th key={'percentage'} className="px-6 py-3 text-center">
+                    percentage
+                </th>
+                <th key={'growth'} className="px-6 py-3 text-right">
+                    growth
+                </th>
+            </tr>
+        )
+    }
+
+    renderAsTableItem(onClick: (sub: string) => void): React.JSX.Element {
+        return(
+            <tr className="bg-white border-b hover:bg-amber" onClick={() => onClick(this.topic)}>
+                <th className="px-6 py-4 font-medium text-gray-900">
+                    {this.topic}
+                </th>
+                <td className="px-6 py-4 text-center">
+                    {this.percentage}%
+                </td>
+                <td className="px-6 py-4 text-right">
+                    {this.growth}%
+                </td>
+            </tr>
+        )
+    }
 }

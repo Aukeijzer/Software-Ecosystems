@@ -68,9 +68,9 @@ export  function buildLineGraphCard(data: any, title: string, x: number, y : num
 /**
  * Builds a table card.
  */
-export function buildTableCard(headers: string[], items: displayableTableItem[], title: string, x : number, y : number, width: number, height: number, alert?: string, color?: string){
+export function buildTableCard(items: displayableTableItem[], title: string, x : number, y : number, width: number, height: number, onClick?: any, alert?: string, color?: string){
     //Make table element
-    var tableComponent = <TableComponent headers={headers} items={items}/>
+    var tableComponent = <TableComponent items={items} onClick={(sub : string) => onClick(sub)}/>
     //Make card element
     var cardTable = <InfoCard title={title} data={tableComponent} alert={alert} Color={color}/>
     //Wrap card
