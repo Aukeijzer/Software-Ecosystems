@@ -140,7 +140,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
         //Make list element
    
-        const subEcosystemCard = buildListCard(subEcosystems, onClickTopic, "Top 5 topics", 0, 2, 1, 4);
+        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, 2, 1, 4, onClickTopic);
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
 
@@ -158,17 +158,17 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildListCard(technologies, onClickTopic, "Top 5 technologies", 6, 2, 1, 4, "This is mock data");
+        const technologyCard = buildTableCard(technologies, "", 6, 2, 1, 4, onClickTopic, "This is mock data");
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildListCard(risingTechnologies, onClickTopic, "Top 5 rising technologies", 3, 2, 2, 4, "This is mock data");
+        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, 2, 2, 4, onClickTopic, "This is mock data");
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildListCard(risingTopics, onClickTopic, "Top 5 rising topics", 1, 2, 2, 4, "This is mock data");
+        const risingTopicsCard = buildTableCard(risingTopics, "", 1, 2, 2, 4, onClickTopic, "This is mock data");
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 

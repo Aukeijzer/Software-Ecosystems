@@ -25,7 +25,7 @@ export default class contributorClass implements displayableTableItem {
 
     renderAsTableItem(): React.JSX.Element {
         return(
-            <tr className="bg-white border-b hover:bg-amber">
+            <tr className="bg-white border-b">
                 <th className="px-6 py-4 font-medium text-gray-900">
                     {this.username}
                 </th>
