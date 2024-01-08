@@ -37,7 +37,7 @@ export default function GridLayout(props: InfoCardGridProps){
     return(
         <div>
             <ResponsiveGridLayout 
-                rowHeight={80}
+                rowHeight={65}
                 breakpoints ={{lg: 3, md:2}}
                 cols ={{lg: 6, md:10}}
                 autoSize

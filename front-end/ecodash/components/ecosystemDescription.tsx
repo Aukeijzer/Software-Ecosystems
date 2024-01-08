@@ -129,9 +129,7 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                             )}
                             {props.languages != null && props.languages.length > 0 && (
                                 <>
-                                    <li className='flex flex-row gap-5 mb-1'>
-                                        Languages:
-                                    </li>
+                                
                                     {props.languages.map((item, i) => (
                                         <li key={i} className='flex flex-row gap-5 mb-1'>
                                             <button

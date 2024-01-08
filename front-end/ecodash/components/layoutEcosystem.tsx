@@ -266,7 +266,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     var cardWrappedList : cardWrapper[] = []
     if(data){
         const yHeight = 2;
-        const offSet = 0.5;
+        const offSet = 0.7;
         //Real data
         const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
@@ -275,42 +275,44 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
         //Make list element
    
-        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, yHeight * 2 + offSet, 2, 5, onClickTopic,"", COLORS[0]);
+        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, yHeight * 2 + offSet, 2, 6, onClickTopic,"", COLORS[0]);
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
         
-        //const contributors = listContributorDTOConverter(data.topContributors);
-       // const contributorCard = buildTableCard(['username', 'contributions'], contributors, "", 0, yHeight * 4, 2, 5, "", COLORS[2]);
-        //cardWrappedList.push(contributorCard);
+      
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "", 0,  yHeight * 4 + offSet * 6, !editMode, COLORS[0]);
+        const languageCard = buildPieGraphCard(languages, "", 2,  yHeight * 2 + offSet, !editMode, COLORS[0]);
         //Add card to list
         cardWrappedList.push(languageCard);
 
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildTableCard(technologies, "", 6, yHeight * 2 + offSet, 1.5, 5, onClickTopic, "This is mock data", COLORS[3]);
+        const technologyCard = buildTableCard(technologies, "", 4, yHeight * 2 + offSet, 2, 6, onClickTechnology, "", COLORS[3]);
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, yHeight * 2 + offSet, 2, 6, onClickTopic, "This is mock data", COLORS[4]);
+        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 0, yHeight * 5 + offSet, 2, 6, onClickRisingTechnology, "", COLORS[4]);
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildTableCard(risingTopics, "", 1, 2, 2, 5, onClickTopic, "This is mock data", COLORS[1]);
+        const risingTopicsCard = buildTableCard(risingTopics, "", 2, yHeight * 8 + offSet, 2, 6, onClickRisingTopic, "", COLORS[5]);
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 
         //For now no data conversion needed as Mock data is already in correct format 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 2, yHeight * 4 + offSet * 6 , !editMode, COLORS[2]);
+        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 4, yHeight * 5 + offSet , !editMode, COLORS[2]);
        cardWrappedList.push(cardLineGraphWrapped)
+
+       // const contributors = listContributorDTOConverter(data.topContributors);
+       // const contributorCard = buildTableCard(['username', 'contributions'], contributors, "", 0, yHeight * 4, 2, 5, "", COLORS[2]);
+        //cardWrappedList.push(contributorCard);
 
         //Ecosystem description
         //Remove main ecosystem from selected sub-ecosystem list to display

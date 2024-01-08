@@ -38,7 +38,7 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'flex h-full p-5   resize content-evenly' + props.className}>
+        <Card onClick={() => func(props.title)} className={'flex h-full p-5   resize' + props.className}>
             
             <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}></div>
 

@@ -60,7 +60,7 @@ export function buildListCard(topics: displayableListItem[], onClick: any, title
  */
 export  function buildLineGraphCard(data: any, title: string, x: number, y : number, staticProp: boolean, color?: string) : cardWrapper{
     const lineGraphTopicsGrowing = <GraphLine items={data} />
-    const cardLineGraph = <InfoCard title={title} data={lineGraphTopicsGrowing} alert="This is mock data" Color={color}/>
+    const cardLineGraph = <InfoCard title={title} data={lineGraphTopicsGrowing} Color={color}/>
     const cardLineGraphWrapped: cardWrapper = {card: cardLineGraph, x: x, y : y, width: 4, height: 6, static:staticProp}
     return cardLineGraphWrapped;
 }
