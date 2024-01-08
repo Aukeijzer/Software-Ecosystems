@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+const { GoogleSocialLogin } = require("cypress-social-logins").plugins
 
 export default defineConfig({
   component: {
@@ -10,8 +11,12 @@ export default defineConfig({
 
   e2e: {
     baseUrl: "http://secodash.com:3000",
+    experimentalModifyObstructiveThirdPartyCode: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      on("task", {
+      GoogleSocialLogin: GoogleSocialLogin,
+    })
     },
   },
 

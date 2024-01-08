@@ -1,7 +1,8 @@
 
+
 describe("Login page", () => {
     before(() => {
-      cy.log(`Visiting https://company.tld`)
+      cy.log(`Visiting https://secodash.com:3000`)
       cy.visit("/")
     })
     it("Login with Google", () => {
@@ -9,17 +10,18 @@ describe("Login page", () => {
       const password = Cypress.env("GOOGLE_PW")
       const loginUrl = Cypress.env("SITE_NAME")
       const cookieName = Cypress.env("COOKIE_NAME")
+      cy.get('[data-cy="loginButton"]').click();
       const socialLoginOptions = {
         username,
         password,
         loginUrl,
-        headless: true,
+        headless: false,
         logs: false,
         isPopup: true,
         loginSelector: `a[href="${Cypress.env(
           "SITE_NAME"
         )}/api/auth/signin/google"]`,
-        postLoginSelector: "adminCreateBoard",
+        postLoginSelector: '[data-cy=loggedInSelector]',
       }
   
       return cy
@@ -32,15 +34,21 @@ describe("Login page", () => {
             .pop()
           if (cookie) {
           
-          //  Cypress.Cookies.defaults({
-           //     preserve: cookieName,
-          //  });
+            cy.setCookie(cookie.name, cookie.value, {
+              domain: cookie.domain,
+              expiry: cookie.expires,
+              httpOnly: cookie.httpOnly,
+              path: cookie.path,
+              secure: cookie.secure,
+            })
   
             // remove the two lines below if you need to stay logged in
             // for your remaining tests
-           // cy.visit("/api/auth/signout")
-           //cy.get("form").submit()
+            cy.visit("/api/auth/signout")
+           cy.get("form").submit()
           }
         })
     })
   })
+
+

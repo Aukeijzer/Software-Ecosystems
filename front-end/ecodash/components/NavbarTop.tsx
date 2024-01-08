@@ -39,7 +39,7 @@ export default function NavBarTop(){
             
             </Navbar.Brand>
            {session && <div>
-                            <div className='flex flex-col'>
+                            <div data-cy={"loggedInSelector"}className='flex flex-col'>
                                 <Image src={session.user!.image!} 
                                     className='rounded-full ml-2'
                                     width={30}
@@ -53,7 +53,7 @@ export default function NavBarTop(){
                         </div>}
             {!session && <div className='flex flex-col'> 
                             <span> Not logged in: </span>
-                            <PopUpBox buttonText='Login'> <LoginBox/> </PopUpBox>
+                            <PopUpBox buttonText='Login' data-cy="loginButton"> <LoginBox/> </PopUpBox>
                         </div>}
         </Navbar>
     )   
