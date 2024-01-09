@@ -72,7 +72,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
         if (ecosystemToUpdate != null)
         {
             ecosystemToUpdate.Description = dto.Description;
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
             return "updated successfully";
         }
         else
