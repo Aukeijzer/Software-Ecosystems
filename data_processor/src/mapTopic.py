@@ -2,8 +2,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 import json
 
-def get_taxonomy(ecosystem):
-    file_path = 'assets/'  + ecosystem + '.json'
+# Retrieve taxonomy file
+def get_taxonomy():
+    file_path = 'assets/taxonomy.json'
     try:
         with open(file_path, 'r') as file:
             taxonomy_data = json.load(file)
@@ -13,6 +14,7 @@ def get_taxonomy(ecosystem):
     except json.JSONDecodeError as e:
         print(f"Error decoding '{file_path}': {e}")
 
+# Flatten the taxonomy to a list of topics
 def flatten_taxonomy_to_strings(json_data):
     def flatten(obj):
         flattened = []
@@ -29,9 +31,12 @@ def flatten_taxonomy_to_strings(json_data):
     flattened_values = flatten(json_data)
     return flattened_values
 
-def map_topics(projects, ecosystem):
-    taxonomy_data = get_taxonomy(ecosystem)
+# Map the found topics to the topics in the taxonomy
+def map_topics(projects):
+    # Get predefined topics
+    taxonomy_data = get_taxonomy()
     predefined_topics = flatten_taxonomy_to_strings(taxonomy_data)
+
     for project in projects:
         topics =  project["topics"]
         # Combine keywords into strings for each topic

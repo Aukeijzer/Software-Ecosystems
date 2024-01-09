@@ -5,6 +5,7 @@ from topicService import topicService
 app = Flask(__name__)
 swagger = Swagger(app)
 
+# Handles POST request 
 @app.route("/extract-topics", methods=["POST"])
 def extract_topics():
     # Add schema for swagger UI

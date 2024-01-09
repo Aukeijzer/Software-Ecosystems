@@ -2,7 +2,7 @@ from preprocessing import preprocessDocs
 from topicModel import extractTopicsLDA
 from mapTopic import map_topics
 
-# Extracts the documents and ids from json data
+# Extracts the document information and ids from json data
 def getData(data):
     docs = []
     ids = [] 
@@ -28,7 +28,7 @@ class topicService:
         ids, docs = getData(self.data)
         preprocessed_docs = preprocessDocs(docs)
         topics = extractTopicsLDA(preprocessed_docs)
-        map_topics(topics, 'taxonomy')
+        map_topics(topics)
 
         response = []
         for id, topic in zip(ids, topics):

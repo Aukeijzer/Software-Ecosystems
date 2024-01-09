@@ -1,5 +1,5 @@
 
-# Dataprocessor Application Setup Guide
+# Dataprocessor Setup
 
 ## 1. Create and Activate a Virtual Environment (please make sure python==3.9 is installed)
 
@@ -18,9 +18,9 @@ pip install -r requirements.txt
 
 ## 3. Run the Application
 
-Once dependencies are installed run the `__init__.py` file in src directory:
+Once dependencies are installed run the `app.py` file in src directory:
 
 ```bash
-python src/__init__.py
+python src/app.py
 ```
 
