@@ -9,7 +9,10 @@ namespace SECODashBackend.Services.Users;
 /// <param name="userContext">Is used to interact with the database.</param>
 public class UsersService(UserContext userContext)
 {
-    //Retrieve all users from the database.
+    /// <summary>
+    /// Retrieve all users from the database.
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<User>> GetAllAsync()
     {
         var users = await userContext.Users
@@ -17,8 +20,11 @@ public class UsersService(UserContext userContext)
             .ToListAsync();
         return users;
     }
-    //Add a user to the database using a given id and username.
-    //All new users start as User.
+    
+    /// <summary>
+    /// Add a user to the database using a given id and username.
+    /// All new users start as User.
+    /// </summary>
     public async Task AddUserAsync(string id, string userName)
     {
         userContext.Users.Add(new User
@@ -29,21 +35,28 @@ public class UsersService(UserContext userContext)
         });
         await userContext.SaveChangesAsync();
     }
-
+    /// <summary>
+    /// This method returns the <see cref="User"/> with the provided UserName.
+    /// </summary>
     public async Task<User?> GetByNameAsync(string userName)
     {
         return await userContext.Users
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.UserName == userName);
     }
-
+    /// <summary>
+    /// This method removes the <see cref="User"/> with the provided Id from the database.
+    /// </summary>
     public async Task RemoveById(string id)
     {
         var user = new User{Id = id,UserName = "",UserType =""};
         userContext.Remove(user);
         await userContext.SaveChangesAsync();
     }
-
+    /// <summary>
+    /// This method handles the Login requests received.
+    /// If the User exists, return the UserType. Otherwise create a new User and then return the UserType.
+    /// </summary>
     public async Task<string> LoginRequest(string id, string userName)
     {
         //Check if the User already exists.
