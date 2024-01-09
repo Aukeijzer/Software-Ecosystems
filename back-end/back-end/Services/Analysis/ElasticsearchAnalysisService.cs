@@ -323,7 +323,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
     {
         return subEcosystemDtos
-            .Where(s => topics.All(topic => topic != s.Topic))
+            .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
     }
