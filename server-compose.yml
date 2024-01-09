@@ -8,13 +8,12 @@ services:
     build:
       context: ./front-end/ecodash/
       dockerfile: ./Dockerfile
-    environment:
-      ASPNETCORE_URLS: http://*:3000
-      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: /local/certs/privkey.pem
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /local/certs/fullchain.pem
     networks:
       - secodash-network
     restart: always
+    
+####
+  # nginx proxy server
   nginx:
     build:
       context: ./front-end/nginx/
@@ -26,6 +25,8 @@ services:
       - /local/certs:/certs:ro #certs on server
     networks:
       - secodash-network
+    restart: always
+    
 #####
   # Spider
   spider-app:
@@ -37,8 +38,7 @@ services:
     environment:
       API_Token: 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
       ASPNETCORE_URLS: http://*:5205
-      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: ./certs/privkey.pem
-      ASPNETCORE_Kestrel__Certificates__Default__Path: ./certs/fullchain.pem
+      Docker_Enviroment: server
     volumes:
       - /local/certs:/publish/certs:ro
 
@@ -54,14 +54,14 @@ services:
       POSTGRES_PASSWORD: SECODash
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  
   backend-app:
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile
     environment:
       ASPNETCORE_URLS: http://*:5003
-      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: ./certs/privkey.pem
-      ASPNETCORE_Kestrel__Certificates__Default__Path: ./certs/fullchain.pem
+      Docker_Enviroment: server
     networks:
       - secodash-network
     restart: always
@@ -69,6 +69,7 @@ services:
       - db
     volumes:
       - /local/certs:/publish/certs:ro
+      
 ####
   # Volumes and networks 
 volumes:

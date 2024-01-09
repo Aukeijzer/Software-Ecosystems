@@ -14,14 +14,14 @@ services:
     build:
       context: ./front-end/ecodash/
       dockerfile: ./Dockerfile
-    environment:
-      ASPNETCORE_URLS: http://*:3000
     ports:
       - 3000:3000
     networks:
       - secodash-network
     restart: always
-    
+        
+####
+  # nginx proxy server
   nginx:
     build:
       context: ./front-end/nginx/
@@ -33,6 +33,7 @@ services:
       - ./front-end/nginx/certs:/certs:ro #certs on local
     networks:
       - secodash-network
+
 #####
   # Spider
   spider-app:
@@ -44,8 +45,7 @@ services:
     environment:
       API_Token: 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
       ASPNETCORE_URLS: http://*:5205
-      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: ./certs/privkey.pem
-      ASPNETCORE_Kestrel__Certificates__Default__Path: ./certs/fullchain.pem
+      Docker_Enviroment: local
     ports:
       - 5205:5205
     volumes:
@@ -58,11 +58,16 @@ services:
     networks:
       - secodash-network
     restart: always
+    secrets:
+      - db-password
     environment:
       POSTGRES_Username: postgres
       POSTGRES_PASSWORD: SECODash
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  
+####
+  # Database browser
   adminer:
     image: adminer
     ports:
@@ -70,14 +75,14 @@ services:
     networks:
       - secodash-network
     restart: always
+  
   backend-app:
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile
     environment:
       ASPNETCORE_URLS: http://*:5003
-      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: ./certs/privkey.pem
-      ASPNETCORE_Kestrel__Certificates__Default__Path: ./certs/fullchain.pem
+      Docker_Enviroment: local
     ports:
       - 5003:5003
     networks:

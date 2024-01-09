@@ -35,14 +35,12 @@ builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Log
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
+if ( app.Environment.IsDevelopment() || local )
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
