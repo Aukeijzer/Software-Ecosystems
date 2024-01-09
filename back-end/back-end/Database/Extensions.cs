@@ -7,9 +7,14 @@ public static class Extensions
       using (var scope = host.Services.CreateScope())
       {
          var services = scope.ServiceProvider;
-         var context = services.GetRequiredService<EcosystemsContext>();
-         context.Database.EnsureCreated();
-         DbInitializer.Initialize(context);
+         //Create the ecosystems database if it does not exist, and initialise it.
+         var ecosystemsContext = services.GetRequiredService<EcosystemsContext>();
+         ecosystemsContext.Database.EnsureCreated();
+         DbInitializer.Initialize(ecosystemsContext);
+         //Create the users database if it does not exist, and initialise it.
+         var usersContext = services.GetRequiredService<UserContext>();
+         usersContext.Database.EnsureCreated();
+         UserDbInitializer.Initialize(usersContext);
       }
    }
 }

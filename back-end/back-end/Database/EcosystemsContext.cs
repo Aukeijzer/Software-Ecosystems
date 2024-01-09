@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Models;
 
-namespace SECODashBackend.Database;
+namespace SECODashBackend.Database; 
 
 public class EcosystemsContext(DbContextOptions<EcosystemsContext> options) : DbContext(options)
 {
