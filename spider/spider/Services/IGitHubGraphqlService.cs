@@ -65,6 +65,6 @@ public interface IGitHubGraphqlService
     /// </summary>
     /// <param name="repos">A list of repository names and owner names</param>
     /// <returns>list of repositories in the form of SpiderData</returns>
-    public Task<SpiderData> ToQueryString(List<ProjectRequestDto> repos);
+    public Task<List<SpiderData>> GetByNames(List<ProjectRequestDto> repos);
 
 }

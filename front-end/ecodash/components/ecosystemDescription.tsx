@@ -33,7 +33,7 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
 
     return(
         <div data-cy='ecosystem description' className='h-full'>
-            <Card className='h-full p-5    '>
+            <Card className='h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl '>
                 <h1 data-cy='welcome ecosystem' className='text-3xl'>
                     Welcome to the <b>{props.ecosystem}</b> ecosystem page
                 </h1>
