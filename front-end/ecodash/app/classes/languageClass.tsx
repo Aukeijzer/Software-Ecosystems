@@ -4,10 +4,10 @@ import displayableListItem from "./displayableListItem";
 import displayableGraphItem from "./displayableGraphItem";
 
 export default class languageClass implements displayableListItem, displayableGraphItem {
-    language: String;
+    language: string;
     percentage: number;
    
-    constructor(language: String, percentage: number) {
+    constructor(language: string, percentage: number) {
         this.language = language;
         this.percentage = percentage;
     }
@@ -33,10 +33,10 @@ export default class languageClass implements displayableListItem, displayableGr
         )
     }
 
-    renderAsGraphItem(index: number): React.JSX.Element {
+    renderAsGraphItem(index: number, onClick: (sub: string) => void): React.JSX.Element {
         const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
         return(
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} onClick={() => onClick(this.language)}/>
         )
     }
 

@@ -151,7 +151,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6);
+        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6, onClickTopic);
         //Add card to list
         cardWrappedList.push(languageCard);
 

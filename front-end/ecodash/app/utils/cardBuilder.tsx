@@ -17,8 +17,8 @@ import displayableTableItem from "../classes/displayableTableItem";
  * @param y - The y-coordinate of the card.
  * @returns The wrapped card object.
  */
-export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number) : cardWrapper{
-    var graphComponent = <GraphComponent items={topics}/>;
+export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number, onClick: any) : cardWrapper{
+    var graphComponent = <GraphComponent items={topics} onClick={(sub : string) => onClick(sub)}/>;
     var cardGraph = <InfoCard title={title} data={graphComponent} />
     //TODO: (min)Width / (min)height should be automatically detected here
     var width = 2;
