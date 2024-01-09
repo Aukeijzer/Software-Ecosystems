@@ -196,7 +196,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             AllContributions = GetAllContributions(result)
         };
     }
-    
+
+    #region Contributors
     /// <summary>
     /// This method retrieves all contributors from the search response
     /// and returns the total number of contributions over all contributors.
@@ -260,33 +261,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         return contributorDtos;
     }
     
-    /// <summary>
-    /// Retrieves the programming languages from the search response and converts them into a Top x list
-    /// </summary>
-    private static List<ProgrammingLanguageDto> GetTopXLanguages(
-        SearchResponse<ProjectDto> searchResponse, int numberOfTopLanguages)
-    {
-        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedLanguagesAggregateName);
-        var languagesAggregate = nestedAggregate?.GetStringTerms(LanguageAggregateName);
-
-        if (languagesAggregate == null)
-            throw new ArgumentException(
-                "Elasticsearch aggregate not found in search response");
-        
-        var programmingLanguageDtos = languagesAggregate
-            .Buckets
-            .Select(b => 
-                new ProgrammingLanguageDto
-                {
-                    Language = b.Key.ToString(),
-                    Percentage = (float)b.GetSum(PercentageSumAggregateName)!.Value!
-                })
-            .ToList();
-
-        var topXLanguages = SortAndNormalizeLanguages(programmingLanguageDtos, numberOfTopLanguages);
-        return topXLanguages;
-    }
-
+    #endregion
+    
+    #region SubEcosystems
     /// <summary>
     /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
     /// </summary>
@@ -327,25 +304,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
         return filteredSubEcosystems.ToList();
     }
-
-    /// <summary>
-    /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
-    /// all projects to a "Top x" list of x length in descending order of percentage with the percentages normalised.
-    /// </summary>
-    public static List<ProgrammingLanguageDto> SortAndNormalizeLanguages(
-        List<ProgrammingLanguageDto> programmingLanguageDtos, int numberOfTopLanguages)
-    {
-        programmingLanguageDtos
-            .Sort((x, y)  => y.Percentage.CompareTo(x.Percentage));
-        var totalSum = programmingLanguageDtos.Sum(l => l.Percentage);
-        var topXLanguages = programmingLanguageDtos
-            .Take(numberOfTopLanguages)
-            .ToList();
-        topXLanguages
-            .ForEach(l => l.Percentage = float.Round(l.Percentage / totalSum * 100));
-        return topXLanguages;
-    }
-
+    
     /// <summary>
     /// Sorts a list of sub-ecosystems in descending order of the number of projects and returns the sorted list.
     /// </summary>
@@ -364,8 +323,57 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
     {
         return subEcosystemDtos
-            .Where(s => !topics.Contains(s.Topic))
+            .Where(s => topics.All(topic => topic != s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
     }
+    
+    #endregion
+    
+    #region Languages
+    /// <summary>
+    /// Retrieves the programming languages from the search response and converts them into a Top x list
+    /// </summary>
+    private static List<ProgrammingLanguageDto> GetTopXLanguages(
+        SearchResponse<ProjectDto> searchResponse, int numberOfTopLanguages)
+    {
+        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedLanguagesAggregateName);
+        var languagesAggregate = nestedAggregate?.GetStringTerms(LanguageAggregateName);
+
+        if (languagesAggregate == null)
+            throw new ArgumentException(
+                "Elasticsearch aggregate not found in search response");
+        
+        var programmingLanguageDtos = languagesAggregate
+            .Buckets
+            .Select(b => 
+                new ProgrammingLanguageDto
+                {
+                    Language = b.Key.ToString(),
+                    Percentage = (float)b.GetSum(PercentageSumAggregateName)!.Value!
+                })
+            .ToList();
+
+        var topXLanguages = SortAndNormalizeLanguages(programmingLanguageDtos, numberOfTopLanguages);
+        return topXLanguages;
+    }
+    
+    /// <summary>
+    /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
+    /// all projects to a "Top x" list of x length in descending order of percentage with the percentages normalised.
+    /// </summary>
+    public static List<ProgrammingLanguageDto> SortAndNormalizeLanguages(
+        List<ProgrammingLanguageDto> programmingLanguageDtos, int numberOfTopLanguages)
+    {
+        programmingLanguageDtos
+            .Sort((x, y)  => y.Percentage.CompareTo(x.Percentage));
+        var totalSum = programmingLanguageDtos.Sum(l => l.Percentage);
+        var topXLanguages = programmingLanguageDtos
+            .Take(numberOfTopLanguages)
+            .ToList();
+        topXLanguages
+            .ForEach(l => l.Percentage = float.Round(l.Percentage / totalSum * 100));
+        return topXLanguages;
+    }
+    #endregion
 }
