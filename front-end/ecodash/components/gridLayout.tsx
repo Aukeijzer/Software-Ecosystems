@@ -40,7 +40,7 @@ export default function GridLayout(props: InfoCardGridProps){
                 rowHeight={65}
                 breakpoints ={{lg: 3, md:2}}
                 cols ={{lg: 6, md:10}}
-                autoSize
+                
             > 
                {props.cards.map((card, i) => (
                     createElement(card, i)

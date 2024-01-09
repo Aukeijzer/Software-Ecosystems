@@ -126,19 +126,21 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Append topic to selected technologies
         await trigger({topics: [...selectedTechnologies, technology]});
         console.log(technology)
-        //Router.push(`/?topics=${[...selectedEcosystems, technology].filter(n => n != props.ecosystem).toString()}`, {scroll: false})
+        Router.push(`/?techhnologies=${[...selectedEcosystems, technology].filter(n => n != props.ecosystem).toString()}`, {scroll: false})
 
         setSelectedTechnologies([...selectedTechnologies, technology]);
         console.log(selectedTechnologies)
     }
 
     async function removeTechnology(technology: string){
+        console.log(technology)
+        console.log(selectedTechnologies)
         var updatedList = selectedTechnologies.filter(n => n != technology)
-        await trigger({topics: updatedList})
+        await trigger({topics: selectedEcosystems})
         //Use shallow routing to update URL
         //Remove props.ecosystem
         setSelectedTechnologies(selectedTechnologies.filter(n => n != technology));
-        Router.push(`/?topics=${updatedList.filter(n => n != props.ecosystem)}`, {scroll: false})
+        Router.push(`/?technologies=${updatedList.filter(n => n != props.ecosystem)}`, {scroll: false})
         //Update selected topics?
         
     }
@@ -149,9 +151,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         await trigger({topics: [...selectedLanguages, language]});
         setSelectedLanguages([...selectedLanguages, language]);
     }
+
     async function onRemoveLanguage(language: string){
         var updatedList = selectedLanguages.filter(n => n != language)
-        await trigger({topics: updatedList})
+        await trigger({topics: selectedEcosystems})
         //Use shallow routing to update URL
         //Remove props.ecosystem
         setSelectedLanguages(selectedLanguages.filter(n => n != language));
@@ -168,7 +171,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     async function onRemoveRisingTopic(topic: string){
         var updatedList = selectedRisingTopics.filter(n => n != topic)
-        await trigger({topics: updatedList})
+        await trigger({topics: selectedEcosystems})
         //Use shallow routing to update URL
         //Remove props.ecosystem
         setSelectedRisingTopics(selectedRisingTopics.filter(n => n != topic));
@@ -184,7 +187,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     async function onRemoveRisingTechnology(technology: string){
         var updatedList = selectedRisingTechnologies.filter(n => n != technology)
-        await trigger({topics: updatedList})
+        await trigger({topics: selectedEcosystems})
         //Use shallow routing to update URL
         //Remove props.ecosystem
         setSelectedRisingTechnologies(selectedRisingTechnologies.filter(n => n != technology));
@@ -195,7 +198,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Function to remove sub-ecosystem from sub-ecosytem list
     async function removeSubEcosystem(subEcosystem: string){
         var updatedList = selectedEcosystems.filter(n => n != subEcosystem)
-        await trigger({topics: updatedList})
+        await trigger({topics: selectedEcosystems})
         //Use shallow routing to update URL
         //Remove props.ecosystem
         setSelectedEcosystems(selectedEcosystems.filter(n => n != subEcosystem));
@@ -308,10 +311,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //For now no data conversion needed as Mock data is already in correct format 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
         const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 4, yHeight * 5 + offSet , !editMode, COLORS[2]);
-       cardWrappedList.push(cardLineGraphWrapped)
+        cardWrappedList.push(cardLineGraphWrapped)
 
-       // const contributors = listContributorDTOConverter(data.topContributors);
-       // const contributorCard = buildTableCard(['username', 'contributions'], contributors, "", 0, yHeight * 4, 2, 5, "", COLORS[2]);
+        //const contributors = listContributorDTOConverter(data.topContributors);
+        //const contributorCard = buildTableCard(['username', 'contributions'], contributors, "", 0, yHeight * 4, 2, 5, "", COLORS[2]);
         //cardWrappedList.push(contributorCard);
 
         //Ecosystem description

@@ -53,100 +53,11 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
 
     return(
         <div data-cy='ecosystem description' className='h-full'>
-            <Card className='h-full p-5    '>
-                <h1 data-cy='welcome ecosystem' className='text-3xl'>
-                    Welcome to the <b>{props.ecosystem}</b> ecosystem page
-                </h1>
-                {((props.subEcosystems != null && props.subEcosystems.length > 0) ||
-                (props.technologies != null && props.technologies.length > 0) ||
-                (props.risingTechnologies != null && props.risingTechnologies.length > 0) ||
-                (props.risingTopics != null && props.risingTopics.length > 0) ||
-                (props.languages != null && props.languages.length > 0) )&& 
-                (
-                    <div>
-                        The following filters have been applied:
-                        <ul data-cy='subecosystems' className='mt-2 mb-2 flex flex-row gap-5'>
-                            {props.subEcosystems != null && props.subEcosystems.map((item, i) => (
-                                <li key={i} className='flex flex-row gap-5 mb-1'>
-                                    <button
-                                        onClick={() => props.removeTopic!(item)}
-                                        style={{ backgroundColor: COLORS[0] }}
-                                        className='font-bold px-2 py-1 rounded-md hover:text-red-500'
-                                    >
-                                        <span className="mr-2 text-black">✖</span>
-                                        {item}
-                                    </button>
-                                </li>
-                            ))}
-                            {props.technologies != null && props.technologies.length > 0 && (
-                                <>
-                                    {props.technologies.map((item, i) => (
-                                        <li key={i} className='flex flex-row gap-5 mb-1'>
-                                            <button
-                                                onClick={() => props.removeTechnology!(item)}
-                                                style={{ backgroundColor: COLORS[3] }}
-                                                className='font-bold px-2 py-1 rounded-md hover:text-red-500'
-                                            >
-                                                <span className="mr-2 text-black">✖</span>
-                                                {item}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </>
-                            )}
-                            {props.risingTechnologies != null && props.risingTechnologies.length > 0 && (
-                                <>
-                                    {props.risingTechnologies.map((item, i) => (
-                                        <li key={i} className='flex flex-row gap-5 mb-1'>
-                                            <button
-                                                onClick={() => props.removeRisingTechnology!(item)}
-                                                style={{ backgroundColor: COLORS[4] }}
-                                                className='font-bold px-2 py-1 rounded-md hover:text-red-500'
-                                            >
-                                                <span className="mr-2 text-black">✖</span>
-                                                {item}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </>
-                            )}
-                            {props.risingTopics != null && props.risingTopics.length > 0 && (
-                                <>
-                                
-                                    {props.risingTopics.map((item, i) => (
-                                        <li key={i} className='flex flex-row gap-5 mb-1'>
-                                            <button
-                                                onClick={() => props.removeRisingTopic!(item)}
-                                                style={{ backgroundColor: COLORS[5] }}
-                                                className='font-bold px-2 py-1 rounded-md hover:text-red-500'
-                                            >
-                                                <span className="mr-2 text-black">✖</span>
-                                                {item}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </>
-                            )}
-                            {props.languages != null && props.languages.length > 0 && (
-                                <>
-                                
-                                    {props.languages.map((item, i) => (
-                                        <li key={i} className='flex flex-row gap-5 mb-1'>
-                                            <button
-                                                onClick={() => props.removeLanguage!(item)}
-                                                style={{ backgroundColor: COLORS[0] }}
-                                                className='font-bold px-2 py-1 rounded-md hover:text-red-500'
-                                            >
-                                                <span className="mr-2 text-black">✖</span>
-                                                {item}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </>
-                            )}
-                        </ul>
-                    </div>
-                )}
+            <Card className='h-full  flex flex-row  pl-10 gap-10  '>
+                <div className='flex flex-col '>
+                    <h1 data-cy='welcome ecosystem' className='text-3xl'>
+                        Welcome to the <b>{props.ecosystem}</b> ecosystem page
+                    </h1>    
                 {props.editMode && 
                     <form>
                         <label> edit description: </label>
@@ -156,7 +67,101 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                     <p data-cy='description ecosystem'>
                         {props.description}
                     </p>
-                }       
+                } 
+                </div>   
+                
+                <div className='flex h-16'>
+                {((props.subEcosystems != null && props.subEcosystems.length > 0) ||
+                    (props.technologies != null && props.technologies.length > 0) ||
+                    (props.risingTechnologies != null && props.risingTechnologies.length > 0) ||
+                    (props.risingTopics != null && props.risingTopics.length > 0) ||
+                    (props.languages != null && props.languages.length > 0) )&& 
+                    (
+                        <div>
+                            The following filters have been applied:
+                            <ul data-cy='subecosystems' className='mt-2 mb-2 flex flex-row gap-5'>
+                                {props.subEcosystems != null && props.subEcosystems.map((item, i) => (
+                                    <li key={i} className='flex flex-row gap-5 mb-1'>
+                                        <button
+                                            onClick={() => props.removeTopic!(item)}
+                                            style={{ backgroundColor: COLORS[0] }}
+                                            className='font-bold px-2 py-1 rounded-md hover:text-red-500'
+                                        >
+                                            <span className="mr-2 text-black">✖</span>
+                                            {item}
+                                        </button>
+                                    </li>
+                                ))}
+                                {props.technologies != null && props.technologies.length > 0 && (
+                                    <>
+                                        {props.technologies.map((item, i) => (
+                                            <li key={i} className='flex flex-row gap-5 mb-1'>
+                                                <button
+                                                    onClick={() => props.removeTechnology!(item)}
+                                                    style={{ backgroundColor: COLORS[3] }}
+                                                    className='font-bold px-2 py-1 rounded-md hover:text-red-500'
+                                                >
+                                                    <span className="mr-2 text-black">✖</span>
+                                                    {item}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </>
+                                )}
+                                {props.risingTechnologies != null && props.risingTechnologies.length > 0 && (
+                                    <>
+                                        {props.risingTechnologies.map((item, i) => (
+                                            <li key={i} className='flex flex-row gap-5 mb-1'>
+                                                <button
+                                                    onClick={() => props.removeRisingTechnology!(item)}
+                                                    style={{ backgroundColor: COLORS[4] }}
+                                                    className='font-bold px-2 py-1 rounded-md hover:text-red-500'
+                                                >
+                                                    <span className="mr-2 text-black">✖</span>
+                                                    {item}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </>
+                                )}
+                                {props.risingTopics != null && props.risingTopics.length > 0 && (
+                                    <>
+
+                                        {props.risingTopics.map((item, i) => (
+                                            <li key={i} className='flex flex-row gap-5 mb-1'>
+                                                <button
+                                                    onClick={() => props.removeRisingTopic!(item)}
+                                                    style={{ backgroundColor: COLORS[5] }}
+                                                    className='font-bold px-2 py-1 rounded-md hover:text-red-500'
+                                                >
+                                                    <span className="mr-2 text-black">✖</span>
+                                                    {item}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </>
+                                )}
+                                {props.languages != null && props.languages.length > 0 && (
+                                    <>
+
+                                        {props.languages.map((item, i) => (
+                                            <li key={i} className='flex flex-row gap-5 mb-1'>
+                                                <button
+                                                    onClick={() => props.removeLanguage!(item)}
+                                                    style={{ backgroundColor: COLORS[0] }}
+                                                    className='font-bold px-2 py-1 rounded-md hover:text-red-500'
+                                                >
+                                                    <span className="mr-2 text-black">✖</span>
+                                                    {item}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </>
+                                )}
+                            </ul>
+                        </div>
+                )}
+                </div>   
             </Card>
         </div>
     )
