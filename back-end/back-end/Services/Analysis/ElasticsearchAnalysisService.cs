@@ -189,8 +189,24 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TopContributors = GetTopXContributors(result, numberOfTopContributors)
+            TopContributors = GetTopXContributors(result, numberOfTopContributors),
+            AllTopics = GetAllSubEcosystems(result, topics).Count,
+            AllProjects = result.Total,
+            AllContributors = GetAllContributors(result).Count,
+            AllContributions = GetAllContributions(result)
         };
+    }
+    
+    /// <summary>
+    /// This method retrieves all contributors from the search response
+    /// and returns the total number of contributions over all contributors.
+    /// </summary>
+    /// <param name="searchResponse"></param>
+    /// <returns></returns>
+    private static int GetAllContributions(SearchResponse<ProjectDto> searchResponse)
+    {
+        var contrubtors = GetAllContributors(searchResponse);
+        return contrubtors.Sum(c => c.Contributions);
     }
     
     /// <summary>
@@ -205,6 +221,24 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
     /// <returns>A list of the top x contributors.</returns>
     private static List<TopContributorDto> GetTopXContributors(SearchResponse<ProjectDto> searchResponse, int numberOfTopContributors)
+    {
+        var contributorDtos = GetAllContributors(searchResponse);
+        var sortedContributors = contributorDtos
+            .OrderByDescending(c => c.Contributions);
+
+        var topXContributors = sortedContributors
+            .Take(numberOfTopContributors)
+            .ToList();
+        return topXContributors;
+    }
+    
+    /// <summary>
+    /// This method retrieves all contributors from the search response and converts them into a list of TopContributorDto objects.
+    /// </summary>
+    /// <param name="searchResponse"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private static List<TopContributorDto> GetAllContributors(SearchResponse<ProjectDto> searchResponse)
     {
         var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedContributorsAggregateName);
         var contributorsAggregate = nestedAggregate?.GetStringTerms(TermsContributorsAggregateName);
@@ -223,13 +257,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 })
             .ToList();
         
-        var sortedContributors = contributorDtos
-            .OrderByDescending(c => c.Contributions);
-
-        var topXContributors = sortedContributors
-            .Take(numberOfTopContributors)
-            .ToList();
-        return topXContributors;
+        return contributorDtos;
     }
     
     /// <summary>
@@ -266,9 +294,28 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         SearchResponse<ProjectDto> searchResponse,
         List<string> topics, int numberOfTopSubEcosystems)
     {
+        var filteredSubEcosystems = GetAllSubEcosystems(searchResponse, topics);
+        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
+        var topXSubEcosystems = sortedSubEcosystems
+            .Take(numberOfTopSubEcosystems)
+            .ToList();
+
+        return topXSubEcosystems;
+    }
+    
+    /// <summary>
+    /// This method retrieves all sub-ecosystems/topics from the search response and converts them into a list of SubEcosystemDto objects.
+    /// </summary>
+    /// <param name="searchResponse"></param>
+    /// <param name="topics"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private static List<SubEcosystemDto> GetAllSubEcosystems(SearchResponse<ProjectDto> searchResponse,
+        List<string> topics)
+    {
         var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
         if(topicsAggregate == null) throw new ArgumentException(
-                "Elasticsearch aggregate not found in search response");
+            "Elasticsearch aggregate not found in search response");
 
         var subEcosystemDtos = topicsAggregate
             .Buckets.Select(topic => new SubEcosystemDto
@@ -278,12 +325,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             });
 
         var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
-        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
-        var topXSubEcosystems = sortedSubEcosystems
-            .Take(numberOfTopSubEcosystems)
-            .ToList();
-
-        return topXSubEcosystems;
+        return filteredSubEcosystems.ToList();
     }
 
     /// <summary>

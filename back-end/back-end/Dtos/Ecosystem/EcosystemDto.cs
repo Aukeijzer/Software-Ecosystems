@@ -16,5 +16,9 @@ public class EcosystemDto
     [DataMember(Name = "topLanguages")] public required List<ProgrammingLanguageDto> TopLanguages { get; init; }
     [DataMember(Name = "subEcosystems")] public required List<SubEcosystemDto> SubEcosystems { get; init; }
     [DataMember(Name = "topContributors")] public required List<TopContributorDto> TopContributors { get; init; }
+    [DataMember(Name = "allTopics")] public required int AllTopics { get; init; }
+    [DataMember(Name = "allProjects")] public required long AllProjects { get; init; }
+    [DataMember(Name = "allContributors")] public required int AllContributors { get; init; }
+    [DataMember(Name = "allContributions")] public required int AllContributions { get; init; }
 }
    
