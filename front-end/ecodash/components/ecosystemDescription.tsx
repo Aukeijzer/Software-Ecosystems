@@ -63,11 +63,18 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                         <label> edit description: </label>
                         <input name="description" type='text' value={props.description} onChange={(e) => props.changeDescription(e.target.value)} />
                     </form>}
-                {!props.editMode && 
-                    <p data-cy='description ecosystem'>
+                {!props.editMode && props.description && 
+                    <p data-cy='description ecosystem h-3'>
                         {props.description}
                     </p>
                 } 
+                 {!props.editMode && !props.description && 
+                    <p data-cy='description ecosystem h-3'>
+                        <br></br>
+                    </p>
+                } 
+
+
                 </div>   
                 
                 <div className='flex h-16'>
