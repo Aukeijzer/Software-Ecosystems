@@ -6,7 +6,6 @@ using SECODashBackend.Models;
 using SECODashBackend.Services.Analysis;
 
 namespace SECODashBackend.Services.Ecosystems;
-
 /// <summary>
 /// This service is responsible for handling all ecosystem-related requests.
 /// It uses the EcosystemsContext to interact with the database.

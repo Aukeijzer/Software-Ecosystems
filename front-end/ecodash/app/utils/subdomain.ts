@@ -16,7 +16,7 @@ export const getValidSubdomain = (host?: string | null) => {
     //agriculture.secodash.science.uu.nl
     
     if(host && host.includes('.')) {
-        const candidate = host.split("secodash.com")[0].split('.').reverse()[1];
+        const candidate = host.split("secodash.science.uu.nl")[0].split('.').reverse()[1];
         if(candidate && candidate != "www"){
             subdomain = candidate
         }

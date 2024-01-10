@@ -97,7 +97,6 @@ _[Ss]cripts
 
 # misc
 /front-end/ecodash.DS_Store
-*.pem
 
 # debug
 /front-end/ecodash/npm-debug.log*
@@ -114,6 +113,8 @@ _[Ss]cripts
 *.tsbuildinfo
 /front-end/ecodash/next-env.d.ts
 
+# secrets
+secrets/
 
 spider/spider/.idea/.idea.spider.dir/.idea/
 

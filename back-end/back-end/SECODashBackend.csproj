@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.11.0" />
     <PackageReference Include="Elasticstretch.DependencyInjection" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Certificate" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,7 +30,6 @@
     <InternalsVisibleTo Include="BackendTests" />
 
   </ItemGroup>
-
 
 
 </Project>
