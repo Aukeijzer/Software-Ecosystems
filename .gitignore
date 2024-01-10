@@ -113,6 +113,8 @@ _[Ss]cripts
 *.tsbuildinfo
 /front-end/ecodash/next-env.d.ts
 
+# secrets
+secrets/
 
 spider/spider/.idea/.idea.spider.dir/.idea/
 

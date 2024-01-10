@@ -1,5 +1,6 @@
 #
-# This file should be identical to the docker-compose file aside from the certificates
+# This file is used to compose the project on the server
+# It has some server specific server-side only specifications
 #
 services:
 ####
@@ -21,8 +22,9 @@ services:
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - /local/certs:/certs:ro #certs on server
+    secrets:
+     - ssl-certificate
+     - ssl-private-key
     networks:
       - secodash-network
     restart: always
@@ -35,12 +37,12 @@ services:
       dockerfile: ./Dockerfile
     networks:
       - secodash-network
+    secrets:
+      - git-api-token
     environment:
-      API_Token: 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
+      API_Token_File: /run/secrets/git-api-token
       ASPNETCORE_URLS: http://*:5205
       Docker_Enviroment: server
-    volumes:
-      - /local/certs:/publish/certs:ro
 
 #####
   # Backend 
@@ -51,10 +53,11 @@ services:
     restart: always
     environment:
       POSTGRES_Username: postgres
-      POSTGRES_PASSWORD: SECODash
+      POSTGRES_PASSWORD_FILE: /run/secrets/db-password
     volumes:
       - postgres-data:/var/lib/postgresql/data
-  
+ ####
+  # Backend (service) layer application
   backend-app:
     build:
       context: ./back-end/
@@ -67,13 +70,21 @@ services:
     restart: always
     depends_on:
       - db
-    volumes:
-      - /local/certs:/publish/certs:ro
       
 ####
-  # Volumes and networks 
+  # Volumes, networks and secrets
 volumes:
   postgres-data:
+
+secrets:
+  db-password:
+    file: secrets/db-password.txt
+  git-api-token:
+    file: secrets/spider-git-api-token.txt
+  ssl-certificate:
+    file: secrets/certs/fullchain.pem
+  ssl-private-key:
+    file: secrets/certs/privkey.pem
 
 networks:
   secodash-network:
