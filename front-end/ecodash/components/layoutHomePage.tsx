@@ -126,7 +126,7 @@ export default function LayoutHomePage(){
     const Router = useRouter();
 
     //Set up API handler
-    const { data, trigger, error, isMutating} = useSWRMutation(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', fetcherHomePage)
+    const { data, trigger, error, isMutating} = useSWRMutation('/api/getEcosystems', fetcherHomePage)
 
     //Set up session
     const { data: session } = useSession();
@@ -156,6 +156,8 @@ export default function LayoutHomePage(){
     let staticProp = true;
     var cardWrappedList : cardWrapper[] = [];
     if(data){
+        console.log(data);
+
         if(user){
             //If user is admin, make cards draggable
             if(user.userType === "Admin" || user.userType === "RootAdmin"){

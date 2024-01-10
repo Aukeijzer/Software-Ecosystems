@@ -74,7 +74,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     
     //Trigger = function to manually trigger fetcher function in SWR mutation. 
     //Data = data received from API. updates when trigger is called. causes update
-    const { data, trigger, error, isMutating } = useSWRMutation(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', fetcherEcosystemByTopic)
+    const { data, trigger, error, isMutating } = useSWRMutation('/api/postEcosystems', fetcherEcosystemByTopic)
 
     //Triggers upon page load once. Calls trigger function with no argument that calls api backend with selected ecosystem
     //Triggers twice in dev mode. Not once build tho / and npm run start. 

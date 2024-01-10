@@ -49,11 +49,16 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
  * @returns A promise that resolves to the fetched homepage ecosystem data.
  */
 export async function fetcherHomePage(url: string){
-    const result : ecosystemDTO[] = await fetch(url, {
+    const result = await fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
-    }).then(res => res.json())
-    return result;
+    });
+
+    console.log(result);
+    const returnValue : ecosystemDTO[] = await result.json();
+    console.log(returnValue);
+
+    return returnValue;
 }
