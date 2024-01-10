@@ -28,6 +28,8 @@ public interface IGitHubGraphqlService
     /// <exception cref="BadHttpRequestException">If it fails after tries amount of retries throw</exception>
     public Task<SpiderData> QueryRepositoriesByName(string name, int amount = 10, string? cursor = null, int tries = 3);
 
+    public Task<int?> GetRepoCount(string Keyword, int starCountUpper, int starCountLower, int tries = 3);
+
     /// <summary>
     /// QueryRepositoriesByTopicHelper splits the incoming request into smaller parts
     /// </summary>

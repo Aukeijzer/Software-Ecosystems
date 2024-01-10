@@ -4,6 +4,8 @@ namespace spider.Services;
 
 public interface ISpiderProjectService
 {
+    public Task<List<List<ProjectDto>>> GetByKeywordSplit(string name, int amount, string? startCursor);
+    
     /// <summary>
     /// GetByKeyword takes a keyword, an amount and a start cursor and uses these to find the first amount of projects
     /// after the start cursor with the keyword as search phrase. The result includes contributors.

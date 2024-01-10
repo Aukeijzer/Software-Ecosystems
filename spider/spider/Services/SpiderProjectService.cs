@@ -20,6 +20,11 @@ public class SpiderProjectService : ISpiderProjectService
         _graphqlDataConverter = graphqlDataConverter;
         _gitHubRestService = gitHubRestService;
     }
+
+    public async Task<List<List<ProjectDto>>> GetByKeywordSplit(string name, int amount, string? startCursor)
+    {
+        
+    }
     
     /// <summary>
     /// GetByKeyword takes a keyword, an amount and a start cursor and uses these to find the first amount of projects
