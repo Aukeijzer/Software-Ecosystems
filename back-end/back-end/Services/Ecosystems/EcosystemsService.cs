@@ -63,7 +63,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
         return ecosystemDto;
     }
 
-    public async Task<string> UpdateDescription(descriptionRequestDto dto)
+    public async Task<string> UpdateDescription(DescriptionRequestDto dto)
     {
         //Update description for ecosystem with given description
         //To lower is because all names are without capital letters

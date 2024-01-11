@@ -1,7 +1,7 @@
 ﻿namespace SECODashBackend.Dtos.users;
 using System.Runtime.Serialization;
 
-public class userTypeRequestDto
+public class UserTypeRequestDto
 {
     [DataMember(Name = "id")] 
     public required string Id { get; init; }

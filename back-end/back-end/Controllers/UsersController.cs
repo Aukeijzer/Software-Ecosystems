@@ -44,10 +44,10 @@ public class UsersController(ILogger<UsersController> logger, UsersService users
     [HttpPost("LoginRequest")]
     [SwaggerOperation("Return user type")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<userTypeDto>> LoginRequest(userTypeRequestDto req)
+    public async Task<ActionResult<UserTypeDto>> LoginRequest(UserTypeRequestDto req)
     {
         var result = await usersService.LoginRequest(req.Id, req.Username);
-        var final = new userTypeDto
+        var final = new UserTypeDto
         {
             UserType = result
         };
