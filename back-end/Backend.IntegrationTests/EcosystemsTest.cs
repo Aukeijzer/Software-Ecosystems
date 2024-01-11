@@ -89,20 +89,25 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
                     Percentage = 100
                 }
             ],
-            TopContributors = 
+            TopContributors =
             [
-                
+
                 new TopContributorDto
                 {
-                    Contributions = 500, 
+                    Contributions = 500,
                     Login = "user1"
-                }, 
+                },
                 new TopContributorDto
                 {
-                    Contributions = 200, 
+                    Contributions = 200,
                     Login = "user2"
                 }
-            ]
+            ], 
+            AllTopics = 3,
+            AllProjects = 10,
+            AllContributors = 2,
+            AllContributions = 700,
+            TimedData = [],
         };
         
         // Act
