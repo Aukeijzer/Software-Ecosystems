@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization.DataContracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace SECODashBackend.Models;
@@ -23,4 +24,7 @@ public class User
     /// </summary>
     [DataMember(Name = "userType")]
     public required string UserType { get; set; }
+    
+    [DataMember(Name = "ecosystems")] 
+    public List<Ecosystem> Ecosystems { get; set; } = [];
 }

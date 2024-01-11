@@ -6,7 +6,7 @@ namespace SECODashBackend.Database;
 /// </summary>
 public static class UserDbInitializer
 {
-    public static void Initialize(UserContext context)
+    public static void Initialize(EcosystemsContext context)
     {
         var user = context.Users.FirstOrDefault();
         if (user != null) return;

@@ -2,19 +2,18 @@
 
 public static class Extensions
 {
+   /// <summary>
+   /// This method checks if the Ecosystems database exists. If it does not exist, create it and fill it with initial values.
+   /// </summary>
    public static void CreateDbIfNotExists(this IHost host)
    {
       using (var scope = host.Services.CreateScope())
       {
          var services = scope.ServiceProvider;
-         //Create the ecosystems database if it does not exist, and initialise it.
          var ecosystemsContext = services.GetRequiredService<EcosystemsContext>();
          ecosystemsContext.Database.EnsureCreated();
+         UserDbInitializer.Initialize(ecosystemsContext);
          DbInitializer.Initialize(ecosystemsContext);
-         //Create the users database if it does not exist, and initialise it.
-         var usersContext = services.GetRequiredService<UserContext>();
-         usersContext.Database.EnsureCreated();
-         UserDbInitializer.Initialize(usersContext);
       }
    }
 }
