@@ -42,19 +42,29 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     {
         ConcurrentDictionary<string,ProjectDto> newDtos = new ConcurrentDictionary<string, ProjectDto>();
         // Request the Spider for projects related to each of the terms in the taxonomy.
+        var tasks = new List<Task>();
         foreach (var term in taxonomy)
         {
-            var newKeywordDtos = await spiderService.GetProjectsByKeywordAsync(term, keywordAmount);
-            foreach (var newKeywordDto in newKeywordDtos)
+            tasks.Add(Task.Run(async () => 
             {
-                newDtos.TryAdd(newKeywordDto.Id, newKeywordDto);
-            }
-            var newTopicDtos = await spiderService.GetProjectsByTopicAsync(term, topicAmount);
-            foreach (var newTopicDto in newTopicDtos)
+                var newKeywordDtos = await spiderService.GetProjectsByKeywordAsync(term, keywordAmount);
+                foreach (var newKeywordDto in newKeywordDtos)
+                {
+                    newDtos.TryAdd(newKeywordDto.Id, newKeywordDto);
+                }
+            }));
+            
+            tasks.Add(Task.Run(async () =>
             {
-                newDtos.TryAdd(newTopicDto.Id, newTopicDto);
-            }
+                var newTopicDtos = await spiderService.GetProjectsByTopicAsync(term, topicAmount);
+                foreach (var newTopicDto in newTopicDtos)
+                {
+                    newDtos.TryAdd(newTopicDto.Id, newTopicDto);
+                }
+            }));
+            
         }
+        await Task.WhenAll(tasks);
         await elasticsearchService.AddProjects(newDtos.Values.ToList());
     }
 }
