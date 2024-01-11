@@ -1,11 +1,21 @@
-import displayable from "../classes/displayableClass";
+// import displayable from "../classes/displayableClass";
 import { cardWrapper } from "../interfaces/cardWrapper";
 import GraphComponent from "@/components/graphComponent";
 import InfoCard from "@/components/infoCard";
 import ListComponent from "@/components/listComponent";
 import GraphLine from "@/components/graphLine";
+import displayableGraphItem from "../classes/displayableGraphItem";
+import displayableListItem from "../classes/displayableListItem";
 
-export function buildPieGraphCard(topics: displayable[], title: string, x : number, y : number) : cardWrapper{
+/**
+ * Builds a pie graph card.
+ * @param topics - The displayable topics for the graph.
+ * @param title - The title of the card.
+ * @param x - The x-coordinate of the card.
+ * @param y - The y-coordinate of the card.
+ * @returns The wrapped card object.
+ */
+export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number) : cardWrapper{
     var graphComponent = <GraphComponent items={topics}/>;
     var cardGraph = <InfoCard title={title} data={graphComponent} />
     //TODO: (min)Width / (min)height should be automatically detected here
@@ -15,8 +25,19 @@ export function buildPieGraphCard(topics: displayable[], title: string, x : numb
     return cardGraphWrapped;
 }
 
-
-export function buildListCard(topics: displayable[], onClick: any, title: string, x : number, y : number, width: number, height: number, alert?: string){
+/**
+ * Builds a list card.
+ * @param topics - The displayable topics for the list.
+ * @param onClick - The click event handler for the list items.
+ * @param title - The title of the card.
+ * @param x - The x-coordinate of the card.
+ * @param y - The y-coordinate of the card.
+ * @param width - The width of the card.
+ * @param height - The height of the card.
+ * @param alert - Optional alert message for the card.
+ * @returns The wrapped card object.
+ */
+export function buildListCard(topics: displayableListItem[], onClick: any, title: string, x : number, y : number, width: number, height: number, alert?: string){
     //Make list element
     var listComponent = <ListComponent items={topics} onClick={(sub : string) => onClick(sub)}/>
     //Make card element
@@ -27,7 +48,14 @@ export function buildListCard(topics: displayable[], onClick: any, title: string
     return cardListWrapped
 }
 
-
+/**
+ * Builds a line graph card.
+ * @param data - The data for the line graph.
+ * @param title - The title of the card.
+ * @param x - The x-coordinate of the card.
+ * @param y - The y-coordinate of the card.
+ * @returns The wrapped card object.
+ */
 export  function buildLineGraphCard(data: any, title: string, x: number, y : number) : cardWrapper{
     const lineGraphTopicsGrowing = <GraphLine items={data} />
     const cardLineGraph = <InfoCard title={title} data={lineGraphTopicsGrowing} alert="This is mock data"/>
