@@ -43,9 +43,9 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <summary>
     /// This method returns a list of projects based on the given taxonomy and amounts.
     /// </summary>
-    /// <param name="taxonomy"></param>
-    /// <param name="keywordAmount"></param>
-    /// <param name="topicAmount"></param>
+    /// <param name="taxonomy">The list of strings to mine off of github</param>
+    /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
+    /// <param name="topicAmount">The amount of repos to search for with topic search</param>
     /// <returns></returns>
     [HttpPost("mine/taxonomy")]
     public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)

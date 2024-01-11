@@ -38,6 +38,9 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// <summary>
     /// Requests the Spider for projects related to the given taxonomy and saves them to Elasticsearch.
     /// </summary>
+    /// <param name="taxonomy">The list of strings to mine off of github</param>
+    /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
+    /// <param name="topicAmount">The amount of repos to search for with topic search</param>
     public async Task MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
     {
         ConcurrentDictionary<string,ProjectDto> newDtos = new ConcurrentDictionary<string, ProjectDto>();
