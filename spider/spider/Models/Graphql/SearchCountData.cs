@@ -5,5 +5,5 @@ namespace spider.Models.Graphql;
 /// </summary>
 public class SearchCountData
 {
-    public SearchResult Search { get; init; }
+    public RepositoryCountData Search { get; init; }
 }

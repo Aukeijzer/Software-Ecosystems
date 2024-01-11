@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Net;
 using System.Text.Json;
 using spider.Converters;
@@ -21,9 +22,76 @@ public class SpiderProjectService : ISpiderProjectService
         _gitHubRestService = gitHubRestService;
     }
 
-    public async Task<List<List<ProjectDto>>> GetByKeywordSplit(string name, int amount, string? startCursor)
+    /// <summary>
+    /// GetByKeywordSplit splits the search space into smaller chunks and then calls GetByKeyword on each chunk.
+    /// </summary>
+    /// <param name="name">keyword to search by</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="startCursor">The cursor to start searching from. If startCursor is null it starts searching from
+    ///     the start</param>
+    /// <returns>A list of repositories including contributors in the form of List&lt;ProjectDto&gt;</returns>
+    public async Task<List<ProjectDto>> GetByKeywordSplit(string name, int amount, string? startCursor)
     {
+        //set max value
+        var mostStarred = await _gitHubGraphqlService.QueryRepositoriesByName(name + " sort:desc", 1, startCursor);
+        if (mostStarred.Search.Nodes.Length == 0)
+        {
+            return new List<ProjectDto>();
+        }
+        var max = mostStarred.Search.Nodes[0].StargazerCount;
+        //Use binary split to split the search space into smaller chunks
+        var sections = await BinarySplit(name, amount, startCursor, 0, max);
+        sections.Reverse();
+        var split = new Queue<(int,int)>(sections);
+        var result = new List<ProjectDto>();
         
+        while (amount > result.Count && split.Count > 0)
+        {
+            var (lower, upper) = split.Dequeue();
+            result.AddRange(await GetByKeyword(name + " stars:" + lower + ".." + upper, Math.Min(1000,amount-result.Count), startCursor));
+        }
+        
+        return result;
+    }
+
+    /// <summary>
+    /// BinarySplit splits the search space into smaller chunks by using an algorithm based on binary search.
+    /// </summary>
+    /// <param name="name">keyword to search by</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="startCursor">The cursor to start searching from. If startCursor is null it starts searching from
+    ///     the start</param>
+    /// <param name="min">The lower bound of the search space</param>
+    /// <param name="max">The upper bound of the search space</param>
+    /// <returns>Returns a list of lower and upper bounds that each contain no more than 1000 repositories</returns>
+    private async Task<List<(int, int)>> BinarySplit(string name, int amount, string? startCursor, int min, int max)
+    {
+        // If min and max are equal we can't divide further
+        if (min == max)
+        {
+            return [(min,max)];
+        }
+        
+        var repoCount = await _gitHubGraphqlService.GetRepoCount(name + " sort:desc ", min, max);
+        // If there are no repositories in the range we can't divide further
+        if (repoCount is null or 0)
+        {
+            return [(min,max)];
+        }
+        
+        // If there are more than 1000 repositories in the range we divide further
+        if (repoCount > 1000)
+        {
+            var mid = (max + min) / 2;
+            var firstHalf = await BinarySplit(name, amount, startCursor, min, mid);
+            var secondHalf = await BinarySplit(name, amount, startCursor, mid + 1, max);
+            firstHalf.AddRange(secondHalf);
+            return firstHalf;
+        }
+        else
+        {
+            return [(min, max)];
+        }
     }
     
     /// <summary>

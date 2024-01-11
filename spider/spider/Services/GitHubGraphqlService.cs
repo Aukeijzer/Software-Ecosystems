@@ -222,8 +222,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     {
       var rateLimitQuery = new GraphQLHttpRequest()
       {
-        Query = @"query repositoriesQueryRequest($name: String!, $_amount: Int!, $_cursor: String) {
-                    search(query: $name, type: REPOSITORY, first: $_amount, after: $_cursor) {
+        Query = @"query repositoriesQueryRequest($name: String!, $_cursor: String) {
+                    search(query: $name, type: REPOSITORY, after: $_cursor) {
                       repositoryCount
                     }
                   }",

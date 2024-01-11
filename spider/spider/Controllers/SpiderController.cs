@@ -48,7 +48,7 @@ public class SpiderController : ControllerBase
             startCursor = WebUtility.UrlDecode(startCursor);
         }
         _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name);
-        return await _spiderProjectService.GetByKeyword(name, amount, startCursor);
+        return await _spiderProjectService.GetByKeywordSplit(name, amount, startCursor);
     }
     
     /// <summary>
