@@ -82,9 +82,10 @@ In order to run the spider you need to install [C# .net 8.0](https://dotnet.micr
 Afterwards you can open the project solution in your IDE (visual studio or rider) and run it using the http profile. 
 
 ## Front-end
-The front-end uses
 
 [Go to front-end documentation](front-end/README.md)
+
+The front-end uses
 
 ### Nginx
 Nginx is used as a reverse proxy to handle ssl certification so the application can run on https. It just handles ssl certification and passes all requests on to the nodejs server. We have a config file to run Nginx in a docker container located at front-end/nginx,
