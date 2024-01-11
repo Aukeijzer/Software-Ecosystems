@@ -39,4 +39,19 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
         await projectsService.MineByKeywordAsync(keyword, amount);
         return Accepted();
     }
+    
+    /// <summary>
+    /// This method returns a list of projects based on the given taxonomy and amounts.
+    /// </summary>
+    /// <param name="taxonomy"></param>
+    /// <param name="keywordAmount"></param>
+    /// <param name="topicAmount"></param>
+    /// <returns></returns>
+    [HttpPost("mine/taxonomy")]
+    public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
+    {
+        logger.LogInformation("{Origin}: Mining command received for taxonomy.", this);
+        await projectsService.MineByTaxonomy(taxonomy, keywordAmount, topicAmount);
+        return Accepted();
+    }
 }

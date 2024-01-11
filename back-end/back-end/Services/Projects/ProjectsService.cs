@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+using SECODashBackend.Dtos.Project;
 using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Spider;
 
@@ -31,5 +33,28 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         
         // Save these projects to elasticsearch
         await elasticsearchService.AddProjects(newDtos);
+    }
+
+    /// <summary>
+    /// Requests the Spider for projects related to the given taxonomy and saves them to Elasticsearch.
+    /// </summary>
+    public async Task MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
+    {
+        ConcurrentDictionary<string,ProjectDto> newDtos = new ConcurrentDictionary<string, ProjectDto>();
+        // Request the Spider for projects related to each of the terms in the taxonomy.
+        foreach (var term in taxonomy)
+        {
+            var newKeywordDtos = await spiderService.GetProjectsByKeywordAsync(term, keywordAmount);
+            foreach (var newKeywordDto in newKeywordDtos)
+            {
+                newDtos.TryAdd(newKeywordDto.Id, newKeywordDto);
+            }
+            var newTopicDtos = await spiderService.GetProjectsByTopicAsync(term, topicAmount);
+            foreach (var newTopicDto in newTopicDtos)
+            {
+                newDtos.TryAdd(newTopicDto.Id, newTopicDto);
+            }
+        }
+        await elasticsearchService.AddProjects(newDtos.Values.ToList());
     }
 }
