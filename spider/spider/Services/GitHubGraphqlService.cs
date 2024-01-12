@@ -225,7 +225,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                 var temp = await QueryRepositoriesByTopic(topic, 25, cursor);
                 amount -= 25;
                 projects.Add(temp);
-                if (temp.Topic.Repositories.PageInfo?.HasNextPage != true)
+                if (temp.Topic == null || temp.Topic.Repositories.PageInfo?.HasNextPage != true)
                 {
                   break;
                 }
