@@ -1,14 +1,22 @@
+"""
+Module: app
+
+This module defines a Flask application for extracting topics from
+ preprocessed data.
+
+"""
+
 from flask import Flask, request, jsonify
 from flasgger import Swagger
-from topicService import topicService
+from topic_service import TopicService
 
 app = Flask(__name__)
 swagger = Swagger(app)
 
-# Handles POST request 
+
+# Handles POST request
 @app.route("/extract-topics", methods=["POST"])
 def extract_topics():
-    # Add schema for swagger UI
     """
     Extract topics from the preprocessed data.
     ---
@@ -48,9 +56,9 @@ def extract_topics():
     if request.method == "POST":
         try:
             data = request.get_json()
-            topic_service = topicService(data)
-            response = topic_service.extractTopics()
-            return jsonify({"result": response}), 200
+            topic_service = TopicService(data)
+            response = topic_service.extract_topics()
+            return response, 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 

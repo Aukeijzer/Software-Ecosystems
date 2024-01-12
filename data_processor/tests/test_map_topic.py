@@ -1,17 +1,33 @@
+"""
+Module: test_map_topic
+
+This module defines tests for the map_topic.py module
+"""
+
 import unittest
 import sys
 sys.path.append('./src')
-from mapTopic import flatten_taxonomy_to_strings, map_topics, get_taxonomy
+from map_topic import flatten_taxonomy_to_strings, map_topics, get_taxonomy
+
 
 class TestTaxonomyFunctions(unittest.TestCase):
+    """
+    A class for testing the functionality of the map_topic module.
+    """
     def test_get_taxonomy(self):
-        # Test get_taxonomy function 
+        """Test the get_taxonomy function by checking the structure of the returned taxonomy 
+        data.
+        """
+        # Test get_taxonomy function
         taxonomy_data = get_taxonomy()
 
         # Assertion on structure of taxonomy
         self.assertIsInstance(taxonomy_data, dict)
 
     def test_flatten_taxonomy_to_strings(self):
+        """Test the flatten_taxonomy_to_strings function by providing a sample taxonomy and checking 
+        the flattened topics.
+        """
         # Mock JSON data representing a taxonomy
         sample_taxonomy = {
             "topic1": {
@@ -26,11 +42,18 @@ class TestTaxonomyFunctions(unittest.TestCase):
         flattened_topics = flatten_taxonomy_to_strings(sample_taxonomy)
 
         # Expected flattened topics
-        expected_flattened = ["topic1", "subtopic1", "subtopic2", "subsubtopic1", "topic2"]
+        expected_flattened = ["topic1",
+                              "subtopic1",
+                              "subtopic2",
+                              "subsubtopic1",
+                              "topic2"]
         self.assertIsInstance(flattened_topics, list)
         self.assertEqual(flattened_topics, expected_flattened)
 
     def test_map_topics(self):
+        """Test the map_topics function by providing sample projects data and checking the modified 
+        project data.
+        """
         # Mock projects data
         sample_projects = [
             {"topics": [{"keywords": ["keyword1", "keyword2"]}]},
@@ -38,15 +61,15 @@ class TestTaxonomyFunctions(unittest.TestCase):
         ]
 
         # Map topics to taxonomy
-        map_topics(sample_projects)
+        mapped_topics = map_topics(sample_projects)
 
         # Assertions to the modified project data
-        for project in sample_projects:
+        for project in mapped_topics:
             self.assertIn("topics", project)
             self.assertIsInstance(project["topics"], list)
             for topic in project["topics"]:
-                self.assertIsInstance(topic, dict)
-                self.assertIn("mapped_topic", topic)
+                self.assertIsInstance(topic, str)
+
 
 if __name__ == '__main__':
     unittest.main()
