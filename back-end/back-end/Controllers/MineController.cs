@@ -44,6 +44,21 @@ public class MineController(
         return Accepted();
     }
     
+    /// <summary>
+    /// This method returns a list of projects based on the given taxonomy and amounts.
+    /// </summary>
+    /// <param name="taxonomy">The list of strings to mine off of github</param>
+    /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
+    /// <param name="topicAmount">The amount of repos to search for with topic search</param>
+    /// <returns></returns>
+    [HttpPost("taxonomy")]
+    public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
+    {
+        logger.LogInformation("{Origin}: Mining command received for taxonomy.", this);
+        await projectsService.MineByTaxonomy(taxonomy, keywordAmount, topicAmount);
+        return Accepted();
+    }
+    
     [HttpGet("schedule/topic")]
     public IActionResult ScheduleMineByTopic(string topic, int amount, MiningFrequency miningFrequency)
     {
