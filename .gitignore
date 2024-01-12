@@ -119,4 +119,13 @@ spider/spider/.idea/.idea.spider.dir/.idea/
 
 front-end/ecodash/.idea/.idea.ecodash.dir/.idea/
 
+# data processor
 data_processor/__pycache__/
+
+data_processor/src/__pycache__/
+
+data_processor/tests/__pycache__/
+
+data_processor/tests/test_data/__pycache__/
+
+data_processor/.venv/
