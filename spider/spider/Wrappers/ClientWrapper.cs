@@ -15,6 +15,13 @@ public class ClientWrapper : IClientWrapper
         _logger = new Logger<ClientWrapper>(new LoggerFactory());
     }
     
+    /// <summary>
+    /// SendQueryAsync sends a query to the GitHub GraphQL API. If the request fails it will check the response headers
+    /// for the Retry-After header and wait that amount of seconds before retrying the request.
+    /// </summary>
+    /// <param name="request">The graphql request</param>
+    /// <typeparam name="TResponse">The response type</typeparam>
+    /// <returns>The response from the graphQL API in the form of GraphQLResponse&lt;TResponse></returns>
     public async Task<GraphQLResponse<TResponse>> SendQueryAsync<TResponse>(GraphQLHttpRequest? request)
     {
         try
