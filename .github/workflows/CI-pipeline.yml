@@ -2,9 +2,9 @@ name: CI pipeline
 
 on:
   push:
-    branches: ["sprint09/CI-pipeline"]
+    branches: ["main", "develop"]
   pull_request:
-    branches: ["sprint09/CI-pipeline"]
+    branches: ["main", "develop"]
 
 jobs:
   docker:
