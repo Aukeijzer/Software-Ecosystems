@@ -1,4 +1,4 @@
-﻿using Hangfire;
+using Hangfire;
 using SECODashBackend.Services.Projects;
 
 namespace SECODashBackend.Services.Scheduler;
@@ -59,7 +59,8 @@ public class HangfireScheduler(
             MiningFrequency.Minutely => Cron.Minutely(),
             MiningFrequency.Hourly => Cron.Hourly(),
             MiningFrequency.Daily => Cron.Daily(),
-            MiningFrequency.Weekly => Cron.Weekly()
+            MiningFrequency.Weekly => Cron.Weekly(),
+            _ => throw new ArgumentOutOfRangeException(nameof(miningFrequency), miningFrequency, null)
         };
     }
 }
