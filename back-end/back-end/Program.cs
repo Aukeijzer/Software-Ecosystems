@@ -90,14 +90,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Add a Hangfire dashboard that allows to view and manage the scheduled jobs.
-app.UseHangfireDashboard();    
 
 // TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
 
 app.UseCors(myAllowSpecificOrigins);
 app.UseAuthorization();
+
+// Add a Hangfire dashboard that allows to view and manage the scheduled jobs.
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new [] { new HangfireAuthorizationFilter() }
+});
 
 // Configure the endpoints.
 app.MapControllers();
