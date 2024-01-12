@@ -56,7 +56,7 @@ jobs:
       #    dotnet csharpier .
       - name: Dataprocessor Tests
         run: |
-          python -m unittest
+          python -m unittest -s ./data_processor/tests
       - name: Spider Tests
         run: |
           dotnet test spider/spiderTests
