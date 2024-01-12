@@ -1,0 +1,74 @@
+using Microsoft.AspNetCore.Mvc;
+using SECODashBackend.Services.Projects;
+using SECODashBackend.Services.Scheduler;
+
+namespace SECODashBackend.Controllers;
+/// <summary>
+/// This controller is responsible for handling requests related to mining projects.
+/// </summary>
+/// <param name="logger"></param>
+/// <param name="projectsService"></param>
+[ApiController]
+[Route("[controller]")]
+public class MineController(
+    ILogger<MineController> logger,
+    IProjectsService projectsService,
+    IScheduler scheduler)
+    : ControllerBase
+{
+    /// <summary>
+    /// This method returns a list of projects based on the given topic and amount.
+    /// </summary>
+    /// <param name="topic"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    [HttpPost("topic")]
+    public async Task<ActionResult> MineByTopic(string topic, int amount)
+    {
+        logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
+        await projectsService.MineByTopicAsync(topic, amount);
+        return Accepted();
+    }
+    
+    /// <summary>
+    /// This method returns a list of projects based on the given keyword and amount.
+    /// </summary>
+    /// <param name="keyword"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    [HttpPost("search")]
+    public async Task<ActionResult> MineByKeyword(string keyword, int amount)
+    {
+        logger.LogInformation("{Origin}: Mining command received for topic: '{keyword}'.", this,keyword);
+        await projectsService.MineByKeywordAsync(keyword, amount);
+        return Accepted();
+    }
+    
+    [HttpGet("schedule/topic")]
+    public IActionResult ScheduleMineByTopic(string topic, int amount, MiningFrequency miningFrequency)
+    {
+        scheduler.AddRecurringTopicMiningJob(topic, amount, miningFrequency); 
+        return Ok($"Mining job for topic: {topic} with amount: {amount} and frequency: {miningFrequency} scheduled.");
+    }
+
+    [HttpGet("unschedule/topic")]
+    public IActionResult UnscheduleMineByTopic(string topic)
+    {
+        scheduler.RemoveRecurringTopicMiningJob(topic);
+        return Ok($"Mining job for topic: {topic} unscheduled if it existed.");
+    }
+    
+    [HttpGet("schedule/keyword")]
+    public IActionResult ScheduleMineByKeyword(string keyword, int amount, MiningFrequency miningFrequency)
+    {
+        scheduler.AddRecurringKeywordMiningJob(keyword, amount, miningFrequency); 
+        return Ok($"Mining job for keyword: {keyword} with amount: {amount} and frequency: {miningFrequency} scheduled.");
+    }
+    
+    [HttpGet("unschedule/keyword")]
+    public IActionResult UnscheduleMineByKeyword(string keyword)
+    {
+        scheduler.RemoveRecurringKeywordMiningJob(keyword);
+        return Ok($"Mining job for keyword: {keyword} unscheduled if it existed.");
+    }
+}
