@@ -1,4 +1,3 @@
-using System.Net;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
@@ -188,17 +187,18 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         };
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
+        var contributors = GetAllContributors(result);
         
         var ecoResponse = new EcosystemDto
         {
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TopContributors = GetTopXContributors(result, numberOfTopContributors),
-            AllTopics = GetAllSubEcosystems(result, topics).Count,
-            AllProjects = result.Total,
-            AllContributors = GetAllContributors(result).Count,
-            AllContributions = GetAllContributions(result),
+            TopContributors = GetTopXContributors(numberOfTopContributors, contributors),
+            NumberOfTopics = GetAllSubEcosystems(result, topics).Count,
+            NumberOfProjects = result.Total,
+            NumberOfContributors = contributors.Count,
+            NumberOfContributions = contributors.Sum(c => c.Contributions),
             TimedData = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, result, topics)
         };
         
@@ -207,18 +207,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
 
     #region Contributors
     /// <summary>
-    /// This method retrieves all contributors from the search response
-    /// and returns the total number of contributions over all contributors.
-    /// </summary>
-    /// <param name="searchResponse"></param>
-    /// <returns></returns>
-    private static int GetAllContributions(SearchResponse<ProjectDto> searchResponse)
-    {
-        var contrubtors = GetAllContributors(searchResponse);
-        return contrubtors.Sum(c => c.Contributions);
-    }
-
-    /// <summary>
     /// Retrieves the top contributors from the search response and converts them into a Top x list.
     /// The method first gets the nested aggregation for contributors from the search response.
     /// Then, it creates a list of TopContributorDto objects from the buckets of the contributors aggregate.
@@ -226,12 +214,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// The method then sorts the list of TopContributorDto objects in descending order of contributions.
     /// Finally, it returns the top x contributors from the sorted list.
     /// </summary>
-    /// <param name="searchResponse">The search response from Elasticsearch.</param>
-    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
-    /// <returns>A list of the top x contributors.</returns>
-    private static List<TopContributorDto> GetTopXContributors(SearchResponse<ProjectDto> searchResponse, int numberOfTopContributors)
+    private static List<TopContributorDto> GetTopXContributors(int numberOfTopContributors, List<TopContributorDto> contributorDtos)
     {
-        var contributorDtos = GetAllContributors(searchResponse);
         var sortedContributors = contributorDtos
             .OrderByDescending(c => c.Contributions);
 
@@ -244,9 +228,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <summary>
     /// This method retrieves all contributors from the search response and converts them into a list of TopContributorDto objects.
     /// </summary>
-    /// <param name="searchResponse"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
     private static List<TopContributorDto> GetAllContributors(SearchResponse<ProjectDto> searchResponse)
     {
         var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedContributorsAggregateName);
@@ -291,10 +272,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <summary>
     /// This method retrieves all sub-ecosystems/topics from the search response and converts them into a list of SubEcosystemDto objects.
     /// </summary>
-    /// <param name="searchResponse"></param>
-    /// <param name="topics"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
     private static List<SubEcosystemDto> GetAllSubEcosystems(SearchResponse<ProjectDto> searchResponse,
         List<string> topics)
     {
@@ -394,28 +371,24 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// Then it creates a TimedDateDto object with the topic, the time bucket and the number of projects.
     /// Lastly, it adds the TimedDateDto object to the response list.
     /// </summary>
-    /// <param name="st"></param>
-    /// <param name="et"></param>
-    /// <param name="elasticsearchService"></param>
-    /// <returns> List<TimedDateDto> </returns>
-    private static async Task<List<TimedDateDto>> GetTimedData(DateTime startTime, DateTime endTime, IElasticsearchService elasticsearchService, int timeBucket, SearchResponse<ProjectDto> searchResponse, List<string> topics)
+    private static async Task<List<TimedDataDto>> GetTimedData(DateTime startTime, DateTime endTime, IElasticsearchService elasticsearchService, int timeBucket, SearchResponse<ProjectDto> searchResponse, List<string> topics)
     {
         var subEcosystems = GetAllSubEcosystems(searchResponse, topics);
-        var response = new List<TimedDateDto>();
+        var response = new List<TimedDataDto>();
 
         while (startTime < endTime)
         {
-            var tasks = new List<Task<TimedDateDto>>();
+            var tasks = new List<Task<TimedDataDto>>();
             
             foreach(var subEcosystem in subEcosystems)
             {
                 tasks.Add(Task.Run(async () =>
                 {
                     var timedTopics = await elasticsearchService.GetProjectsByDate(startTime, endTime, subEcosystem.Topic);
-                    return new TimedDateDto()
+                    return new TimedDataDto()
                     {
                         Topic = subEcosystem.Topic,
-                        TimeBucket = startTime.ToString("dd-MM-yyyy"),
+                        TimeBucket = startTime.ToString("MM-yyyy"),
                         ProjectCount = timedTopics
                     };
                 }));

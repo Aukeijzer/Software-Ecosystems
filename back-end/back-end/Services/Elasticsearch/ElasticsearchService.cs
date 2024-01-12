@@ -12,18 +12,16 @@ namespace SECODashBackend.Services.ElasticSearch;
 /// </summary>
 public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchService
 {
-    private const string ProjectIndex = "projects-timed-test-02";
    
     /// <summary>
     /// Adds the given projects to the Elasticsearch index. 
     /// </summary>
     public async Task AddProjects(IEnumerable<ProjectDto> projectDtos)
     {
-        var request = new BulkRequest(ProjectIndex);
+        var request = new BulkRequest();
         var indexOperations = 
             projectDtos.Select(p =>
             {
-                p.Timestamp = p.LatestDefaultBranchCommitDate;
                 return new BulkIndexOperation<ProjectDto>(p);
             });
         
@@ -33,38 +31,38 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     }
     
     /// <summary>
-    /// Returns a list of projects that were created in the given DateRange and contain all the given topics
+    /// Returns a project count of the projects that were created in the given DateRange and contain the given topic
     /// </summary>
-    /// <param name="st"></param>
-    /// <param name="et"></param>
-    /// <param name="topic"></param>
-    /// <returns></returns>
-    /// <exception cref="HttpRequestException"></exception>
-    public async Task<int> GetProjectsByDate(DateTime st, DateTime et, string topic)
+    public async Task<long> GetProjectsByDate(DateTime rawStartTime, DateTime rawEndTime, string topic)
     {
-        // Create a query that searches for projects in the given DateRange. 
-        string endTime = et.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
-            startTime = st.ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
-        var response = await client.SearchAsync<ProjectDto>(s => s
-            .Index("projects-timed-test-02")
+        // Create a query that searches for project count in the given DateRange with the give topic. 
+        string endTime = rawEndTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
+            startTime = rawStartTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
+        var response = await client.CountAsync<ProjectDto>(s => s
             .Query(q => q
-                .Range(r => r
-                    .DateRange( dr => dr
-                        .Field(f => f.Timestamp)
-                        .Lte(endTime)
-                        .Gte(startTime)
-                        .TimeZone("+00:00")
-                        .Format("yyyy-MM-dd'T'HH:mm:ss.SS")
+                .Bool(b => b.
+                    Must(mu => mu
+                        .Match(m => m
+                            .Field(f => f.Topics)
+                            .Query(topic)
+                        ),
+                        mu => mu
+                            .Range(r => r
+                                .DateRange(dr => dr
+                                    .Field(f => f.LatestDefaultBranchCommitDate)
+                                    .Gte(startTime)
+                                    .Lte(endTime)
+                                )
+
+                            )
                     )
                 )
             )
         );
+        
         if (!response.IsValidResponse) throw new HttpRequestException(response.ToString()); 
         
-        var result = response.Documents.ToList().FindAll(p => p.Topics.Contains(topic));
-        
-        return result.Count;
-        // return response.Documents.Where(p => topic.All(t => p.Topics.Contains(t))).ToList();
+        return response.Count;
     }
 
     /// <summary>

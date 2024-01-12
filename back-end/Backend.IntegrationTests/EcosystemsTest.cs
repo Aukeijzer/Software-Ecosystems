@@ -103,10 +103,10 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
                     Login = "user2"
                 }
             ], 
-            AllTopics = 3,
-            AllProjects = 10,
-            AllContributors = 2,
-            AllContributions = 700,
+            NumberOfTopics = 3,
+            NumberOfProjects = 10,
+            NumberOfContributors = 2,
+            NumberOfContributions = 700,
             TimedData = [],
         };
         

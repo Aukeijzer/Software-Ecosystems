@@ -43,9 +43,6 @@ public class ProjectDto
    [DataMember(Name = "numberOfStars")]
    public int NumberOfStars { get; set; }
    
-   [DataMember(Name = "timestamp")]
-   public DateTime? Timestamp { get; set; } 
-   
    [DataMember(Name = "contributors")]
    public List<ContributorDto>? Contributors { get; set; }
 }

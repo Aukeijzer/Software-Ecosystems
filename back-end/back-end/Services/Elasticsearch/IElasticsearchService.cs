@@ -11,6 +11,6 @@ namespace SECODashBackend.Services.ElasticSearch;
 public interface IElasticsearchService
 {
    public Task AddProjects(IEnumerable<ProjectDto> projectDtos);
-   public Task<int> GetProjectsByDate(DateTime st, DateTime et, string topic);
+   public Task<long> GetProjectsByDate(DateTime startTime, DateTime endTime, string topic);
    public Task<SearchResponse<ProjectDto>> QueryProjects(SearchRequest searchRequest);
 }

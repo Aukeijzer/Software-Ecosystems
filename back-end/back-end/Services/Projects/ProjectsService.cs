@@ -38,12 +38,11 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     }
     
     /// <summary>
-    /// Requests Elasticsearch for projects related to the given time.
+    /// Returns a project count of the projects that were created in the given DateRange and contain the given topic.
     /// </summary>
-    /// <param name="time"></param>
-    public async Task<int> GetByTimeFrameAsync(DateTime st, DateTime et, string topic)
+    public async Task<long> GetByTimeFrameAsync(DateTime startTime, DateTime endTime, string topic)
     {
-        var result = await elasticsearchService.GetProjectsByDate(st, et, topic);
+        var result = await elasticsearchService.GetProjectsByDate(startTime, endTime, topic);
         return result;
     }
 }
