@@ -7,5 +7,5 @@ public interface IProjectsService
 {
     public Task MineByTopicAsync(string topic, int amount);
     public Task MineByKeywordAsync(string topic, int amount);
-    public Task MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount);
+    public Task MineByTaxonomyAsync(List<string> taxonomy, int keywordAmount, int topicAmount);
 }

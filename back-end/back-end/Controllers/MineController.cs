@@ -55,7 +55,7 @@ public class MineController(
     public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
     {
         logger.LogInformation("{Origin}: Mining command received for taxonomy.", this);
-        await projectsService.MineByTaxonomy(taxonomy, keywordAmount, topicAmount);
+        await projectsService.MineByTaxonomyAsync(taxonomy, keywordAmount, topicAmount);
         return Accepted();
     }
     

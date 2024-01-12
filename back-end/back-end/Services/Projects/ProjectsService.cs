@@ -41,7 +41,7 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// <param name="taxonomy">The list of strings to mine off of github</param>
     /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
     /// <param name="topicAmount">The amount of repos to search for with topic search</param>
-    public async Task MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
+    public async Task MineByTaxonomyAsync(List<string> taxonomy, int keywordAmount, int topicAmount)
     {
         ConcurrentDictionary<string,ProjectDto> newDtos = new ConcurrentDictionary<string, ProjectDto>();
         // Request the Spider for projects related to each of the terms in the taxonomy.
