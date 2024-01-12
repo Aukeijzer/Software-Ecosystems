@@ -20,6 +20,7 @@ public class EcosystemDto
     [DataMember(Name = "allProjects")] public long NumberOfProjects { get; init; }
     [DataMember(Name = "allContributors")] public int NumberOfContributors { get; init; }
     [DataMember(Name = "allContributions")] public int NumberOfContributions { get; init; }
-    [DataMember(Name = "timedData")] public List<TimedDataDto>? TimedData { get; init; }
+    [DataMember(Name = "timedDataTopics")] public List<TimedDataDto>? TimedDataTopics { get; init; }
+    [DataMember(Name = "timedDataEcosystem")] public List<TimedDataDto>? TimedDataEcosystem { get; init; }
 }
    

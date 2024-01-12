@@ -201,12 +201,13 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             NumberOfProjects = result.Total,
             NumberOfContributors = contributors.Count,
             NumberOfContributions = contributors.Sum(c => c.Contributions),
-            TimedData = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, topXSubEcosystems.Select(s => s.Topic).ToList())
+            TimedDataTopics = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, topXSubEcosystems.Select(s => s.Topic).ToList()),
+            TimedDataEcosystem = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, topics)
         };
         
         return ecoResponse;
     }
-
+ 
     #region Contributors
     /// <summary>
     /// Retrieves the top contributors from the search response and converts them into a Top x list.
@@ -402,6 +403,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         
         return response;
     }
+    
     
     #endregion
 }
