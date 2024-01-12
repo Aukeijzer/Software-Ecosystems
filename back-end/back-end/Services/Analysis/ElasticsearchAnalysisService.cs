@@ -188,18 +188,20 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
         var contributors = GetAllContributors(result);
+        var filteredSubEcosystems = GetAllSubEcosystems(result, topics);
+        var topXSubEcosystems = GetTopXSubEcosystems(filteredSubEcosystems, numberOfTopSubEcosystems);
         
         var ecoResponse = new EcosystemDto
         {
             Topics = topics,
-            SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
+            TopSubEcosystems = topXSubEcosystems,
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
             TopContributors = GetTopXContributors(numberOfTopContributors, contributors),
-            NumberOfTopics = GetAllSubEcosystems(result, topics).Count,
+            NumberOfTopics = filteredSubEcosystems.Count,
             NumberOfProjects = result.Total,
             NumberOfContributors = contributors.Count,
             NumberOfContributions = contributors.Sum(c => c.Contributions),
-            TimedData = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, result, topics)
+            TimedData = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, topXSubEcosystems.Select(s => s.Topic).ToList())
         };
         
         return ecoResponse;
@@ -256,11 +258,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <summary>
     /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
     /// </summary>
-    private static List<SubEcosystemDto> GetTopXSubEcosystems(
-        SearchResponse<ProjectDto> searchResponse,
-        List<string> topics, int numberOfTopSubEcosystems)
+    private static List<SubEcosystemDto> GetTopXSubEcosystems(List<SubEcosystemDto> filteredSubEcosystems, int numberOfTopSubEcosystems)
     {
-        var filteredSubEcosystems = GetAllSubEcosystems(searchResponse, topics);
         var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
         var topXSubEcosystems = sortedSubEcosystems
             .Take(numberOfTopSubEcosystems)
@@ -271,9 +270,10 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     
     /// <summary>
     /// This method retrieves all sub-ecosystems/topics from the search response and converts them into a list of SubEcosystemDto objects.
+    /// It also filters out sub-ecosystems that are in the topics list that defines the ecosystem,
+    /// have fewer than the minimum number of projects and are programming languages.
     /// </summary>
-    private static List<SubEcosystemDto> GetAllSubEcosystems(SearchResponse<ProjectDto> searchResponse,
-        List<string> topics)
+    private static List<SubEcosystemDto> GetAllSubEcosystems(SearchResponse<ProjectDto> searchResponse, List<string> topics)
     {
         var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
         if(topicsAggregate == null) throw new ArgumentException(
@@ -371,34 +371,34 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// Then it creates a TimedDateDto object with the topic, the time bucket and the number of projects.
     /// Lastly, it adds the TimedDateDto object to the response list.
     /// </summary>
-    private static async Task<List<TimedDataDto>> GetTimedData(DateTime startTime, DateTime endTime, IElasticsearchService elasticsearchService, int timeBucket, SearchResponse<ProjectDto> searchResponse, List<string> topics)
+    private static async Task<List<TimedDataDto>> GetTimedData(DateTime startTime, DateTime endTime, 
+        IElasticsearchService elasticsearchService, int timeBucket, List<string> topXTopics)
     {
-        var subEcosystems = GetAllSubEcosystems(searchResponse, topics);
         var response = new List<TimedDataDto>();
-
+        
         while (startTime < endTime)
         {
             var tasks = new List<Task<TimedDataDto>>();
-            
-            foreach(var subEcosystem in subEcosystems)
+            foreach(var topic in topXTopics)
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    var timedTopics = await elasticsearchService.GetProjectsByDate(startTime, endTime, subEcosystem.Topic);
+                    var timedTopics = await elasticsearchService.GetProjectsByDate(startTime, endTime, topic);
                     return new TimedDataDto()
                     {
-                        Topic = subEcosystem.Topic,
+                        Topic = topic,
                         TimeBucket = startTime.ToString("MM-yyyy"),
                         ProjectCount = timedTopics
                     };
                 }));
             }
-
+            
             var timedDates = await Task.WhenAll(tasks);
             response.AddRange(timedDates);
-
+            
             startTime = startTime.AddDays(timeBucket);
         }
+        
         
         return response;
     }

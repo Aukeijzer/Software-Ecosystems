@@ -35,9 +35,10 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     /// </summary>
     public async Task<long> GetProjectsByDate(DateTime rawStartTime, DateTime rawEndTime, string topic)
     {
-        // Create a query that searches for project count in the given DateRange with the give topic. 
         string endTime = rawEndTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
             startTime = rawStartTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
+        
+        // Create a query that searches for project count in the given DateRange with the give topic. 
         var response = await client.CountAsync<ProjectDto>(s => s
             .Query(q => q
                 .Bool(b => b.
@@ -53,7 +54,6 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
                                     .Gte(startTime)
                                     .Lte(endTime)
                                 )
-
                             )
                     )
                 )

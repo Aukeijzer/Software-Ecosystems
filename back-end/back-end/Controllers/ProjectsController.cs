@@ -16,9 +16,6 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <summary>
     /// This method returns a list of projects based on the given topic and amount.
     /// </summary>
-    /// <param name="topic"></param>
-    /// <param name="amount"></param>
-    /// <returns></returns>
     [HttpPost("mine/topic")]
     public async Task<ActionResult> MineByTopic(string topic, int amount)
     {
@@ -30,9 +27,6 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <summary>
     /// This method returns a list of projects based on the given keyword and amount.
     /// </summary>
-    /// <param name="keyword"></param>
-    /// <param name="amount"></param>
-    /// <returns></returns>
     [HttpPost("mine/search")]
     public async Task<ActionResult> MineByKeyword(string keyword, int amount)
     {
@@ -44,13 +38,11 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <summary>
     /// This method returns a list of projects based on the given time.
     /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
     [HttpPost("searchbytimeframe")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByTimeFrame(DateTime st, DateTime et, string topic)
+    public async Task<ActionResult<List<ProjectDto>>> GetByTimeFrame(DateTime startTime, DateTime endTime, string topic)
     {
-        logger.LogInformation("{Origin}: Projects requested with time: '{starttime}' '.", this, st);
-        var result = await projectsService.GetByTimeFrameAsync(st, et, topic);
+        logger.LogInformation("{Origin}: Projects requested with time: '{starttime}' '.", this, startTime);
+        var result = await projectsService.GetByTimeFrameAsync(startTime, endTime, topic);
         return new ObjectResult(result);
     }
     
