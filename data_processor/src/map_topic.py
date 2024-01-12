@@ -19,8 +19,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
-# Retrieve taxonomy file
-def get_taxonomy():
+def get_taxonomy(file_path):
     """
     Retrieve and return the predefined taxonomy from a JSON file.
 
@@ -29,15 +28,16 @@ def get_taxonomy():
     dict
         The dictionary containing the taxonomy data.
     """
-    file_path = 'assets/taxonomy.json'
     try:
         with open(file_path, 'r', encoding="utf-8") as file:
             taxonomy_data = json.load(file)
             return taxonomy_data
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         print(f"File '{file_path}' not found.")
+        return e
     except json.JSONDecodeError as e:
         print(f"Error decoding '{file_path}': {e}")
+        return e
 
 
 # Flatten the taxonomy to a list of topics
@@ -90,7 +90,7 @@ def map_topics(projects):
         corresponding project.
     """
     # Get predefined topics
-    taxonomy_data = get_taxonomy()
+    taxonomy_data = get_taxonomy(file_path = "assets/taxonomy.json")
     predefined_topics = flatten_taxonomy_to_strings(taxonomy_data)
     results = []
     for project in projects:

@@ -5,7 +5,7 @@ This module defines tests for the topic_model.py module
 """
 import unittest
 import sys
-from test_data.mock_preprocessedDocs import preprocessed_docs
+from tests.test_data.mock_preprocessed_docs import preprocessed_docs
 sys.path.append('./src')
 from topic_model import extract_topics_lda
 
