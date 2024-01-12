@@ -38,22 +38,22 @@ jobs:
           
       # Run flake8 linter.
       # Linter for python code (Data processor).
-      #- name: Python flake8 Lint
-      #  uses: py-actions/flake8@v2.3.0
+      - name: Python flake8 Lint
+        uses: py-actions/flake8@v2.3.0
 
       # ESLint is installed in frontend, so run via dependences installed in build step above.
-      #- name: Run ESLint linter
+      - name: Run ESLint linter
         #working-directory: ./ecodash
-      #  run: npx eslint
+        run: npx eslint
 
       # Run C# linter.
       # Note: dotnet format does not enforce line length, so use CSharpier for that one.
-      #- name: Run C# linters.
-      #  run: |
-      #    dotnet format ./spider/spider.sln
-      #    dotnet format ./back-end/back-end.sln
-      #    dotnet tool install -g csharpier
-      #    dotnet csharpier .
+      - name: Run C# linters.
+        run: |
+          dotnet format ./spider/spider.sln
+          dotnet format ./back-end/back-end.sln
+          dotnet tool install -g csharpier
+          dotnet csharpier .
       - name: Dataprocessor Tests
         run: |
           python -m unittest discover -s data_processor -p 'test_*.py'
