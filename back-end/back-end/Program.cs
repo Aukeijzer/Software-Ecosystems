@@ -79,7 +79,7 @@ builder.Services.AddHangfire((provider, config) => config
 
 // Add the Hangfire server that is responsible for executing the scheduled jobs.
 builder.Services.AddHangfireServer();
-builder.Services.AddScoped<ISchedulerService, HangfireSchedulerService>();
+builder.Services.AddScoped<IScheduler, HangfireScheduler>();
 
 var app = builder.Build();
 
