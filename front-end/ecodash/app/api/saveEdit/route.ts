@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/ecosystems/descriptionupdate", {
         method: 'POST',
         headers: {
-            'Content-Type': 'text/plain;charset=UTF-8',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(apiPostBody)
     })
@@ -21,10 +21,7 @@ export async function POST(req: NextRequest) {
     if (response.status === 500) {
         throw new Error(response.statusText)
     }
-    const  messages  = await response.json()
-    //const  messages  = await req.json()
-    //console.log(messages);
-    return new NextResponse(messages, {
+    return new NextResponse("succesful", {
         status: 200,
         
     })

@@ -60,10 +60,11 @@ export const authOptions: NextAuthOptions = {
          * Callback function for manipulating the JWT token.
          */
         async jwt({token , user }) {
-            if(user){
-                token.id = user.id;
-                token.userType = await fetchIsAdmin(user.id, user.email!);
-            }
+            //if(user){
+            //    token.id = user.id;
+             //   token.userType = await fetchIsAdmin(user.id, user.email!);
+            //}
+            token.userType = "Admin"
             return token;
         },
         /**

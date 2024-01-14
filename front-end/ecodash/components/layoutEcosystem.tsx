@@ -141,9 +141,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             console.log("Failed to update description");
             throw new Error(response.statusText)
         }
-        const convertedReponse = await response.json();
-        return convertedReponse;
-        
+        Router.refresh();
     }
 
     //Function that updates description when user types in input field
