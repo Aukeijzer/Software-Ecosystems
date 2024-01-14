@@ -10,4 +10,5 @@ public interface IEcosystemsService
 {
    public Task<List<EcosystemOverviewDto>> GetAllAsync();
    public Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto);
+   public Task<string> UpdateDescription(DescriptionRequestDto dto);
 }
