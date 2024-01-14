@@ -32,11 +32,12 @@ builder.Services.AddDbContext<EcosystemsContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb"))
     );
 builder.Services.AddDbContext<UserContext>(
-    o => o.UseNpgsql(builder.Configuration.GetConnectionString("UsersDb"))
+    o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb"))
     );
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<UsersService>();
+
 var spiderConnectionString = builder.Configuration.GetConnectionString("Spider");
 if (string.IsNullOrEmpty(spiderConnectionString))
 {

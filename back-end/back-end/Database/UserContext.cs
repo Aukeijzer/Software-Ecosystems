@@ -6,16 +6,8 @@ namespace SECODashBackend.Database;
 /// <summary>
 /// Represents the database context for the User entity.
 /// </summary>
-public class UserContext : DbContext
+public class UserContext(DbContextOptions<UserContext> options) : DbContext(options)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UserContext"/> class.
-    /// </summary>
-    /// <param name="options">The options for configuring the context.</param>
-    public UserContext(DbContextOptions<UserContext> options) : base(options)
-    {
-    }
-
     /// <summary>
     /// Configures the model for the context.
     /// </summary>
@@ -24,9 +16,6 @@ public class UserContext : DbContext
     {
         modelBuilder.UseSerialColumns();
     }
-
-    /// <summary>
-    /// Gets or sets the collection of users.
-    /// </summary>
     public DbSet<User> Users { get; set; }
+    
 }
