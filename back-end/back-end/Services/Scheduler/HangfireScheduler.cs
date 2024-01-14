@@ -1,4 +1,4 @@
-using Hangfire;
+﻿using Hangfire;
 using SECODashBackend.Services.Projects;
 
 namespace SECODashBackend.Services.Scheduler;
@@ -11,28 +11,36 @@ public class HangfireScheduler(
     IRecurringJobManager recurringJobManager,
     IProjectsService projectsService) : IScheduler
 {
-
     /// <summary>
-    /// Adds a recurring job that mines projects by topic.
+    /// Adds or updates a recurring job that mines projects by a topic.
     /// </summary>
-    /// <param name="topic"></param>
-    /// <param name="amount"></param>
-    /// <param name="miningFrequency"></param>
-    /// <returns></returns>
-    public void AddRecurringTopicMiningJob(string topic, int amount, MiningFrequency miningFrequency)
+    /// <param name="topic"> The topic to mine by</param>
+    /// <param name="amount"> The amount of projects to mine. </param>
+    /// <param name="miningFrequency"> The frequency of mining. </param>
+    public void AddOrUpdateRecurringTopicMiningJob(string topic, int amount, MiningFrequency miningFrequency)
     {
         var jobId = $"topic-mining_topic={topic}";
         recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTopicAsync(topic, amount), GetCronFrequency(miningFrequency));
         logger.LogInformation($"Job Id: {jobId} added.");
     }
     
-    public void AddRecurringKeywordMiningJob(string keyword, int amount, MiningFrequency miningFrequency)
+    /// <summary>
+    /// Adds or updates a recurring job that mines projects by a keyword.
+    /// </summary>
+    /// <param name="keyword"> The keyword to mine by. </param>
+    /// <param name="amount"> The amount of projects to mine. </param>
+    /// <param name="miningFrequency"> The frequency of mining. </param>
+    public void AddOrUpdateRecurringKeywordMiningJob(string keyword, int amount, MiningFrequency miningFrequency)
     {
         var jobId = $"keyword-mining_keyword={keyword}";
         recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByKeywordAsync(keyword, amount), GetCronFrequency(miningFrequency));
         logger.LogInformation($"Job Id: {jobId} added.");
     }
     
+    /// <summary>
+    /// Removes a recurring job that mines projects by a topic.
+    /// </summary>
+    /// <param name="topic"> The topic belonging to the job that is to removed. </param>
     public void RemoveRecurringTopicMiningJob(string topic)
     {
         var jobId = $"topic-mining_topic={topic}";
@@ -40,6 +48,10 @@ public class HangfireScheduler(
         logger.LogInformation($"Job Id: {jobId} removed if it existed.");
     }
 
+    /// <summary>
+    /// Removes a recurring job that mines projects by a keyword.
+    /// </summary>
+    /// <param name="keyword"> The keyword belonging to the job that is to removed. </param>
     public void RemoveRecurringKeywordMiningJob(string keyword)
     {
        var jobId = $"keyword-mining_keyword={keyword}";
@@ -75,8 +87,8 @@ public class HangfireScheduler(
     /// <summary>
     /// Gets the cron frequency of the job based on the given <see cref="MiningFrequency"/>.
     /// </summary>
-    /// <param name="miningFrequency"></param>
-    /// <returns></returns>
+    /// <param name="miningFrequency"> The mining frequency for which the Cron frequency is requested.</param>
+    /// <returns> The corresponding Cron frequency.</returns>
     private static string GetCronFrequency(MiningFrequency miningFrequency)
     {
         return miningFrequency switch

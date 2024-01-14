@@ -62,7 +62,7 @@ public class MineController(
     [HttpGet("schedule/topic")]
     public IActionResult ScheduleMineByTopic(string topic, int amount, MiningFrequency miningFrequency)
     {
-        scheduler.AddRecurringTopicMiningJob(topic, amount, miningFrequency); 
+        scheduler.AddOrUpdateRecurringTopicMiningJob(topic, amount, miningFrequency); 
         return Ok($"Mining job for topic: {topic} with amount: {amount} and frequency: {miningFrequency} scheduled.");
     }
 
@@ -76,7 +76,7 @@ public class MineController(
     [HttpGet("schedule/keyword")]
     public IActionResult ScheduleMineByKeyword(string keyword, int amount, MiningFrequency miningFrequency)
     {
-        scheduler.AddRecurringKeywordMiningJob(keyword, amount, miningFrequency); 
+        scheduler.AddOrUpdateRecurringKeywordMiningJob(keyword, amount, miningFrequency); 
         return Ok($"Mining job for keyword: {keyword} with amount: {amount} and frequency: {miningFrequency} scheduled.");
     }
     

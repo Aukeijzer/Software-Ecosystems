@@ -1,4 +1,4 @@
-namespace SECODashBackend.Services.Scheduler;
+﻿namespace SECODashBackend.Services.Scheduler;
 
 /// <summary>
 /// Interface for a scheduler that is responsible for scheduling jobs.
@@ -6,19 +6,34 @@ namespace SECODashBackend.Services.Scheduler;
 public interface IScheduler
 {
     /// <summary>
-    /// Adds a recurring job that mines projects by a topic.
+    /// Adds or updates a recurring job that mines projects by a topic.
     /// </summary>
-    /// <param name="topic"></param>
-    /// <param name="amount"></param>
-    /// <param name="miningFrequency"></param>
+    /// <param name="topic"> The topic to mine by</param>
+    /// <param name="amount"> The amount of projects to mine. </param>
+    /// <param name="miningFrequency"> The frequency of mining. </param>
     /// <returns></returns>
-    public void AddRecurringTopicMiningJob(string topic, int amount, MiningFrequency miningFrequency);
-    
-    public void AddRecurringKeywordMiningJob(string keyword, int amount, MiningFrequency miningFrequency);
+    public void AddOrUpdateRecurringTopicMiningJob(string topic, int amount, MiningFrequency miningFrequency);
+    /// <summary>
+    /// Adds or updates a recurring job that mines projects by a keyword.
+    /// </summary>
+    /// <param name="keyword"> The keyword to mine by. </param>
+    /// <param name="amount"> The amount of projects to mine. </param>
+    /// <param name="miningFrequency"> The frequency of mining. </param>
+    /// <returns></returns>
+    public void AddOrUpdateRecurringKeywordMiningJob(string keyword, int amount, MiningFrequency miningFrequency);
+    /// <summary>
+    /// Removes a recurring job that mines projects by a topic.
+    /// </summary>
+    /// <param name="topic"> The topic belonging to the job that is to removed. </param>
+    /// <returns></returns>
     public void RemoveRecurringTopicMiningJob(string topic);
-    
+    /// <summary>
+    /// Removes a recurring job that mines projects by a keyword.
+    /// </summary>
+    /// <param name="keyword"> The keyword belonging to the job that is to removed. </param>
+    /// <returns></returns>
     public void RemoveRecurringKeywordMiningJob(string keyword);
-    
+
     /// <summary>
     /// Add a recurring job that mines projects by a taxonomy.
     /// </summary>
