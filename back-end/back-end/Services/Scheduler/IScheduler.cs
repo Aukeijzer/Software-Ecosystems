@@ -1,4 +1,4 @@
-﻿namespace SECODashBackend.Services.Scheduler;
+namespace SECODashBackend.Services.Scheduler;
 
 /// <summary>
 /// Interface for a scheduler that is responsible for scheduling jobs.
@@ -19,4 +19,19 @@ public interface IScheduler
     
     public void RemoveRecurringKeywordMiningJob(string keyword);
     
+    /// <summary>
+    /// Add a recurring job that mines projects by a taxonomy.
+    /// </summary>
+    /// <param name="ecosystemName"> The name of the ecosystem. </param>
+    /// <param name="taxonomy"> The taxonomy to mine by. </param>
+    /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
+    /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
+    /// <returns></returns>
+    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount);
+    /// <summary>
+    /// Removes a recurring job that mines projects by a taxonomy.
+    /// </summary>
+    /// <param name="ecosystem"> The ecosystem belonging to the job that is to removed. </param>
+    /// <returns></returns>
+    public void RemoveRecurringTaxonomyMiningJob(string ecosystem);
 }
