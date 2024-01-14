@@ -85,5 +85,32 @@ public class MineController(
     {
         scheduler.RemoveRecurringKeywordMiningJob(keyword);
         return Ok($"Mining job for keyword: {keyword} unscheduled if it existed.");
+    /// <summary>
+    /// This method schedules a recurring job that mines projects based on the given taxonomy.
+    /// </summary>
+    /// <param name="ecosystem"> The name of the ecosystem. </param>
+    /// <param name="taxonomy"> The taxonomy to mine by. </param>
+    /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
+    /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
+    /// <param name="miningFrequency"> The frequency of mining. </param>
+    [HttpPost("schedule/taxonomy")]
+    public IActionResult ScheduleMineByTaxonomy(string ecosystem, List<string> taxonomy, int keywordAmount, int topicAmount, MiningFrequency miningFrequency)
+    {
+        scheduler.AddRecurringTaxonomyMiningJob(ecosystem, taxonomy, keywordAmount, topicAmount); 
+        logger.LogInformation(
+            $"Mining job for ecosystem: {ecosystem} using taxonomy: {taxonomy} with keyword amount: {keywordAmount} and topic amount: {topicAmount} scheduled.");
+        return Accepted();
+    }
+    
+    /// <summary>
+    /// This method deletes a recurring job that mines projects based on the given taxonomy if the job exists.
+    /// </summary>
+    /// <param name="ecosystem"> The name of the ecosystem. </param>
+    [HttpGet("unschedule/taxonomy")]
+    public IActionResult UnscheduleMineByTaxonomy(string ecosystem)
+    {
+        scheduler.RemoveRecurringTaxonomyMiningJob(ecosystem);
+        logger.LogInformation($"Mining job for ecosystem: {ecosystem} using a taxonomy unscheduled if it existed.");
+        return Accepted();
     }
 }
