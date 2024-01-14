@@ -10,6 +10,8 @@ import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
 import GridLayout from "./gridLayout";
+import { useSession} from "next-auth/react";
+import { ExtendedUser } from "@/app/utils/authOptions";
 
 /**
  * Renders the layout for the home page.
@@ -43,8 +45,12 @@ export default function LayoutHomePage(){
     const Router = useRouter();
 
     //Set up API handler
-    const { data, trigger, error, isMutating} = useSWRMutation(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', fetcherHomePage)
+    const { data, trigger, error, isMutating} = useSWRMutation('/api/homePageGet', fetcherHomePage)
 
+    //Set up session
+    const { data: session } = useSession();
+    const user = session?.user as ExtendedUser;
+    
     //Trigger useEffect on load component. 
     useEffect(() => {
         trigger();
@@ -67,8 +73,21 @@ export default function LayoutHomePage(){
         Router.push(finalUrl);
     }
 
+    let staticProp = true;
     var cardWrappedList : cardWrapper[] = [];
     if(data){
+        if(user){
+            //If user is admin, make cards draggable
+            if(user.userType === "Admin" || user.userType === "RootAdmin"){
+                staticProp = false;
+        
+                //Create new dashboard card
+                const newDashboardButton = <div  onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton}/>
+                const newDashboardButtonWrapped : cardWrapper = {card: newDashboardButtonCard, width: 2, height: 3, x: 2, y: 5, static:true}
+                cardWrappedList.push(newDashboardButtonWrapped);
+            }
+        }
 
         //General information about SECODash
         const info = (<div className="flex flex-col"> 
@@ -79,25 +98,25 @@ export default function LayoutHomePage(){
         )
 
         const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
-        const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0, static: false}
+        const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0, static: staticProp}
         cardWrappedList.push(infoCardWrapped);
 
          //Agriculture card
         const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
         const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem}/>
-        const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:true}
+        const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:staticProp}
         cardWrappedList.push(agricultureButtonCardWrapped)
         
         //Quantum card
         const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
         const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} />
-        const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: false}
+        const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: staticProp}
         cardWrappedList.push(quantumButtonCardWrapped)
         
         //Artificial-intelligence card
         const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
         const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem}/>
-        const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: false}
+        const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: staticProp}
         cardWrappedList.push(aiButtonCardWrapped);
     } else {
         //When still loading display spinner
