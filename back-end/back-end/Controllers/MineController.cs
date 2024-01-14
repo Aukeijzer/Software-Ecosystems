@@ -59,32 +59,59 @@ public class MineController(
         return Accepted();
     }
     
+    /// <summary>
+    /// This method schedules a recurring job that mines projects based on the given topic, amount and frequency.
+    /// </summary>
+    /// <param name="topic"> The topic to mine by. </param>
+    /// <param name="amount"> The amount of projects to mine. </param>
+    /// <param name="miningFrequency"> The frequency of mining. </param>
     [HttpGet("schedule/topic")]
     public IActionResult ScheduleMineByTopic(string topic, int amount, MiningFrequency miningFrequency)
     {
         scheduler.AddOrUpdateRecurringTopicMiningJob(topic, amount, miningFrequency); 
-        return Ok($"Mining job for topic: {topic} with amount: {amount} and frequency: {miningFrequency} scheduled.");
+        logger.LogInformation($"{this}: Mining job for topic: {topic} with amount: {amount} and frequency: {miningFrequency} scheduled.");
+        return Accepted();
     }
 
+    /// <summary>
+    /// This method deleting a recurring job that mines projects based on the given topic if the jobs exists.
+    /// </summary>
+    /// <param name="topic"> The topic to mine by. </param>
     [HttpGet("unschedule/topic")]
     public IActionResult UnscheduleMineByTopic(string topic)
     {
         scheduler.RemoveRecurringTopicMiningJob(topic);
-        return Ok($"Mining job for topic: {topic} unscheduled if it existed.");
+        logger.LogInformation($"{this}: Mining job for topic: {topic} unscheduled if it existed.");
+        return Accepted();
     }
     
+    /// <summary>
+    /// This method schedules a recurring job that mines projects based on the given keyword, amount and frequency.
+    /// </summary>
+    /// <param name="keyword"> The keyword to mine by. </param>
+    /// <param name="amount"> The amount of projects to mine. </param>
+    /// <param name="miningFrequency"> The frequency of mining. </param>
     [HttpGet("schedule/keyword")]
     public IActionResult ScheduleMineByKeyword(string keyword, int amount, MiningFrequency miningFrequency)
     {
         scheduler.AddOrUpdateRecurringKeywordMiningJob(keyword, amount, miningFrequency); 
-        return Ok($"Mining job for keyword: {keyword} with amount: {amount} and frequency: {miningFrequency} scheduled.");
+        logger.LogInformation(
+            $"{this}: Mining job for keyword: {keyword} with amount: {amount} and frequency: {miningFrequency} scheduled.");
+        return Accepted();
     }
     
+    /// <summary>
+    /// This method deleting a recurring job that mines projects based on the given keyword if the jobs exists.
+    /// </summary>
+    /// <param name="keyword"> The keyword to mine by. </param>
     [HttpGet("unschedule/keyword")]
     public IActionResult UnscheduleMineByKeyword(string keyword)
     {
         scheduler.RemoveRecurringKeywordMiningJob(keyword);
-        return Ok($"Mining job for keyword: {keyword} unscheduled if it existed.");
+        logger.LogInformation($"Mining job for keyword: {keyword} unscheduled if it existed.");
+        return Accepted();
+    }
+    
     /// <summary>
     /// This method schedules a recurring job that mines projects based on the given taxonomy.
     /// </summary>
