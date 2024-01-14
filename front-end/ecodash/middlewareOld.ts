@@ -1,5 +1,11 @@
+/*
 import { NextRequest, NextResponse } from 'next/server';
 import { getValidSubdomain } from './app/utils/subdomain';
+
+
+This had been commented out because it does not work with certificates.
+This can be renabled if we get a wildcard certificate.
+
 
 export async function middleware(req: NextRequest) {
     //Clone the url
@@ -23,3 +29,5 @@ export async function middleware(req: NextRequest) {
     }
    return NextResponse.rewrite(url)
 }
+
+*/

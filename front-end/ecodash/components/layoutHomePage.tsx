@@ -67,10 +67,12 @@ export default function LayoutHomePage(){
     }
     
     function onClickEcosystem(ecosystem: string){
-        //Get local adress and append ecosystem to it
+        /* Old code for when we had middlewar 
         var url = process.env.NEXT_PUBLIC_LOCAL_ADRESS!.split("//");
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
+        */
+        Router.push('/' + ecosystem);
     }
 
     let staticProp = true;
