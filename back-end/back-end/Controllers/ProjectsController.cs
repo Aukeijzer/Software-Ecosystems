@@ -5,8 +5,6 @@ namespace SECODashBackend.Controllers;
 /// <summary>
 /// This controller is responsible for handling requests related to projects.
 /// </summary>
-/// <param name="logger"></param>
-/// <param name="projectsService"></param>
 [ApiController]
 [Route("[controller]")]
 public class ProjectsController(ILogger<ProjectsController> logger, IProjectsService projectsService)
@@ -15,8 +13,8 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <summary>
     /// This method returns a list of projects based on the given topic and amount.
     /// </summary>
-    /// <param name="topic"></param>
-    /// <param name="amount"></param>
+    /// <param name="topic"> The topic that the projects should relate to.</param>
+    /// <param name="amount">The number of projects to be mined</param>
     /// <returns></returns>
     [HttpPost("mine/topic")]
     public async Task<ActionResult> MineByTopic(string topic, int amount)
@@ -29,8 +27,8 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <summary>
     /// This method returns a list of projects based on the given keyword and amount.
     /// </summary>
-    /// <param name="keyword"></param>
-    /// <param name="amount"></param>
+    /// <param name="keyword">The keyword that the projects should relate to.</param>
+    /// <param name="amount">The number of projects to be mined.</param>
     /// <returns></returns>
     [HttpPost("mine/search")]
     public async Task<ActionResult> MineByKeyword(string keyword, int amount)

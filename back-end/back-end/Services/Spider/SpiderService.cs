@@ -22,6 +22,8 @@ public class SpiderService : ISpiderService
     /// <summary>
     /// Requests the Spider for projects related to the given keyword.
     /// </summary>
+    /// <param name="keyword">The keyword to search for. </param>
+    /// <param name="amount">The amount of repos to search for. </param>
     public async Task<List<ProjectDto>> GetProjectsByKeywordAsync(string keyword, int amount)
     {
         var request = new RestRequest("name/" + keyword + "/" + amount);
@@ -32,6 +34,8 @@ public class SpiderService : ISpiderService
     /// <summary>
     /// Requests the Spider for projects related to the given topic.
     /// </summary>
+    /// <param name="topic">The topic to search for. </param>
+    /// <param name="amount">The amount of repos to search for. </param>
     public async Task<List<ProjectDto>> GetProjectsByTopicAsync(string topic, int amount)
     {
         var request = new RestRequest("topic/" + topic + "/" + amount);
