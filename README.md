@@ -3,7 +3,6 @@ Secodash (Software-Ecosystems) is a web-application which gathers, analyses and 
 
 # Running Secodash
 Secodash is fully containerized with Docker. As such it is portable and easy to run. You only need to download [Docker](https://docs.docker.com/get-docker/) to be able to run the project.
-
 Furthermore this project needs a [personal access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) token from an account on GitHub in order to query data and a valid ssl certificate and private key.
 
 ## Managing secrets
@@ -56,11 +55,19 @@ If you intend to continue developping this project it is recommended to be able 
 
 # Overview of All Applications
 
-TODO
+The structure of the project is made up of 4 different branches.
+- Front-end
+- Back-end
+- Spider
+- Data processor
+
+These have been made  
 
 ## Back-end (service)
 
 [Go to back-end documentation](back-end/README.md)
+
+![UML diagram of the back-end](assets/projectUML.png)
 
 Typically a 'back-end' in a project is viewed as everything which happens behind the scenes. From this perspective other parts of the project, such as the dataprocessor and spider can both be seen as back-end. **In our project we use a different definition for back-end.** We see the back-end as the application which manages communication between applications. All applications only communicate with the back-end. As such the back-end can be seen as the glue which holds everything together.
 
@@ -82,18 +89,49 @@ In order to run the spider you need to install [C# .net 8.0](https://dotnet.micr
 Afterwards you can open the project solution in your IDE (visual studio or rider) and run it using the http profile. 
 
 ## Front-end
-The front-end uses
 
 [Go to front-end documentation](front-end/README.md)
+
+The front-end uses
 
 ### Nginx
 Nginx is used as a reverse proxy to handle ssl certification so the application can run on https. It just handles ssl certification and passes all requests on to the nodejs server. We have a config file to run Nginx in a docker container located at front-end/nginx,
 
-### Nextjs
+### Next.js
+
+
+Next.js is a React framework that simplifies the process of building server-side rendered (SSR) and statically generated web applications. It is designed to enhance the developer experience by providing a set of conventions and tools for quickly creating robust and scalable web applications.
 
 
 ### Running outside of a container
-Outside of a container we just run the nextjs on http so we do not need Nginx. TODO
+Outside of a container we just run the Next.js on http so we do not need Nginx. In order to use Next.js we first need to download [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). 
+
+1. Open the project folder to frontend/ecodash
+2. Open a new terminal in the folder
+3. Run the following command "npm ci". This chain installs all required packages
+4. to run the front-end in development mode excecute: "npm run dev"
+5. To run the front-end in production mode execute: "npm run build" followed by "npm start"
+
+## Testing
+Front-end testing is doen with Cypress and Jest. Cypress is used for component testing and e2e tests. Jest is used for all seperate functions.
+
+### Cypress testing
+To start testing with cypress follow these steps:
+1. Open the projet folder to frontend/ecodash
+2. Open a new terminal
+3. Run the following command: "npm run dev"
+4. Open a second new terminal
+5. Run the following command: "npx cypress open"
+6. This opens up a new window with two options: e2e testing / component
+7. Click on the chosen option
+8. Click specs and click on the green start icon to run the selected tests
+
+### Jest testing
+To start testing with jest follow these steps:
+1. Open the projet folder to frontend/ecodash
+2. Open a new terminal
+3. Run the following command: "npm run test"
+4. Supply the command with the following flag --verbose to see additional test information
 
 ## Spider
 
