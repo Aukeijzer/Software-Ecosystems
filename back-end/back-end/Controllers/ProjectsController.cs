@@ -15,7 +15,6 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// </summary>
     /// <param name="topic"> The topic that the projects should relate to.</param>
     /// <param name="amount">The number of projects to be mined</param>
-    /// <returns></returns>
     [HttpPost("mine/topic")]
     public async Task<ActionResult> MineByTopic(string topic, int amount)
     {
@@ -29,7 +28,6 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// </summary>
     /// <param name="keyword">The keyword that the projects should relate to.</param>
     /// <param name="amount">The number of projects to be mined.</param>
-    /// <returns></returns>
     [HttpPost("mine/search")]
     public async Task<ActionResult> MineByKeyword(string keyword, int amount)
     {
@@ -44,7 +42,6 @@ public class ProjectsController(ILogger<ProjectsController> logger, IProjectsSer
     /// <param name="taxonomy">The list of strings to mine off of github</param>
     /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
     /// <param name="topicAmount">The amount of repos to search for with topic search</param>
-    /// <returns></returns>
     [HttpPost("mine/taxonomy")]
     public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
     {
