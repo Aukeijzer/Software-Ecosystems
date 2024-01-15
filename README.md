@@ -12,7 +12,7 @@ This project has some private information which is not included "out-of-the-box"
 - SSL certificate and private key
 - github personal access token 
 
-In order to include this information we need to make a directory called *secrets*. In this directory we add these files.
+In order to include this information we need to make a directory called `secrets`. In this directory we add these files.
 
 - db-password.txt
 - fullchain.pem
@@ -41,7 +41,7 @@ Next we compose the project.
 
 This builds all our applications into images which will then be ran as containers ([Docker documentation](https://docs.docker.com/guides/get-started/)). Building the images can take a while (10 minutes), however this only needs to be done once. Running the images as containers will only take a few seconds. In this command the `--build` flag is optional. However it will make Docker rebuild an image if you change the source code.
 
-After this you have the project running. You can find the application at localhost??? and use Docker Desktop to inspect the containers.
+After this you have the project running. You can find the application at localhost and use Docker Desktop to inspect the containers.
 
 ## Running in production
 
@@ -67,7 +67,7 @@ These have been made
 
 [Go to back-end documentation](back-end/README.md)
 
-![UML diagram of the back-end](assets/projectUML.png)
+![UML diagram of the back-end](assets/backendUML.png)
 
 Typically a 'back-end' in a project is viewed as everything which happens behind the scenes. From this perspective other parts of the project, such as the dataprocessor and spider can both be seen as back-end. **In our project we use a different definition for back-end.** We see the back-end as the application which manages communication between applications. All applications only communicate with the back-end. As such the back-end can be seen as the glue which holds everything together.
 
@@ -109,29 +109,29 @@ Outside of a container we just run the Next.js on http so we do not need Nginx. 
 1. Open the project folder to frontend/ecodash
 2. Open a new terminal in the folder
 3. Run the following command "npm ci". This chain installs all required packages
-4. to run the front-end in development mode excecute: "npm run dev"
-5. To run the front-end in production mode execute: "npm run build" followed by "npm start"
+4. to run the front-end in development mode excecute: `npm run dev`
+5. To run the front-end in production mode execute: `npm run build` followed by `npm start`
 
-## Testing
+### Testing
 Front-end testing is doen with Cypress and Jest. Cypress is used for component testing and e2e tests. Jest is used for all seperate functions.
 
-### Cypress testing
+#### Cypress testing
 To start testing with cypress follow these steps:
 1. Open the projet folder to frontend/ecodash
 2. Open a new terminal
-3. Run the following command: "npm run dev"
+3. Run the following command: `npm run dev`
 4. Open a second new terminal
-5. Run the following command: "npx cypress open"
+5. Run the following command: `npx cypress open`
 6. This opens up a new window with two options: e2e testing / component
 7. Click on the chosen option
 8. Click specs and click on the green start icon to run the selected tests
 
-### Jest testing
+#### Jest testing
 To start testing with jest follow these steps:
-1. Open the projet folder to frontend/ecodash
+1. Open the project folder to `frontend/ecodash`
 2. Open a new terminal
-3. Run the following command: "npm run test"
-4. Supply the command with the following flag --verbose to see additional test information
+3. Run the following command: `npm run test`
+4. Supply the command with the following flag `--verbose` to see additional test information
 
 ## Spider
 
@@ -140,7 +140,7 @@ To start testing with jest follow these steps:
 ### Running outside of a container
 In order to run the spider you need to install [C# .net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0). 
 
-Because spider also needs a github personal access token to run, which docker usually provides you also need to edit the launchsettings in spider/spider/Properties. Add the token with the name *API_TOKEN* as enviroment variable under all profiles.
+Because spider also needs a github personal access token to run, which docker usually provides you also need to edit the launchsettings in `spider/spider/Properties`. Add the token with the name *API_TOKEN* as enviroment variable under all profiles.
 
 Afterwards you can open the project solution in your IDE (visual studio or rider) and run the project using the http profile.
 
