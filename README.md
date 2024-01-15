@@ -144,16 +144,38 @@ Because spider also needs a github personal access token to run, which docker us
 
 Afterwards you can open the project solution in your IDE (visual studio or rider) and run the project using the http profile.
 
-# Data Processor
+## Data Processor
 [Go to data processor documentation](data_processor/README.md)
 
 ### Running outside of a container
-In order to run the dataprocessor you need to [install python](https://www.python.org/downloads/release/python-3114/). Make sure you install version TODO. **Other versions are not supported.** 
+#### Step 1: Create and Activate a Virtual Environment (please make sure python==3.9 is installed)
 
 Once you have installed python you need to open the data_processor directory in the commandline and install all dependencies
 
+`$ python -m venv .venv`
+
+`$ .venv\Scripts\activate`
+
+#### Step 2: Install Dependencies
+
+After activating the virtual environment, install project dependencies from `requirements.txt`:
+
 `$ pip install -r requirements.txt`
 
-Afterwards you can run python
+#### Step 3: Run the Application
 
-`$ `
+Once dependencies are installed run the `app.py` file in src directory:
+
+`$ python src/app.py`
+
+In order to run the dataprocessor you need to [install python](https://www.python.org/downloads/release/python-390/). Make sure you install version 3.9. **Other versions are not supported.** 
+
+### Running tests
+
+#### Step 1: Set Up Environment
+Follow all previous steps to run data processor outside of a containter
+
+#### Step 2: Run Tests
+Run all tests using the following command:
+
+`$ python -m unittest discover -s tests -p 'test_*.py'`
