@@ -1,3 +1,6 @@
+import { risingDTO } from "@/app/interfaces/DTOs/risingDTO"
+import { technologyDTO } from "@/app/interfaces/DTOs/technologyDTO"
+
 export interface topTopic {
     name: string,
     percentage: number
@@ -10,8 +13,8 @@ export interface topTopicGrowing {
 }
 
 export interface topTechnology {
-    name: string,
-    percentage: number
+    technology: string,
+    projectCount: number
 }
 
 export interface topProject {
@@ -36,12 +39,12 @@ export const topTopics : topTopic[] = [
     {name: "Finance", percentage: 5},
 ]
 
-export const topTechnologies : topTechnology[] = [
-    {name: "Ethereum", percentage: 31},
-    {name: "Blockchain", percentage: 22},
-    {name: "Hyperledger", percentage: 11},
-    {name: "Solana", percentage: 9},
-    {name: "Cardano", percentage: 5},
+export const topTechnologies : technologyDTO[] = [
+    {technology: "Ethereum", projectCount: 31},
+    {technology: "Blockchain", projectCount: 22},
+    {technology: "Hyperledger", projectCount: 11},
+    {technology: "Solana", projectCount: 9},
+    {technology: "Cardano", projectCount: 5},
 ]
 
 export const topProjects : topProject[]= [
@@ -60,22 +63,22 @@ export const topEngineers : topEngineer[]= [
     {name: "Daan Hillebrand"}
 ]
 
-export const topTopicsGrowing : topTopicGrowing[] = [
-    {name: "DApps", percentage: 9, growth: 6},
-    {name: "Plant protection", percentage: 7, growth: 5},
-    {name: "Water weight", percentage: 5, growth: 3},
-    {name: "PPO", percentage: 4, growth: 2},
-    {name: "Flamingo", percentage: 3, growth: 2},
+export const topTopicsGrowing : risingDTO[] = [
+    {item: "DApps", percentage: 9, growth: 6},
+    {item: "Plant protection", percentage: 7, growth: 5},
+    {item: "Water weight", percentage: 5, growth: 3},
+    {item: "PPO", percentage: 4, growth: 2},
+    {item: "Flamingo", percentage: 3, growth: 2},
 
 ]
 
 
-export const topTechnologyGrowing: topTechnologyGrowing[] = [
-    {name: "Ethereum", percentage: 31, growth:5},
-    {name: "Blockchain", percentage: 22, growth:3},
-    {name: "Hyperledger", percentage: 11, growth:3},
-    {name: "Solana", percentage: 9, growth:2},
-    {name: "Cardano", percentage: 5, growth:1}
+export const topTechnologyGrowing: risingDTO[] = [
+    {item: "Ethereum", percentage: 31, growth:5},
+    {item: "Blockchain", percentage: 22, growth:3},
+    {item: "Hyperledger", percentage: 11, growth:3},
+    {item: "Solana", percentage: 9, growth:2},
+    {item: "Cardano", percentage: 5, growth:1}
 ]
 
 export interface lineData{

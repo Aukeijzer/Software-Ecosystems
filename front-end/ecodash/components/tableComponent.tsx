@@ -1,24 +1,24 @@
 "use client"
 
-import displayable from "@/app/classes/displayableClass";
-/*
-infoCardDataTable exports:
-- InfoCardDataTable: JSX.Element filled with a table containing provided data 
-    - input:
-        - headers: string[]: the headers that the table has
-        - items: T[]: a list of items that each should be rendered in the table
-        - renderFunction: a function that takes T item and renders a table row for it
-    - output: 
-        - JSX.Element
-*/
-
+import displayableTableItem from "@/app/classes/displayableTableItem";
 import { Table } from "flowbite-react";
 
 interface infoCardDataTableProps<T>{
+    /**
+     * The headers that the table has.
+     */
     headers: string[],
-    items: displayable[]
+    /**
+     * A list of items that each should be rendered in the table.
+     */
+    items: displayableTableItem[]
 }
 
+/**
+ * Component that renders a table with provided data.
+ * @param props The props for the table component.
+ * @returns A JSX.Element representing the table.
+ */
 export default function TableComponent<T extends {}>(props: infoCardDataTableProps<T>){
     return(
         <div>

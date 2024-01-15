@@ -1,202 +1,144 @@
 using System.Net;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using spider.Converter;
 using spider.Dtos;
 using spider.Services;
 
 namespace spider.Controllers;
 
+/// <summary>
+/// SpiderController is the controller for the Spider project. It contains all the endpoints for the project.
+/// The controller is responsible for receiving requests and returning responses. It uses the ISpiderProjectService
+/// to handle the requests and return the responses.
+/// </summary>
 [ApiController]
 [Route("[controller]")]
 public class SpiderController : ControllerBase
 {
     private readonly ILogger<SpiderController> _logger;
-    private readonly IGitHubGraphqlService _gitHubGraphqlService;
-    private readonly IGraphqlDataConverter _graphqlDataConverter;
-    private readonly IGitHubRestService _gitHubRestService;
+    private readonly ISpiderProjectService _spiderProjectService;
 
-    public SpiderController(IGitHubGraphqlService gitHubGraphqlService, IGraphqlDataConverter graphqlDataConverter,
-        IGitHubRestService gitHubRestService, ILogger<SpiderController> logger)
+    public SpiderController(ISpiderProjectService spiderProjectService)
     {
-        _logger = logger;
-        _gitHubGraphqlService = gitHubGraphqlService;
-        _graphqlDataConverter = graphqlDataConverter;
-        _gitHubRestService = gitHubRestService;
+        _logger = new Logger<SpiderController>(new LoggerFactory());
+        _spiderProjectService = spiderProjectService;
     }
-    //http:localhost:Portnumberhere/spider/name/amount
-    [HttpGet("name/{name}/{amount}")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name, int amount)
-    {
-        return await GetByName(name, amount, null);
-    }
-
-    [HttpGet("name/{name}/{amount}/{startCursor}")]
-    public async Task<ActionResult<List<ProjectDto>>> GetByName(string name, int amount, string? startCursor)
-    {
-        return await GetByNameHelper(name, amount, startCursor);
-    }
+    //http:localhost:Portnumberhere/spider/...
     
-    private async Task<ActionResult<List<ProjectDto>>> GetByNameHelper(string name, int amount, string? startCursor)
+    /// <summary>
+    /// GetByKeyword receives a HttpGet request and returns a list of repositories. This method calls the GetByKeyword
+    /// method with a startCursor of null
+    /// </summary>
+    /// <param name="name">keyword to search by</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <returns>A list of repositories in the form of List&lt;ProjectDto&gt;</returns>
+    [HttpGet("name/{name}/{amount}")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByKeyword(string name, int amount)
+    {
+        return await GetByKeyword(name, amount, null);
+    }
+
+    /// <summary>
+    /// GetByKeyword receives a HttpGet request and returns a list of repositories
+    /// </summary>
+    /// <param name="name">Keyword to search by</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="startCursor">The cursor to start the search from. If cursor is null start from the start</param>
+    /// <returns>A list of repositories in the form of List&lt;ProjectDto&gt;</returns>
+    [HttpGet("name/{name}/{amount}/{startCursor}")]
+    public async Task<ActionResult<List<ProjectDto>>> GetByKeyword(string name, int amount, string? startCursor)
     {
         name = WebUtility.UrlDecode(name);
         if (startCursor != null)
         {
-            WebUtility.UrlDecode(startCursor);
+            startCursor = WebUtility.UrlDecode(startCursor);
         }
         _logger.LogInformation("{Origin}: Project requested by name: {name}.", this, name);
-        try
-        {
-            var listResult = await _gitHubGraphqlService.QueryRepositoriesByNameHelper(name, amount, startCursor);
-            List<ProjectDto> result = new List<ProjectDto>();
-            foreach (var spiderData in listResult)
-            {
-                result.AddRange(_graphqlDataConverter.SearchToProjects(spiderData));
-            }
-
-            _logger.LogInformation("{Origin}: Returning the project with name: {name}.", this, name);
-            return result;
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, name);
-            switch (e)
-            {
-                case JsonException:
-                {
-                    var exception = new HttpRequestException("An unexpected error occured", e,
-                        HttpStatusCode.InternalServerError);
-                    throw exception;
-                }
-                case NullReferenceException :
-                {
-                    var exception = new HttpRequestException("An unexpected error occured", e,
-                        HttpStatusCode.InternalServerError);
-                    throw exception;
-                } 
-                    
-                default:
-                    throw;
-            }
-        }
+        return await _spiderProjectService.GetByKeyword(name, amount, startCursor);
     }
     
+    /// <summary>
+    /// GetByTopic receives a HttpGet request and returns a list of repositories. This method calls the GetByTopic
+    /// method with a startCursor of null
+    /// </summary>
+    /// <param name="topic">topic to search for</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <returns>A list of repositories in the form of List&lt;ProjectDto&gt;</returns>
     [HttpGet("topic/{topic}/{amount}")]
     public async Task<ActionResult<List<ProjectDto>>> GetByTopic(string topic, int amount)
     {
         return await GetByTopic(topic, amount, null);
     }
 
+    /// <summary>
+    /// GetByTopic receives a HttpGet request and returns a list of repositories
+    /// </summary>
+    /// <param name="topic">topic to search for</param>
+    /// <param name="amount">Amount of repositories to return</param>
+    /// <param name="startCursor">The cursor to start the search from. If cursor is null start from the start</param>
+    /// <returns>A list of repositories in the form of List&lt;ProjectDto&gt;</returns>
     [HttpGet("topic/{topic}/{amount}/{startCursor}")]
     public async Task<ActionResult<List<ProjectDto>>> GetByTopic(string topic, int amount, string? startCursor)
     {
-        return await GetByTopicHelper(topic, amount, startCursor);
-    }
-
-    private async Task<ActionResult<List<ProjectDto>>> GetByTopicHelper(string topic, int amount, string? startCursor)
-    {
-        try
+        topic = WebUtility.UrlDecode(topic);
+        if (startCursor != null)
         {
-            topic = WebUtility.UrlDecode(topic);
-            if (startCursor != null)
-            {
-                WebUtility.UrlDecode(startCursor);
-            }
-
-            var listResult = await _gitHubGraphqlService.QueryRepositoriesByTopicHelper(topic, amount, startCursor);
-            _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
-            List<ProjectDto> result = new List<ProjectDto>();
-            foreach (var topicSearchData in listResult)
-            {
-                result.AddRange(_graphqlDataConverter.TopicSearchToProjects(topicSearchData));
-            }
-
-            _logger.LogInformation("{Origin}: Returning projects with the topic: {name}.",
-                this, topic);
-            return result;
+            startCursor = WebUtility.UrlDecode(startCursor);
         }
-        catch (Exception e)
-        {
-            _logger.LogError(e.Message + " in {origin} with request: \"{name}\"", this, topic);
-            switch (e)
-            {
-                case JsonException:
-                {
-                    var exception = new HttpRequestException("An unexpected error occured", e,
-                        HttpStatusCode.InternalServerError);
-                    throw exception;
-                }
-                case NullReferenceException :
-                {
-                    var exception = new HttpRequestException("An unexpected error occured", e,
-                        HttpStatusCode.InternalServerError);
-                    throw exception;
-                } 
-                    
-                default:
-                    throw;
-            }
-        }
-
+        _logger.LogInformation("{Origin}: Projects requested by topic: {name}.", this, topic);
+        return await _spiderProjectService.GetByTopic(topic, amount, startCursor);
     }
     
+    /// <summary>
+    /// GetByName receives a HttpGet request and returns a repository
+    /// </summary>
+    /// <param name="name">Name of the repository</param>
+    /// <param name="ownerName">Name of the repository owner</param>
+    /// <returns>A single repository in the form of ProjectDto</returns>
     [HttpGet("repository/{name}/{ownerName}")]
     public async Task<ActionResult<ProjectDto>> GetByName(string name, string ownerName)
     {
         name = WebUtility.UrlDecode(name);
         ownerName = WebUtility.UrlDecode(ownerName);
-        _logger.LogInformation("{Origin}: Repository requested by name and owner: {name}, {owner}.",
+        _logger.LogInformation("{Origin}: Repository requested by name and owner: {name}, {owner}.", 
             this, name , ownerName );
-        var result = await _gitHubGraphqlService.QueryRepositoryByName(name, ownerName);        
-        _logger.LogInformation("{Origin}: Returning repository {name} owned by: {owner}.",
-            this, name , ownerName);
-        return _graphqlDataConverter.RepositoryToProject(result.Repository);
+        return await _spiderProjectService.GetByName(name, ownerName);
     }
 
+    /// <summary>
+    /// GetContributersByName receives a HttpPost request with a list of ProjectRequestDtos and then returns a list of
+    /// repositories for each ProjectRequestDto
+    /// </summary>
+    /// <param name="repos">List of ProjectRequestDtos with at least the repo and ownerNames</param>
+    /// <returns>A list of repositories in the form of List&lt;ProjectDto&gt;</returns>
     [HttpPost]
     public async Task<ActionResult<List<ProjectDto>>> GetByNames(List<ProjectRequestDto> repos)
     {
         _logger.LogInformation("{Origin}: Requested a list of repositories: {repos}.", this, repos);
-        var result = _graphqlDataConverter.SearchToProjects(await _gitHubGraphqlService.ToQueryString(repos));
-        _logger.LogInformation("{Origin}: Returning all requested repositories.", this);
-        return result;
+        return await _spiderProjectService.GetByNames(repos);
     }
     
-    [HttpGet("Contributors/{ownerName}/{name}/{amount}")]
-    public async Task<ActionResult<List<ContributorDto>>> GetContributorsByName(string name, string ownerName, int amount)
+    /// <summary>
+    /// GetContributersByName receives a HttpGet request and returns a list of contributors
+    /// </summary>
+    /// <param name="name">Name of the repository</param>
+    /// <param name="ownerName">Name of the repository owner</param>
+    /// <param name="amount">Amount of contributors to return</param>
+    /// <returns>A list of contributors in the form of List&lt;ContributorDto&gt;</returns>
+    [HttpGet("Contributors/{name}/{ownerName}/{amount}")]
+    public async Task<ActionResult<List<ContributorDto>>> GetContributorsByName(string name, string ownerName,
+        int amount)
     {
         name = WebUtility.UrlDecode(name);
         ownerName = WebUtility.UrlDecode(ownerName);
         _logger.LogInformation("{Origin}: Contributors requested by name and owner: {name}, {owner}.",
             this, name , ownerName );
-        try
+        var result = await _spiderProjectService.GetContributorsByName(name, ownerName, amount);
+        _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
+            this, name , ownerName);
+        if (result == null)
         {
-            var result = await _gitHubRestService.GetRepoContributors(name, ownerName, amount);     
-            _logger.LogInformation("{Origin}: Returning contributors of repository: {name} owned by: {owner}.",
-                this, name , ownerName);
-            return result;
+            return new List<ContributorDto>();
         }
-        catch (Exception e)
-        {
-            _logger.LogError(e.Message + " in {origin} with request: \"{name}/{ownerName}\"", this, name, ownerName);
-            switch (e)
-            {
-                case JsonException:
-                {
-                    var exception = new HttpRequestException("An unexpected error occured", e,
-                        HttpStatusCode.InternalServerError);
-                    throw exception;
-                }
-                case NullReferenceException :
-                {
-                    var exception = new HttpRequestException("An unexpected error occured", e,
-                        HttpStatusCode.InternalServerError);
-                    throw exception;
-                } 
-                    
-                default:
-                    throw;
-            }
-        }
+        return result;
     }
 }

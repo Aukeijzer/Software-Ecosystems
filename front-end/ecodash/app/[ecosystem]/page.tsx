@@ -1,4 +1,3 @@
-import LayoutEcosystemPaged from "@/components/layoutEcosystemPaged";
 import LayoutEcosystem from "@/components/layoutEcosystem";
 
 import { Metadata } from "next";

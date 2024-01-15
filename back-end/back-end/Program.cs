@@ -3,6 +3,7 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
+using SECODashBackend.Dtos.Project;
 using SECODashBackend.Logging;
 using SECODashBackend.Services.Analysis;
 using SECODashBackend.Services.DataProcessor;
@@ -12,16 +13,16 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Spider;
 
 var builder = WebApplication.CreateBuilder(args);
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(name: myAllowSpecificOrigins,
             policy =>
             {
-                //policy.WithOrigins("http://localhost:3000", "http://argiculture.localhost:3000");
                 policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
             });
 });
+
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
@@ -31,17 +32,34 @@ builder.Services.AddDbContext<EcosystemsContext>(
     );
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
-builder.Services.AddScoped<ISpiderService, SpiderService>();
+
+var spiderConnectionString = builder.Configuration.GetConnectionString("Spider");
+if (string.IsNullOrEmpty(spiderConnectionString))
+{
+    throw new InvalidOperationException("Missing configuration for Spider");
+}
+
+builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")!));
+
 builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
+
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
+var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
+{
+    throw new InvalidOperationException("Missing configuration for Elasticsearch");
+}
+var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
+    // set default index for ProjectDtos
+    .DefaultMappingFor<ProjectDto>(i => i
+        .IndexName("projects-03")
+    );
+
 builder.Services.AddSingleton(
-    new ElasticsearchClient(
-        builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value!,
-        new ApiKey(builder.Configuration.GetSection("ElasticSearch").GetSection("ApiKey").Value!)
-        ));
+    new ElasticsearchClient(settings));
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
 builder.Services.AddScoped<IAnalysisService, ElasticsearchAnalysisService>();
-builder.Services.AddElasticsearchClient();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -57,10 +75,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
-app.UseCors(MyAllowSpecificOrigins);
+
+app.UseCors(myAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapControllers();
 app.CreateDbIfNotExists();
 app.Run();
+
+// Necessary for integration testing.
+// See https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-8.0#basic-tests-with-the-default-webapplicationfactory
+public partial class Program { }

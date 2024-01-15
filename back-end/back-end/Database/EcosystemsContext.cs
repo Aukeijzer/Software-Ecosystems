@@ -2,16 +2,17 @@
 using SECODashBackend.Models;
 
 namespace SECODashBackend.Database;
-
-public class EcosystemsContext: DbContext
+/// <summary>
+/// This class is used to connect to the database and create the Ecosystems table.
+/// </summary>
+public class EcosystemsContext(DbContextOptions<EcosystemsContext> options) : DbContext(options)
 {
-   public EcosystemsContext(DbContextOptions<EcosystemsContext> options) : base(options)
-   {
-   }
-
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
       modelBuilder.UseSerialColumns();
    }
+   /// <summary>
+   /// The Ecosystems table.
+   /// </summary>
    public DbSet<Ecosystem> Ecosystems { get; set; }
 }

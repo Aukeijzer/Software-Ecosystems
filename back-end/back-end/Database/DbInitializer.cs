@@ -2,8 +2,15 @@
 
 namespace SECODashBackend.Database;
 
+/// <summary>
+/// Database initializer.
+/// </summary>
 public static class DbInitializer
 {
+   /// <summary>
+   /// Initializes the Ecosystems database with the top-level ecosystems.
+   /// </summary>
+   /// <param name="context">The database context.</param>
    public static void Initialize(EcosystemsContext context)
    {
       var ecosystem = context.Ecosystems.FirstOrDefault();

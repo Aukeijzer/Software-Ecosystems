@@ -2,6 +2,9 @@
 
 namespace spider.Dtos;
 
+/// <summary>
+/// A data transfer object for a single repository
+/// </summary>
 [DataContract]
 public class ProjectDto
 {
@@ -37,4 +40,7 @@ public class ProjectDto
    
    [DataMember(Name = "numberOfStars")]
    public int NumberOfStars { get; set; }
+   
+   [DataMember(Name = "contributors")]
+   public List<ContributorDto>? Contributors { get; set; }
 }

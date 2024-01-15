@@ -1,6 +1,7 @@
-﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
+using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Dtos.Project;
@@ -8,7 +9,12 @@ using SECODashBackend.Services.ElasticSearch;
 
 namespace SECODashBackend.Services.Analysis;
 
-public class ElasticsearchAnalysisService : IAnalysisService
+/// <summary>
+/// Service that analyses an ecosystem by querying the Elasticsearch index for projects that contain the given topics.
+/// The service is responsible for retrieving the relevant data from the search response and converting it to the
+/// correct format.
+/// </summary>
+public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchService) : IAnalysisService
 {
     // Use the maximum bucket size supported by elasticsearch
     // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
@@ -22,24 +28,84 @@ public class ElasticsearchAnalysisService : IAnalysisService
     private const string LanguagesPropertyPath = "languages";
     private const string LanguageNameField = "languages.language.keyword";
     private const string LanguagePercentageField = "languages.percentage";
+    private const string ContributorsPath = "contributors";
+    private const string ContributorLoginField = "contributors.login.keyword";
+    private const string ContributorContributionsField = "contributors.contributions";
 
     // Instructs elasticsearch to match using all terms of a term set
     private const string MatchAllParametersScript = "params.num_terms";
 
     // Used to create and retrieve aggregates in the Elasticsearch queries
     private const string LanguageAggregateName = "languages";
-    private const string SumAggregateName = "sum";
-    private const string NestedAggregateName = "nested";
+    private const string PercentageSumAggregateName = "sum_percentage";
+    private const string NestedLanguagesAggregateName = "nested_languages";
     private const string TopicAggregateName = "topics";
-    
-    private readonly IElasticsearchService _elasticSearchService;
+    private const string NestedContributorsAggregateName = "nested_contributors";
+    private const string TermsContributorsAggregateName = "contributors";
+    private const string ContributionsSumAggregateName = "sum_contributions";
 
-    public ElasticsearchAnalysisService(IElasticsearchService elasticsearchService)
+    // Dictionary of topics that are programming languages and need to be filtered out
+    private static readonly HashSet<string> ProgrammingLanguageTopics = new()
     {
-        _elasticSearchService = elasticsearchService;
-    }
-    
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems)
+        "c#",
+        "c++",
+        "java",
+        "javascript",
+        "python",
+        "ruby",
+        "rust",
+        "typescript",
+        "go",
+        "php",
+        "swift",
+        "kotlin",
+        "scala",
+        "dart",
+        "elixir",
+        "haskell",
+        "r",
+        "clojure",
+        "erlang",
+        "f#",
+        "groovy",
+        "julia",
+        "lua",
+        "ocaml",
+        "perl",
+        "powershell",
+        "racket",
+        "shell",
+        "sql",
+        "visual basic",
+        "assembly",
+        "matlab",
+        "objective-c",
+        "delphi",
+        "cobol",
+        "fortran",
+        "lisp",
+        "pascal",
+        "prolog",
+        "scheme",
+        "smalltalk",
+        "abap",
+        "apex",
+        "coffeescript",
+        "crystal"
+    };
+
+    /// <summary>
+    /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
+    /// The analysis consists of two parts:
+    /// 1. Retrieving the top x programming languages
+    /// 2. Retrieving the top x sub-ecosystems/topics
+    /// </summary>
+    /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
+    /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
+    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors)
     {
         // Query that matches all projects that contain all topics in the topics list
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
@@ -51,7 +117,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
 
         // Aggregation of the nested Language documents in the Project documents
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
-        var nestedAggregation = new NestedAggregation(NestedAggregateName)
+        var nestedLanguagesAggregation = new NestedAggregation(NestedLanguagesAggregateName)
         {
             Path = LanguagesPropertyPath,
             
@@ -68,13 +134,37 @@ public class ElasticsearchAnalysisService : IAnalysisService
                     // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/sum-aggregation-usage.html
                     Aggregations = new AggregationDictionary
                     {
-                        new SumAggregation(SumAggregateName)
+                        new SumAggregation(PercentageSumAggregateName)
                         {
                             Field = LanguagePercentageField
                         },
                     }
                 },
-
+            }
+        };
+        
+        // Aggregation of the nested Contributor documents in the Project documents 
+        var nestedContributorsAggregation = new NestedAggregation(NestedContributorsAggregateName)
+        {
+            Path = ContributorsPath,
+            Aggregations = new AggregationDictionary
+            {
+                // Aggregation of the unique values of the contributor.login field
+                new TermsAggregation(TermsContributorsAggregateName)
+                {
+                    Field = ContributorLoginField,
+                    Size = MaxBucketSize,
+                    
+                    // Aggregation of the projects that contain the contributor
+                    Aggregations = new AggregationDictionary
+                    {
+                        // Aggregation of the sum of the contributor.contributions field of all contributors objects with the same login
+                        new SumAggregation(ContributionsSumAggregateName)
+                        {
+                            Field = ContributorContributionsField
+                        }
+                    }
+                }
             }
         };
 
@@ -82,7 +172,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {
             Field = TopicField,
-            Size = topics.Count + numberOfTopSubEcosystems
+            Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count
         };
 
         var searchRequest = new SearchRequest
@@ -90,29 +180,73 @@ public class ElasticsearchAnalysisService : IAnalysisService
             Query = termsSetQuery,
             Aggregations = new AggregationDictionary
             { 
-                nestedAggregation,
+                nestedLanguagesAggregation,
+                nestedContributorsAggregation,
                 topicAggregation
             },
             Size = 0 // Do not request actual Project documents
         };
         
-        var result = await _elasticSearchService.QueryProjects(searchRequest);
+        var result = await elasticsearchService.QueryProjects(searchRequest);
         
         return new EcosystemDto
         {
             Topics = topics,
-            SubEcosystems = GetTopXSubEcosystems(result, topics),
-            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages) 
+            SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
+            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
+            TopContributors = GetTopXContributors(result, numberOfTopContributors)
         };
+    }
+    
+    /// <summary>
+    /// Retrieves the top contributors from the search response and converts them into a Top x list.
+    /// The method first gets the nested aggregation for contributors from the search response.
+    /// Then, it creates a list of TopContributorDto objects from the buckets of the contributors aggregate.
+    /// Each TopContributorDto object contains the login and the total number of contributions of a contributor.
+    /// The method then sorts the list of TopContributorDto objects in descending order of contributions.
+    /// Finally, it returns the top x contributors from the sorted list.
+    /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <returns>A list of the top x contributors.</returns>
+    private static List<TopContributorDto> GetTopXContributors(SearchResponse<ProjectDto> searchResponse, int numberOfTopContributors)
+    {
+        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedContributorsAggregateName);
+        var contributorsAggregate = nestedAggregate?.GetStringTerms(TermsContributorsAggregateName);
+
+        if (contributorsAggregate == null)
+            throw new ArgumentException(
+                "Elasticsearch aggregate not found in search response");
+        
+        var contributorDtos = contributorsAggregate
+            .Buckets
+            .Select(b => 
+                new TopContributorDto
+                {
+                    Login = b.Key.ToString(),
+                    Contributions = (int)b.GetSum(ContributionsSumAggregateName)!.Value!
+                })
+            .ToList();
+        
+        var sortedContributors = contributorDtos
+            .OrderByDescending(c => c.Contributions);
+
+        var topXContributors = sortedContributors
+            .Take(numberOfTopContributors)
+            .ToList();
+        return topXContributors;
     }
     
     /// <summary>
     /// Retrieves the programming languages from the search response and converts them into a Top x list
     /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <param name="numberOfTopLanguages">The number of top languages to retrieve.</param>
+    /// <returns>A list of the top x languages in an ecosystem.</returns>
     private static List<ProgrammingLanguageDto> GetTopXLanguages(
         SearchResponse<ProjectDto> searchResponse, int numberOfTopLanguages)
     {
-        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedAggregateName);
+        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedLanguagesAggregateName);
         var languagesAggregate = nestedAggregate?.GetStringTerms(LanguageAggregateName);
 
         if (languagesAggregate == null)
@@ -125,7 +259,7 @@ public class ElasticsearchAnalysisService : IAnalysisService
                 new ProgrammingLanguageDto
                 {
                     Language = b.Key.ToString(),
-                    Percentage = (float)b.GetSum(SumAggregateName)!.Value!
+                    Percentage = (float)b.GetSum(PercentageSumAggregateName)!.Value!
                 })
             .ToList();
 
@@ -136,9 +270,13 @@ public class ElasticsearchAnalysisService : IAnalysisService
     /// <summary>
     /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
     /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <param name="topics">The list of topics that define the ecosystem.</param>
+    /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
+    /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
     private static List<SubEcosystemDto> GetTopXSubEcosystems(
         SearchResponse<ProjectDto> searchResponse,
-        List<string> topics)
+        List<string> topics, int numberOfTopSubEcosystems)
     {
         var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
         if(topicsAggregate == null) throw new ArgumentException(
@@ -149,17 +287,24 @@ public class ElasticsearchAnalysisService : IAnalysisService
             {
                 Topic = topic.Key.ToString(),
                 ProjectCount = (int)topic.DocCount
-            }).ToList();
+            });
 
-        var topSubEcosystems = SortSubEcosystems(subEcosystemDtos, topics);
+        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
+        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
+        var topXSubEcosystems = sortedSubEcosystems
+            .Take(numberOfTopSubEcosystems)
+            .ToList();
 
-        return topSubEcosystems;
+        return topXSubEcosystems;
     }
 
     /// <summary>
     /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
     /// all projects to a "Top x" list of x length in descending order of percentage with the percentages normalised.
     /// </summary>
+    /// <param name="programmingLanguageDtos">A list of all the programming languages in an ecosystem with the sum of their usage percentages over all projects.</param>
+    /// <param name="numberOfTopLanguages">The number of top languages to retrieve.</param>
+    /// <returns>A Top x list of the top languages in an ecosystem.</returns>
     public static List<ProgrammingLanguageDto> SortAndNormalizeLanguages(
         List<ProgrammingLanguageDto> programmingLanguageDtos, int numberOfTopLanguages)
     {
@@ -175,17 +320,30 @@ public class ElasticsearchAnalysisService : IAnalysisService
     }
 
     /// <summary>
-    /// Converts a list of all the sub-ecosystems/topics of an ecosystem into a "Top x" list of x length in descending
-    /// order of project count. The topics that define the ecosystem are filtered out.
+    /// Sorts a list of sub-ecosystems in descending order of the number of projects and returns the sorted list.
     /// </summary>
-    public static List<SubEcosystemDto> SortSubEcosystems(List<SubEcosystemDto> subEcosystemDtos, List<string> topics){
-        subEcosystemDtos
+    /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
+    /// <returns>A list of sub-ecosystems sorted in descending order of the number of projects.</returns>
+    public static IEnumerable<SubEcosystemDto> SortSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos)
+    {
+        var subEcosystemsList = subEcosystemDtos.ToList();
+        subEcosystemsList
             .Sort((x,y) => y.ProjectCount.CompareTo(x.ProjectCount));
-        
-        var topSubEcosystems = subEcosystemDtos
+        return subEcosystemsList;
+    }
+
+    /// <summary>
+    ///  Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects
+    ///  or are programming languages.
+    /// </summary>
+    /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
+    /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <returns>A list of sub-ecosystems filtered by the given topics.</returns>
+    public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
+    {
+        return subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
-            .ToList();
-        return topSubEcosystems;
+            .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
     }
 }
