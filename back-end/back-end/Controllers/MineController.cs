@@ -69,7 +69,7 @@ public class MineController(
     }
 
     /// <summary>
-    /// This method deleting a recurring job that mines projects based on the given topic if the jobs exists.
+    /// This method deletes a recurring job that mines projects based on the given topic if the jobs exists.
     /// </summary>
     /// <param name="topic"> The topic to mine by. </param>
     [HttpGet("unschedule/topic")]
@@ -96,7 +96,7 @@ public class MineController(
     }
     
     /// <summary>
-    /// This method deleting a recurring job that mines projects based on the given keyword if the jobs exists.
+    /// This method deletes a recurring job that mines projects based on the given keyword if the jobs exists.
     /// </summary>
     /// <param name="keyword"> The keyword to mine by. </param>
     [HttpGet("unschedule/keyword")]
