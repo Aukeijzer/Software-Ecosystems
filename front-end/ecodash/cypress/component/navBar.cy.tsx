@@ -14,7 +14,7 @@ describe('NavBar', () => {
         const expectedURL = 'http://localhost:3000';
 
         cy.mount(<NavBarTop />);
-        
+
         // Click the Navbar link and check the URL
         cy.get('[data-cy=navBar]').find('a').should('have.attr', 'href', expectedURL).click()
     });

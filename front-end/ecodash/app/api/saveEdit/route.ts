@@ -1,5 +1,10 @@
 import { NextResponse , NextRequest} from "next/server";
 
+/**
+ * Handles the POST request to update the description of an ecosystem.
+ * @param req - The NextRequest object representing the incoming request.
+ * @returns A NextResponse object with the response data.
+ */
 export async function POST(req: NextRequest) {
     //Get description from body
     const data = await req.json();
