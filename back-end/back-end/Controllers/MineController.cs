@@ -6,8 +6,6 @@ namespace SECODashBackend.Controllers;
 /// <summary>
 /// This controller is responsible for handling requests related to mining projects.
 /// </summary>
-/// <param name="logger"></param>
-/// <param name="projectsService"></param>
 [ApiController]
 [Route("[controller]")]
 public class MineController(
@@ -19,9 +17,8 @@ public class MineController(
     /// <summary>
     /// This method returns a list of projects based on the given topic and amount.
     /// </summary>
-    /// <param name="topic"></param>
-    /// <param name="amount"></param>
-    /// <returns></returns>
+    /// <param name="topic"> The topic that the projects should relate to.</param>
+    /// <param name="amount">The number of projects to be mined</param>
     [HttpPost("topic")]
     public async Task<ActionResult> MineByTopic(string topic, int amount)
     {
@@ -33,9 +30,8 @@ public class MineController(
     /// <summary>
     /// This method returns a list of projects based on the given keyword and amount.
     /// </summary>
-    /// <param name="keyword"></param>
-    /// <param name="amount"></param>
-    /// <returns></returns>
+    /// <param name="keyword">The keyword that the projects should relate to.</param>
+    /// <param name="amount">The number of projects to be mined.</param>
     [HttpPost("search")]
     public async Task<ActionResult> MineByKeyword(string keyword, int amount)
     {
@@ -50,7 +46,6 @@ public class MineController(
     /// <param name="taxonomy">The list of strings to mine off of github</param>
     /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
     /// <param name="topicAmount">The amount of repos to search for with topic search</param>
-    /// <returns></returns>
     [HttpPost("taxonomy")]
     public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
     {
