@@ -61,8 +61,6 @@ The structure of the project is made up of 4 different branches.
 - Spider
 - Data processor
 
-These have been made  
-
 ## Back-end (service)
 
 [Go to back-end documentation](back-end/README.md)
@@ -73,11 +71,7 @@ Typically a 'back-end' in a project is viewed as everything which happens behind
 
 The back-end consists of a .NET application which keeps a connection with a SQL and a Elasticsearch database.
 
-### C# Application
-
-TODO
-
-### SQL database
+The application runs on a postgres
 
 ### Elasticsearch database
 
@@ -98,7 +92,6 @@ The front-end uses
 Nginx is used as a reverse proxy to handle ssl certification so the application can run on https. It just handles ssl certification and passes all requests on to the nodejs server. We have a config file to run Nginx in a docker container located at front-end/nginx,
 
 ### Next.js
-
 
 Next.js is a React framework that simplifies the process of building server-side rendered (SSR) and statically generated web applications. It is designed to enhance the developer experience by providing a set of conventions and tools for quickly creating robust and scalable web applications.
 
@@ -148,7 +141,7 @@ Afterwards you can open the project solution in your IDE (visual studio or rider
 [Go to data processor documentation](data_processor/README.md)
 
 ### Running outside of a container
-#### Step 1: Create and Activate a Virtual Environment (please make sure python==3.9 is installed)
+#### Step 1: Create and Activate a Virtual Environment (please make sure python==3.9 is installed)*
 
 Once you have installed python you need to open the data_processor directory in the commandline and install all dependencies
 
