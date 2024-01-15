@@ -54,7 +54,8 @@ public class EcosystemsService(EcosystemsContext dbContext,
             dto.Topics,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
-            dto.NumberOfTopContributors ?? DefaultNumberOfTopItems);
+            dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
+            dto.NumberOfTopTechnologies ?? DefaultNumberOfTopItems);
 
         // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
         if (dto.Topics.Count != 1) return ecosystemDto;

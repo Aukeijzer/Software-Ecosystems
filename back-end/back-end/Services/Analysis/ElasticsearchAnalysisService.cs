@@ -93,6 +93,35 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         "coffeescript",
         "crystal"
     };
+    
+    // Temporary dictionary of topics that are technologies and need to be filtered out
+    private static readonly HashSet<string> TechnologiesTopics = new()
+    {
+        "android",
+        "ios",
+        "macos",
+        "windows",
+        "linux",
+        "Baseband",
+        "Bluetooth",
+        "Cellular technology",
+        "Indoor radio communication",
+        "Land mobile radio",
+        "Millimeter wave communication",
+        "Near field communication",
+        "Packet radio networks",
+        "Passband",
+        "Personal area networks",
+        "Radio broadcasting",
+        "Radio communication countermeasures",
+        "Radio frequency",
+        "Radio links",
+        "Radio spectrum management",
+        "Satellite communication",
+        "Satellite ground stations",
+        "Software radio",
+        "Zigbee"
+    };
 
     /// <summary>
     /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
@@ -105,7 +134,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
     /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors)
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies)
     {
         // Query that matches all projects that contain all topics in the topics list
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
@@ -172,7 +201,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {
             Field = TopicField,
-            Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count
+            Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count + TechnologiesTopics.Count
         };
 
         var searchRequest = new SearchRequest
@@ -194,7 +223,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TopContributors = GetTopXContributors(result, numberOfTopContributors)
+            TopContributors = GetTopXContributors(result, numberOfTopContributors),
+            TopTechnologies = GetTopXTechnologies(result, numberOfTopTechnologies)
         };
     }
     
@@ -278,16 +308,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         SearchResponse<ProjectDto> searchResponse,
         List<string> topics, int numberOfTopSubEcosystems)
     {
-        var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
-        if(topicsAggregate == null) throw new ArgumentException(
-                "Elasticsearch aggregate not found in search response");
-
-        var subEcosystemDtos = topicsAggregate
-            .Buckets.Select(topic => new SubEcosystemDto
-            {
-                Topic = topic.Key.ToString(),
-                ProjectCount = (int)topic.DocCount
-            });
+        var subEcosystemDtos = GetSubEcosystems(searchResponse);
 
         var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
         var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
@@ -296,6 +317,34 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .ToList();
 
         return topXSubEcosystems;
+    }
+
+    private static List<SubEcosystemDto> GetTopXTechnologies(SearchResponse<ProjectDto> searchResponse, int numberOfTopTechnologies)
+    {
+        var subEcosystemDtos = GetSubEcosystems(searchResponse);
+        var filteredTechnologies = FilterTechnologies(subEcosystemDtos);
+        var sortedTechnologies = SortSubEcosystems(filteredTechnologies);
+        var topXTechnologies = sortedTechnologies
+            .Take(numberOfTopTechnologies)
+            .ToList();
+        
+        return topXTechnologies;
+    }
+
+    private static List<SubEcosystemDto> GetSubEcosystems( SearchResponse<ProjectDto> searchResponse)
+    {
+        var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
+        if(topicsAggregate == null) throw new ArgumentException(
+            "Elasticsearch aggregate not found in search response");
+
+        var subEcosystemDtos = topicsAggregate
+            .Buckets.Select(topic => new SubEcosystemDto
+            {
+                Topic = topic.Key.ToString(),
+                ProjectCount = (int)topic.DocCount
+            });
+        
+        return subEcosystemDtos.ToList();
     }
 
     /// <summary>
@@ -333,8 +382,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     }
 
     /// <summary>
-    ///  Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects
-    ///  or are programming languages.
+    ///  Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects,
+    ///  are programming languages or are technologies.
     /// </summary>
     /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
@@ -344,6 +393,13 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         return subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
-            .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
+            .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic))
+            .Where(s => !TechnologiesTopics.Contains(s.Topic));
+    }
+    
+    public static IEnumerable<SubEcosystemDto> FilterTechnologies(IEnumerable<SubEcosystemDto> subEcosystemDtos)
+    {
+        return subEcosystemDtos
+            .Where(s => TechnologiesTopics.Contains(s.Topic));
     }
 }
