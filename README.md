@@ -100,8 +100,38 @@ Nginx is used as a reverse proxy to handle ssl certification so the application 
 ### Next.js
 
 
+Next.js is a React framework that simplifies the process of building server-side rendered (SSR) and statically generated web applications. It is designed to enhance the developer experience by providing a set of conventions and tools for quickly creating robust and scalable web applications.
+
+
 ### Running outside of a container
-Outside of a container we just run the Next.js on http so we do not need Nginx. In order to use Next.js we first need to download [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Afterwards open the terminal in  
+Outside of a container we just run the Next.js on http so we do not need Nginx. In order to use Next.js we first need to download [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). 
+
+1. Open the project folder to frontend/ecodash
+2. Open a new terminal in the folder
+3. Run the following command "npm ci". This chain installs all required packages
+4. to run the front-end in development mode excecute: "npm run dev"
+5. To run the front-end in production mode execute: "npm run build" followed by "npm start"
+
+## Testing
+Front-end testing is doen with Cypress and Jest. Cypress is used for component testing and e2e tests. Jest is used for all seperate functions.
+
+### Cypress testing
+To start testing with cypress follow these steps:
+1. Open the projet folder to frontend/ecodash
+2. Open a new terminal
+3. Run the following command: "npm run dev"
+4. Open a second new terminal
+5. Run the following command: "npx cypress open"
+6. This opens up a new window with two options: e2e testing / component
+7. Click on the chosen option
+8. Click specs and click on the green start icon to run the selected tests
+
+### Jest testing
+To start testing with jest follow these steps:
+1. Open the projet folder to frontend/ecodash
+2. Open a new terminal
+3. Run the following command: "npm run test"
+4. Supply the command with the following flag --verbose to see additional test information
 
 ## Spider
 
