@@ -4,6 +4,12 @@ using GraphQL.Client.Http;
 
 namespace spider.Wrappers;
 
+/// <summary>
+/// Wrapper for GraphQL.Client.Abstractions.Websocket.IGraphQLWebSocketClient
+/// 
+/// This is a wrapper because the IGraphQLWebSocketClient interface is not
+/// mockable.
+/// </summary>
 public class ClientWrapper : IClientWrapper
 {
     private Logger<ClientWrapper> _logger;

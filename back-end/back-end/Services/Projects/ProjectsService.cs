@@ -15,6 +15,8 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// <summary>
     /// Requests the Spider for projects related to the given topic and saves them to Elasticsearch.
     /// </summary>
+    /// <param name="topic">The topic to to search for. </param>
+    /// <param name="amount">The amount of repos to search for. </param>
     public async Task MineByTopicAsync(string topic, int amount)
     {
         // Request the Spider for projects related to this topic.
@@ -26,6 +28,8 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// <summary>
     /// Requests the Spider for projects related to the given keyword and saves them to Elasticsearch.
     /// </summary>
+    /// <param name="keyword">The keyword to to search for. </param>
+    /// <param name="amount">The amount of repos to search for. </param>
     public async Task MineByKeywordAsync(string keyword, int amount)
     {
         // Request the Spider for projects related to this topic.

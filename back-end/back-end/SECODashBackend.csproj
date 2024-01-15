@@ -8,6 +8,10 @@
     <RootNamespace>SECODashBackend</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DocumentationFile>bin\Debug\SECODashBackend.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.11.0" />
     <PackageReference Include="Elasticstretch.DependencyInjection" Version="1.1.2" />

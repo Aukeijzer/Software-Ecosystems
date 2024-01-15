@@ -2,6 +2,9 @@
 
 namespace SECODashBackend.Dtos.Topic;
 
+/// <summary>
+/// Represents a data transfer object for a topic returned by the Data Processor.
+/// </summary>
 public class TopicResponseDto
 {
     [DataMember(Name ="projectId")]
