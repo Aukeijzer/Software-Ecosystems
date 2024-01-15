@@ -4,7 +4,8 @@ import { mockEcosystemDescription1, mockEcosystemDescription2, mockEcosystemDesc
 describe('Ecosystem Description',() => {
     it('render ecosystem description', () =>{
         // Render component
-        cy.mount(<EcosystemDescription {...mockEcosystemDescription1} />)
+        var editMode = false;
+        cy.mount(<EcosystemDescription {...mockEcosystemDescription1} editMode />)
 
         // Check whether the welcome message is rendered correctly
         cy.get('[data-cy="ecosystem description"]')

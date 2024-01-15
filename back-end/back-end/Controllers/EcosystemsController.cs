@@ -50,4 +50,25 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
             return Problem(e.Message);
         }
     }
+
+    [HttpPost("DescriptionUpdate")]
+    [SwaggerOperation("Updates description for root ecosystem")]
+    [SwaggerResponse(statusCode: 200, description: "successfully updated description")]
+    public async Task<ActionResult<DescriptionDto>> UpdateDescription(DescriptionRequestDto req)
+    {
+        try
+        {
+            var result = await ecosystemsService.UpdateDescription(req);
+            var response = new DescriptionDto()
+            {
+                Description = result
+            };
+            return new ObjectResult(response);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

@@ -71,4 +71,24 @@ public class EcosystemsService(EcosystemsContext dbContext,
         
         return ecosystemDto;
     }
+    /// <summary>
+    /// Update description for ecosystem with given description
+    /// </summary>
+    public async Task<string> UpdateDescription(DescriptionRequestDto dto)
+    {
+        
+        //To lower is because all names are without capital letters
+        var ecosystemToUpdate = dbContext.Ecosystems.FirstOrDefault(ecosystem => ecosystem.Name == dto.Ecosystem.ToLower());
+        if (ecosystemToUpdate != null)
+        {
+            ecosystemToUpdate.Description = dto.Description;
+            await dbContext.SaveChangesAsync();
+            return "updated successfully";
+        }
+        else
+        {
+            throw new Exception("Ecosystem not found");
+
+        }
+    }
 }
