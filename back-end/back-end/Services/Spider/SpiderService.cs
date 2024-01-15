@@ -42,22 +42,4 @@ public class SpiderService : ISpiderService
         // Throw an exception if the request cannot be deserialized into a List of Projects
         return await _spiderClient.GetAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
     }
-
-    /// <summary>
-    /// Requests the Spider to update the given projects. 
-    /// </summary>
-    public async Task<List<ProjectDto>> UpdateProjects(List<ProjectRequestDto> projectDtos)
-    {
-        var request = new RestRequest("", Method.Post).AddJsonBody(projectDtos);
-        return await _spiderClient.PostAsync<List<ProjectDto>>(request) ?? throw new HttpRequestException();
-    }
-
-    /// <summary>
-    /// Requests the Spider for the contributors of the given project.
-    /// </summary>
-    public async Task<List<ContributorDto>> GetContributors(ProjectRequestDto projectDto, int amount)
-    {
-        var request = new RestRequest("contributors/" + projectDto.OwnerName + "/" + projectDto.RepoName + "/" + amount);
-        return await _spiderClient.GetAsync<List<ContributorDto>>(request) ?? throw new HttpRequestException();
-    }
 }

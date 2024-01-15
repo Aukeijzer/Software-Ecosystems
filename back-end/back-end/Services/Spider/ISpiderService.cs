@@ -1,5 +1,3 @@
-using SECODashBackend.Dtos;
-using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Services.Spider;
@@ -21,6 +19,4 @@ public interface ISpiderService
     /// <param name="keyword">The keyword to search for. </param>
     /// <param name="amount">The amount of repos to search for. </param>
     public Task<List<ProjectDto>> GetProjectsByKeywordAsync(string keyword, int amount);
-    public Task<List<ProjectDto>> UpdateProjects(List<ProjectRequestDto> dtos);
-    public Task<List<ContributorDto>> GetContributors(ProjectRequestDto projectDto, int amount);
 }
