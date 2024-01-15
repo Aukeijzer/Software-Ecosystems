@@ -98,6 +98,10 @@ public class SpiderProjectService : ISpiderProjectService
             List<ProjectDto> result = new List<ProjectDto>();
             foreach (var topicSearchData in listResult)
             {
+                if (topicSearchData.Topic == null)
+                {
+                    continue;
+                }
                 var temp = _graphqlDataConverter.TopicSearchToProjects(topicSearchData);
                  var tasks = temp.Select(async project =>
                  {
