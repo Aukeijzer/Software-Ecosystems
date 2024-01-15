@@ -5,6 +5,10 @@ using spider.Dtos;
 
 namespace spider.Services;
 
+/// <summary>
+/// SpiderProjectService is the service that handles all requests concerning repositories. It uses the GitHubGraphqlService
+/// and the GitHubRestService to get the data it needs.
+/// </summary>
 public class SpiderProjectService : ISpiderProjectService
 {
     private readonly ILogger<SpiderProjectService> _logger;

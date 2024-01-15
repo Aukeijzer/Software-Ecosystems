@@ -4,6 +4,9 @@ using GraphQL.Client.Http;
 
 namespace spider.Wrappers;
 
+/// <summary>
+/// Wrapper for GraphQL client
+/// </summary>
 public interface IClientWrapper
 {
     public IGraphQLWebSocketClient Client { get; set; }
