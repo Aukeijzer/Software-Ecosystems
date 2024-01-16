@@ -1,4 +1,8 @@
-export default function newDashboardPage(){
+"use client";
+import { useSession } from "next-auth/react";
+import { ExtendedUser } from "../utils/authOptions";
+
+export default function NewDashboardPage(){
     //Check if isAdmin
     return(
         <div className="bg-gray-400 m-10 p-3 border-2 border-black">
