@@ -42,11 +42,7 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
     const user = session?.user as ExtendedUser;
     const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
-    console.log("subecosystems:   "+ props.subEcosystems)
-    console.log("technologies:    "+ props.technologies)
-    console.log("risingTechnologies:    "+ props.risingTechnologies)
-    console.log("risingTopics:    "+ props.risingTopics)
-    console.log("languages:   "+ props.languages)
+
     //COLORS[0] = "#f2c4d8" = subEcosystems
     //COLORS[3] = "" = technologies
     //COLORS[4] = "#f8e3a1" = risingTechnologies

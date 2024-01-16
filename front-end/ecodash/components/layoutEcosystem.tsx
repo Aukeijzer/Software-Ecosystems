@@ -337,10 +337,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Small boxes
          
         const smallBoxes = ( <div className="flex flex-row   mb-5 justify-around">
-                <SmallDataBox item={"Topics"} count={100} increase={5}  />
-                <SmallDataBox item={"Projects"} count={100} increase={5} />
-                <SmallDataBox item={"Contributors"} count={100} increase={5} />
-                <SmallDataBox item={"Contributions"} count={100} increase={5} />
+                <SmallDataBox item={"Topics"} count={data.allTopics} increase={5}  />
+                <SmallDataBox item={"Projects"} count={data.allProjects} increase={5} />
+                <SmallDataBox item={"Contributors"} count={data.allContributors} increase={5} />
+                <SmallDataBox item={"Contributions"} count={data.allContributions} increase={5} />
             </div>
         )
 
