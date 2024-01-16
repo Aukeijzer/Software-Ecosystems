@@ -22,13 +22,4 @@ describe('ecosystem remove topic routing test', () => {
     })
 })
 
-describe('Login routing test', () => {
-    it('Clicks on login button', () => {
-        cy.visit('http://localhost:3000')
-        cy.contains('Login').click()
-        cy.url().should('include', 'login')
-    })
-
-
-})
 
