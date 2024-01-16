@@ -16,4 +16,7 @@ public class Taxonomy
 
     [DataMember(Name = "ecosystems")]
     public List<Ecosystem> Ecosystems { get; set; } = [];
+    
+    [DataMember(Name = "technologies")]
+    public List<Technology> Technologies { get; set; } = [];
 }

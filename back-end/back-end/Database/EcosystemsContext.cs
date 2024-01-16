@@ -18,4 +18,6 @@ public class EcosystemsContext(DbContextOptions<EcosystemsContext> options) : Db
 
    public DbSet<User> Users { get; set; }
    
+   public DbSet<Taxonomy> Taxonomies { get; set; }
+   
 }

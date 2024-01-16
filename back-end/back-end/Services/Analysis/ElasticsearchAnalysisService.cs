@@ -5,6 +5,8 @@ using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Dtos.Project;
+using SECODashBackend.Models;
+using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.ElasticSearch;
 
 namespace SECODashBackend.Services.Analysis;
@@ -14,7 +16,7 @@ namespace SECODashBackend.Services.Analysis;
 /// The service is responsible for retrieving the relevant data from the search response and converting it to the
 /// correct format.
 /// </summary>
-public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchService) : IAnalysisService
+public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchService, EcosystemsService ecosystemsService) : IAnalysisService
 {
     // Use the maximum bucket size supported by elasticsearch
     // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
@@ -95,6 +97,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     };
     
     // Temporary dictionary of topics that are technologies and need to be filtered out
+    /*
     private static readonly HashSet<string> TechnologiesTopics = new()
     {
         "android",
@@ -122,6 +125,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         "Software radio",
         "Zigbee"
     };
+    */
 
     /// <summary>
     /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
@@ -136,6 +140,18 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
     public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies)
     {
+        //Set TechnologiesTopics based on the selected ecosystems (topics).
+        List<Technology>? TechnologiesTopics = new List<Technology>();
+        List<Technology>? temp;
+        foreach(string topic in topics)
+        {
+            temp = await ecosystemsService.GetTechnologiesByNameAsync(topic);
+            TechnologiesTopics.AddRange(temp); 
+        }
+        
+        
+        
+        
         // Query that matches all projects that contain all topics in the topics list
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
         var termsSetQuery = new TermsSetQuery(TopicField)
@@ -221,10 +237,10 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         return new EcosystemDto
         {
             Topics = topics,
-            SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
+            SubEcosystems = GetTopXSubEcosystems(TechnologiesTopics, result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
             TopContributors = GetTopXContributors(result, numberOfTopContributors),
-            TopTechnologies = GetTopXTechnologies(result, numberOfTopTechnologies)
+            TopTechnologies = GetTopXTechnologies(TechnologiesTopics, result, numberOfTopTechnologies)
         };
     }
     
@@ -305,12 +321,13 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
     /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
     private static List<SubEcosystemDto> GetTopXSubEcosystems(
+        List<Technology>? TechnologiesTopics,
         SearchResponse<ProjectDto> searchResponse,
         List<string> topics, int numberOfTopSubEcosystems)
     {
         var subEcosystemDtos = GetSubEcosystems(searchResponse);
 
-        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
+        var filteredSubEcosystems = FilterSubEcosystems(TechnologiesTopics, subEcosystemDtos, topics);
         var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
         var topXSubEcosystems = sortedSubEcosystems
             .Take(numberOfTopSubEcosystems)
@@ -319,10 +336,10 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         return topXSubEcosystems;
     }
 
-    private static List<SubEcosystemDto> GetTopXTechnologies(SearchResponse<ProjectDto> searchResponse, int numberOfTopTechnologies)
+    private static List<SubEcosystemDto> GetTopXTechnologies(List<Technology>? TechnologiesTopics, SearchResponse<ProjectDto> searchResponse, int numberOfTopTechnologies)
     {
         var subEcosystemDtos = GetSubEcosystems(searchResponse);
-        var filteredTechnologies = FilterTechnologies(subEcosystemDtos);
+        var filteredTechnologies = FilterTechnologies(TechnologiesTopics, subEcosystemDtos);
         var sortedTechnologies = SortSubEcosystems(filteredTechnologies);
         var topXTechnologies = sortedTechnologies
             .Take(numberOfTopTechnologies)
@@ -388,18 +405,20 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
     /// <returns>A list of sub-ecosystems filtered by the given topics.</returns>
-    public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
+    public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(List<Technology>? TechnologiesTopics, IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
     {
-        return subEcosystemDtos
+        List<string>? technologiesTopics = TechnologiesTopics.ConvertAll(x => x.ToString());
+       return subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic))
-            .Where(s => !TechnologiesTopics.Contains(s.Topic));
+            .Where(s => !technologiesTopics.Contains(s.Topic));
     }
     
-    public static IEnumerable<SubEcosystemDto> FilterTechnologies(IEnumerable<SubEcosystemDto> subEcosystemDtos)
+    public static IEnumerable<SubEcosystemDto> FilterTechnologies(List<Technology>? TechnologiesTopics, IEnumerable<SubEcosystemDto> subEcosystemDtos)
     {
+        List<string>? technologiesTopics = TechnologiesTopics.ConvertAll(x => x.ToString());
         return subEcosystemDtos
-            .Where(s => TechnologiesTopics.Contains(s.Topic));
+            .Where(s => technologiesTopics.Contains(s.Topic));
     }
 }

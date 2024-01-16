@@ -3,6 +3,9 @@ using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Services.Ecosystems;
 using Swashbuckle.AspNetCore.Annotations;
 
+using SECODashBackend.Dtos.Taxonomy;
+
+
 namespace SECODashBackend.Controllers;
 /// <summary>
 /// This controller is responsible for handling requests related to ecosystems.
@@ -71,4 +74,20 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
             throw;
         }
     }
+
+    
+    [HttpPost("AddTaxonomy")]
+    public async Task<ActionResult<TaxonomyDto>> AddTaxonomy(TaxonomyDto taxonomy)
+    {
+        try
+        {
+            var result = await ecosystemsService.AddTaxonomy(taxonomy);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
 }

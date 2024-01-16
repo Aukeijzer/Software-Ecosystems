@@ -1,7 +1,9 @@
+using Elastic.Clients.Elasticsearch.Core.TermVectors;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Ecosystem;
+using SECODashBackend.Dtos.Taxonomy;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Analysis;
 
@@ -91,4 +93,26 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         }
     }
+    
+    
+    // Get technologies of an ecosystem by name.
+    public async Task<List<Technology>?> GetTechnologiesByNameAsync(string name)
+    {
+        return await dbContext.Ecosystems
+            .AsNoTracking()
+            .Where(e => e.Name == name)
+            .Select(x => x.Technologies)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task AddTaxonomy(TaxonomyDto taxonomy)
+    {
+        dbContext.Taxonomies.Add(new Taxonomy
+        {
+            Term = taxonomy.Term,
+            Ecosystems = taxonomy.Ecosystems
+        });
+        await dbContext.SaveChangesAsync();
+    }
+    
 }
