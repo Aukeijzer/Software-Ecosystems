@@ -21,8 +21,8 @@ export default function TableComponent<T extends {}>(props: infoCardDataTablePro
     if(props.items.length > 0){
         return(
             <div>
-                <table className="w-full text-left text-gray-500">
-                    <thead className="text-gray-700 uppercase bg-gray-200">
+                <table className="w-full text-left ">
+                    <thead className=" uppercase bg-gray-200">
                         {props.items[0].renderTableHeaders()}
                     </thead>
                     <tbody>

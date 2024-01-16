@@ -186,19 +186,19 @@ export default function LayoutHomePage(){
 
          //Agriculture card
         const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
-        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem} Color={COLORS[0]}/>
+        const agricultureButtonCard = <InfoCard title="Agriculture" data={agricultureButton} onClick={onClickEcosystem} Color={COLORS[0]}/>
         const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 3, static:staticProp}
         cardWrappedList.push(agricultureButtonCardWrapped)
         
         //Quantum card
         const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
-        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} Color={COLORS[1]}/>
+        const quantumButtonCard = <InfoCard title="Quantum" data={quantumButton}onClick={onClickEcosystem} Color={COLORS[1]}/>
         const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 3, static: staticProp }
         cardWrappedList.push(quantumButtonCardWrapped)
         
         //Artificial-intelligence card
         const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem} Color={COLORS[2]}/>
+        const aiButtonCard = <InfoCard title="Artificial-intelligence" data={aiButton} onClick={onClickEcosystem} Color={COLORS[2]}/>
         const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4 , y : 3, static: staticProp}
         cardWrappedList.push(aiButtonCardWrapped);
         

@@ -278,7 +278,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
         //Make list element
    
-        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, yHeight * 2 + offSet, 2, 6, onClickTopic,"", COLORS[0]);
+        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, yHeight * 2, 2, 6, onClickTopic,"", COLORS[0]);
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
         
@@ -287,30 +287,30 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "", 2,  yHeight * 2 + offSet, !editMode, COLORS[5]);
+        const languageCard = buildPieGraphCard(languages, "", 2,  yHeight * 2 , !editMode, COLORS[5]);
         //Add card to list
         cardWrappedList.push(languageCard);
 
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildTableCard(technologies, "", 4, yHeight * 2 + offSet, 2, 6, onClickTechnology, "", COLORS[3]);
+        const technologyCard = buildTableCard(technologies, "", 4, yHeight * 2, 2, 6, onClickTechnology, "", COLORS[3]);
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 0, yHeight * 5 + offSet, 2, 6, onClickRisingTechnology, "", COLORS[4]);
+        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 0, yHeight * 5 , 2, 6, onClickRisingTechnology, "", COLORS[4]);
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildTableCard(risingTopics, "", 2, yHeight * 8 + offSet, 2, 6, onClickRisingTopic, "", COLORS[5]);
+        const risingTopicsCard = buildTableCard(risingTopics, "", 2, yHeight * 8 , 2, 6, onClickRisingTopic, "", COLORS[5]);
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 
         //For now no data conversion needed as Mock data is already in correct format 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 4, yHeight * 5 + offSet , !editMode, COLORS[2]);
+        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 4, yHeight * 5  , !editMode, COLORS[2]);
         cardWrappedList.push(cardLineGraphWrapped)
 
         //const contributors = listContributorDTOConverter(data.topContributors);
@@ -336,15 +336,15 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
         //Small boxes
          
-        const smallBoxes = ( <div className="flex flex-row   mb-5 justify-around">
+        const smallBoxes = ( <div className="flex flex-row mb-5 w-full ">
                 <SmallDataBox item={"Topics"} count={data.allTopics} increase={5}  />
                 <SmallDataBox item={"Projects"} count={data.allProjects} increase={5} />
-                <SmallDataBox item={"Contributors"} count={data.allContributors} increase={5} />
+                <SmallDataBox item={"Contributors"} count={data.allContributors} increase={5}className={"ml-3"} />
                 <SmallDataBox item={"Contributions"} count={data.allContributions} increase={5} />
             </div>
         )
 
-      const smallBoxesWrapped: cardWrapper = {card: smallBoxes, width: 6, height: 2, x: 0, y : yHeight, static: true}
+      const smallBoxesWrapped: cardWrapper = {card: smallBoxes, width: 10, height: 1, x: 0, y : yHeight, static: true}
       cardWrappedList.push(smallBoxesWrapped);
     
     } else {

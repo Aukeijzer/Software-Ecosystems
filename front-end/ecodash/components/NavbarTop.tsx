@@ -41,14 +41,14 @@ export default function NavBarTop(){
            {session && <div>
                             <div className='flex flex-col'>
                                 <Image src={session.user!.image!} 
-                                    className='rounded-full ml-2'
+                                    className='rounded-full ml-7'
                                     width={30}
                                     height={30}
                                     alt="Profile picture"
                                 />
-                               <b> {user.userType} </b>
+                               <span className='ml-5'> {user.userType} </span>
                             </div>            
-                            <button className="bg-gray-500 rounded-md p-1" onClick={() => Router.push('/api/auth/signout')}>Sign out</button>
+                            <button className="bg-gray-300 pl-3 pr-3 pt-2 pb-2 rounded-md" onClick={() => Router.push('/api/auth/signout')}> <b> Sign out </b></button>
                           
                         </div>}
             {!session && <div className='flex flex-col'> 

@@ -29,8 +29,8 @@ export default function PopUpBox(props: PopUpBoxProps){
             
     } else {
         return(
-         <div>
-                <button data-cy="loginButton" onClick={() => setShow(true)} className="bg-gray-500 border-2 p-2 border-gray-900">{props.buttonText}</button>
+         <div className="flex">
+                <button data-cy="loginButton" onClick={() => setShow(true)} className="flex ml-3 bg-gray-300 pl-3 pr-3 pt-2 pb-2 rounded-md"> <b>{props.buttonText} </b></button>
          </div>)
     }
 }

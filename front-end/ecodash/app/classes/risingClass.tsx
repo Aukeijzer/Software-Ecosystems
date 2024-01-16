@@ -43,7 +43,7 @@ export default class risingClass implements displayableListItem {
     renderAsTableItem(onClick: (sub: string) => void): React.JSX.Element {
         return(
             <tr className="bg-white border-b hover:bg-amber" onClick={() => onClick(this.topic)}>
-                <th className="px-6 py-4 font-medium text-gray-900">
+                <th className="px-6 py-4 font-medium ">
                     {this.topic}
                 </th>
                 <td className="px-6 py-4 text-center">

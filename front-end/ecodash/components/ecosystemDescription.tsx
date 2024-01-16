@@ -20,6 +20,7 @@ interface ecoSystemDescriptionProps{
     removeTechnology?: (technology: string) => void
 }
 
+//This is a mess split this is up into a description component a selectedFilters component
 
 
 /**
@@ -69,11 +70,9 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                         <br></br>
                     </p>
                 } 
-
-
-                </div>   
-                
-                <div className='flex h-16'>
+                </div>                 
+            </Card>
+        <div className='flex h-16  mt-28 ml-4'>
                 {((props.subEcosystems != null && props.subEcosystems.length > 0) ||
                     (props.technologies != null && props.technologies.length > 0) ||
                     (props.risingTechnologies != null && props.risingTechnologies.length > 0) ||
@@ -81,7 +80,7 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                     (props.languages != null && props.languages.length > 0) )&& 
                     (
                         <div>
-                            The following filters have been applied:
+                  
                             <ul data-cy='subecosystems' className='mt-2 mb-2 flex flex-row gap-5'>
                                 {props.subEcosystems != null && props.subEcosystems.map((item, i) => (
                                     <li key={i} className='flex flex-row gap-5 mb-1'>
@@ -163,9 +162,8 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                                 )}
                             </ul>
                         </div>
-                )}
-                </div>   
-            </Card>
+                    )}
+                </div>
         </div>
     )
 }
