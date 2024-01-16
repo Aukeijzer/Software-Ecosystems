@@ -1,7 +1,8 @@
+"use client";
 import { useSession } from "next-auth/react";
 import { ExtendedUser } from "../utils/authOptions";
 
-export default function newDashboardPage(){
+export default function NewDashboardPage(){
     //Check if isAdmin
     const { data: session } = useSession()
     const user = session?.user as ExtendedUser;

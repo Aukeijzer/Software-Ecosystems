@@ -20,7 +20,7 @@ export default function PopUpBox(props: PopUpBoxProps){
         setShow(false);
     }
 
-    if(!show){
+    if(show){
         return(
             <div className="absolute w-screen h-screen bg-opacity-80  bg-gray-500 z-10 top-0 left-0" onClick={() => setShow(false)} data-cy={".oauthPopUp"}>
                 <div className="relative top-20 left-1/3 z-10 w-min border-4 border-black shadow-2xl p-3 rounded-xl bg-opacity-100 bg-gray-900 "  >

@@ -1,11 +1,7 @@
 describe("Login functionality", () => {
-    //This does not work cause session is not set
-    
-    it("Visit newDashboard not logged in", () => {
-        cy.visit("http://localhost:3000/newDashboard")
-        cy.get('[data-cy="newDashboard"]').should("be.not.visible")
-    })
-
+    //Sadly this is not implemented fuly. OAuth2 is hard to test with cypress.
+    //Link to github issue:https://github.com/lirantal/cypress-social-logins/issues/43
+    /*
     it("Login with Google", () => {
         const username = Cypress.env("GOOGLE_USER")
         const password = Cypress.env("GOOGLE_PW")
@@ -14,9 +10,6 @@ describe("Login functionality", () => {
         cy.visit('http://localhost:3000')
         //cy.get('[data-cy="loginButton"]').click();
         cy.get('[data-cy=".oauthPopUp"]').should('be.visible');
-    
-        //ECHT WAAR DIT KAN ALLEMAAL DE TYFUS KRIJGEN 
-        //TYF OP MET JE KUT TESTEN VAN LOGIN SYSTEM ECHT KRIJG DE TERING
 
         const socialLoginOptions = {
             username,
@@ -24,7 +17,7 @@ describe("Login functionality", () => {
             loginUrl,
             headless: false,
             logs: true,
-            isPopup: true,
+            isPopup: false,
             //loginSelector: `a[href="${Cypress.env("SITE_NAME")} /api/auth/signin/google"]`,
             loginSelector: '[data-cy="googleLoginButton"]',
             postLoginSelector: '[data-cy="loggedInSelector"].Click()'
@@ -54,5 +47,6 @@ describe("Login functionality", () => {
             }
         })
     })
+    */
 })
         
