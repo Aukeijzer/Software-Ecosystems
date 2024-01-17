@@ -40,7 +40,7 @@ public class SpiderProjectService : ISpiderProjectService
         }
         var max = mostStarred.Search.Nodes[0].StargazerCount;
         //Use binary split to split the search space into smaller chunks
-        var sections = await BinarySplit(name, amount, startCursor, 0, max);
+        var sections = await BinarySplit(name, amount, startCursor, 5, max);
         sections.Reverse();
         var split = new Queue<(int,int)>(sections);
         var result = new List<ProjectDto>();
