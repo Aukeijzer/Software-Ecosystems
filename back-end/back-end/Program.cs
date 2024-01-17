@@ -1,6 +1,9 @@
 using System.Text.Json.Serialization;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
+using Hangfire;
+using Hangfire.AspNetCore;
+using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.Dtos.Project;
@@ -10,6 +13,7 @@ using SECODashBackend.Services.DataProcessor;
 using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Projects;
+using SECODashBackend.Services.Scheduler;
 using SECODashBackend.Services.Spider;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +32,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
     .AddJsonOptions(options =>  options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddDbContext<EcosystemsContext>(
-    o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb"))
-    );
+    o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb")));
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 
@@ -66,6 +69,18 @@ builder.Services.AddSwaggerGen();
 builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File")
     .GetSection("Options").Bind(options); });
 
+// Configure the Hangfire scheduler
+builder.Services.AddHangfire((provider, config) => config
+    .UsePostgreSqlStorage(c =>
+        c.UseNpgsqlConnection(builder.Configuration.GetConnectionString("Hangfire")))
+    .UseActivator(new AspNetCoreJobActivator(provider.GetRequiredService<IServiceScopeFactory>()))
+    .UseRecommendedSerializerSettings()
+    .UseSimpleAssemblyNameTypeSerializer());
+
+// Add the Hangfire server that is responsible for executing the scheduled jobs.
+builder.Services.AddHangfireServer();
+builder.Services.AddScoped<IScheduler, HangfireScheduler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,13 +90,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 // TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
 
 app.UseCors(myAllowSpecificOrigins);
 app.UseAuthorization();
 
+// Add a Hangfire dashboard that allows to view and manage the scheduled jobs.
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new [] { new HangfireAuthorizationFilter() }
+});
+
+// Configure the endpoints.
 app.MapControllers();
+app.MapHangfireDashboard();
+
 app.CreateDbIfNotExists();
 app.Run();
 
