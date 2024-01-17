@@ -52,6 +52,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
+            dto.Technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems);
