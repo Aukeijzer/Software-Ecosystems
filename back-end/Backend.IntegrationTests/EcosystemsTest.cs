@@ -67,7 +67,7 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         var expectedResponse = new EcosystemDto
         {
             Topics = [topic1],
-            TopSubEcosystems =
+            SubEcosystems =
             [
                 new SubEcosystemDto
                 {
@@ -95,26 +95,20 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
                     Percentage = 100
                 }
             ],
-            TopContributors =
+            TopContributors = 
             [
-
+                
                 new TopContributorDto
                 {
-                    Contributions = 500,
+                    Contributions = 500, 
                     Login = "user1"
-                },
+                }, 
                 new TopContributorDto
                 {
-                    Contributions = 200,
+                    Contributions = 200, 
                     Login = "user2"
                 }
-            ], 
-            NumberOfTopics = 3,
-            NumberOfProjects = 10,
-            NumberOfContributors = 2,
-            NumberOfContributions = 700,
-            TimedDataTopics = [],
-            TimedDataEcosystem = [],
+            ]
         };
         
         // Act

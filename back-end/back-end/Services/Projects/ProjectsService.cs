@@ -1,7 +1,3 @@
-using Elastic.Clients.Elasticsearch;
-using SECODashBackend.DataConverters;
-using SECODashBackend.Dtos.Project;
-using SECODashBackend.Models;
 using System.Collections.Concurrent;
 using SECODashBackend.Dtos.Project;
 using SECODashBackend.Services.ElasticSearch;
@@ -42,16 +38,7 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         // Save these projects to elasticsearch
         await elasticsearchService.AddProjects(newDtos);
     }
-    
-    /// <summary>
-    /// Returns a project count of the projects that were created in the given DateRange and contain the given topic.
-    /// </summary>
-    public async Task<long> GetByTimeFrameAsync(DateTime startTime, DateTime endTime, string topic)
-    {
-        var result = await elasticsearchService.GetProjectsByDate(startTime, endTime, topic);
-        return result;
-    }
-    
+
     /// <summary>
     /// Requests the Spider for projects related to the given taxonomy and saves them to Elasticsearch.
     /// </summary>
