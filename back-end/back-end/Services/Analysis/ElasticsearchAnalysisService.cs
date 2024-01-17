@@ -104,8 +104,10 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
     /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <param name="numberOfTopProjects">The number of top projects to retrieve</param>
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors)
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages,
+        int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopProjects)
     {
         // Query that matches all projects that contain all topics in the topics list
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
@@ -174,7 +176,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Field = TopicField,
             Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count
         };
-
+        
         var searchRequest = new SearchRequest
         {
             Query = termsSetQuery,
@@ -184,7 +186,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 nestedContributorsAggregation,
                 topicAggregation
             },
-            Size = 0 // Do not request actual Project documents
+            Sort = new List<SortOptions> {SortOptions.Field("numberOfStars", new FieldSort{Order = SortOrder.Desc})},
+            Size = numberOfTopProjects // Retrieve the top x projectDtos
         };
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
@@ -194,7 +197,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Topics = topics,
             SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TopContributors = GetTopXContributors(result, numberOfTopContributors)
+            TopContributors = GetTopXContributors(result, numberOfTopContributors),
+            TopProjects = GetTopXProjects(result)
         };
     }
     
@@ -345,5 +349,12 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
+    }
+   
+    private static List<ProjectDto> GetTopXProjects(SearchResponse<ProjectDto> searchResponse)
+    {
+        return searchResponse.Documents
+            .OrderByDescending(p => p.NumberOfStars)
+            .ToList();
     }
 }
