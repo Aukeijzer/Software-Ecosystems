@@ -354,10 +354,21 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic));
     }
-   
-    private static List<ProjectDto> GetTopXProjects(SearchResponse<ProjectDto> searchResponse)
+  
+    /// <summary>
+    /// Retrieves the projects from the search response and converts them into a Top x list
+    /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <returns>A list of the top x projects in an ecosystem.</returns>
+    private static List<TopProjectDto> GetTopXProjects(SearchResponse<ProjectDto> searchResponse)
     {
         return searchResponse.Documents
+            .Select(p => new TopProjectDto
+            {
+                Name = p.Name,
+                Owner = p.Owner,
+                NumberOfStars = p.NumberOfStars
+            })
             .ToList();
     }
 }
