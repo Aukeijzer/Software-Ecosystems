@@ -62,6 +62,7 @@ def extract_topics():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
+
 if __name__ == "__main__":
     print("Swagger UI on: http://localhost:5000/apidocs/")
     app.run(debug=True)

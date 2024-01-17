@@ -7,9 +7,8 @@ import unittest
 import json
 import sys
 from unittest.mock import MagicMock
-sys.path.append('./src')
 from topic_service import TopicService
-
+sys.path.append('./src')
 # Define mock data for testing
 mock_data = [
     {"id": 1, "name": "Project 1",
@@ -28,12 +27,13 @@ class TestTopicService(unittest.TestCase):
     """
     def test_extract_topics_integration(self):
         """
-        Test the extract_topics method by mocking dependent functions and checking the interactions.
+        Test the extract_topics method by mocking dependent functions and
+        checking the interactions.
         """
         # Mock preprocessDocs function
         preprocess_docs_mock = MagicMock()
         preprocess_docs_mock.return_value = ["processed_doc_1",
-                                            "processed_doc_2"]
+                                             "processed_doc_2"]
 
         # Mock extractTopicsLDA function
         extract_topics_lda_mock = MagicMock()
@@ -72,10 +72,13 @@ class TestTopicService(unittest.TestCase):
 
     def test_result_types(self):
         """
-        Test the types and structure of the result returned by the topic service.
+        Test the types and structure of the result returned by
+        the topic service.
         """
         # Read the mock result from a file
-        with open('./tests/test_data/mock_result.json', 'r', encoding="utf-8") as file:
+        with open(
+            './tests/test_data/mock_result.json', 'r', encoding="utf-8"
+                ) as file:
             result_json = file.read()
 
         # Convert the JSON string to a dictionary

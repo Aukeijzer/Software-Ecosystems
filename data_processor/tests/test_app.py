@@ -7,8 +7,8 @@ This module defines tests for the app.py module
 
 import unittest
 import sys
-sys.path.append('./src')
 from app import app
+sys.path.append('./src')
 
 
 class TestApp(unittest.TestCase):
@@ -23,7 +23,8 @@ class TestApp(unittest.TestCase):
     Methods
     -------
     setUp()
-        Set up the test environment by creating an instance of the Flask test client.
+        Set up the test environment by creating
+        an instance of the Flask test client.
 
     test_extract_topics_endpoint()
         Test the '/extract-topics' endpoint with valid and invalid input.
@@ -37,8 +38,10 @@ class TestApp(unittest.TestCase):
         Test the '/extract-topics' endpoint with valid and invalid input.
 
         This method performs two tests:
-        1. Sends a POST request with valid input and checks for a 200 status code.
-        2. Sends a POST request with invalid input and checks for a 500 status code 
+        1. Sends a POST request with valid input
+        and checks for a 200 status code.
+        2. Sends a POST request with invalid input
+        and checks for a 500 status code
         with an error message.
         """
         # Test with valid input

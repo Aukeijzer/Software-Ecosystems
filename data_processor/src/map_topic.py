@@ -8,7 +8,7 @@ from a taxonomy. It uses cosine similarity between TF-IDF vectors of project
 
 Functions:
 - get_taxonomy: Retrieve and return the predefined taxonomy from a JSON file.
-- flatten_taxonomy_to_strings: Flatten the structure of the taxonomy into a 
+- flatten_taxonomy_to_strings: Flatten the structure of the taxonomy into a
 list of strings.
 - map_topics: Map the topics in a collection of projects to the closest
  predefined topics in the taxonomy.
@@ -79,18 +79,18 @@ def map_topics(projects):
 
     Parameters
     ----------
-    projects : list 
+    projects : list
         A list of dictionaries, each representing a project with
         associated topics.
 
     Returns
     -------
-    list: 
+    list:
         A list of dictionaries, each containing mapped topics for the
         corresponding project.
     """
     # Get predefined topics
-    taxonomy_data = get_taxonomy(file_path = "assets/taxonomy.json")
+    taxonomy_data = get_taxonomy(file_path="assets/taxonomy.json")
     predefined_topics = flatten_taxonomy_to_strings(taxonomy_data)
     results = []
     for project in projects:

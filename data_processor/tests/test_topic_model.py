@@ -6,8 +6,8 @@ This module defines tests for the topic_model.py module
 import unittest
 import sys
 from tests.test_data.mock_preprocessed_docs import preprocessed_docs
-sys.path.append('./src')
 from topic_model import extract_topics_lda
+sys.path.append('./src')
 
 
 class TestTopicExtractor(unittest.TestCase):
@@ -16,10 +16,12 @@ class TestTopicExtractor(unittest.TestCase):
     """
     def test_extract_topics(self):
         """
-        Test the extract_topics_lda function by providing preprocessed documents and checking the structure of the extracted topics.
+        Test the extract_topics_lda function by providing preprocessed
+        documents and checking the structure of the extracted topics.
         """
         # Extract topics using LDA
-        extracted_topics = extract_topics_lda(preprocessed_docs, top_x_topics=3)
+        extracted_topics = extract_topics_lda(preprocessed_docs,
+                                              top_x_topics=3)
 
         # Assert that extracted_topics is a list of projects
         self.assertIsInstance(extracted_topics, list)

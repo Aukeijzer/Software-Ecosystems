@@ -6,8 +6,8 @@ This module defines tests for the preprocessing.py module
 
 import unittest
 import sys
-sys.path.append('./src')
 from preprocessing import preprocess_docs, preprocess_document
+sys.path.append('./src')
 
 
 class TestTextPreprocessing(unittest.TestCase):
