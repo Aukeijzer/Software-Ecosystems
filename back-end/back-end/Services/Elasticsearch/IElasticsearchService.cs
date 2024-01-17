@@ -1,5 +1,7 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.Project;
+
 
 namespace SECODashBackend.Services.ElasticSearch;
 
@@ -13,6 +15,7 @@ public interface IElasticsearchService
    /// </summary>
    /// <param name="projectDtos">The projects to be added to the index.</param>
    public Task AddProjects(IEnumerable<ProjectDto> projectDtos);
+   public Task<long> GetProjectsByDate(DateTime startTime, DateTime endTime, string topic);
    /// <summary>
    /// Queries the Elasticsearch index for projects that match the given search request. 
    /// </summary>
