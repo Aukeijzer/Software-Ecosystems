@@ -107,7 +107,8 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
             NumberOfProjects = 10,
             NumberOfContributors = 2,
             NumberOfContributions = 700,
-            TimedData = [],
+            TimedDataTopics = [],
+            TimedDataEcosystem = [],
         };
         
         // Act
