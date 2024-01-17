@@ -62,7 +62,7 @@ export default function Filters(props: filterProps){
                                         <li key={i} className='flex flex-row gap-5 mb-1'>
                                             <button
                                                 onClick={() => props.removeFilter(item, "technologies")}
-                                                style={{ backgroundColor: COLORS[3] }}
+                                                style={{ backgroundColor: COLORS[2] }}
                                                 className='font-bold px-2 py-1 rounded-md hover:text-red-500'
                                             >
                                                 <span className="mr-2 text-black">✖</span>

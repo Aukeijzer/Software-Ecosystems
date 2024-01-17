@@ -64,14 +64,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Set up search params
     const searchParams = useSearchParams();
 
-    //Keep track of selected (sub)Ecosystems. start with ecosystem provided
-    interface SelectedItems {
-        ecosystems: string[];
-        technologies: string[];
-        languages: string[];
-        [key: string]: string[]; // Add index signature
-    }
-
+    //Keep track of selected filters / (sub)Ecosystems. start with ecosystem provided
     class filters {
         ecosystems: string[];
         technologies: string[];
@@ -127,6 +120,34 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems], filter]
         }));
+        //Prepare technology url
+        var techUrl = "";
+        if(filterType == "technologies"){
+            techUrl ="&technologies=" + selectedItems.technologies.join(",") + "," + filter
+        } else {
+            techUrl ="&technologies=" + selectedItems.technologies.join(",")
+        }
+    
+        //Prepare topic url
+        var topicUrl = "";
+        if(filterType == "ecosystems"){
+            topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",") + "," + filter
+        } else {
+            topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",")
+        }
+        //Prepare language url
+        var languageUrl = "";
+
+        if(filterType == "languages"){
+            languageUrl ="&languages=" + selectedItems.languages.join(",") + "," + filter
+        } else {
+            languageUrl ="&languages=" + selectedItems.languages.join(",")
+        }
+
+    
+        if(techUrl != "" || topicUrl != "" || languageUrl != "") {
+            Router.push(`/?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
+        }
     }
 
     /**
@@ -140,7 +161,37 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         setSelectedItems(prevState => ({
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems].filter(n => n != filter)]
-        }));
+        }));   
+
+        //Prepare technology url
+        var techUrl = "";
+        if(filterType == "technologies"){
+            techUrl ="&technologies=" + selectedItems.technologies.filter(n => n != filter).join(",")
+        } else {
+            techUrl ="&technologies=" + selectedItems.technologies.join(",")
+        }
+    
+        //Prepare topic url
+        var topicUrl = "";
+        if(filterType == "ecosystems"){
+            topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).filter(n => n != filter).join(",")
+        } else {
+            topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",")
+        }
+        //Prepare language url
+        var languageUrl = "";
+
+        if(filterType == "languages"){
+            languageUrl ="&languages=" + selectedItems.languages.filter(n => n != filter).join(",") 
+        } else {
+            languageUrl ="&languages=" + selectedItems.languages.join(",")
+        }
+
+    
+        if(techUrl != "" || topicUrl != "" || languageUrl != "") {
+            Router.push(`/?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
+        }
+
     }
     //If error we display error message
     if(error){
@@ -190,17 +241,17 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildTableCard(technologies, "", 4, 4, 2, 5, onClickFilter, "languages", "", COLORS[2]);
+        const technologyCard = buildTableCard(technologies, "", 4, 4, 2, 5, onClickFilter, "technologies", "", COLORS[2]);
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, 15, 3, 5, onClickFilter, "technologies", "", COLORS[3]);
+        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, 15, 3, 5, onClickFilter, "technologies", "", COLORS[2]);
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildTableCard(risingTopics, "", 2, 4, 2, 5, onClickFilter, "ecosystems", "", COLORS[4]);
+        const risingTopicsCard = buildTableCard(risingTopics, "", 2, 4, 2, 5, onClickFilter, "ecosystems", "", COLORS[0]);
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 
