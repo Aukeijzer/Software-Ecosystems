@@ -13,10 +13,9 @@ public class EcosystemDto
     [DataMember(Name = "description")] public string? Description { get; set; }
     [DataMember(Name = "numberOfStars")] public int? NumberOfStars { get; set; }
     [DataMember(Name = "topics")] public required List<string> Topics { get; init; }
-    [DataMember(Name = "topTechnologies")] public required List<string> TopTechnologies { get; init; }
+    [DataMember(Name = "topTechnologies")] public required List<SubEcosystemDto> TopTechnologies { get; init; }
     [DataMember(Name = "topLanguages")] public required List<ProgrammingLanguageDto> TopLanguages { get; init; }
-    [DataMember(Name = "subEcosystems")] public required List<SubEcosystemDto> SubEcosystems { get; init; }
+    [DataMember(Name = "subEcosystems")] public required List<SubEcosystemDto> TopSubEcosystems { get; init; }
     [DataMember(Name = "topContributors")] public required List<TopContributorDto> TopContributors { get; init; }
-    [DataMember(Name = "technologies")] public required List<SubEcosystemDto> TopTechnologies { get; init; }
 }
    

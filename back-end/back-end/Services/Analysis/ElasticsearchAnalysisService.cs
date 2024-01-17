@@ -94,35 +94,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         "crystal"
     };
     
-    // Temporary dictionary of topics that are technologies and need to be filtered out
-    private static readonly HashSet<string> TechnologiesTopics = new()
-    {
-        "android",
-        "ios",
-        "macos",
-        "windows",
-        "linux",
-        "Baseband",
-        "Bluetooth",
-        "Cellular technology",
-        "Indoor radio communication",
-        "Land mobile radio",
-        "Millimeter wave communication",
-        "Near field communication",
-        "Packet radio networks",
-        "Passband",
-        "Personal area networks",
-        "Radio broadcasting",
-        "Radio communication countermeasures",
-        "Radio frequency",
-        "Radio links",
-        "Radio spectrum management",
-        "Satellite communication",
-        "Satellite ground stations",
-        "Software radio",
-        "Zigbee"
-    };
-
     /// <summary>
     /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
     /// The analysis consists of two parts:
@@ -201,7 +172,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {
             Field = TopicField,
-            Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count + TechnologiesTopics.Count
+            Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count + technologies.Count
         };
 
         var searchRequest = new SearchRequest
@@ -217,15 +188,15 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         };
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
+        var subEcosystemDtos = GetSubEcosystems(result);
         
         return new EcosystemDto
         {
             Topics = topics,
-            TopTechnologies = technologies,
-            SubEcosystems = GetTopXSubEcosystems(result, topics, numberOfTopSubEcosystems, technologies),
+            TopTechnologies = GetTopXTechnologies(technologies, numberOfTopTechnologies, subEcosystemDtos),
+            TopSubEcosystems = GetTopXSubEcosystems(topics, numberOfTopSubEcosystems, technologies, subEcosystemDtos),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
             TopContributors = GetTopXContributors(result, numberOfTopContributors),
-            TopTechnologies = GetTopXTechnologies(result, numberOfTopTechnologies)
         };
     }
     
@@ -306,11 +277,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
     /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
     private static List<SubEcosystemDto> GetTopXSubEcosystems(
-        SearchResponse<ProjectDto> searchResponse,
-        List<string> topics, int numberOfTopSubEcosystems, List<string> technologies)
+        List<string> topics, int numberOfTopSubEcosystems, List<string> technologies, List<SubEcosystemDto> subEcosystemDtos)
     {
-        var subEcosystemDtos = GetSubEcosystems(searchResponse);
-
         var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologies);
         var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
         var topXSubEcosystems = sortedSubEcosystems
@@ -320,10 +288,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         return topXSubEcosystems;
     }
 
-    private static List<SubEcosystemDto> GetTopXTechnologies(SearchResponse<ProjectDto> searchResponse, int numberOfTopTechnologies)
+    private static List<SubEcosystemDto> GetTopXTechnologies(List<string> technologies, int numberOfTopTechnologies, List<SubEcosystemDto> subEcosystemDtos)
     {
-        var subEcosystemDtos = GetSubEcosystems(searchResponse);
-        var filteredTechnologies = FilterTechnologies(subEcosystemDtos);
+        var filteredTechnologies = FilterTechnologies(subEcosystemDtos, technologies);
         var sortedTechnologies = SortSubEcosystems(filteredTechnologies);
         var topXTechnologies = sortedTechnologies
             .Take(numberOfTopTechnologies)
@@ -398,9 +365,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .Where(s => !technologies.Contains(s.Topic));
     }
     
-    public static IEnumerable<SubEcosystemDto> FilterTechnologies(IEnumerable<SubEcosystemDto> subEcosystemDtos)
+    public static IEnumerable<SubEcosystemDto> FilterTechnologies(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> technologies)
     {
         return subEcosystemDtos
-            .Where(s => TechnologiesTopics.Contains(s.Topic));
+            .Where(s => technologies.Contains(s.Topic));
     }
 }

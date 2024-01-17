@@ -70,8 +70,15 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         var expectedResponse = new EcosystemDto
         {
             Topics = [topic1],
-            TopTechnologies = [technology1],
-            SubEcosystems =
+            TopTechnologies =
+            [
+                new SubEcosystemDto
+                {
+                    ProjectCount = 10,
+                    Topic = technology1
+                }
+            ],
+            TopSubEcosystems = 
             [
                 new SubEcosystemDto
                 {
