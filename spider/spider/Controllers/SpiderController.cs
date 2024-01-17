@@ -5,6 +5,11 @@ using spider.Services;
 
 namespace spider.Controllers;
 
+/// <summary>
+/// SpiderController is the controller for the Spider project. It contains all the endpoints for the project.
+/// The controller is responsible for receiving requests and returning responses. It uses the ISpiderProjectService
+/// to handle the requests and return the responses.
+/// </summary>
 [ApiController]
 [Route("[controller]")]
 public class SpiderController : ControllerBase

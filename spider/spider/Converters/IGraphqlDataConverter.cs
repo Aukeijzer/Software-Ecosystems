@@ -3,6 +3,9 @@ using spider.Models.Graphql;
 
 namespace spider.Converters;
 
+/// <summary>
+/// IGraphqlDataConverter converts GraphQL data to a format that is easier to work with.
+/// </summary>
 public interface IGraphqlDataConverter
 {
     /// <summary>

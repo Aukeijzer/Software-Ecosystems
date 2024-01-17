@@ -3,6 +3,9 @@ using SECODashBackend.Models;
 
 namespace SECODashBackend.DataConverters;
 
+/// <summary>
+/// Converts Ecosystems to and from data transfer objects.
+/// </summary> 
 public static class EcosystemConverter
 {
     /// <summary>

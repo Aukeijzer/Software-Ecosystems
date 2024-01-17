@@ -1,0 +1,414 @@
+{
+  "result": [
+    {
+      "projectId": "R_kgDOBP8EZQ",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOBo8b9A",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOBVU5mQ",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOBxGUUg",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOAhDtqA",
+      "topics": [
+        {
+          "keywords": [
+            "scheduler",
+            "job scheduler",
+            "job",
+            "watch job",
+            "watch"
+          ],
+          "mapped_topic": "On the job training",
+          "probability": 0.032607832255878225,
+          "topicId": 3
+        },
+        {
+          "keywords": [
+            "programming",
+            "enterprise programming",
+            "language",
+            "programming language",
+            "enterprise"
+          ],
+          "mapped_topic": "Application programming interfaces",
+          "probability": 0.0067119482834759265,
+          "topicId": 2
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOB76r6A",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOCI-v9A",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        },
+        {
+          "keywords": [
+            "programming",
+            "enterprise programming",
+            "language",
+            "programming language",
+            "enterprise"
+          ],
+          "mapped_topic": "Application programming interfaces",
+          "probability": 0.0067119482834759265,
+          "topicId": 2
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOAF2hxQ",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOCB1nKA",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        },
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        }
+      ]
+    },
+    {
+      "projectId": "R_kgDOFAft8g",
+      "topics": [
+        {
+          "keywords": [
+            "quantum",
+            "machine",
+            "quantum machine",
+            "machine learning",
+            "framework"
+          ],
+          "mapped_topic": "Machine-to-machine communications",
+          "probability": 0.07049676554864681,
+          "topicId": 0
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computer",
+            "computer",
+            "pennylane",
+            "qiskit"
+          ],
+          "mapped_topic": "Computer networks",
+          "probability": 0.058549981600014664,
+          "topicId": 4
+        },
+        {
+          "keywords": [
+            "quantum",
+            "quantum computing",
+            "computing",
+            "learning",
+            "open source"
+          ],
+          "mapped_topic": "Quantum computing",
+          "probability": 0.05971227656303385,
+          "topicId": 1
+        }
+      ]
+    }
+  ]
+}
