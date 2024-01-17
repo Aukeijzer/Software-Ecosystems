@@ -16,6 +16,7 @@ namespace SECODashBackend.Services.Analysis;
 /// </summary>
 public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchService) : IAnalysisService
 {
+    #region Constants
     // Use the maximum bucket size supported by elasticsearch
     // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
     private const int MaxBucketSize = 10000;
@@ -93,6 +94,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         "coffeescript",
         "crystal"
     };
+    #endregion
     
     /// <summary>
     /// Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
@@ -200,6 +202,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         };
     }
     
+    #region Contributors
     /// <summary>
     /// Retrieves the top contributors from the search response and converts them into a Top x list.
     /// The method first gets the nested aggregation for contributors from the search response.
@@ -238,7 +241,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .ToList();
         return topXContributors;
     }
+    #endregion
     
+    #region Languages
     /// <summary>
     /// Retrieves the programming languages from the search response and converts them into a Top x list
     /// </summary>
@@ -268,53 +273,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var topXLanguages = SortAndNormalizeLanguages(programmingLanguageDtos, numberOfTopLanguages);
         return topXLanguages;
     }
-
-    /// <summary>
-    /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
-    /// </summary>
-    /// <param name="searchResponse">The search response from Elasticsearch.</param>
-    /// <param name="topics">The list of topics that define the ecosystem.</param>
-    /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
-    /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
-    private static List<SubEcosystemDto> GetTopXSubEcosystems(
-        List<string> topics, int numberOfTopSubEcosystems, List<string> technologies, List<SubEcosystemDto> subEcosystemDtos)
-    {
-        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologies);
-        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
-        var topXSubEcosystems = sortedSubEcosystems
-            .Take(numberOfTopSubEcosystems)
-            .ToList();
-
-        return topXSubEcosystems;
-    }
-
-    private static List<SubEcosystemDto> GetTopXTechnologies(List<string> technologies, int numberOfTopTechnologies, List<SubEcosystemDto> subEcosystemDtos)
-    {
-        var filteredTechnologies = FilterTechnologies(subEcosystemDtos, technologies);
-        var sortedTechnologies = SortSubEcosystems(filteredTechnologies);
-        var topXTechnologies = sortedTechnologies
-            .Take(numberOfTopTechnologies)
-            .ToList();
-        
-        return topXTechnologies;
-    }
-
-    private static List<SubEcosystemDto> GetSubEcosystems( SearchResponse<ProjectDto> searchResponse)
-    {
-        var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
-        if(topicsAggregate == null) throw new ArgumentException(
-            "Elasticsearch aggregate not found in search response");
-
-        var subEcosystemDtos = topicsAggregate
-            .Buckets.Select(topic => new SubEcosystemDto
-            {
-                Topic = topic.Key.ToString(),
-                ProjectCount = (int)topic.DocCount
-            });
-        
-        return subEcosystemDtos.ToList();
-    }
-
+    
     /// <summary>
     /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
     /// all projects to a "Top x" list of x length in descending order of percentage with the percentages normalised.
@@ -335,7 +294,50 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .ForEach(l => l.Percentage = float.Round(l.Percentage / totalSum * 100));
         return topXLanguages;
     }
+    
+    #endregion
+    
+    #region SubEcosystems
+    /// <summary>
+    /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
+    /// </summary>
+    /// <param name="topics">The list of topics that define the ecosystem.</param>
+    /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
+    /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
+    private static List<SubEcosystemDto> GetTopXSubEcosystems(
+        List<string> topics, int numberOfTopSubEcosystems, List<string> technologies, List<SubEcosystemDto> subEcosystemDtos)
+    {
+        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologies);
+        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
+        var topXSubEcosystems = sortedSubEcosystems
+            .Take(numberOfTopSubEcosystems)
+            .ToList();
 
+        return topXSubEcosystems;
+    }
+    
+    /// <summary>
+    /// This method retrieves the sub-ecosystems/topics from the search response and converts them into a list of sub-ecosystem dtos.
+    /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <returns>A list of sub-ecosystems of an ecosystem.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    private static List<SubEcosystemDto> GetSubEcosystems( SearchResponse<ProjectDto> searchResponse)
+    {
+        var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
+        if(topicsAggregate == null) throw new ArgumentException(
+            "Elasticsearch aggregate not found in search response");
+
+        var subEcosystemDtos = topicsAggregate
+            .Buckets.Select(topic => new SubEcosystemDto
+            {
+                Topic = topic.Key.ToString(),
+                ProjectCount = (int)topic.DocCount
+            });
+        
+        return subEcosystemDtos.ToList();
+    }
+    
     /// <summary>
     /// Sorts a list of sub-ecosystems in descending order of the number of projects and returns the sorted list.
     /// </summary>
@@ -355,6 +357,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// </summary>
     /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <param name="technologies">A list of technologies that define the ecosystem.</param>
     /// <returns>A list of sub-ecosystems filtered by the given topics.</returns>
     public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies)
     {
@@ -364,10 +367,37 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic))
             .Where(s => !technologies.Contains(s.Topic));
     }
+    #endregion
     
+    #region Technologies
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="technologies">A list of technologies that define the ecosystem.</param>
+    /// <param name="numberOfTopTechnologies">The number of technologies we want to showcase.</param>
+    /// <param name="subEcosystemDtos">A list of given sub-ecosystems.</param>
+    /// <returns></returns>
+    private static List<SubEcosystemDto> GetTopXTechnologies(List<string> technologies, int numberOfTopTechnologies, List<SubEcosystemDto> subEcosystemDtos)
+    {
+        var filteredTechnologies = FilterTechnologies(subEcosystemDtos, technologies);
+        var sortedTechnologies = SortSubEcosystems(filteredTechnologies);
+        var topXTechnologies = sortedTechnologies
+            .Take(numberOfTopTechnologies)
+            .ToList();
+        
+        return topXTechnologies;
+    }
+    
+    /// <summary>
+    /// Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects,
+    /// </summary>
+    /// <param name="subEcosystemDtos">This is a list of found sub-ecosystems.</param>
+    /// <param name="technologies">This is the list of technologies that define an ecosystem.</param>
+    /// <returns></returns>
     public static IEnumerable<SubEcosystemDto> FilterTechnologies(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> technologies)
     {
         return subEcosystemDtos
             .Where(s => technologies.Contains(s.Topic));
     }
+    #endregion
 }
