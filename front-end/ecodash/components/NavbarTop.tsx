@@ -15,7 +15,7 @@ import Link from 'next/link'
 export default function NavBarTop(){
     //For now has the basepath 
     return(
-        <Navbar data-cy='navBar' fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
+        <Navbar data-cy='navBar' fluid  className='bg-navBar shadow-sm mb-5 pl-36 pr-36' >
             <Navbar.Brand as={Link} href="http://localhost:3000" >
                 <Image
                     data-cy='navLogo'
@@ -25,7 +25,7 @@ export default function NavBarTop(){
                     width={40}
                     height={40}
                 />
-                <span className="self-center whitespace-nowrap text-l font-semibold dark:text-white">
+                <span className="self-center whitespace-nowrap text-l font-semibold">
                     SECODash
                 </span>
             </Navbar.Brand>

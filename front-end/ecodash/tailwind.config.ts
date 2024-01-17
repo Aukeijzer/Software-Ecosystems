@@ -14,6 +14,8 @@ const config: Config = {
       'odin': '#015B6D',
       'odinAccent': '#143240',
       'amber': '#F5F8FA',
+      'newBg': '#F1F6F6',
+      'navBar': '#FFFFFF'
 
     }
   },

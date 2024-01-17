@@ -16,6 +16,9 @@ import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
 import listContributorDTOConverter from "@/app/utils/Converters/contributorConverter"
+import Filters from "./filters"
+import test from "node:test"
+import SmallDataBox from "./smallDataBox"
 interface layoutEcosystemProps{
     ecosystem: string
 }
@@ -60,7 +63,30 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     const searchParams = useSearchParams();
 
     //Keep track of selected (sub)Ecosystems. start with ecosystem provided
-    const [selectedEcosystems, setSelectedEcosystems] = useState<string[]>([props.ecosystem])
+    interface SelectedItems {
+        ecosystems: string[];
+        technologies: string[];
+        languages: string[];
+        [key: string]: string[]; // Add index signature
+    }
+
+    class filters {
+        ecosystems: string[];
+        technologies: string[];
+        languages: string[];
+        constructor(ecosystems: string[], technologies: string[], languages: string[]){
+            this.ecosystems = ecosystems;
+            this.technologies = technologies;
+            this.languages = languages;
+        }
+    }
+
+    const [selectedItems, setSelectedItems] = useState<filters>({
+        ecosystems: [props.ecosystem],
+        technologies: [],
+        languages: [],
+    });
+
 
     //Trigger = function to manually trigger fetcher function in SWR mutation. 
     //Data = data received from API. updates when trigger is called. causes update
@@ -76,40 +102,31 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         if(params){
             //Convert params to string list
             const topics = params.split(',')
-            trigger({topics: [...selectedEcosystems, ...topics ]})
-            setSelectedEcosystems([...selectedEcosystems, ...topics])
+            trigger({topics: [...selectedItems.ecosystems, ...topics ]})
+            setSelectedItems({ecosystems: [...selectedItems.ecosystems, ...topics ] , technologies: selectedItems.technologies, languages: selectedItems.languages})
         } else {
-            trigger({topics: selectedEcosystems})
+            trigger({topics: selectedItems.ecosystems})
         }
 
     },[]) 
     //[] means that it calls useEffect again if values inside [] are updated.
     //But since [] is empty it only is called upon page load
 
-    //Function that gets trigger on Clicking on topic
-    async function onClickTopic(topic: string){
-        //Append topic to selected ecosystems
-        await trigger({topics: [...selectedEcosystems, topic]});
-        //Use shallow routing
-        //Dont display the props.ecosystem 
-        Router.push(`/?topics=${[...selectedEcosystems, topic].filter(n => n != props.ecosystem).toString()}`, {scroll: false})
-        //Update selected topics?
-        setSelectedEcosystems([...selectedEcosystems, topic]);
-        
+    async function onClickFilter(filter: string, filterType: string){
+        await trigger({topics: [...selectedItems.ecosystems, filter]});
+        setSelectedItems(prevState => ({
+            ...prevState,
+            [filterType]: [...prevState[filterType as keyof typeof selectedItems], filter]
+        }));
     }
 
-    //Function to remove sub-ecosystem from sub-ecosytem list
-    async function removeSubEcosystem(subEcosystem: string){
-        var updatedList = selectedEcosystems.filter(n => n != subEcosystem)
-        await trigger({topics: updatedList})
-        //Use shallow routing to update URL
-        //Remove props.ecosystem
-        setSelectedEcosystems(selectedEcosystems.filter(n => n != subEcosystem));
-        Router.push(`/?topics=${updatedList.filter(n => n != props.ecosystem)}`, {scroll: false})
-        //Update selected topics?
-        
+    async function removeFilter(filter: string, filterType: string){
+        await trigger({topics: selectedItems.ecosystems.filter(n => n != filter)});
+        setSelectedItems(prevState => ({
+            ...prevState,
+            [filterType]: [...prevState[filterType as keyof typeof selectedItems].filter(n => n != filter)]
+        }));
     }
-
     //If error we display error message
     if(error){
         return(
@@ -134,55 +151,71 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     var cardWrappedList : cardWrapper[] = []
     if(data){
         //Real data
-    
+        const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
+
         //Top 5 topics
         //First Convert DTO's to Classes
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
         //Make list element
-   
-        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, 2, 1, 4, onClickTopic);
-        //Add card to list
+        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, 4, 2, 5, onClickFilter, "ecosystems", "", COLORS[0]);
         cardWrappedList.push(subEcosystemCard);
 
+        //Top 5 contributors
         const contributors = listContributorDTOConverter(data.topContributors);
-        const contributorCard = buildTableCard(contributors, "", 0, 12, 1.5, 4.5);
+        const contributorCard = buildTableCard(contributors, "", 0, 15, 2, 5, onClickFilter, "contributor" , "", COLORS[1]);
         cardWrappedList.push(contributorCard);
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6, onClickTopic);
+        const languageCard = buildPieGraphCard(languages, "", 0, 9, COLORS[1]);
         //Add card to list
         cardWrappedList.push(languageCard);
 
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildTableCard(technologies, "", 6, 2, 1, 4, onClickTopic, "This is mock data");
+        const technologyCard = buildTableCard(technologies, "", 4, 4, 2, 5, onClickFilter, "languages", "", COLORS[2]);
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, 2, 2, 4, onClickTopic, "This is mock data");
+        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, 15, 3, 5, onClickFilter, "technologies", "", COLORS[3]);
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildTableCard(risingTopics, "", 1, 2, 2, 4, onClickTopic, "This is mock data");
+        const risingTopicsCard = buildTableCard(risingTopics, "", 2, 4, 2, 5, onClickFilter, "ecosystems", "", COLORS[4]);
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 
         //For now no data conversion needed as Mock data is already in correct format 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "Top 5 topics over time", 2, 6);
+        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 6, 9, false, COLORS[5]);
         cardWrappedList.push(cardLineGraphWrapped)
 
         //Ecosystem description
         //Remove main ecosystem from selected sub-ecosystem list to display
-        const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem}   removeTopic={removeSubEcosystem} description={data.description ? data.description : "no description provided"}  subEcosystems={selectedEcosystems.filter(n => n!= props.ecosystem)} />
+        const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem}  description={data.description ? data.description : "no description provided"} />
         const ecosystemDescriptionWrapped : cardWrapper = {card: ecosystemDescription, width: 6, height: 2, x: 0, y: 0, static:true}
         cardWrappedList.push(ecosystemDescriptionWrapped)
-    
+
+        //Filters
+        const filters = <Filters technologies={selectedItems.technologies} subEcosystems={selectedItems.ecosystems.filter(n => n != props.ecosystem)} languages={selectedItems.languages} removeFilter={removeFilter}/>
+        const filtersWrapped : cardWrapper = {card: filters, width: 10, height: 0.5, x: 4, y: 3.3, static:true}
+        cardWrappedList.push(filtersWrapped)
+
+        //Small data boxes  
+        const smallBoxes = ( <div className="flex flex-row   mb-5 justify-around">
+
+            <SmallDataBox item={"Topics"} count={data.allTopics} increase={5}  />
+            <SmallDataBox item={"Projects"} count={data.allProjects} increase={5} />
+            <SmallDataBox item={"Contributors"} count={data.allContributors} increase={5} />
+            <SmallDataBox item={"Contributions"} count={data.allContributions} increase={5} />
+        </div>)
+        const smallBoxesWrapped : cardWrapper = {card: smallBoxes, width: 10, height: 1, x: 4, y: 2, static:true}
+        cardWrappedList.push(smallBoxesWrapped)
+
     } else {
         //When no data display spinner
         return(
@@ -194,7 +227,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Normal render (No error)
     return(
-        <div>
+        <div className="ml-44 mr-44">
             <GridLayout cards={cardWrappedList} />
         </div>      
     )

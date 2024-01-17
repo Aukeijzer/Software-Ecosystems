@@ -10,6 +10,7 @@ import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
 import GridLayout from "./gridLayout";
+import SmallDataBox from "./smallDataBox";
 
 /**
  * Renders the layout for the home page.
@@ -69,6 +70,7 @@ export default function LayoutHomePage(){
 
     var cardWrappedList : cardWrapper[] = [];
     if(data){
+        const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
         //General information about SECODash
         const info = (<div className="flex flex-col"> 
@@ -79,26 +81,27 @@ export default function LayoutHomePage(){
         )
 
         const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
-        const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0, static: false}
+        const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 3, x: 0, y: 0, static: false}
         cardWrappedList.push(infoCardWrapped);
 
          //Agriculture card
         const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
-        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem}/>
+        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem} Color={COLORS[0]}/>
         const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:true}
         cardWrappedList.push(agricultureButtonCardWrapped)
         
         //Quantum card
         const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
-        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} />
+        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} Color={COLORS[1]} />
         const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: false}
         cardWrappedList.push(quantumButtonCardWrapped)
         
         //Artificial-intelligence card
         const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem}/>
+        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem} Color={COLORS[2]}/>
         const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: false}
         cardWrappedList.push(aiButtonCardWrapped);
+
     } else {
         //When still loading display spinner
         return(
@@ -109,7 +112,7 @@ export default function LayoutHomePage(){
     }
 
     return(
-        <div>
+        <div className="ml-44 mr-44">
             <GridLayout cards={cardWrappedList} />
         </div>
     )

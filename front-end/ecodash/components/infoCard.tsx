@@ -15,6 +15,7 @@
  * @param {string} [alert] - If provided, renders a small alert box with the provided string.
  * @param {string} [className] - Additional CSS class name for the card.
  * @param {Function} [onClick] - The function to be called when the card is clicked.
+ * @param {string} [Color] - The color of the top of the card.
  * @returns {JSX.Element} The rendered InfoCard component.
  */
 import { Card, Alert } from 'flowbite-react'
@@ -27,6 +28,7 @@ interface InfoCardProps {
     alert?: string,
     className?: string,
     onClick?: any,
+    Color?: string
 }
 
 export default function InfoCard(props: InfoCardProps) {
@@ -37,7 +39,9 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'flex h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl resize content-evenly' + props.className}>
+        <Card onClick={() => func(props.title)} className={'flex h-full p-5 resize' + props.className}>
+            <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}></div>
+            
             <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
                 {props.title}
             </h5>
