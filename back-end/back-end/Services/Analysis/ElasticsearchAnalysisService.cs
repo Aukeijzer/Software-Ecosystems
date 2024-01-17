@@ -358,7 +358,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private static List<ProjectDto> GetTopXProjects(SearchResponse<ProjectDto> searchResponse)
     {
         return searchResponse.Documents
-            .OrderByDescending(p => p.NumberOfStars)
             .ToList();
     }
 }
