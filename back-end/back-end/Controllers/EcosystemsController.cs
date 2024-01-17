@@ -7,8 +7,6 @@ namespace SECODashBackend.Controllers;
 /// <summary>
 /// This controller is responsible for handling requests related to ecosystems.
 /// </summary>
-/// <param name="logger"></param>
-/// <param name="ecosystemsService"></param>
 [ApiController]
 [Route("[controller]")]
 public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosystemsService ecosystemsService)
@@ -17,7 +15,6 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     /// <summary>
     /// Returns all top-level ecosystems.
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     [SwaggerOperation("Get all ecosystems")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]

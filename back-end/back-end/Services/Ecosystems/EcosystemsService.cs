@@ -32,6 +32,8 @@ public class EcosystemsService(EcosystemsContext dbContext,
     /// <summary>
     /// Get an ecosystem by its name.
     /// </summary>
+    /// <param name="name">The name of the ecosystem to get.</param>
+    /// <returns>The ecosystem.</returns>
     private async Task<Ecosystem?> GetByNameAsync(string name)
     {
         return await dbContext.Ecosystems
@@ -42,6 +44,8 @@ public class EcosystemsService(EcosystemsContext dbContext,
     /// <summary>
     /// Get an ecosystem by its topics.
     /// </summary>
+    /// <param name="dto">The Dto that contains the request information of the ecosystem to get.</param>
+    /// <returns>The ecosystem.</returns>
     public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");

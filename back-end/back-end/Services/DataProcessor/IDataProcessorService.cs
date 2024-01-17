@@ -7,5 +7,10 @@ namespace SECODashBackend.Services.DataProcessor;
 /// </summary>
 public interface IDataProcessorService
 {
+    /// <summary>
+    /// Sends the readme data to the data processor and returns the resulting topics.
+    /// </summary>
+    /// <param name="readmeDtos">The readme data to be sent to the data processor.</param>
+    /// <returns>The resulting topics.</returns>
     public Task<IEnumerable<TopicResponseDto>> GetTopics(IEnumerable<TopicRequestDto> readmeDtos);
 }

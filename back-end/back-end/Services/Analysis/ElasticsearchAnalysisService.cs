@@ -100,6 +100,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 1. Retrieving the top x programming languages
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
+    /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
+    /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
+    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
     public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors)
     {
         // Query that matches all projects that contain all topics in the topics list
@@ -263,6 +268,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <summary>
     /// Retrieves the programming languages from the search response and converts them into a Top x list
     /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <param name="numberOfTopLanguages">The number of top languages to retrieve.</param>
+    /// <returns>A list of the top x languages in an ecosystem.</returns>
     private static List<ProgrammingLanguageDto> GetTopXLanguages(
         SearchResponse<ProjectDto> searchResponse, int numberOfTopLanguages)
     {
@@ -290,6 +298,10 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <summary>
     /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
     /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <param name="topics">The list of topics that define the ecosystem.</param>
+    /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
+    /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
     private static List<SubEcosystemDto> GetTopXSubEcosystems(
         SearchResponse<ProjectDto> searchResponse,
         List<string> topics, int numberOfTopSubEcosystems)
@@ -332,6 +344,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
     /// all projects to a "Top x" list of x length in descending order of percentage with the percentages normalised.
     /// </summary>
+    /// <param name="programmingLanguageDtos">A list of all the programming languages in an ecosystem with the sum of their usage percentages over all projects.</param>
+    /// <param name="numberOfTopLanguages">The number of top languages to retrieve.</param>
+    /// <returns>A Top x list of the top languages in an ecosystem.</returns>
     public static List<ProgrammingLanguageDto> SortAndNormalizeLanguages(
         List<ProgrammingLanguageDto> programmingLanguageDtos, int numberOfTopLanguages)
     {
@@ -349,6 +364,8 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <summary>
     /// Sorts a list of sub-ecosystems in descending order of the number of projects and returns the sorted list.
     /// </summary>
+    /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
+    /// <returns>A list of sub-ecosystems sorted in descending order of the number of projects.</returns>
     public static IEnumerable<SubEcosystemDto> SortSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos)
     {
         var subEcosystemsList = subEcosystemDtos.ToList();
@@ -361,6 +378,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     ///  Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects
     ///  or are programming languages.
     /// </summary>
+    /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
+    /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <returns>A list of sub-ecosystems filtered by the given topics.</returns>
     public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics)
     {
         return subEcosystemDtos
