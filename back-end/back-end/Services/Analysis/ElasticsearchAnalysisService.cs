@@ -103,6 +103,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <param name="technologies">A list of technologies that define the ecosystem.</param>
     /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
     /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
