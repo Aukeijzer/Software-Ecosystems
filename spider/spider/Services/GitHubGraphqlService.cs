@@ -8,6 +8,9 @@ using BadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestExceptio
 
 namespace spider.Services;
 
+/// <summary>
+/// GitHubGraphqlService handles all requests to the github graphql api
+/// </summary>
 public class GitHubGraphqlService : IGitHubGraphqlService
 {
     private readonly IClientWrapper _client;
@@ -225,7 +228,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                 var temp = await QueryRepositoriesByTopic(topic, 25, cursor);
                 amount -= 25;
                 projects.Add(temp);
-                if (temp.Topic.Repositories.PageInfo?.HasNextPage != true)
+                if (temp.Topic == null || temp.Topic.Repositories.PageInfo?.HasNextPage != true)
                 {
                   break;
                 }

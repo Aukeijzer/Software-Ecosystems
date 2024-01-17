@@ -23,6 +23,9 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
 
     private readonly JsonSerializerOptions _serializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
+    /// <summary>
+    /// Checks whether a GET request to /ecosystems returns the correct ecosystems.
+    /// </summary>
     [Fact]
     public async Task Get_Ecosystems_ReturnsCorrectEcosystems()
     {
@@ -41,6 +44,9 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         ecosystemNames.Should().BeEquivalentTo(expectedNames);
     }
 
+    /// <summary>
+    /// Checks whether a POST request to /ecosystems returns the correct EcosystemDto.
+    /// </summary>
     [Fact]
     public async Task Post_Ecosystems_ReturnsCorrectEcosystems()
     {

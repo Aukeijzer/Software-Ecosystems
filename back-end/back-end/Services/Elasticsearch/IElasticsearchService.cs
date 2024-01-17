@@ -10,7 +10,16 @@ namespace SECODashBackend.Services.ElasticSearch;
 /// </summary>
 public interface IElasticsearchService
 {
+   /// <summary>
+   /// Adds the given projects to the Elasticsearch index. 
+   /// </summary>
+   /// <param name="projectDtos">The projects to be added to the index.</param>
    public Task AddProjects(IEnumerable<ProjectDto> projectDtos);
    public Task<long> GetProjectsByDate(DateTime startTime, DateTime endTime, string topic);
+   /// <summary>
+   /// Queries the Elasticsearch index for projects that match the given search request. 
+   /// </summary>
+   /// <param name="searchRequest">The search request.</param>
+   /// <returns>A SearchResponse for the projects that match the search request.</returns>
    public Task<SearchResponse<ProjectDto>> QueryProjects(SearchRequest searchRequest);
 }

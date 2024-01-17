@@ -16,6 +16,7 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     /// <summary>
     /// Adds the given projects to the Elasticsearch index. 
     /// </summary>
+    /// <param name="projectDtos">The projects to be added to the index.</param>
     public async Task AddProjects(IEnumerable<ProjectDto> projectDtos)
     {
         var request = new BulkRequest();
@@ -68,6 +69,8 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     /// <summary>
     /// Queries the Elasticsearch index for projects that match the given search request. 
     /// </summary>
+    /// <param name="searchRequest">The search request.</param>
+    /// <returns>A SearchResponse for the projects that match the search request.</returns>
     public async Task<SearchResponse<ProjectDto>> QueryProjects(SearchRequest searchRequest)
     {
         var response = await client
