@@ -191,30 +191,26 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
         var subEcosystemDtos = GetSubEcosystems(result);
+        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologies);
+        var contributors = GetAllContributors(result);
         
         return new EcosystemDto
         {
             Topics = topics,
             TopTechnologies = GetTopXTechnologies(technologies, numberOfTopTechnologies, subEcosystemDtos),
-            TopSubEcosystems = GetTopXSubEcosystems(topics, numberOfTopSubEcosystems, technologies, subEcosystemDtos),
+            TopSubEcosystems = GetTopXSubEcosystems(numberOfTopSubEcosystems, filteredSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TopContributors = GetTopXContributors(result, numberOfTopContributors),
+            TopContributors = GetTopXContributors(contributors, numberOfTopContributors),
+            NumberOfTopics = filteredSubEcosystems.Count,
+            NumberOfProjects = result.Total,
+            NumberOfContributors = contributors.Count,
+            NumberOfContributions = contributors.Sum(c => c.Contributions),
         };
     }
     
     #region Contributors
-    /// <summary>
-    /// Retrieves the top contributors from the search response and converts them into a Top x list.
-    /// The method first gets the nested aggregation for contributors from the search response.
-    /// Then, it creates a list of TopContributorDto objects from the buckets of the contributors aggregate.
-    /// Each TopContributorDto object contains the login and the total number of contributions of a contributor.
-    /// The method then sorts the list of TopContributorDto objects in descending order of contributions.
-    /// Finally, it returns the top x contributors from the sorted list.
-    /// </summary>
-    /// <param name="searchResponse">The search response from Elasticsearch.</param>
-    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
-    /// <returns>A list of the top x contributors.</returns>
-    private static List<TopContributorDto> GetTopXContributors(SearchResponse<ProjectDto> searchResponse, int numberOfTopContributors)
+
+    private static List<TopContributorDto> GetAllContributors(SearchResponse<ProjectDto> searchResponse)
     {
         var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedContributorsAggregateName);
         var contributorsAggregate = nestedAggregate?.GetStringTerms(TermsContributorsAggregateName);
@@ -233,6 +229,21 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 })
             .ToList();
         
+        return contributorDtos;
+    }
+    /// <summary>
+    /// Retrieves the top contributors from the search response and converts them into a Top x list.
+    /// The method first gets the nested aggregation for contributors from the search response.
+    /// Then, it creates a list of TopContributorDto objects from the buckets of the contributors aggregate.
+    /// Each TopContributorDto object contains the login and the total number of contributions of a contributor.
+    /// The method then sorts the list of TopContributorDto objects in descending order of contributions.
+    /// Finally, it returns the top x contributors from the sorted list.
+    /// </summary>
+    /// <param name="contributorDtos">The list of contributors found in an ecosystem.</param>
+    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <returns>A list of the top x contributors.</returns>
+    private static List<TopContributorDto> GetTopXContributors(List<TopContributorDto> contributorDtos, int numberOfTopContributors)
+    {
         var sortedContributors = contributorDtos
             .OrderByDescending(c => c.Contributions);
 
@@ -301,13 +312,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <summary>
     /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
     /// </summary>
-    /// <param name="topics">The list of topics that define the ecosystem.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
+    /// <param name="filteredSubEcosystems">The list of filteres sub-ecosystems found in an ecosystem.</param>
     /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
-    private static List<SubEcosystemDto> GetTopXSubEcosystems(
-        List<string> topics, int numberOfTopSubEcosystems, List<string> technologies, List<SubEcosystemDto> subEcosystemDtos)
+    private static List<SubEcosystemDto> GetTopXSubEcosystems(int numberOfTopSubEcosystems, List<SubEcosystemDto> filteredSubEcosystems)
     {
-        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologies);
         var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
         var topXSubEcosystems = sortedSubEcosystems
             .Take(numberOfTopSubEcosystems)
@@ -359,13 +368,14 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="topics">A list of topics that define the ecosystem.</param>
     /// <param name="technologies">A list of technologies that define the ecosystem.</param>
     /// <returns>A list of sub-ecosystems filtered by the given topics.</returns>
-    public static IEnumerable<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies)
+    public static List<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies)
     {
         return subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic))
-            .Where(s => !technologies.Contains(s.Topic));
+            .Where(s => !technologies.Contains(s.Topic))
+            .ToList();
     }
     #endregion
     
