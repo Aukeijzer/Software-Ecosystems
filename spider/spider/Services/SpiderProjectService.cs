@@ -6,6 +6,10 @@ using spider.Dtos;
 
 namespace spider.Services;
 
+/// <summary>
+/// SpiderProjectService is the service that handles all requests concerning repositories. It uses the GitHubGraphqlService
+/// and the GitHubRestService to get the data it needs.
+/// </summary>
 public class SpiderProjectService : ISpiderProjectService
 {
     private readonly ILogger<SpiderProjectService> _logger;
@@ -167,6 +171,10 @@ public class SpiderProjectService : ISpiderProjectService
             List<ProjectDto> result = new List<ProjectDto>();
             foreach (var topicSearchData in listResult)
             {
+                if (topicSearchData.Topic == null)
+                {
+                    continue;
+                }
                 var temp = _graphqlDataConverter.TopicSearchToProjects(topicSearchData);
                  var tasks = temp.Select(async project =>
                  {

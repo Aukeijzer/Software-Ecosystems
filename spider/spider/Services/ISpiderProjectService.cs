@@ -2,6 +2,10 @@
 
 namespace spider.Services;
 
+/// <summary>
+/// ISpiderProjectService is the interface for the SpiderProjectService class. It contains the methods that are
+/// implemented in SpiderProjectService
+/// </summary>
 public interface ISpiderProjectService
 {
     public Task<List<ProjectDto>> GetByKeywordSplit(string name, int amount, string? startCursor);

@@ -3,9 +3,11 @@ using spider.Models.Graphql;
 
 namespace spider.Services;
 
+/// <summary>
+/// IGitHubGraphqlService is a service that handles communication with the github graphql api
+/// </summary>
 public interface IGitHubGraphqlService
 {
-    
     /// <summary>
     /// QueryRepositoriesByNameHelper splits the incoming request into smaller parts
     /// </summary>

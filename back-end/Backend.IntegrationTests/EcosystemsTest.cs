@@ -23,6 +23,9 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
 
     private readonly JsonSerializerOptions _serializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
+    /// <summary>
+    /// Checks whether a GET request to /ecosystems returns the correct ecosystems.
+    /// </summary>
     [Fact]
     public async Task Get_Ecosystems_ReturnsCorrectEcosystems()
     {
@@ -41,6 +44,9 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         ecosystemNames.Should().BeEquivalentTo(expectedNames);
     }
 
+    /// <summary>
+    /// Checks whether a POST request to /ecosystems returns the correct EcosystemDto.
+    /// </summary>
     [Fact]
     public async Task Post_Ecosystems_ReturnsCorrectEcosystems()
     {
@@ -61,7 +67,7 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         var expectedResponse = new EcosystemDto
         {
             Topics = [topic1],
-            SubEcosystems =
+            TopSubEcosystems =
             [
                 new SubEcosystemDto
                 {
@@ -89,20 +95,26 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
                     Percentage = 100
                 }
             ],
-            TopContributors = 
+            TopContributors =
             [
-                
+
                 new TopContributorDto
                 {
-                    Contributions = 500, 
+                    Contributions = 500,
                     Login = "user1"
-                }, 
+                },
                 new TopContributorDto
                 {
-                    Contributions = 200, 
+                    Contributions = 200,
                     Login = "user2"
                 }
-            ]
+            ], 
+            NumberOfTopics = 3,
+            NumberOfProjects = 10,
+            NumberOfContributors = 2,
+            NumberOfContributions = 700,
+            TimedDataTopics = [],
+            TimedDataEcosystem = [],
         };
         
         // Act
