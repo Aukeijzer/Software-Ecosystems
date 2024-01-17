@@ -1,4 +1,4 @@
-namespace SECODashBackend.Dtos.users;
+namespace SECODashBackend.Dtos.User;
 using System.Runtime.Serialization;
 
 /// <summary>

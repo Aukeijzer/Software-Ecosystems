@@ -59,6 +59,7 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     [SwaggerResponse(statusCode: 200, description: "successfully updated description")]
     public async Task<ActionResult<DescriptionDto>> UpdateDescription(DescriptionRequestDto req)
     {
+        logger.LogInformation("{Origin}: Updating ecosystem description.",this);
         try
         {
             var result = await ecosystemsService.UpdateDescription(req);
@@ -66,10 +67,12 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
             {
                 Description = result
             };
+            logger.LogInformation("{Origin}: Successfully updated the description.",this);
             return new ObjectResult(response);
         }
         catch (Exception e)
         {
+            logger.LogInformation("{Origin}: Failed to update ecosystem description: '{exception}'.",this,e.Message);
             Console.WriteLine(e);
             throw;
         }

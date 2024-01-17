@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SECODashBackend.Dtos.users;
+using SECODashBackend.Dtos.User;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Users;
 using Swashbuckle.AspNetCore.Annotations;

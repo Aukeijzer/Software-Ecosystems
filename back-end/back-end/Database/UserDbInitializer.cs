@@ -15,7 +15,7 @@ public static class UserDbInitializer
         {
             Id = "InitialRootAdmin",
             UserName = "InitialRootAdmin",
-            UserType = "RootAdmin",
+            Type = User.UserType.RootAdmin,
         });
         context.SaveChanges();
     }

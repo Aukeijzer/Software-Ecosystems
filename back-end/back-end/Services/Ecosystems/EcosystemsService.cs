@@ -69,6 +69,8 @@ public class EcosystemsService(EcosystemsContext dbContext,
     /// <summary>
     /// Update description for ecosystem with given description
     /// </summary>
+    /// <param name="dto">The <see cref="DescriptionDto"/> containts the new description to be saved to the database.</param>
+    /// <returns>Returns a <see cref="string"/> with the update status.</returns>
     public async Task<string> UpdateDescription(DescriptionRequestDto dto)
     {
         

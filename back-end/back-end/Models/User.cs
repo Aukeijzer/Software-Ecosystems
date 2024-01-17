@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.DataContracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace SECODashBackend.Models;
 /// <summary>
-/// A class that represents a User that has an <see cref="Id"/>, a <see cref="UserName"/> and a <see cref="UserType"/>.
+/// A class that represents a User that has an <see cref="Id"/>, a <see cref="UserName"/>, a <see cref="Type"/>,
+/// and a <see cref="List{T}"/> <see cref="Ecosystems"/>.
 /// </summary>
 [Index(nameof(UserName),IsUnique = true)]
 public class User
@@ -23,8 +23,17 @@ public class User
     /// Usertype is the permissions level of the User.
     /// </summary>
     [DataMember(Name = "userType")]
-    public required string UserType { get; set; }
-    
+    public required UserType Type { get; set; }
+    /// <summary>
+    /// Ecosystems represents the ecosystems that the user can edit.
+    /// </summary>
     [DataMember(Name = "ecosystems")] 
     public List<Ecosystem> Ecosystems { get; set; } = [];
+
+    public enum UserType
+    {
+        User,
+        Admin,
+        RootAdmin
+    }
 }

@@ -1,5 +1,6 @@
-namespace SECODashBackend.Dtos.users;
 using System.Runtime.Serialization;
+
+namespace SECODashBackend.Dtos.User;
 
 /// <summary>
 /// Represents a data transfer object for user type.
@@ -7,5 +8,5 @@ using System.Runtime.Serialization;
 public class UserTypeDto
 {
     [DataMember(Name = "userType")]
-    public required string UserType { get; init; }
+    public required Models.User.UserType UserType { get; init; }
 }

@@ -10,10 +10,15 @@ namespace SECODashBackend.Models;
 [Index(nameof(Term), IsUnique = true)]
 public class Technology
 {
+    /// <summary>
+    /// The term used in taxonomy for software ecosystems.
+    /// </summary>
     [DataMember(Name = "term")]
     [Key]
     public required string Term { get; set; }
-
+    /// <summary>
+    /// The ecosystems in which this term is a technology.
+    /// </summary>
     [DataMember(Name = "ecosystems")]
     public List<Ecosystem> Ecosystems { get; set; } = [];
 }
