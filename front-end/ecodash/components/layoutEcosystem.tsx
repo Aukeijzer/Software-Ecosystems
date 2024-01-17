@@ -19,6 +19,8 @@ import listContributorDTOConverter from "@/app/utils/Converters/contributorConve
 import Filters from "./filters"
 import test from "node:test"
 import SmallDataBox from "./smallDataBox"
+var abbreviate = require('number-abbreviate');
+
 interface layoutEcosystemProps{
     ecosystem: string
 }
@@ -221,10 +223,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Small data boxes  
         const smallBoxes = ( <div className="flex flex-row   mb-5 justify-around">
 
-            <SmallDataBox item={"Topics"} count={data.allTopics} increase={5}  />
-            <SmallDataBox item={"Projects"} count={data.allProjects} increase={5} />
-            <SmallDataBox item={"Contributors"} count={data.allContributors} increase={5} />
-            <SmallDataBox item={"Contributions"} count={data.allContributions} increase={5} />
+            <SmallDataBox item={"Topics"} count={abbreviate(data.allTopics)} increase={5}  />
+            <SmallDataBox item={"Projects"} count={abbreviate(data.allProjects)} increase={5} />
+            <SmallDataBox item={"Contributors"} count={abbreviate(data.allContributors)} increase={5} />
+            <SmallDataBox item={"Contributions"} count={abbreviate(data.allContributions)} increase={5} />
         </div>)
         const smallBoxesWrapped : cardWrapper = {card: smallBoxes, width: 10, height: 1, x: 4, y: 2, static:true}
         cardWrappedList.push(smallBoxesWrapped)
