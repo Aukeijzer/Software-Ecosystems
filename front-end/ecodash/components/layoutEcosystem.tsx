@@ -121,7 +121,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     }
     //Function to save description and make post API call to backend
     async function saveDescription(){
-        //Prepare post body with description and selected exosystems
+        //Prepare post body with description and selected ecosystems
         var apiPostBody = {
             description: description,
             ecosystem: props.ecosystem

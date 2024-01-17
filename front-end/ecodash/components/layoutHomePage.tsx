@@ -67,7 +67,7 @@ export default function LayoutHomePage(){
     }
     
     function onClickEcosystem(ecosystem: string){
-        /* Old code for when we had middlewar 
+        /* Old code for when we had middleware 
         var url = process.env.NEXT_PUBLIC_LOCAL_ADRESS!.split("//");
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
