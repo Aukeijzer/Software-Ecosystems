@@ -353,37 +353,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     }
 
     /// <summary>
-    /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
-    /// </summary>
-    /// <param name="searchResponse">The search response from Elasticsearch.</param>
-    /// <param name="topics">The list of topics that define the ecosystem.</param>
-    /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
-    /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
-    private static List<SubEcosystemDto> GetTopXSubEcosystems(
-        SearchResponse<ProjectDto> searchResponse,
-        List<string> topics, int numberOfTopSubEcosystems)
-    {
-        var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
-        if(topicsAggregate == null) throw new ArgumentException(
-                "Elasticsearch aggregate not found in search response");
-
-        var subEcosystemDtos = topicsAggregate
-            .Buckets.Select(topic => new SubEcosystemDto
-            {
-                Topic = topic.Key.ToString(),
-                ProjectCount = (int)topic.DocCount
-            });
-
-        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics);
-        var sortedSubEcosystems = SortSubEcosystems(filteredSubEcosystems);
-        var topXSubEcosystems = sortedSubEcosystems
-            .Take(numberOfTopSubEcosystems)
-            .ToList();
-
-        return topXSubEcosystems;
-    }
-
-    /// <summary>
     /// Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
     /// all projects to a "Top x" list of x length in descending order of percentage with the percentages normalised.
     /// </summary>
