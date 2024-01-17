@@ -31,6 +31,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string ContributorsPath = "contributors";
     private const string ContributorLoginField = "contributors.login.keyword";
     private const string ContributorContributionsField = "contributors.contributions";
+    private const string NumberOfStarsField = "numberOfStars";
 
     // Instructs elasticsearch to match using all terms of a term set
     private const string MatchAllParametersScript = "params.num_terms";
@@ -186,8 +187,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 nestedContributorsAggregation,
                 topicAggregation
             },
-            Sort = new List<SortOptions> {SortOptions.Field("numberOfStars", new FieldSort{Order = SortOrder.Desc})},
-            Size = numberOfTopProjects // Retrieve the top x projectDtos
+            // Sort the projects by the number of stars in descending order
+            Sort = new List<SortOptions> {SortOptions.Field(NumberOfStarsField, new FieldSort{Order = SortOrder.Desc})},
+            
+            // Retrieve a number of ProjectDtos equal to the number of Top Projects requested
+            Size = numberOfTopProjects 
         };
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
