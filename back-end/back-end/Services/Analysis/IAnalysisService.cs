@@ -17,5 +17,5 @@ public interface IAnalysisService
     /// <param name="numberOfTopContributors">The number of top contributors to get.</param>
     /// <returns>The result of the analysis.</returns>
     public Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<string> technologies,
-        int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors);
+        int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies);
 }
