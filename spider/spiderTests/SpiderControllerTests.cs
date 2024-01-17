@@ -21,18 +21,18 @@ public class SpiderControllerTests
     public async Task ControllerSearchTest()
     {
         var mockSpiderProjectService = new Mock<ISpiderProjectService>();
-        mockSpiderProjectService.Setup(x => x.GetByKeyword(It.IsAny<string>(),
+        mockSpiderProjectService.Setup(x => x.GetByKeywordSplit(It.IsAny<string>(),
                 It.IsAny<int>(), It.IsAny<string?>()))
             .ReturnsAsync(new List<ProjectDto>());
         
         var spiderController = new SpiderController(mockSpiderProjectService.Object);
         
         await spiderController.GetByKeyword("agriculture", 110);
-        mockSpiderProjectService.Verify(x => x.GetByKeyword(It.IsAny<string>(),
+        mockSpiderProjectService.Verify(x => x.GetByKeywordSplit(It.IsAny<string>(),
             It.IsAny<int>(), It.IsAny<string?>()), Times.Once);
         
         await spiderController.GetByKeyword("agriculture", 110, "Y3Vyc29yOjE=");
-        mockSpiderProjectService.Verify(x => x.GetByKeyword(It.IsAny<string>(),
+        mockSpiderProjectService.Verify(x => x.GetByKeywordSplit(It.IsAny<string>(),
             It.IsAny<int>(), It.IsAny<string?>()), Times.Exactly(2));
     }
 
