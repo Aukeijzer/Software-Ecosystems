@@ -112,6 +112,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //[] means that it calls useEffect again if values inside [] are updated.
     //But since [] is empty it only is called upon page load
 
+   
+    /**
+     * Handles the click event for applying a filter. Everything in a table is clickable
+     * @param filter - The filter to be applied.
+     * @param filterType - The type of filter to be applied. Indexes the selectedItems object.
+     * @returns A Promise that resolves when the filter is applied.
+     */
     async function onClickFilter(filter: string, filterType: string){
         await trigger({topics: [...selectedItems.ecosystems, filter]});
         setSelectedItems(prevState => ({
@@ -120,6 +127,12 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         }));
     }
 
+    /**
+     * Removes a filter from the selected items.
+     * @param filter - The filter to be removed.
+     * @param filterType - The type of filter to be removed. Indexes the selectedItems object.
+     * @returns A Promise that resolves when the filter has been removed.
+     */
     async function removeFilter(filter: string, filterType: string){
         await trigger({topics: selectedItems.ecosystems.filter(n => n != filter)});
         setSelectedItems(prevState => ({

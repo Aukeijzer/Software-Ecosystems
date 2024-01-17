@@ -1,3 +1,6 @@
+/**
+ * Props for the Filters component.
+ */
 interface filterProps{
     technologies: string[],
     languages: string[],
@@ -5,6 +8,14 @@ interface filterProps{
     removeFilter(filter: string, filterType: string): void,
 }
 
+/**
+ * Renders the selected Filters in horizontal line with ability to remove them.
+ * @param technologies The technologies to be displayed.
+ * @param languages The languages to be displayed.
+ * @param subEcosystems The subEcosystems to be displayed.
+ * @param removeFilter The function to be called when a filter is removed.
+ * @returns The rendered Filters component.
+ */
 export default function Filters(props: filterProps){
     const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
     return(
