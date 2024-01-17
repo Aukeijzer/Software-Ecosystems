@@ -6,6 +6,8 @@ import ListComponent from "@/components/listComponent";
 import GraphLine from "@/components/graphLine";
 import displayableGraphItem from "../classes/displayableGraphItem";
 import displayableListItem from "../classes/displayableListItem";
+import TableComponent from "@/components/tableComponent";
+import displayableTableItem from "../classes/displayableTableItem";
 
 /**
  * Builds a pie graph card.
@@ -15,8 +17,8 @@ import displayableListItem from "../classes/displayableListItem";
  * @param y - The y-coordinate of the card.
  * @returns The wrapped card object.
  */
-export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number) : cardWrapper{
-    var graphComponent = <GraphComponent items={topics}/>;
+export function buildPieGraphCard(topics: displayableGraphItem[], title: string, x : number, y : number, onClick: any) : cardWrapper{
+    var graphComponent = <GraphComponent items={topics} onClick={(sub : string) => onClick(sub)}/>;
     var cardGraph = <InfoCard title={title} data={graphComponent} />
     //TODO: (min)Width / (min)height should be automatically detected here
     var width = 2;
@@ -63,5 +65,17 @@ export  function buildLineGraphCard(data: any, title: string, x: number, y : num
     return cardLineGraphWrapped;
 }
 
+/**
+ * Builds a table card.
+ */
+export function buildTableCard(items: displayableTableItem[], title: string, x : number, y : number, width: number, height: number, onClick?: any, alert?: string){
+    //Make table element
+    var tableComponent = <TableComponent items={items} onClick={(sub : string) => onClick(sub)}/>
+    //Make card element
+    var cardTable = <InfoCard title={title} data={tableComponent} alert={alert}/>
+    //Wrap card
+    const cardTableWrapped: cardWrapper = {card: cardTable, width: width, height: height, x: x, y: y, minH: 2, static:true}
+    return cardTableWrapped
+}
 
 

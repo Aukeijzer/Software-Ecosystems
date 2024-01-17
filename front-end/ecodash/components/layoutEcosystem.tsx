@@ -5,7 +5,7 @@ import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import GridLayout from "./gridLayout"
 import SpinnerComponent from "./spinner"
-import { buildLineGraphCard, buildListCard, buildPieGraphCard } from "@/app/utils/cardBuilder"
+import { buildLineGraphCard, buildListCard, buildPieGraphCard, buildTableCard } from "@/app/utils/cardBuilder"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
 import  listLanguageDTOConverter  from "@/app/utils/Converters/languageConverter"
@@ -15,6 +15,7 @@ import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConvert
 import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
+import listContributorDTOConverter from "@/app/utils/Converters/contributorConverter"
 interface layoutEcosystemProps{
     ecosystem: string
 }
@@ -139,31 +140,35 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
         //Make list element
    
-        const subEcosystemCard = buildListCard(subEcosystems, onClickTopic, "Top 5 topics", 0, 2, 1, 4);
+        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, 2, 1, 4, onClickTopic);
         //Add card to list
         cardWrappedList.push(subEcosystemCard);
+
+        const contributors = listContributorDTOConverter(data.topContributors);
+        const contributorCard = buildTableCard(contributors, "", 0, 12, 1.5, 4.5);
+        cardWrappedList.push(contributorCard);
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
-        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6);
+        const languageCard = buildPieGraphCard(languages, "Top 5 languages", 0, 6, onClickTopic);
         //Add card to list
         cardWrappedList.push(languageCard);
 
         //Mock data
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildListCard(technologies, onClickTopic, "Top 5 technologies", 6, 2, 1, 4, "This is mock data");
+        const technologyCard = buildTableCard(technologies, "", 6, 2, 1, 4, onClickTopic, "This is mock data");
         cardWrappedList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildListCard(risingTechnologies, onClickTopic, "Top 5 rising technologies", 3, 2, 2, 4, "This is mock data");
+        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, 2, 2, 4, onClickTopic, "This is mock data");
         cardWrappedList.push(risingTechnologiesCard)
 
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildListCard(risingTopics, onClickTopic, "Top 5 rising topics", 1, 2, 2, 4, "This is mock data");
+        const risingTopicsCard = buildTableCard(risingTopics, "", 1, 2, 2, 4, onClickTopic, "This is mock data");
         cardWrappedList.push(risingTopicsCard)
 
         //Line graph topicsGrowing 
