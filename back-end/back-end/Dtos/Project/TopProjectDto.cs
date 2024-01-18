@@ -2,6 +2,10 @@
 
 namespace SECODashBackend.Dtos.Project;
 
+/// <summary>
+/// Represents a data transfer object for a top project of an ecosystem based on the number of stars.
+/// </summary>
+[DataContract]
 public class TopProjectDto
 {
    [DataMember(Name = "name")] public required string Name { get; set; }
