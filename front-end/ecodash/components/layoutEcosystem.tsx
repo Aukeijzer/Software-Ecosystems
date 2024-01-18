@@ -64,6 +64,9 @@ interface layoutEcosystemProps{
 export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Set up router
     const Router = useRouter();
+    //Set up session
+    const { data: session } = useSession()
+    const user = session?.user as ExtendedUser;
 
     //Set up search params
     const searchParams = useSearchParams();
@@ -152,9 +155,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             languageUrl ="&languages=" + selectedItems.languages.join(",")
         }
 
+        console.log(topicUrl);
     
         if(techUrl != "" || topicUrl != "" || languageUrl != "") {
-            Router.push(`/?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
+            Router.push(`?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
         }
     }
 
@@ -196,9 +200,8 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             languageUrl ="&languages=" + selectedItems.languages.join(",")
         }
 
-    
         if(techUrl != "" || topicUrl != "" || languageUrl != "") {
-            Router.push(`/?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
+            Router.push(`?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
         }
 
     }
@@ -214,7 +217,6 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
                     <p>
                         {error.stack}
                     </p>
-                   
                 </div>
             </>
         )
@@ -223,6 +225,19 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Prepare variables before we have data so we can render before data is gathered
     var cardList  = []
     if(data){
+        {user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") &&
+        <div className="m-3 rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-3">
+            <form className="flex flex-col">
+                <div className="flex flex-row gap-3">
+                    <label> edit mode:</label>
+                    <input type="checkbox" name="editMode" onChange={() => setEditMode(!editMode)}/> 
+                </div>
+               
+            </form>
+            <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={(e) => saveDescription()}> save changes</button>
+        </div>
+       }
+
         //Real data
         const ecosystemDescription =  <div className="col-span-full">
             <EcosystemDescription ecosystem={props.ecosystem}  
@@ -232,10 +247,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         
         //Small data boxes  
         const smallBoxes = ( <div className="flex flex-row justify-around">
-            <SmallDataBox item={"Topics"} count={abbreviate(data.allTopics)} increase={5}  />
-            <SmallDataBox item={"Projects"} count={abbreviate(data.allProjects)} increase={5} />
-            <SmallDataBox item={"Contributors"} count={abbreviate(data.allContributors)} increase={5} />
-            <SmallDataBox item={"Contributions"} count={abbreviate(data.allContributions)} increase={5} />
+            <SmallDataBox item={"Topics"} count={abbreviate(data.numberOfTopics)} increase={5}  />
+            <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfTopics)} increase={5} />
+            <SmallDataBox item={"Contributors"} count={abbreviate(data.numberOfContributors)} increase={5} />
+            <SmallDataBox item={"Contributions"} count={abbreviate(data.numberOfContributions)} increase={5} />
         </div>)
         const smallBoxesCard = <div className="col-span-full">
             {smallBoxes}
@@ -261,7 +276,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         
         //Top 5 topics
         //First Convert DTO's to Classes
-        const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
+        const subEcosystems = listSubEcosystemDTOConverter(data.topSubEcosystems);
         //Make table element
         var subEcosystemComponent = <TableComponent items={subEcosystems} onClick={(sub : string) => onClickFilter(sub, "ecosystems")}/>
         //Make card element
@@ -344,17 +359,6 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 }
 
 /*
- {user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") &&
- <div className="m-3 rounded-sm  p-3 text-yellow-700 bg-red-200">
-     <form className="flex flex-col">
-         <div className="flex flex-row gap-3">
-             <label> edit mode:</label>
-             <input type="checkbox" name="editMode" onChange={() => setEditMode(!editMode)}/> 
-         </div>
-        
-     </form>
-     <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={(e) => saveDescription()}> save changes</button>
- </div>
-}
+
 
 */
