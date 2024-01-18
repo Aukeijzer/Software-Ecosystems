@@ -7,7 +7,7 @@ namespace SECODashBackend.Services.Users;
 /// This service is responsible for handling all user-related requests.
 /// </summary>
 /// <param name="userContext">Is used to interact with the database.</param>
-public class UsersService(UserContext userContext)
+public class UsersService(EcosystemsContext userContext)
 {
     /// <summary>
     /// Retrieve all users from the database.
