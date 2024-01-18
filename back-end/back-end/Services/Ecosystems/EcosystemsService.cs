@@ -49,9 +49,16 @@ public class EcosystemsService(EcosystemsContext dbContext,
     public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
-
+        
+        // Retrieve the technology taxonomy from the database that are in the ecosystem
+        var technologyTaxonomy = await dbContext.Ecosystems
+            .AsNoTracking()
+            .Include(e => e.Technologies)
+            .ToListAsync();
+        
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
+            [],
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
