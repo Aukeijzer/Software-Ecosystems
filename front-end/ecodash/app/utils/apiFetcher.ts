@@ -7,17 +7,25 @@ import { ecosystemDTO } from "../interfaces/DTOs/ecosystemDTO";
  * @param arg.topics - An array of topics to filter the ecosystem data.
  * @returns A promise that resolves to the fetched ecosystem data.
  */
-export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics: string[]}}){
+export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics: string[], technologies: string[]}}){
     //Variables for post body
     const numberOfTopContributors = 5;
     const numberOfTopLanguages = 5;
     const numberOfTopSubEcosystems = 5;
 
-   var apiPostBody = { topics: arg.topics,
-           numberOfTopLanguages: numberOfTopLanguages,
-           numberOfTopSubEcosystems: numberOfTopSubEcosystems,
-           numberOfTopContributors: numberOfTopContributors
-    }
+   var apiPostBody = {
+           "topics": arg.topics,
+           "technologies": ["agriculture"],
+           "numberOfTopLanguages": numberOfTopLanguages,
+           "numberOfTopSubEcosystems": numberOfTopSubEcosystems,
+           "numberOfTopContributors": numberOfTopContributors,
+           "numberOfTopTechnologies": 5,
+           "numberOfTopProjects": 5,
+   }
+
+
+ 
+   console.log(apiPostBody);
    
     //Make fetch call to url that returns promise
     //Resolve promise by awaiting 
