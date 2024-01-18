@@ -39,8 +39,8 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'flex h-full p-5 resize' + props.className}>
-            <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}></div>
+        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-5 ' + props.className}>
+            <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
             
             <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
                 {props.title}

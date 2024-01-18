@@ -3,22 +3,25 @@
 
 import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
-import GridLayout from "./gridLayout"
 import SpinnerComponent from "./spinner"
-import { buildLineGraphCard, buildListCard, buildPieGraphCard, buildTableCard } from "@/app/utils/cardBuilder"
 import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
 import  listLanguageDTOConverter  from "@/app/utils/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
-import { cardWrapper } from "@/app/interfaces/cardWrapper"
 import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConverter"
 import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
 import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
 import listContributorDTOConverter from "@/app/utils/Converters/contributorConverter"
 import Filters from "./filters"
-import test from "node:test"
 import SmallDataBox from "./smallDataBox"
+import TopicSearch from "./topicSearch"
+import InfoCard from "./infoCard"
+import TableComponent from "./tableComponent"
+import GraphComponent from "./graphComponent"
+import GraphLine from "./graphLine"
+import { colors } from "@/app/enums/filterColor"
+
 var abbreviate = require('number-abbreviate');
 
 interface layoutEcosystemProps{
@@ -81,7 +84,6 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         technologies: [],
         languages: [],
     });
-
 
     //Trigger = function to manually trigger fetcher function in SWR mutation. 
     //Data = data received from API. updates when trigger is called. causes update
@@ -197,7 +199,6 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     if(error){
         return(
             <>
-                
                 <h2 className='text-3xl m-5'>Something went wrong!</h2>
                 <div className='flex flex-col gap-3 p-5 bg-gray-300 border-2 m-5 border-gray-900 rounded-sm'>
                     <p>
@@ -212,76 +213,108 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         )
     }
   
-
-    //Prepare variables before we have data so we can render before data
-    var cardWrappedList : cardWrapper[] = []
+    //Prepare variables before we have data so we can render before data is gathered
+    var cardWrappedList  = []
     if(data){
         //Real data
-        const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
-
-        //Top 5 topics
-        //First Convert DTO's to Classes
-        const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
-        //Make list element
-        const subEcosystemCard = buildTableCard(subEcosystems, "", 0, 4, 2, 5, onClickFilter, "ecosystems", "", COLORS[0]);
-        cardWrappedList.push(subEcosystemCard);
-
-        //Top 5 contributors
-        const contributors = listContributorDTOConverter(data.topContributors);
-        const contributorCard = buildTableCard(contributors, "", 0, 15, 2, 5, onClickFilter, "contributor" , "", COLORS[1]);
-        cardWrappedList.push(contributorCard);
-
-        //Top 5 languages
-        const languages = listLanguageDTOConverter(data.topLanguages);
-        //Make graph card
-        const languageCard = buildPieGraphCard(languages, "", 0, 9, COLORS[1]);
-        //Add card to list
-        cardWrappedList.push(languageCard);
-
-        //Mock data
-        //List of technologies
-        const technologies = listTechnologyDTOConverter(topTechnologies)
-        const technologyCard = buildTableCard(technologies, "", 4, 4, 2, 5, onClickFilter, "technologies", "", COLORS[2]);
-        cardWrappedList.push(technologyCard)
-
-        //List of rising technologies
-        const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesCard = buildTableCard(risingTechnologies, "", 3, 15, 3, 5, onClickFilter, "technologies", "", COLORS[2]);
-        cardWrappedList.push(risingTechnologiesCard)
-
-        //List of rising topics
-        const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsCard = buildTableCard(risingTopics, "", 2, 4, 2, 5, onClickFilter, "ecosystems", "", COLORS[0]);
-        cardWrappedList.push(risingTopicsCard)
-
-        //Line graph topicsGrowing 
-        //For now no data conversion needed as Mock data is already in correct format 
-        //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const cardLineGraphWrapped = buildLineGraphCard(topicGrowthLine, "", 6, 9, false, COLORS[5]);
-        cardWrappedList.push(cardLineGraphWrapped)
-
-        //Ecosystem description
-        //Remove main ecosystem from selected sub-ecosystem list to display
-        const ecosystemDescription =  <EcosystemDescription ecosystem={props.ecosystem}  description={data.description ? data.description : "no description provided"} />
-        const ecosystemDescriptionWrapped : cardWrapper = {card: ecosystemDescription, width: 6, height: 2, x: 0, y: 0, static:true}
-        cardWrappedList.push(ecosystemDescriptionWrapped)
-
-        //Filters
-        const filters = <Filters technologies={selectedItems.technologies} subEcosystems={selectedItems.ecosystems.filter(n => n != props.ecosystem)} languages={selectedItems.languages} removeFilter={removeFilter}/>
-        const filtersWrapped : cardWrapper = {card: filters, width: 10, height: 0.5, x: 4, y: 3.3, static:true}
-        cardWrappedList.push(filtersWrapped)
-
+        const ecosystemDescription =  <div className="col-span-full">
+            <EcosystemDescription ecosystem={props.ecosystem}  
+            description={data.description ? data.description : "no description provided"} />
+        </div>
+        cardWrappedList.push(ecosystemDescription)
+        
         //Small data boxes  
-        const smallBoxes = ( <div className="flex flex-row   mb-5 justify-around">
-
+        const smallBoxes = ( <div className="flex flex-row justify-around">
             <SmallDataBox item={"Topics"} count={abbreviate(data.allTopics)} increase={5}  />
             <SmallDataBox item={"Projects"} count={abbreviate(data.allProjects)} increase={5} />
             <SmallDataBox item={"Contributors"} count={abbreviate(data.allContributors)} increase={5} />
             <SmallDataBox item={"Contributions"} count={abbreviate(data.allContributions)} increase={5} />
         </div>)
-        const smallBoxesWrapped : cardWrapper = {card: smallBoxes, width: 10, height: 1, x: 4, y: 2, static:true}
-        cardWrappedList.push(smallBoxesWrapped)
+        const smallBoxesCard = <div className="col-span-full">
+            {smallBoxes}
+        </div>
+        cardWrappedList.push(smallBoxesCard)
+        
+        //Filters
+        const filters = <div className="col-span-1 lg:col-span-3 overflow-scroll">
+            <Filters technologies={selectedItems.technologies} 
+            subEcosystems={selectedItems.ecosystems.filter(n => n != props.ecosystem)} 
+            languages={selectedItems.languages} 
+            removeFilter={removeFilter}
+            />
+        </div>
+        cardWrappedList.push(filters)
+        
+        //Topic search box
+        const topicSearch = <div className="col-span-1 lg:col-start-3">
+              <TopicSearch selectTopic={onClickFilter} />
+        </div>
+        cardWrappedList.push(topicSearch)
+        
+        
+        //Top 5 topics
+        //First Convert DTO's to Classes
+        const subEcosystems = listSubEcosystemDTOConverter(data.subEcosystems);
+        //Make table element
+        var subEcosystemComponent = <TableComponent items={subEcosystems} onClick={(sub : string) => onClickFilter(sub, "ecosystems")}/>
+        //Make card element
+        var subEcosystemCard = <div className="col-span-1">
+                <InfoCard title={""} data={subEcosystemComponent} Color={colors.topic}/>
+        </div>
+        cardWrappedList.push(subEcosystemCard)
 
+        //Top 5 contributors
+        const contributors = listContributorDTOConverter(data.topContributors);
+        var contributorTable = <TableComponent items={contributors} onClick={(contributor : string) => (console.log(contributor))}/>
+        var contributorCard = <div className="col-span-1">
+                <InfoCard title={""} data={contributorTable} Color={colors.contributor}/>
+        </div>
+        cardWrappedList.push(contributorCard);
+
+        //Top 5 languages
+        const languages = listLanguageDTOConverter(data.topLanguages);
+        console.log(languages);
+        //Make graph card
+        const languageGraph = <GraphComponent items={languages} onClick={(language : string) => onClickFilter(language, "languages")}/>
+        var languageCard = <div className="col-span-1">
+                <InfoCard title={""} data={languageGraph} Color={colors.language}/>
+        </div>
+        //Add card to list
+        cardWrappedList.push(languageCard);
+        
+        //List of technologies
+        const technologies = listTechnologyDTOConverter(topTechnologies)
+        const technologyTable = <TableComponent items={technologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
+        const technologyCard = <div className="col-span-1">
+            <InfoCard title={""} data={technologyTable} Color={colors.technology}/>
+        </div>
+        cardWrappedList.push(technologyCard)
+
+        //List of rising technologies
+        const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
+        const risingTechnologiesTable = <TableComponent items={risingTechnologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
+        const risingTechnologiesCard = <div className="col-span-1">
+            <InfoCard title={""} data={risingTechnologiesTable} Color={colors.technology} />
+        </div>
+        cardWrappedList.push(risingTechnologiesCard)
+ 
+        //List of rising topics
+        const risingTopics = listRisingDTOConverter(topTopicsGrowing);
+        const risingTopicsTable = <TableComponent items={risingTopics} onClick={(topic : string) => onClickFilter(topic, "ecosystems")}/>
+        const risingTopicsCard = <div className="col-span-1">
+            <InfoCard title={""} data={risingTopicsTable} Color={colors.topic} />
+        </div>
+        cardWrappedList.push(risingTopicsCard)
+        
+        //Line graph topicsGrowing 
+        //For now no data conversion needed as Mock data is already in correct format 
+        //When working with real data there should be a conversion from DTO to dataLineGraphModel
+        const lineGraphTopicsGrowing = <GraphLine items={topicGrowthLine} />
+        const cardLineGraph = <div className="col-span-full">
+            <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
+        </div>
+        cardWrappedList.push(cardLineGraph)  
+        
     } else {
         //When no data display spinner
         return(
@@ -293,8 +326,12 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Normal render (No error)
     return(
-        <div className="ml-44 mr-44">
-            <GridLayout cards={cardWrappedList} />
+        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0">
+           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3" >
+                {cardWrappedList.map((card, i) => (
+                    card
+                ))}
+           </div>
         </div>      
     )
 }

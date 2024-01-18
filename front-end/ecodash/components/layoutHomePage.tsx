@@ -4,13 +4,10 @@ import { useEffect} from "react"
 import { useRouter } from 'next/navigation'
 import { fetcherHomePage } from '@/app/utils/apiFetcher';
 import useSWRMutation from 'swr/mutation'
-import { cardWrapper } from "@/app/interfaces/cardWrapper";
 import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
-import GridLayout from "./gridLayout";
-import SmallDataBox from "./smallDataBox";
 
 /**
  * Renders the layout for the home page.
@@ -68,7 +65,7 @@ export default function LayoutHomePage(){
         Router.push(finalUrl);
     }
 
-    var cardWrappedList : cardWrapper[] = [];
+    var cardWrappedList = [];
     if(data){
         const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
@@ -80,27 +77,40 @@ export default function LayoutHomePage(){
             </div>
         )
 
-        const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
-        const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 3, x: 0, y: 0, static: false}
-        cardWrappedList.push(infoCardWrapped);
+        const infoCard = <div className="col-span-3">
+            <InfoCard title="Information about SECODash" data={info} />
+        </div>
+        cardWrappedList.push(infoCard);
 
          //Agriculture card
         const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
-        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem} Color={COLORS[0]}/>
-        const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:true}
-        cardWrappedList.push(agricultureButtonCardWrapped)
+        const agricultureButtonCard = <div className="col-span-1">
+                <InfoCard title="agriculture" 
+                data={agricultureButton}
+                onClick={onClickEcosystem}
+                Color={COLORS[0]}/>
+            </div>
+        cardWrappedList.push(agricultureButtonCard)
         
         //Quantum card
         const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
-        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} Color={COLORS[1]} />
-        const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: false}
-        cardWrappedList.push(quantumButtonCardWrapped)
+        const quantumButtonCard = <div className="col-span-1">
+            <InfoCard title="quantum" 
+            data={quantumButton}
+            onClick={onClickEcosystem} 
+            Color={COLORS[1]} />
+        </div>
+        cardWrappedList.push(quantumButtonCard)
         
         //Artificial-intelligence card
         const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem} Color={COLORS[2]}/>
-        const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: false}
-        cardWrappedList.push(aiButtonCardWrapped);
+        const aiButtonCard =  <div className="col-span-1"> 
+            <InfoCard title="artificial-intelligence"
+            data={aiButton}
+            onClick={onClickEcosystem} 
+            Color={COLORS[2]}/>
+        </div>
+        cardWrappedList.push(aiButtonCard);
 
     } else {
         //When still loading display spinner
@@ -112,8 +122,12 @@ export default function LayoutHomePage(){
     }
 
     return(
-        <div className="ml-44 mr-44">
-            <GridLayout cards={cardWrappedList} />
+        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32">
+            <div className="grid gap-3 grid-cols-3" >
+             {cardWrappedList.map((card, i) => (
+                 card
+             ))}
         </div>
+     </div>   
     )
 }

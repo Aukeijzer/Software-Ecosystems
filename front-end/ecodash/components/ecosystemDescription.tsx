@@ -18,7 +18,7 @@ interface ecoSystemDescriptionProps{
 
 export default function EcosystemDescription(props: ecoSystemDescriptionProps){
     return(
-        <div data-cy='ecosystem description' className='h-full'>
+        <div data-cy='ecosystem description' className='h-full w-full'>
             <Card className='h-full p-5 '>
                 <h1 data-cy='welcome ecosystem' className='text-3xl'>
                     Welcome to the <b>{props.ecosystem}</b> ecosystem page

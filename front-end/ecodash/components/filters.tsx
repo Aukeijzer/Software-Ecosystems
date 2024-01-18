@@ -1,3 +1,4 @@
+import { colors } from "@/app/enums/filterColor"
 /**
  * Props for the Filters component.
  */
@@ -17,7 +18,6 @@ interface filterProps{
  * @returns The rendered Filters component.
  */
 export default function Filters(props: filterProps){
-    const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
     return(
         <div className=" w-full ">
             <ul className="flex flex-row gap-3">
@@ -27,7 +27,7 @@ export default function Filters(props: filterProps){
            
                                     <button
                                         onClick={() => props.removeFilter(item, "ecosystems",)}
-                                        style={{ backgroundColor: COLORS[0] }}
+                                        style={{ backgroundColor: colors.topic }}
                                         className='font-bold px-2 py-1 rounded-md hover:text-red-500'
                                     >
                                         <span className="mr-2 text-black">✖</span>
@@ -44,7 +44,7 @@ export default function Filters(props: filterProps){
                                         <li key={i} className='flex flex-row gap-5 mb-1'>
                                             <button
                                                 onClick={() => props.removeFilter( item, "languages")}
-                                                style={{ backgroundColor: COLORS[2] }}
+                                                style={{ backgroundColor: colors.language }}
                                                 className='font-bold px-2 py-1 rounded-md hover:text-red-500'
                                             >
                                                 <span className="mr-2 text-black">✖</span>
@@ -62,7 +62,7 @@ export default function Filters(props: filterProps){
                                         <li key={i} className='flex flex-row gap-5 mb-1'>
                                             <button
                                                 onClick={() => props.removeFilter(item, "technologies")}
-                                                style={{ backgroundColor: COLORS[2] }}
+                                                style={{ backgroundColor: colors.technology }}
                                                 className='font-bold px-2 py-1 rounded-md hover:text-red-500'
                                             >
                                                 <span className="mr-2 text-black">✖</span>
