@@ -87,10 +87,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         if(params){
             //Convert params to string list
             const topics = params.split(',')
-            trigger({topics: [...selectedEcosystems, ...topics ]})
+            trigger({topics: [...selectedEcosystems, ...topics ], technologies: []})
             setSelectedEcosystems([...selectedEcosystems, ...topics])
         } else {
-            trigger({topics: selectedEcosystems})
+            trigger({topics: selectedEcosystems, technologies: []})
         }
 
     },[]) 
@@ -100,7 +100,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Function that gets trigger on Clicking on topic
     async function onClickTopic(topic: string){
         //Append topic to selected ecosystems
-        await trigger({topics: [...selectedEcosystems, topic]});
+        await trigger({topics: [...selectedEcosystems, topic], technologies: []});
         //Use shallow routing
         Router.push(`?topics=${[...selectedEcosystems, topic].filter(n => n != props.ecosystem).toString()}`, {scroll: false})
         //Update selected topics
@@ -111,7 +111,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Function to remove sub-ecosystem from sub-ecosytem list
     async function removeSubEcosystem(subEcosystem: string){
         var updatedList = selectedEcosystems.filter(n => n != subEcosystem)
-        await trigger({topics: updatedList})
+        await trigger({topics: updatedList, technologies: []})
         //Use shallow routing to update URL
         //Remove props.ecosystem
         setSelectedEcosystems(selectedEcosystems.filter(n => n != subEcosystem));
@@ -172,9 +172,9 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     var cardWrappedList : cardWrapper[] = []
     if(data){
         //Real data
-    
+        
         //Top 5 topics
-        const topics = listSubEcosystemDTOConverter(data.subEcosystems);
+        const topics = listSubEcosystemDTOConverter(data.topSubEcosystems);
         //Build card
         const subEcosystemCard = buildListCard(topics, onClickTopic, "Top 5 topics", 0, 2, 1, 4, !editMode);
         //Add card to list
