@@ -11,4 +11,5 @@ public class EcosystemRequestDto
     [DataMember(Name = "numberOfTopLanguages")] public int? NumberOfTopLanguages { get; set; }
     [DataMember(Name = "numberOfSubEcosystems")] public int? NumberOfTopSubEcosystems { get; set; }
     [DataMember(Name = "numberOfTopContributors")] public int? NumberOfTopContributors { get; set; }
+    [DataMember(Name = "numberOfTopProjects")] public int? NumberOfTopProjects { get; set; }
 }
