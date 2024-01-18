@@ -400,7 +400,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     
     #region Technologies
     /// <summary>
-    /// 
+    /// This method uses the FilterTechnologies and SortSubEcosystems methods to retrieve the top x technologies.
     /// </summary>
     /// <param name="technologies">A list of technologies that define the ecosystem.</param>
     /// <param name="numberOfTopTechnologies">The number of technologies we want to showcase.</param>
@@ -436,6 +436,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// For every topic in the sub-ecosystems/topics list, it retrieves the number of projects that contain that topic.
     /// Then it creates a TimedDateDto object with the topic, the time bucket and the number of projects.
     /// Lastly, it adds the TimedDateDto object to the response list.
+    /// <param name="startTime">The start date of the period of time to retrieve.</param>
+    /// <param name="endTime">The end date of the period of time to retrieve.</param>
+    /// <param name="elasticsearchService">The elasticsearch service.</param>
+    /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
+    /// <param name="topXTopics">The list of top x sub-ecosystems/topics.</param>
     /// </summary>
     private static async Task<List<TimedDataDto>> GetTimedData(DateTime startTime, DateTime endTime, 
         IElasticsearchService elasticsearchService, int timeBucket, List<string> topXTopics)
