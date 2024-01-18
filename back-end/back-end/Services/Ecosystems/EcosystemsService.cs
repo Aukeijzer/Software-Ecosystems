@@ -52,9 +52,11 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
+            dto.Technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
+            dto.NumberOfTopTechnologies ?? DefaultNumberOfTopItems,
             dto.NumberOfTopProjects ?? DefaultNumberOfTopItems);
 
         // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
