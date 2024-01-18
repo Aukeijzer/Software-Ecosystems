@@ -34,4 +34,39 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
             .SearchAsync<ProjectDto>(searchRequest);
         return response.IsValidResponse ? response : throw new HttpRequestException(response.ToString());
     }
+    
+    /// <summary>
+    /// Returns a project count of the projects that were created in the given DateRange and contain the given topic
+    /// </summary>
+    public async Task<long> GetProjectsByDate(DateTime rawStartTime, DateTime rawEndTime, string topic)
+    {
+        string endTime = rawEndTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
+            startTime = rawStartTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
+        
+        // Create a query that searches for project count in the given DateRange with the give topic. 
+        var response = await client.CountAsync<ProjectDto>(s => s
+            .Query(q => q
+                .Bool(b => b.
+                    Must(mu => mu
+                            .Match(m => m
+                                .Field(f => f.Topics)
+                                .Query(topic)
+                            ),
+                        mu => mu
+                            .Range(r => r
+                                .DateRange(dr => dr
+                                    .Field(f => f.LatestDefaultBranchCommitDate)
+                                    .Gte(startTime)
+                                    .Lte(endTime)
+                                )
+                            )
+                    )
+                )
+            )
+        );
+        
+        if (!response.IsValidResponse) throw new HttpRequestException(response.ToString()); 
+        
+        return response.Count;
+    }
 }
