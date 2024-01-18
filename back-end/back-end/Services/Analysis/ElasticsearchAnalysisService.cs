@@ -110,6 +110,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
     /// <param name="numberOfTopTechnologies">The number of top technologies to retrieve.</param>
     /// <param name="numberOfTopProjects">The number of top projects to retrieve</param>
+    /// <param name="startTime">The start date of the period of time to retrieve.</param>
+    /// <param name="endTime">The end date of the period of time to retrieve.</param>
+    /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
     public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, 
     int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies, int numberOfTopProjects, 

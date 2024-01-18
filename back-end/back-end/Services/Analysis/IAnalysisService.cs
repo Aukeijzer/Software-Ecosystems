@@ -15,6 +15,10 @@ public interface IAnalysisService
     /// <param name="numberOfTopSubEcosystems">The number of top sub ecosystems to get.</param>
     /// <param name="numberOfTopContributors">The number of top contributors to get.</param>
     /// <param name="numberOfTopProjects">The number of top projects to retrieve</param>
+    /// <param name="numberOfTopTechnologies">The number od top technologies to retrieve.</param>
+    /// <param name="startTime">The start date of the period of time to retrieve.</param>
+    /// <param name="endTime">The end date of the period of time to retrieve.</param>
+    /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
     /// <returns>The result of the analysis.</returns>
     public Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics,
         int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, 
