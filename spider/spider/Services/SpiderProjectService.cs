@@ -175,7 +175,7 @@ public class SpiderProjectService : ISpiderProjectService
                 {
                     continue;
                 }
-                var temp = _graphqlDataConverter.TopicSearchToProjects(topicSearchData);
+                var temp = _graphqlDataConverter.TopicSearchToProjects(topicSearchData).Where(dto => dto.NumberOfStars >= 5);
                  var tasks = temp.Select(async project =>
                  {
                      var response = await GetContributorsByName(project.Name, project.Owner, 100);
