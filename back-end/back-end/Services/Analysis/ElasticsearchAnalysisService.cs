@@ -32,6 +32,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string ContributorsPath = "contributors";
     private const string ContributorLoginField = "contributors.login.keyword";
     private const string ContributorContributionsField = "contributors.contributions";
+    private const string NumberOfStarsField = "numberOfStars";
 
     // Instructs elasticsearch to match using all terms of a term set
     private const string MatchAllParametersScript = "params.num_terms";
@@ -107,8 +108,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
     /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <param name="numberOfTopTechnologies">The number of top technologies to retrieve.</param>
+    /// <param name="numberOfTopProjects">The number of top projects to retrieve</param>
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<string> technologies, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies)
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<string> technologies, int numberOfTopLanguages, 
+    int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies, int numberOfTopProjects)
     {
         // Query that matches all projects that contain all topics in the topics list
         // https://www.elastic.co/guide/en/elasticsearch/client/net-api/7.17/terms-set-query-usage.html
@@ -177,7 +181,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Field = TopicField,
             Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count + technologies.Count
         };
-
+        
         var searchRequest = new SearchRequest
         {
             Query = termsSetQuery,
@@ -187,7 +191,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 nestedContributorsAggregation,
                 topicAggregation
             },
-            Size = 0 // Do not request actual Project documents
+            // Sort the projects by the number of stars in descending order
+            Sort = new List<SortOptions> {SortOptions.Field(NumberOfStarsField, new FieldSort{Order = SortOrder.Desc})},
+            
+            // Retrieve a number of ProjectDtos equal to the number of Top Projects requested
+            Size = numberOfTopProjects 
         };
         
         var result = await elasticsearchService.QueryProjects(searchRequest);
@@ -202,6 +210,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             TopSubEcosystems = GetTopXSubEcosystems(numberOfTopSubEcosystems, filteredSubEcosystems),
             TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
             TopContributors = GetTopXContributors(contributors, numberOfTopContributors),
+            TopProjects = GetTopXProjects(result),
             NumberOfTopics = filteredSubEcosystems.Count,
             NumberOfProjects = result.Total,
             NumberOfContributors = contributors.Count,
@@ -411,4 +420,21 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .Where(s => technologies.Contains(s.Topic));
     }
     #endregion
+  
+    /// <summary>
+    /// Retrieves the projects from the search response and converts them into a Top x list
+    /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <returns>A list of the top x projects in an ecosystem.</returns>
+    private static List<TopProjectDto> GetTopXProjects(SearchResponse<ProjectDto> searchResponse)
+    {
+        return searchResponse.Documents
+            .Select(p => new TopProjectDto
+            {
+                Name = p.Name,
+                Owner = p.Owner,
+                NumberOfStars = p.NumberOfStars
+            })
+            .ToList();
+    }
 }

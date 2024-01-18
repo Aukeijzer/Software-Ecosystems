@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.ProgrammingLanguage;
+using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Dtos.Ecosystem;
 
@@ -17,10 +18,12 @@ public class EcosystemDto
     [DataMember(Name = "topLanguages")] public required List<ProgrammingLanguageDto> TopLanguages { get; init; }
     [DataMember(Name = "subEcosystems")] public required List<SubEcosystemDto> TopSubEcosystems { get; init; }
     [DataMember(Name = "topContributors")] public required List<TopContributorDto> TopContributors { get; init; }
+    [DataMember(Name = "topProjects")] public required List<TopProjectDto> TopProjects { get; init; }
     [DataMember(Name = "numberOfProjects")] public long NumberOfProjects { get; set; }
     [DataMember(Name = "numberOfTopics")] public int? NumberOfTopics { get; set; }
     [DataMember(Name = "numberOfContributors")] public int? NumberOfContributors { get; set; }
     [DataMember(Name = "numberOfContributions")] public int? NumberOfContributions { get; set; }
+    
     
 }
    
