@@ -18,12 +18,13 @@ const config: Config = {
       'navBar': '#FFFFFF'
 
     },
-    screens: {
-      'lg': '1024px',
-      'md': '768px',	
-      'sm': '640px',
+    extend: {
+      screens: {
+        'zoom': {'raw': '(min-width: 1024px) and (min-device-pixel-ratio: 1.25)'}
+      }
     }
   },
+  
   plugins: [
     require('flowbite/plugin')
   ],

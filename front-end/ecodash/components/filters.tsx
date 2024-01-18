@@ -19,7 +19,7 @@ interface filterProps{
  */
 export default function Filters(props: filterProps){
     return(
-        <div className=" w-full ">
+        <div className=" w-full h-9">
             <ul className="flex flex-row gap-3">
                 {props.subEcosystems != null && props.subEcosystems.map((item, i) => (
    

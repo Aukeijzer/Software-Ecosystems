@@ -25,7 +25,7 @@ export default function TableComponent<T extends {}>(props: infoCardDataTablePro
                     <thead className=" uppercase bg-gray-200">
                         {props.items[0].renderTableHeaders()}
                     </thead>
-                    <tbody>
+                    <tbody className="w-full">
                         {props.items.map((item) => (
                             item.renderAsTableItem(props.onClick)
                         ))}

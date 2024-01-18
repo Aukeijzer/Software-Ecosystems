@@ -39,7 +39,7 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-5 ' + props.className}>
+        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal ' + props.className}>
             <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
             
             <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
@@ -47,9 +47,9 @@ export default function InfoCard(props: InfoCardProps) {
             </h5>
 
             {props.alert && <Alert color="green" icon={HiInformationCircle} rounded className='mb-2 text-yellow-700 bg-yellow-100 border-yellow-500 dark:bg-yellow-200 dark:text-yellow-800'> <p>{props.alert}  </p></Alert>}
-
-            {props.data}
-
+            <div className='mt-3'>
+                {props.data}
+            </div>
         </Card>
     )
 }

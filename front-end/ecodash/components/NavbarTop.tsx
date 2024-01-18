@@ -21,7 +21,7 @@ export default function NavBarTop(){
     const Router = useRouter();
     //For now has the basepath 
     return(
-        <Navbar data-cy='navBar' fluid  className='bg-navBar shadow-sm mb-5 pl-36 pr-36' >
+        <Navbar data-cy='navBar' fluid  className='bg-navBar shadow-sm mb-5 px-5 lg:px-36 md:px-20' >
             <Navbar.Brand as={Link}  href={process.env.NEXT_PUBLIC_LOCAL_ADRESS} >
                 <Image
                     data-cy='navLogo'
