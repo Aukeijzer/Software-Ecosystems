@@ -15,6 +15,8 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// <summary>
     /// Requests the Spider for projects related to the given topic and saves them to Elasticsearch.
     /// </summary>
+    /// <param name="topic">The topic to to search for. </param>
+    /// <param name="amount">The amount of repos to search for. </param>
     public async Task MineByTopicAsync(string topic, int amount)
     {
         // Request the Spider for projects related to this topic.
@@ -26,6 +28,8 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// <summary>
     /// Requests the Spider for projects related to the given keyword and saves them to Elasticsearch.
     /// </summary>
+    /// <param name="keyword">The keyword to to search for. </param>
+    /// <param name="amount">The amount of repos to search for. </param>
     public async Task MineByKeywordAsync(string keyword, int amount)
     {
         // Request the Spider for projects related to this topic.
@@ -41,7 +45,7 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// <param name="taxonomy">The list of strings to mine off of github</param>
     /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
     /// <param name="topicAmount">The amount of repos to search for with topic search</param>
-    public async Task MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
+    public async Task MineByTaxonomyAsync(List<string> taxonomy, int keywordAmount, int topicAmount)
     {
         ConcurrentDictionary<string,ProjectDto> newDtos = new ConcurrentDictionary<string, ProjectDto>();
         // Request the Spider for projects related to each of the terms in the taxonomy.

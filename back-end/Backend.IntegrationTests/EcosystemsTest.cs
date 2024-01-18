@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Dtos.ProgrammingLanguage;
+using SECODashBackend.Dtos.Project;
 
 namespace Backend.IntegrationTests;
 
@@ -23,6 +24,9 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
 
     private readonly JsonSerializerOptions _serializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
+    /// <summary>
+    /// Checks whether a GET request to /ecosystems returns the correct ecosystems.
+    /// </summary>
     [Fact]
     public async Task Get_Ecosystems_ReturnsCorrectEcosystems()
     {
@@ -41,6 +45,9 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         ecosystemNames.Should().BeEquivalentTo(expectedNames);
     }
 
+    /// <summary>
+    /// Checks whether a POST request to /ecosystems returns the correct EcosystemDto.
+    /// </summary>
     [Fact]
     public async Task Post_Ecosystems_ReturnsCorrectEcosystems()
     {
@@ -49,19 +56,31 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         const string topic3 = "topic3";
         const string topic4 = "topic4";
         
+        const string technology1 = "technology1";
+        
         // Arrange
         var requestDto = new EcosystemRequestDto
         {
             Topics = [topic1],
+            Technologies = [technology1],
             NumberOfTopLanguages = 2,
             NumberOfTopSubEcosystems = 3,
             NumberOfTopContributors = 2,
+            NumberOfTopProjects = 2
         };
         
         var expectedResponse = new EcosystemDto
         {
             Topics = [topic1],
-            SubEcosystems =
+            TopTechnologies =
+            [
+                new SubEcosystemDto
+                {
+                    ProjectCount = 10,
+                    Topic = technology1
+                }
+            ],
+            TopSubEcosystems = 
             [
                 new SubEcosystemDto
                 {
@@ -101,6 +120,21 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
                 {
                     Contributions = 200, 
                     Login = "user2"
+                }
+            ],
+            TopProjects = 
+            [
+                new TopProjectDto
+                {
+                    Name = "Project 10",
+                    Owner = "user1",
+                    NumberOfStars = 10000
+                },
+                new TopProjectDto
+                {
+                    Name = "Project 9",
+                    Owner = "user1",
+                    NumberOfStars = 9000
                 }
             ]
         };

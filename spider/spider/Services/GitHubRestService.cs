@@ -4,11 +4,15 @@ using RestSharp;
 
 namespace spider.Services;
 
+/// <summary>
+/// GitHubRestService is a service that handles the communication with the github rest api
+/// </summary>
 public class GitHubRestService : IGitHubRestService
 {
     private readonly IRestClient _gitHubRestClient;
     private readonly ILogger<GitHubRestService> _logger;
     private readonly JsonSerializerOptions _deserializerOptions;
+    
     public GitHubRestService(IRestClient gitHubRestClient)
     {
         _gitHubRestClient = gitHubRestClient;

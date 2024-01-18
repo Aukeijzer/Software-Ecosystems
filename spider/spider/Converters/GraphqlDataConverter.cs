@@ -3,6 +3,9 @@ using spider.Models.Graphql;
 
 namespace spider.Converters;
 
+/// <summary>
+/// GraphqlDataConverter is used to convert data from the Github GraphQL API to C# data types.
+/// </summary>
 public class GraphqlDataConverter : IGraphqlDataConverter
 {
     /// <summary>

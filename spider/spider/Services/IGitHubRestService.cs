@@ -1,7 +1,9 @@
 using spider.Dtos;
 
 namespace spider.Services;
-
+/// <summary>
+/// IGitHubRestService is an interface for the GitHub rest api.
+/// </summary>
 public interface IGitHubRestService
 {
     /// <summary>

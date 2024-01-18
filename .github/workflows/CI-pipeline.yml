@@ -1,0 +1,77 @@
+name: CI pipeline
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4      
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Network creation
+        run: docker network create secodash-network
+      - name: Build docker
+        run: docker compose -f docker-compose.yml up --build -d 
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      - name: Restore dependencies
+        run: |
+          dotnet restore ./spider
+          dotnet restore ./back-end
+          
+      # Run flake8 linter.
+      # Linter for python code (Data processor).
+      - name: Python flake8 Lint
+        uses: py-actions/flake8@v2.3.0
+
+      # ESLint is installed in frontend, so run via dependences installed in build step above.
+      - name: Run ESLint linter
+        #working-directory: ./ecodash
+        run: npx eslint
+
+      # Run C# linter.
+      # Note: dotnet format does not enforce line length, so use CSharpier for that one.
+      - name: Run C# linters.
+        run: |
+          dotnet format ./spider/spider.sln
+          dotnet format ./back-end/back-end.sln
+          dotnet tool install -g csharpier
+          dotnet csharpier .
+      - name: Dataprocessor Tests
+        run: |
+          python -m unittest discover -s data_processor -p 'test_*.py'
+      - name: Spider Tests
+        run: |
+          dotnet test spider/spiderTests
+      - name: Backend Tests
+        run: |
+          dotnet test back-end/BackendTests
+      - name: Frontend Tests
+        run: |
+          npm run test --prefix ./front-end/ecodash
+      - name: Remove used Docker
+        run: docker compose rm
+      # - name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     platforms: linux/amd64
+      #     push: false
+      #     load: true
