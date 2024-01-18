@@ -24,4 +24,6 @@ public class Ecosystem
    
    [DataMember(Name = "numberOfStars")]
    public int? NumberOfStars { get; set; }
+   [DataMember(Name = "technologies")]
+   public List<string> Technologies { get; set; }
 }

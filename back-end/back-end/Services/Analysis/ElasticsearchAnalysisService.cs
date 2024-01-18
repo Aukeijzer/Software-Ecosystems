@@ -104,14 +104,13 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
-    /// <param name="technologies">A list of technologies that define the ecosystem.</param>
     /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
     /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
     /// <param name="numberOfTopTechnologies">The number of top technologies to retrieve.</param>
     /// <param name="numberOfTopProjects">The number of top projects to retrieve</param>
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<string> technologies, int numberOfTopLanguages, 
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, int numberOfTopLanguages, 
     int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies, int numberOfTopProjects)
     {
         // Query that matches all projects that contain all topics in the topics list
@@ -174,7 +173,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 }
             }
         };
-
+        
+        List<string> technologies = ["qubits"];
+        
         // Aggregation of all projects aggregated by topic
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {

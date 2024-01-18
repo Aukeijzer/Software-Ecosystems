@@ -19,4 +19,12 @@ public interface IEcosystemsService
    /// <param name="dto">The Dto that contains the request information of the ecosystem to get.</param>
    /// <returns>The ecosystem defined by the given topics.</returns>
    public Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto);
+   /// <summary>
+   /// This method returns the technology taxonomy of the given ecosystem.
+   /// That is, the list of technologies that were used to create the ecosystem,
+   /// and was saved in the postgres database when the ecosystem was created.
+   /// </summary>
+   /// <param name="ecosystemName">The name of the ecosystem we want to find technologies for.</param>
+   /// <returns>A list of technologies for a given ecosystem.</returns>
+   public Task<List<string>> GetTechnologyTaxonomy(string ecosystemName);
 }

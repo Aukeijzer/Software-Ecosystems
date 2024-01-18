@@ -52,7 +52,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
-            dto.Technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
@@ -72,5 +71,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
         ecosystemDto.Description = ecosystem.Description;
         
         return ecosystemDto;
+    }
+    
+    public async Task<List<string>> GetTechnologyTaxonomy(string ecosystemName)
+    {
+        var ecosystem = await GetByNameAsync(ecosystemName);
+        if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
+        return ecosystem.Technologies;
     }
 }
