@@ -7,8 +7,6 @@ namespace SECODashBackend.Controllers;
 /// <summary>
 /// This controller is responsible for handling requests related to ecosystems.
 /// </summary>
-/// <param name="logger"></param>
-/// <param name="ecosystemsService"></param>
 [ApiController]
 [Route("[controller]")]
 public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosystemsService ecosystemsService)
@@ -17,7 +15,6 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     /// <summary>
     /// Returns all top-level ecosystems.
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     [SwaggerOperation("Get all ecosystems")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
@@ -30,7 +27,7 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     }
 
     /// <summary>
-    /// Returns an ecosystem defined by the topics in the dto
+    /// Returns an ecosystem defined by the topics in the dto.
     /// </summary>
     [HttpPost]
     public async Task<ActionResult<EcosystemDto>> SearchByTopics(EcosystemRequestDto dto)
@@ -53,7 +50,9 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
             return Problem(e.Message);
         }
     }
-
+    /// <summary>
+    /// Update the description of a top-level ecosystem.
+    /// </summary>
     [HttpPost("DescriptionUpdate")]
     [SwaggerOperation("Updates description for root ecosystem")]
     [SwaggerResponse(statusCode: 200, description: "successfully updated description")]
