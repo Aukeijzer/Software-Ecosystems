@@ -24,6 +24,7 @@ public static class DbInitializer
          Description = "Software related to agriculture",
          NumberOfStars = 34565,
          Users = [context.Users.Find("InitialRootAdmin")]
+         Technologies = ["farming"],
       });
       context.Ecosystems.Add(new Ecosystem
       {
@@ -33,6 +34,7 @@ public static class DbInitializer
          Description = "Software related to quantum mechanics",
          NumberOfStars = 4352,
          Users = [context.Users.Find("InitialRootAdmin")]
+         Technologies = ["qubits"],
       });
       context.Ecosystems.Add(new Ecosystem
       {
@@ -42,6 +44,7 @@ public static class DbInitializer
          Description = "Software related to artificial intelligence",
          NumberOfStars = 4352,
          Users = [context.Users.Find("InitialRootAdmin")]
+         Technologies = ["neural-networks"],
       });
       context.SaveChanges();
    }

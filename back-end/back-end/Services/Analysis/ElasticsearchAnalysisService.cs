@@ -179,7 +179,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 }
             }
         };
-
+        
+        List<string> technologies = ["qubits"];
+        
         // Aggregation of all projects aggregated by topic
         var topicAggregation = new TermsAggregation(TopicAggregateName)
         {

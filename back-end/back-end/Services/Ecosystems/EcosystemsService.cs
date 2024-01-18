@@ -104,4 +104,11 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         }
     }
+    
+    public async Task<List<string>> GetTechnologyTaxonomy(string ecosystemName)
+    {
+        var ecosystem = await GetByNameAsync(ecosystemName);
+        if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
+        return ecosystem.Technologies;
+    }
 }
