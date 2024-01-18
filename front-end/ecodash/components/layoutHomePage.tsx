@@ -8,6 +8,8 @@ import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
+import { ExtendedUser } from "@/app/utils/authOptions";
+import { useSession } from "next-auth/react";
 
 /**
  * Renders the layout for the home page.
@@ -41,8 +43,12 @@ export default function LayoutHomePage(){
     const Router = useRouter();
 
     //Set up API handler
-    const { data, trigger, error, isMutating} = useSWRMutation(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', fetcherHomePage)
+    const { data, trigger, error, isMutating} = useSWRMutation('/api/homePageGet', fetcherHomePage)
 
+    //Set up session
+    const { data: session } = useSession();
+    const user = session?.user as ExtendedUser;
+    
     //Trigger useEffect on load component. 
     useEffect(() => {
         trigger();
@@ -59,16 +65,31 @@ export default function LayoutHomePage(){
     }
     
     function onClickEcosystem(ecosystem: string){
-        //Get local adress and append ecosystem to it
+        /* Old code for when we had middleware 
         var url = process.env.NEXT_PUBLIC_LOCAL_ADRESS!.split("//");
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
+        */
+        Router.push('/' + ecosystem);
     }
 
     var cardWrappedList = [];
     if(data){
         const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
-
+        /*
+        if(user){
+            //If user is admin, make cards draggable
+            if(user.userType === "Admin" || user.userType === "RootAdmin"){
+                staticProp = false;
+        
+                //Create new dashboard card
+                const newDashboardButton = <div  onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton}/>
+                const newDashboardButtonWrapped : cardWrapper = {card: newDashboardButtonCard, width: 2, height: 3, x: 2, y: 5, static:true}
+                cardWrappedList.push(newDashboardButtonWrapped);
+            }
+        }
+        */
         //General information about SECODash
         const info = (<div className="flex flex-col"> 
                 <span> Total ecosystems: {totalInformation.totalEcosystems}</span>

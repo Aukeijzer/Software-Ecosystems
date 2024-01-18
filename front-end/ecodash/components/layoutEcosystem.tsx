@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState} from "react"
@@ -21,6 +20,8 @@ import TableComponent from "./tableComponent"
 import GraphComponent from "./graphComponent"
 import GraphLine from "./graphLine"
 import { colors } from "@/app/enums/filterColor"
+import { useSession} from "next-auth/react"
+import { ExtendedUser } from "@/app/utils/authOptions"
 
 var abbreviate = require('number-abbreviate');
 
@@ -85,12 +86,17 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         languages: [],
     });
 
+    //Keeps track of edit mode
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [description, setDescription] = useState<string>('');
+    
+     
     //Trigger = function to manually trigger fetcher function in SWR mutation. 
     //Data = data received from API. updates when trigger is called. causes update
-    const { data, trigger, error, isMutating } = useSWRMutation(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', fetcherEcosystemByTopic)
+    const { data, trigger, error, isMutating } = useSWRMutation('/api/ecosystemPagePost', fetcherEcosystemByTopic)
 
     //Triggers upon page load once. Calls trigger function with no argument that calls api backend with selected ecosystem
-    //Triggers twice in dev mode. Not once build tho / and npm run start. 
+    //Triggers twice in dev mode.
     
     useEffect(() => {
         //Check if URL has additional parameters
@@ -99,10 +105,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         if(params){
             //Convert params to string list
             const topics = params.split(',')
-            trigger({topics: [...selectedItems.ecosystems, ...topics ]})
+            trigger({topics: [...selectedItems.ecosystems, ...topics ], technologies:  selectedItems.technologies})
             setSelectedItems({ecosystems: [...selectedItems.ecosystems, ...topics ] , technologies: selectedItems.technologies, languages: selectedItems.languages})
         } else {
-            trigger({topics: selectedItems.ecosystems})
+            trigger({topics: selectedItems.ecosystems, technologies: selectedItems.technologies},)
         }
 
     },[]) 
@@ -117,7 +123,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
      * @returns A Promise that resolves when the filter is applied.
      */
     async function onClickFilter(filter: string, filterType: string){
-        await trigger({topics: [...selectedItems.ecosystems, filter]});
+        await trigger({topics: [...selectedItems.ecosystems, filter], technologies: selectedItems.technologies});
         setSelectedItems(prevState => ({
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems], filter]
@@ -159,7 +165,8 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
      * @returns A Promise that resolves when the filter has been removed.
      */
     async function removeFilter(filter: string, filterType: string){
-        await trigger({topics: selectedItems.ecosystems.filter(n => n != filter)});
+        //Solve trigger function
+        await trigger({topics: selectedItems.ecosystems.filter(n => n != filter), technologies: []});
         setSelectedItems(prevState => ({
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems].filter(n => n != filter)]
@@ -214,14 +221,14 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     }
   
     //Prepare variables before we have data so we can render before data is gathered
-    var cardWrappedList  = []
+    var cardList  = []
     if(data){
         //Real data
         const ecosystemDescription =  <div className="col-span-full">
             <EcosystemDescription ecosystem={props.ecosystem}  
             description={data.description ? data.description : "no description provided"} />
         </div>
-        cardWrappedList.push(ecosystemDescription)
+        cardList.push(ecosystemDescription)
         
         //Small data boxes  
         const smallBoxes = ( <div className="flex flex-row justify-around">
@@ -233,7 +240,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const smallBoxesCard = <div className="col-span-full">
             {smallBoxes}
         </div>
-        cardWrappedList.push(smallBoxesCard)
+        cardList.push(smallBoxesCard)
         
         //Filters
         const filters = <div className="col-span-1 lg:col-span-3 overflow-scroll">
@@ -243,13 +250,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             removeFilter={removeFilter}
             />
         </div>
-        cardWrappedList.push(filters)
+        cardList.push(filters)
         
         //Topic search box
         const topicSearch = <div className="col-span-1 lg:col-start-3">
               <TopicSearch selectTopic={onClickFilter} />
         </div>
-        cardWrappedList.push(topicSearch)
+        cardList.push(topicSearch)
         
         
         //Top 5 topics
@@ -261,7 +268,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         var subEcosystemCard = <div className="col-span-1">
                 <InfoCard title={""} data={subEcosystemComponent} Color={colors.topic}/>
         </div>
-        cardWrappedList.push(subEcosystemCard)
+        cardList.push(subEcosystemCard)
 
         //Top 5 contributors
         const contributors = listContributorDTOConverter(data.topContributors);
@@ -269,7 +276,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         var contributorCard = <div className="col-span-1">
                 <InfoCard title={""} data={contributorTable} Color={colors.contributor}/>
         </div>
-        cardWrappedList.push(contributorCard);
+        cardList.push(contributorCard);
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
@@ -280,7 +287,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
                 <InfoCard title={""} data={languageGraph} Color={colors.language}/>
         </div>
         //Add card to list
-        cardWrappedList.push(languageCard);
+        cardList.push(languageCard);
         
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
@@ -288,7 +295,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const technologyCard = <div className="col-span-1">
             <InfoCard title={""} data={technologyTable} Color={colors.technology}/>
         </div>
-        cardWrappedList.push(technologyCard)
+        cardList.push(technologyCard)
 
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
@@ -296,7 +303,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const risingTechnologiesCard = <div className="col-span-1">
             <InfoCard title={""} data={risingTechnologiesTable} Color={colors.technology} />
         </div>
-        cardWrappedList.push(risingTechnologiesCard)
+        cardList.push(risingTechnologiesCard)
  
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
@@ -304,7 +311,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const risingTopicsCard = <div className="col-span-1">
             <InfoCard title={""} data={risingTopicsTable} Color={colors.topic} />
         </div>
-        cardWrappedList.push(risingTopicsCard)
+        cardList.push(risingTopicsCard)
         
         //Line graph topicsGrowing 
         //For now no data conversion needed as Mock data is already in correct format 
@@ -313,7 +320,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const cardLineGraph = <div className="col-span-full">
             <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
         </div>
-        cardWrappedList.push(cardLineGraph)  
+        cardList.push(cardLineGraph)  
         
     } else {
         //When no data display spinner
@@ -328,10 +335,26 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     return(
         <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0">
            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3" >
-                {cardWrappedList.map((card, i) => (
+                {cardList.map((card, i) => (
                     card
                 ))}
            </div>
         </div>      
     )
 }
+
+/*
+ {user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") &&
+ <div className="m-3 rounded-sm  p-3 text-yellow-700 bg-red-200">
+     <form className="flex flex-col">
+         <div className="flex flex-row gap-3">
+             <label> edit mode:</label>
+             <input type="checkbox" name="editMode" onChange={() => setEditMode(!editMode)}/> 
+         </div>
+        
+     </form>
+     <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={(e) => saveDescription()}> save changes</button>
+ </div>
+}
+
+*/

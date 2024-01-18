@@ -27,7 +27,7 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     }
 
     /// <summary>
-    /// Returns an ecosystem defined by the topics in the dto
+    /// Returns an ecosystem defined by the topics in the dto.
     /// </summary>
     [HttpPost]
     public async Task<ActionResult<EcosystemDto>> SearchByTopics(EcosystemRequestDto dto)
@@ -48,6 +48,32 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
         {
             logger.LogInformation("{Origin}: No ecosystem returned: '{exception}'.", this, e.Message);
             return Problem(e.Message);
+        }
+    }
+    /// <summary>
+    /// Update the description of a top-level ecosystem.
+    /// </summary>
+    [HttpPost("DescriptionUpdate")]
+    [SwaggerOperation("Updates description for root ecosystem")]
+    [SwaggerResponse(statusCode: 200, description: "successfully updated description")]
+    public async Task<ActionResult<DescriptionDto>> UpdateDescription(DescriptionRequestDto req)
+    {
+        logger.LogInformation("{Origin}: Updating ecosystem description.",this);
+        try
+        {
+            var result = await ecosystemsService.UpdateDescription(req);
+            var response = new DescriptionDto()
+            {
+                Description = result
+            };
+            logger.LogInformation("{Origin}: Successfully updated the description.",this);
+            return new ObjectResult(response);
+        }
+        catch (Exception e)
+        {
+            logger.LogInformation("{Origin}: Failed to update ecosystem description: '{exception}'.",this,e.Message);
+            Console.WriteLine(e);
+            throw;
         }
     }
 }
