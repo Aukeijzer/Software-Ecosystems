@@ -22,11 +22,6 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
            "numberOfTopTechnologies": 5,
            "numberOfTopProjects": 5,
    }
-
-
- 
-   console.log(apiPostBody);
-   
     //Make fetch call to url that returns promise
     //Resolve promise by awaiting 
     //Then convert result to JSON
