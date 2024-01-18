@@ -11,11 +11,11 @@ public interface IAnalysisService
     /// Analyzes the ecosystem given by the topics.
     /// </summary>
     /// <param name="topics">The topics of the ecosystem.</param>
-    /// <param name="numberOfTopLanguages">The number of top languages to get.</param>
-    /// <param name="numberOfTopSubEcosystems">The number of top sub ecosystems to get.</param>
-    /// <param name="numberOfTopContributors">The number of top contributors to get.</param>
+    /// <param name="numberOfTopLanguages">The number of top languages to retrieve.</param>
+    /// <param name="numberOfTopSubEcosystems">The number of top sub ecosystems to retrieve.</param>
+    /// <param name="numberOfTopContributors">The number of top contributors to retrieve.</param>
+    /// <param name="numberOfTopProjects">The number of top projects to retrieve</param>
     /// <returns>The result of the analysis.</returns>
     public Task<EcosystemDto> AnalyzeEcosystemAsync(
-        List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, 
-        DateTime startTime, DateTime endTime, int timeBucket);
+        List<string> topics, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopProjects);
 }
