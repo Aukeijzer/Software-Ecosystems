@@ -22,7 +22,7 @@ export default function NavBarTop(){
     const Router = useRouter();
     //For now has the basepath 
     return(
-        <Navbar data-cy='navBar' fluid  className='bg-navBar shadow-sm mb-5 px-5 lg:px-36 md:px-20' >
+        <Navbar data-cy='navBar' fluid  className='bg-navBar shadow-sm mb-5 px-5 lg:px-32 md:px-20' >
             <Navbar.Brand as={Link}  href={process.env.NEXT_PUBLIC_LOCAL_ADRESS} >
                 <Image
                     data-cy='navLogo'
@@ -54,7 +54,6 @@ export default function NavBarTop(){
                         </div>}
             {/* If not logged in display login button */}
             {!session && <div className='flex flex-col'> 
-                            <span> Not logged in: </span>
                             <PopUpBox buttonText='Login' data-cy="loginButton"> <LoginBox/> </PopUpBox>
                          </div>}
         </Navbar>

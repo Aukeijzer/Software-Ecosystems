@@ -36,8 +36,8 @@ export default function TableComponent<T extends {}>(props: infoCardDataTablePro
     }
     else{
         return(
-            <div>
-                
+            <div className="flex justify-center">
+                No more data to show.
             </div>
         )
     }

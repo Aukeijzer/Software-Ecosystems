@@ -279,10 +279,11 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             />
         </div>
         cardList.push(filters)
-       
         
-        
-        //Top 5 topics
+
+        //Check if there is enough data to display
+        if(data.topSubEcosystems.length > 0 || data.topContributors.length > 0){
+            //Top 5 topics
         //First Convert DTO's to Classes
         const subEcosystems = listSubEcosystemDTOConverter(data.topSubEcosystems);
         //Make table element
@@ -306,7 +307,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         console.log(languages);
         //Make graph card
         const languageGraph = <GraphComponent items={languages} onClick={(language : string) => onClickFilter(language, "languages")}/>
-        var languageCard = <div className="">
+        var languageCard = <div className="h-[400px]">
                 <InfoCard title={""} data={languageGraph} Color={colors.language}/>
         </div>
         //Add card to list
@@ -343,16 +344,19 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const cardLineGraph = <div className="col-span-full">
             <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
         </div>
-        cardList.push(cardLineGraph)  
+        cardList.push(cardLineGraph)
+        } else {
+             cardList.push(<div className="col-span-full bg-white py-10 justify-center flex"> No data available with selected filters.</div>)
+        }
+          
         
     } else {
-        //When no data display spinner
         return(
             <div>
                 <SpinnerComponent />
             </div>
         )
-    }
+    } 
 
     //Normal render (No error)
     return(
