@@ -170,6 +170,11 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         try
         {
             var response = await _client.SendQueryAsync<SpiderData>(repositoriesQuery);
+            if (response.Data == null)
+            {
+              await checkRatelimit<SpiderData>(response.AsGraphQLHttpResponse());
+              return await QueryRepositoriesByName(repositoryName, amount, cursor, tries);
+            }
 
             if (response is GraphQLHttpResponse<SpiderData> httpResponse && httpResponse.Errors == null)
             {
@@ -358,6 +363,12 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         {
           var response = await _client.SendQueryAsync<TopicSearchData>(topicRepositoriesQuery);
 
+          if (response.Data == null)
+          {
+            await checkRatelimit<TopicSearchData>(response.AsGraphQLHttpResponse());
+            response = await _client.SendQueryAsync<TopicSearchData>(topicRepositoriesQuery);
+          }
+          
           if (response is GraphQLHttpResponse<TopicSearchData> httpResponse && httpResponse.Errors == null)
           {
             return response.Data;
@@ -529,5 +540,28 @@ public class GitHubGraphqlService : IGitHubGraphqlService
       }
       
       return (data);
+    }
+
+    public async Task checkRatelimit<TResponse>(GraphQLHttpResponse<TResponse> response)
+    {
+      
+      var header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "X-RateLimit-Remaining");
+      if (int.Parse(header.Value.First()) == 0)
+      {
+        header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "X-RateLimit-Reset");
+            
+        DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value.First()));
+        DateTime retryTime = utcTime.DateTime;
+        _logger.LogWarning("Primary rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
+        Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
+        return;
+      }
+      
+      header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "Retry-After");
+      if (header.Value != null)
+      {
+        _logger.LogWarning("Secondary rate limit reached. Retrying in {seconds} seconds", header.Value);
+        Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
+      }
     }
 }
