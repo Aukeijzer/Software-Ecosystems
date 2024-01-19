@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest){
     //Get variables from POST body
-    console.log("Getting ecosystem data.")
     const data = await req.json();
     const {topics, numberOfTopLanguages, numberOfTopSubEcosystems, numberOfTopContributors, technologies} = data;
 
@@ -15,7 +14,6 @@ export async function POST(req: NextRequest){
         numberOfTopTechnologies: 5,
         numberOfTopProjects: 5
     }
-    console.log("Posting ecosystem data.")
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/ecosystems", {
         method: 'POST',
         headers: {

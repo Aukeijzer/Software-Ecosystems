@@ -2,10 +2,13 @@ import GraphComponent from "@/components/graphComponent";
 import React from 'react';
 import { mockLanguages, languages } from "../fixtures/mockData";
 
+function mockOnClick(){
+  return;
+}
 describe('GraphComponent', () => {
   beforeEach(() => {
     // Mount the component before each test
-    cy.mount(<GraphComponent items={mockLanguages} />);
+    cy.mount(<GraphComponent items={mockLanguages} onClick={() => mockOnClick}/>);
   });
 
   it('renders the pie chart with the provided data', () => {

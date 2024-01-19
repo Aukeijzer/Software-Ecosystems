@@ -8,7 +8,7 @@ import { languageDTO } from "../../interfaces/DTOs/languageDTO";
  * @returns The converted languageClass object.
  */
 export function languageDTOConverter(language: languageDTO){
-    return new languageClass(language.language, language.percentage);
+    return new languageClass(language.language as string, language.percentage);
 }
 
 /**
