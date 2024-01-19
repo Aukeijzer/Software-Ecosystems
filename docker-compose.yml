@@ -36,6 +36,9 @@ services:
     networks:
       - secodash-network
     restart: always
+    build:
+      context: ./database
+      dockerfile: db.Dockerfile
     environment:
       POSTGRES_Username: postgres
       POSTGRES_PASSWORD: SECODash
