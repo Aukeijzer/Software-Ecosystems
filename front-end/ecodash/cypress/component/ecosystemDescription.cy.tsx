@@ -1,10 +1,17 @@
 import EcosystemDescription from "@/components/ecosystemDescription";
 import { mockEcosystemDescription1, mockEcosystemDescription2, mockEcosystemDescription3 } from "../fixtures/mockData";
 
+function MockChangeDescription(desc: string) {
+    return;
+}
+   
+var editMode = false;
+
 describe('Ecosystem Description',() => {
     it('render ecosystem description', () =>{
         // Render component
-        cy.mount(<EcosystemDescription {...mockEcosystemDescription1} />)
+  
+        cy.mount(<EcosystemDescription {...mockEcosystemDescription1} editMode={editMode} changeDescription={MockChangeDescription}/>)
 
         // Check whether the welcome message is rendered correctly
         cy.get('[data-cy="ecosystem description"]')
@@ -27,7 +34,7 @@ describe('Ecosystem Description',() => {
 
     it('render selected subecosystems', () =>{
         // Render component
-        cy.mount(<EcosystemDescription {...mockEcosystemDescription2} />)
+        cy.mount(<EcosystemDescription {...mockEcosystemDescription2} editMode={editMode} changeDescription={MockChangeDescription} />)
 
         // Check whether the subecosystems are rendered correctly
         cy.get('[data-cy="ecosystem description"]')
@@ -44,7 +51,7 @@ describe('Ecosystem Description',() => {
     // Test to check when remove is clicked, subecosystem list is updated
     it('remove selected sub-ecosystems', () => {
         // Render component
-        cy.mount(<EcosystemDescription {...mockEcosystemDescription3} />);
+        cy.mount(<EcosystemDescription {...mockEcosystemDescription3} editMode={editMode} changeDescription={MockChangeDescription}/>);
     
         // Simulate clicking on the remove button for 'farming'
         cy.get('[data-cy=subecosystems]')
@@ -53,7 +60,7 @@ describe('Ecosystem Description',() => {
     
         // Wait for removal and rerender component
         cy.wait(100).then(() => {
-            cy.mount(<EcosystemDescription {...mockEcosystemDescription3} />);
+            cy.mount(<EcosystemDescription {...mockEcosystemDescription3} editMode={editMode} changeDescription={MockChangeDescription} />);
     
         // Check that 'farming' is removed from the subecosystems list
         cy.get('[data-cy=subecosystems]')
