@@ -243,10 +243,16 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
                 </div>) 
             cardList.push(ecosystemEdit)
         }
-        //Real data
+        
+         //Topic search box
+        const topicSearch = <div className="col-span-1 lg:col-start-3">
+            <TopicSearch selectTopic={onClickFilter} />
+        </div>
+        
         const ecosystemDescription =  <div className="col-span-full">
             <EcosystemDescription ecosystem={props.ecosystem}  
-            description={data.description ? data.description : "no description provided"} />
+            description={data.description ? data.description : "no description provided"} 
+            children={topicSearch}/>
         </div>
         cardList.push(ecosystemDescription)
         
@@ -265,20 +271,15 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         cardList.push(smallBoxesCard)
         
         //Filters
-        const filters = <div className="col-span-1 lg:col-span-3 overflow-scroll">
+        const filters = <div className="col-span-full">
             <Filters technologies={selectedItems.technologies} 
-            subEcosystems={selectedItems.ecosystems.filter(n => n != props.ecosystem)} 
-            languages={selectedItems.languages} 
-            removeFilter={removeFilter}
+                     subEcosystems={selectedItems.ecosystems.filter(n => n != props.ecosystem)} 
+                     languages={selectedItems.languages} 
+                     removeFilter={removeFilter}
             />
         </div>
         cardList.push(filters)
-        
-        //Topic search box
-        const topicSearch = <div className="col-span-1 lg:col-start-3">
-              <TopicSearch selectTopic={onClickFilter} />
-        </div>
-        cardList.push(topicSearch)
+       
         
         
         //Top 5 topics

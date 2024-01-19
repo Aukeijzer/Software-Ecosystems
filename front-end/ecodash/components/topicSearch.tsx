@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from './button';
 
 interface TopicSearchProps {
     selectTopic: (topic: string, filtertype: string) => void;
@@ -51,12 +52,7 @@ export default function TopicSearch(props: TopicSearchProps){
                     className="mr-2 p-2 border border-gray-300 rounded-md"
                 />
 
-                <button
-                    onClick={handleSearch}
-                    className="p-2 bg-blue-500 text-white rounded-md"
-                >
-                    Search
-                </button>
+                <Button text='Search' onClick={handleSearch} />
             </div>
     );
 }

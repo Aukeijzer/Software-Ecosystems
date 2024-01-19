@@ -18,7 +18,8 @@
  * @param {string} [Color] - The color of the top of the card.
  * @returns {JSX.Element} The rendered InfoCard component.
  */
-import { Card, Alert } from 'flowbite-react'
+import { Alert } from 'flowbite-react'
+import Card from './card'
 import React from 'react'
 import { HiInformationCircle } from 'react-icons/hi'
 
@@ -43,7 +44,7 @@ export default function InfoCard(props: InfoCardProps) {
             <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
             
             <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
-                {props.title}
+                {props.title}   
             </h5>
 
             {props.alert && <Alert color="green" icon={HiInformationCircle} rounded className='mb-2 text-yellow-700 bg-yellow-100 border-yellow-500 dark:bg-yellow-200 dark:text-yellow-800'> <p>{props.alert}  </p></Alert>}

@@ -10,6 +10,7 @@ import PopUpBox from './popUpBox';
 import LoginBox from './loginBox';
 import { ExtendedUser } from '@/app/utils/authOptions';
 import { useSession} from "next-auth/react";
+import Button from './button';
 /**
  * Renders the top navigation bar component. That contains login display and link to homepage.
  * @returns The JSX element representing the top navigation bar.
@@ -48,10 +49,8 @@ export default function NavBarTop(){
                                 />
                                <b> {user.userType} </b>
                             </div>            
-                            
-                            <button className="bg-gray-500 rounded-md p-1" onClick={() => Router.push('/api/auth/signout')}>
-                                Sign out
-                            </button>
+
+                            <Button text='Sign out' onClick={() =>  Router.push('/api/auth/signout')} />
                         </div>}
             {/* If not logged in display login button */}
             {!session && <div className='flex flex-col'> 
