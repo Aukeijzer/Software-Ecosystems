@@ -3,6 +3,7 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Hangfire;
 using Hangfire.AspNetCore;
+using Hangfire.Dashboard;
 using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
@@ -71,11 +72,14 @@ builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Log
 
 // Configure the Hangfire scheduler
 builder.Services.AddHangfire((provider, config) => config
-    .UsePostgreSqlStorage(c =>
-        c.UseNpgsqlConnection(builder.Configuration.GetConnectionString("Hangfire")))
+    .UsePostgreSqlStorage(c => c
+        .UseNpgsqlConnection(builder.Configuration.GetConnectionString("Hangfire")))
     .UseActivator(new AspNetCoreJobActivator(provider.GetRequiredService<IServiceScopeFactory>()))
     .UseRecommendedSerializerSettings()
-    .UseSimpleAssemblyNameTypeSerializer());
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseDashboardMetric(DashboardMetrics.FailedCount)
+    .UseDashboardMetrics(DashboardMetrics.RecurringJobCount)
+    .UseDashboardMetrics(DashboardMetrics.RetriesCount));
 
 // Add the Hangfire server that is responsible for executing the scheduled jobs.
 builder.Services.AddHangfireServer();
