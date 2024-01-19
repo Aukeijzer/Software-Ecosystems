@@ -76,20 +76,9 @@ export default function LayoutHomePage(){
     var cardWrappedList = [];
     if(data){
         const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
-        /*
-        if(user){
-            //If user is admin, make cards draggable
-            if(user.userType === "Admin" || user.userType === "RootAdmin"){
-                staticProp = false;
         
-                //Create new dashboard card
-                const newDashboardButton = <div  onClick={() => Router.push('/newDashboard')}>Create </div>
-                const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton}/>
-                const newDashboardButtonWrapped : cardWrapper = {card: newDashboardButtonCard, width: 2, height: 3, x: 2, y: 5, static:true}
-                cardWrappedList.push(newDashboardButtonWrapped);
-            }
-        }
-        */
+        
+        
         //General information about SECODash
         const info = (<div className="flex flex-col"> 
                 <span> Total ecosystems: {totalInformation.totalEcosystems}</span>
@@ -132,6 +121,22 @@ export default function LayoutHomePage(){
             Color={COLORS[2]}/>
         </div>
         cardWrappedList.push(aiButtonCard);
+        
+        if(user){
+            //If user is admin, make cards draggable
+            if(user.userType === "Admin" || user.userType === "RootAdmin"){
+ 
+                //Create new dashboard card
+                const newDashboardButton = <div onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButtonCard = <div>
+                    <InfoCard 
+                    title="Create new Dashboard"
+                    data={newDashboardButton}
+                    Color={COLORS[3]}/>
+                </div> 
+                cardWrappedList.push(newDashboardButtonCard);
+            }
+        }
 
     } else {
         //When still loading display spinner
