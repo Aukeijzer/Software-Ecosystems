@@ -313,7 +313,9 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             description={description ? description : data.description}
             editMode={editMode}
             changeDescription={changeDescription} 
-            children={topicSearch}/>
+            >
+                {topicSearch}
+            </EcosystemDescription>
         </div>
         cardList.push(ecosystemDescription)
         
