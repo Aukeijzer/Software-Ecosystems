@@ -4,6 +4,8 @@ import { Card } from 'flowbite-react'
 interface ecoSystemDescriptionProps{
     ecosystem: string,
     description: string,
+    editMode: boolean,
+    changeDescription: (description: string) => void,
     subEcosystems?: string[],
     removeTopic?: (topic: string) => void
 }
@@ -15,6 +17,8 @@ interface ecoSystemDescriptionProps{
  * @param {Object} props - The component props.
  * @param {string} props.ecosystem - The name of the ecosystem.
  * @param {string} props.description - The description of the ecosystem.
+ * @param {boolean} props.editMode - Indicates whether the component is in edit mode.
+ * @param {(description: string) => void} props.changeDescription - The function to change the description.
  * @param {string[]} [props.subEcosystems] - The list of sub-ecosystems.
  * @param {(topic: string) => void} [props.removeTopic] - The function to remove a topic.
  * @returns {JSX.Element} The rendered EcosystemDescription component.
@@ -38,9 +42,16 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                     </ul>
                 </div>
                 }
-                <p data-cy='description ecosystem'>
-                    {props.description}
-                </p>
+                {props.editMode && 
+                    <form>
+                        <label> edit description: </label>
+                        <input name="description" type='text' value={props.description} onChange={(e) => props.changeDescription(e.target.value)} />
+                    </form>}
+                {!props.editMode && 
+                    <p data-cy='description ecosystem'>
+                        {props.description}
+                    </p>
+                } 
             </Card>
         </div>
     )

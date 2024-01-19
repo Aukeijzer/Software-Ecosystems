@@ -16,6 +16,7 @@ using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Scheduler;
 using SECODashBackend.Services.Spider;
+using SECODashBackend.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -36,6 +37,7 @@ builder.Services.AddDbContext<EcosystemsContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb")));
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
+builder.Services.AddScoped<UsersService>();
 
 var spiderConnectionString = builder.Configuration.GetConnectionString("Spider");
 if (string.IsNullOrEmpty(spiderConnectionString))
