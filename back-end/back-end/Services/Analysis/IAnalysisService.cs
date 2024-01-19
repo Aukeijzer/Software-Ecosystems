@@ -1,4 +1,5 @@
 ﻿using SECODashBackend.Dtos.Ecosystem;
+using SECODashBackend.Models;
 
 namespace SECODashBackend.Services.Analysis;
 
@@ -21,7 +22,7 @@ public interface IAnalysisService
     /// <param name="endTime">The end date of the period of time to retrieve.</param>
     /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
     /// <returns>The result of the analysis.</returns>
-    public Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<string> technologies,
+    public Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<Technology> technologies,
         int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, 
         int numberOfTopTechnologies, int numberOfTopProjects,
         DateTime startTime, DateTime endTime, int timeBucket);

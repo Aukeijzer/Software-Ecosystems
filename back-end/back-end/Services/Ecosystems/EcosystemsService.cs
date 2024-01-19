@@ -50,15 +50,11 @@ public class EcosystemsService(EcosystemsContext dbContext,
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
         
-        // Retrieve the technology taxonomy from the database that are in the ecosystem
-        var technologyTaxonomy = await dbContext.Ecosystems
-            .AsNoTracking()
-            .Include(e => e.Technologies)
-            .ToListAsync();
+        var technologies = await GetTechnologyTaxonomy(dto.Topics.First());
         
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
-            [],
+            technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
@@ -70,10 +66,9 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
         if (dto.Topics.Count != 1) return ecosystemDto;
-            
+        
         // Check if the database has additional data regarding this ecosystem
         var ecosystem = await GetByNameAsync(dto.Topics.First());
-
         // If it doesn't, return the dto as is, else add the additional data
         if (ecosystem == null) return ecosystemDto;
         ecosystemDto.DisplayName = ecosystem.DisplayName;
@@ -105,7 +100,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
         }
     }
     
-    public async Task<List<string>> GetTechnologyTaxonomy(string ecosystemName)
+    public async Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName)
     {
         var ecosystem = await GetByNameAsync(ecosystemName);
         if (ecosystem == null) throw new ArgumentException("Ecosystem not found");

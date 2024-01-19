@@ -27,5 +27,5 @@ public interface IEcosystemsService
    /// </summary>
    /// <param name="ecosystemName">The name of the ecosystem we want to find technologies for.</param>
    /// <returns>A list of technologies for a given ecosystem.</returns>
-   public Task<List<string>> GetTechnologyTaxonomy(string ecosystemName);
+   public Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName);
 }
