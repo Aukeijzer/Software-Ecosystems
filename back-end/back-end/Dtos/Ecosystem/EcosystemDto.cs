@@ -24,5 +24,6 @@ public class EcosystemDto
     [DataMember(Name = "numberOfContributors")] public int? NumberOfContributors { get; set; }
     [DataMember(Name = "numberOfContributions")] public int? NumberOfContributions { get; set; }
     
+    
 }
    
