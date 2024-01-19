@@ -12,7 +12,7 @@ export default class contributorClass implements displayableTableItem {
 
     renderTableHeaders(): React.JSX.Element {
         return(
-            <tr>
+            <tr className="flex flex-row justify-between py-3">
                 <th key={'username'} className="px-6 py-3">
                     username
                 </th>
@@ -25,11 +25,11 @@ export default class contributorClass implements displayableTableItem {
 
     renderAsTableItem(): React.JSX.Element {
         return(
-            <tr className="bg-white border-b">
-                <th className="px-6 py-4 font-medium text-gray-900">
+            <tr className="bg-white border-b px-5 flex flex-row justify-between">
+                <th className="py-4 font-medium text-gray-900">
                     {this.username}
                 </th>
-                <td className="px-6 py-4 text-right">
+                <td className="py-4 text-right">
                     {this.contributions}
                 </td>
             </tr>

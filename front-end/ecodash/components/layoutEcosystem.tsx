@@ -22,6 +22,7 @@ import GraphLine from "./graphLine"
 import { colors } from "@/app/enums/filterColor"
 import { useSession} from "next-auth/react"
 import { ExtendedUser } from "@/app/utils/authOptions"
+import Button from "./button"
 
 var abbreviate = require('number-abbreviate');
 
@@ -105,13 +106,35 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     
     useEffect(() => {
         //Check if URL has additional parameters
-        const params = searchParams.get('topics');
-    
-        if(params){
+        const topicParams = searchParams.get('topics');
+        const techParams = searchParams.get('technologies');
+        const languageParams = searchParams.get('languages');
+
+        
+        if(topicParams || techParams || languageParams){
             //Convert params to string list
-            const topics = params.split(',')
-            trigger({topics: [...selectedItems.ecosystems, ...topics ], technologies:  selectedItems.technologies})
-            setSelectedItems({ecosystems: [...selectedItems.ecosystems, ...topics ] , technologies: selectedItems.technologies, languages: selectedItems.languages})
+            var topics : string[] = [] ;
+            if(topicParams){
+                topics = topicParams!.split(',');
+
+            }
+            var technologies : string[] = [];
+            if(techParams){
+                technologies = techParams!.split(',');
+            }
+
+            var languages : string[] = [];
+            if(languageParams){
+                languages = languageParams!.split(',');
+            }
+
+            trigger({topics: [...selectedItems.ecosystems, ...topics ], 
+                technologies:  [...selectedItems.technologies, ...technologies ]}
+            )
+            setSelectedItems({ecosystems: [...selectedItems.ecosystems, ...topics ] , 
+                technologies: [...selectedItems.technologies, ...technologies], 
+                languages: [...selectedItems.languages, ...languages]}
+            )
         } else {
             trigger({topics: selectedItems.ecosystems, technologies: selectedItems.technologies},)
         }
@@ -135,25 +158,36 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         }));
         //Prepare technology url
         var techUrl = "";
-        if(filterType == "technologies"){
-            techUrl ="&technologies=" + selectedItems.technologies.join(",") + "," + filter
-        } else {
+        if(filterType == "technologies" ){
+            if(selectedItems.technologies.length > 1){
+                techUrl ="&technologies=" + selectedItems.technologies.join(",")  + ',' + filter ;
+            } else {
+                techUrl ="&technologies=" + filter ;
+            }
+        } else if(selectedItems.technologies.length > 0) {
             techUrl ="&technologies=" + selectedItems.technologies.join(",")
         }
     
         //Prepare topic url
         var topicUrl = "";
         if(filterType == "ecosystems"){
-            topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",") + "," + filter
-        } else {
+            if(selectedItems.ecosystems.length > 1){
+                topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",") + ',' + filter
+            } else {
+                topicUrl ="&topics=" + filter
+            }
+        } else if(selectedItems.ecosystems.length > 1) {
             topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",")
         }
         //Prepare language url
         var languageUrl = "";
-
         if(filterType == "languages"){
-            languageUrl ="&languages=" + selectedItems.languages.join(",") + "," + filter
-        } else {
+            if(selectedItems.languages.length > 1){
+                languageUrl ="&languages=" + selectedItems.languages.join(",") + ',' + filter
+            } else {
+                languageUrl ="&languages=" + filter
+            }
+        } else if(selectedItems.languages.length > 0) {
             languageUrl ="&languages=" + selectedItems.languages.join(",")
         }
 
@@ -180,36 +214,58 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
         //Prepare technology url
         var techUrl = "";
-        if(filterType == "technologies"){
+        if(filterType == "technologies" && selectedItems.technologies.length > 1){
             techUrl ="&technologies=" + selectedItems.technologies.filter(n => n != filter).join(",")
-        } else {
+        }  else if(filterType != "technologies" && selectedItems.technologies.length > 0) {
             techUrl ="&technologies=" + selectedItems.technologies.join(",")
         }
-    
         //Prepare topic url
         var topicUrl = "";
-        if(filterType == "ecosystems"){
+        if(filterType == "ecosystems" && selectedItems.ecosystems.length > 2){
             topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).filter(n => n != filter).join(",")
-        } else {
-            topicUrl ="&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",")
-        }
+            topicUrl = "&topics=" + selectedItems.ecosystems.filter(n => n != props.ecosystem).join(",")
+        } 
         //Prepare language url
         var languageUrl = "";
-
-        if(filterType == "languages"){
+        if(filterType == "languages" && selectedItems.languages.length > 1){
             languageUrl ="&languages=" + selectedItems.languages.filter(n => n != filter).join(",") 
-        } else {
-            languageUrl ="&languages=" + selectedItems.languages.join(",")
+        } else if(filterType != "languages" && selectedItems.languages.length > 0) {
+            techUrl ="&languages=" + selectedItems.languages.join(",")
         }
 
-        if(techUrl != "" || topicUrl != "" || languageUrl != "") {
-            Router.push(`?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
-        }
+        Router.push(`?${topicUrl}${techUrl}${languageUrl}`, { scroll: false})
     }
 
     async function saveDescription(){
+        //Prepare post body with description and selected ecosystems
+        var apiPostBody = {
+            description: description,
+            ecosystem: props.ecosystem
+        }
 
+        //Send to node backend,
+        const response : Response = await fetch(process.env.NEXT_PUBLIC_LOCAL_ADRESS + "/api/saveEdit", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(apiPostBody)
+        })
+
+        //Check if response is ok, if not throw error 500
+        if (response.status == 500){
+            console.log("Failed to update description");
+            throw new Error(response.statusText)
+        }
+        Router.refresh();
     }
+
+    function changeDescription(description: string){
+        console.log(description);
+        setDescription(description);
+    }
+
+
     //If error we display error message
     if(error){
         return(
@@ -232,14 +288,17 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     if(data){
         if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin")) {
             const ecosystemEdit = (
-                <div className="m-3 rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-3">
+                <div className="rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-3">
                     <form className="flex flex-col">
                         <div className="flex flex-row gap-3">
                             <label> edit mode:</label>
-                            <input type="checkbox" name="editMode" onChange={() => setEditMode(!editMode)}/> 
+                            <input type="checkbox" name="editMode" className="mt-1" onChange={() => setEditMode(!editMode)}/> 
                         </div>
                     </form>
-                    <button className="text-center w-52 bg-blue-500 hover:bg-blue-700 border-2 border-black text-white font-bold py-2 px-4 rounded" onClick={() => saveDescription}> Save changes</button>
+                    {editMode && 
+                        <Button text='Save changes' onClick={() => saveDescription()} />
+                    }
+
                 </div>) 
             cardList.push(ecosystemEdit)
         }
@@ -251,7 +310,9 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         
         const ecosystemDescription =  <div className="col-span-full">
             <EcosystemDescription ecosystem={props.ecosystem}  
-            description={data.description ? data.description : "no description provided"} 
+            description={description ? description : data.description}
+            editMode={editMode}
+            changeDescription={changeDescription} 
             children={topicSearch}/>
         </div>
         cardList.push(ecosystemDescription)
@@ -289,7 +350,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Make table element
         var subEcosystemComponent = <TableComponent items={subEcosystems} onClick={(sub : string) => onClickFilter(sub, "ecosystems")}/>
         //Make card element
-        var subEcosystemCard = <div className="">
+        var subEcosystemCard = <div>
                 <InfoCard title={""} data={subEcosystemComponent} Color={colors.topic}/>
         </div>
         cardList.push(subEcosystemCard)
@@ -297,17 +358,16 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Top 5 contributors
         const contributors = listContributorDTOConverter(data.topContributors);
         var contributorTable = <TableComponent items={contributors} onClick={(contributor : string) => (console.log(contributor))}/>
-        var contributorCard = <div className="">
+        var contributorCard = <div>
                 <InfoCard title={""} data={contributorTable} Color={colors.contributor}/>
         </div>
         cardList.push(contributorCard);
 
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
-        console.log(languages);
         //Make graph card
         const languageGraph = <GraphComponent items={languages} onClick={(language : string) => onClickFilter(language, "languages")}/>
-        var languageCard = <div className="h-[400px]">
+        var languageCard = <div>
                 <InfoCard title={""} data={languageGraph} Color={colors.language}/>
         </div>
         //Add card to list
@@ -316,7 +376,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
         const technologyTable = <TableComponent items={technologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
-        const technologyCard = <div className="">
+        const technologyCard = <div>
             <InfoCard title={""} data={technologyTable} Color={colors.technology}/>
         </div>
         cardList.push(technologyCard)
@@ -324,7 +384,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //List of rising technologies
         const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
         const risingTechnologiesTable = <TableComponent items={risingTechnologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
-        const risingTechnologiesCard = <div className="">
+        const risingTechnologiesCard = <div>
             <InfoCard title={""} data={risingTechnologiesTable} Color={colors.technology} />
         </div>
         cardList.push(risingTechnologiesCard)
@@ -332,7 +392,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
         const risingTopicsTable = <TableComponent items={risingTopics} onClick={(topic : string) => onClickFilter(topic, "ecosystems")}/>
-        const risingTopicsCard = <div className="col-span-1">
+        const risingTopicsCard = <div>
             <InfoCard title={""} data={risingTopicsTable} Color={colors.topic} />
         </div>
         cardList.push(risingTopicsCard)
@@ -360,7 +420,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Normal render (No error)
     return(
-        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0 zoom:ml-32 zoom:mr-0">
+        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0">
            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3" >
                 {cardList.map((card, i) => (
                     card

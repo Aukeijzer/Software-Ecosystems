@@ -1,9 +1,8 @@
 "use client"
 
 import dynamic from 'next/dynamic'
-import { Pie, Legend } from "recharts";
+import { Pie, Legend, Tooltip } from "recharts";
 import displayableGraphItem from '@/app/classes/displayableGraphItem';
-import { useRouter } from 'next/navigation';
 
 //This must be imported dynamicly so that SSR can be disabled
 //TODO: Maybe add a spinner to loading time?
@@ -18,7 +17,6 @@ const PieChart = dynamic(() => import('recharts').then(mod => mod.PieChart), {
  */
 interface infoCardDataGraphProps{
     items: displayableGraphItem[],
-
     onClick: (sub: string) => void;
 }
 
@@ -28,11 +26,9 @@ interface infoCardDataGraphProps{
  * @returns {JSX.Element} The rendered graph component.
  */
 export default function GraphComponent(props: infoCardDataGraphProps){
-    const router = useRouter();
     if(props.items.length > 1){
     return(
         <div data-cy='pie-chart'>
-
               <PieChart width={400} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}} >
                 <Pie data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
                     {props.items.map((entry, index) => (
@@ -40,11 +36,11 @@ export default function GraphComponent(props: infoCardDataGraphProps){
                     ))}
                 </Pie>
                 <Legend align="left" layout="vertical" verticalAlign="middle" />
+                <Tooltip />
            </PieChart>    
         </div>
     );
     } else {
-        //router.push("/endOfData");
         return(
             <div>
                 No projects found

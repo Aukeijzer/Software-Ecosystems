@@ -34,7 +34,7 @@ export default class technologyClass implements displayableListItem {
     renderTableHeaders(): React.JSX.Element {
         return(
             <tr className="flex flex-row justify-between py-3 px-5">
-                <th key={'technology'} className="">
+                <th key={'technology'}>
                     technology
                 </th>
                 <th key={'projects'} className="text-right">

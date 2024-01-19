@@ -15,13 +15,6 @@ const config: Config = {
       'odinAccent': '#143240',
       'amber': '#F5F8FA',
       'newBg': '#F1F6F6',
-      'navBar': '#FFFFFF'
-
-    },
-    extend: {
-      screens: {
-        'zoom': {'raw': '(min-width: 1024px) and (min-device-pixel-ratio: 1.25)'}
-      }
     }
   },
   

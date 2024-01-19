@@ -21,7 +21,9 @@ export default function Filters(props: filterProps){
     return(
         <div className=" w-full h-8 overflow-x-scroll">
             <ul className="flex flex-row gap-3">
-                {props.subEcosystems != null && props.subEcosystems.map((item, i) => (
+                {props.subEcosystems != null && props.subEcosystems.length > 0 && (
+                    <>
+                    {props.subEcosystems.map((item, i) => (
                                 <li key={i} className='flex flex-row gap-5 mb-1'>
            
                                     <button
@@ -35,6 +37,9 @@ export default function Filters(props: filterProps){
                                 </li>
                             )
                         )
+                    }
+                    </>
+                    )
                 }
                 {props.languages != null && props.languages.length > 0 && (
                                 <>

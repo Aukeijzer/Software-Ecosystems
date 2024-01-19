@@ -29,7 +29,6 @@ export default function TopicSearch(props: TopicSearchProps){
     };
 
     const handleSearch = () => {
-        console.log(searchType, searchText)
         props.selectTopic(searchText, searchType);
     };
    
