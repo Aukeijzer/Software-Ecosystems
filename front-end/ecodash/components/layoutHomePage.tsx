@@ -127,7 +127,7 @@ export default function LayoutHomePage(){
             if(user.userType === "Admin" || user.userType === "RootAdmin"){
  
                 //Create new dashboard card
-                const newDashboardButton = <div className="h-44" onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButton = <div className="h-36" onClick={() => Router.push('/newDashboard')}>Create </div>
                 const newDashboardButtonCard = <div>
                     <InfoCard 
                     title="Create new Dashboard"

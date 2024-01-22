@@ -32,6 +32,7 @@ export default function NewDashboardPage(){
         //Get taxonomy.json file
         const fileTaxonomyInput : HTMLInputElement | null = document.querySelector('input[name="taxonomy"]');
         if(fileTaxonomyInput === null || fileTaxonomyInput.files === null){
+            alert("File taxonomy input not found")
             throw new Error("File taxonomy input not found");
         }
         const fileTaxonomy = fileTaxonomyInput.files[0];
@@ -39,6 +40,7 @@ export default function NewDashboardPage(){
         //Get technology.json file
         const fileTechnologyInput : HTMLInputElement | null = document.querySelector('input[name="technology"]');
         if(fileTechnologyInput === null || fileTechnologyInput.files === null){
+            alert("File technology input not found")
             throw new Error("File technology input not found");
         }
         const fileTechnology = fileTechnologyInput.files[0];
@@ -46,6 +48,7 @@ export default function NewDashboardPage(){
         //Get excluded topic.json file
         const fileExcludedInput : HTMLInputElement | null = document.querySelector('input[name="excluded"]');
         if(fileExcludedInput === null || fileExcludedInput.files === null){
+            alert("File excluded input not found")
             throw new Error("File excluded input not found");
         }
         const fileExcluded = fileExcludedInput.files[0];
@@ -81,6 +84,7 @@ export default function NewDashboardPage(){
             }
         } else {
             // Handle no file chosen
+            alert("Not all files were selected");
             throw new Error("Not all files were selected");
         }
     }

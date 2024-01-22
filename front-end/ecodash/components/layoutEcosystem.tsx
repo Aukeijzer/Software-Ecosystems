@@ -257,6 +257,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             console.log("Failed to update description");
             throw new Error(response.statusText)
         }
+        alert("Description updated successfully")
         Router.refresh();
     }
 
