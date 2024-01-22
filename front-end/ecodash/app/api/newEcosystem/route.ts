@@ -1,17 +1,20 @@
 import { NextResponse , NextRequest} from "next/server";
+import { getToken } from "next-auth/jwt";
 
 export async function POST(req: NextRequest) {
-    console.log("Getting topic taxonomy");
-    //Get topic taxonomy from body
-    //This is a formdata object with taxonmy as key and the taxonomy file as value
-    //Parse the formdata object
-    const data = await req.formData();
-    console.log(data);
-    //Read through json file
+    //Get session
+    const token = await getToken({req});
 
-    //I have not checked if these files have data in them
-    //I dont want to implement reading the file here
-    //Just send to backend
+    //Check if user is admin
+    if (!token || (token.userType !== "Admin" && token.userType !== "RootAdmin")) {
+        return(new NextResponse("Unauthorized", {status: 401}));
+    }
+    
+    const data = await req.formData();
+
+
+    console.log(data);
+
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/newEcosystem", {
         method: 'POST',
         body: data
