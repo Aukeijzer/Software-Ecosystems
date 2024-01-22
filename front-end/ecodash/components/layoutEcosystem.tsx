@@ -436,12 +436,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         cardList.push(risingTopicsCard)
         
         //Line graph topicsGrowing 
-        var topicsGrowing = convertTimedData(topicGrowthLine, 5, 12);
+        var topicsGrowing = convertTimedData(data.timedDataTopics,5 , 12);
+        console.log(topicsGrowing);
         var topicLabels = getLabels(topicsGrowing);
 
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
         const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
-        const cardLineGraph = <div className="col-span-full">
+        const cardLineGraph = <div className="col-span-full h-96">
             <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
         </div>
         cardList.push(cardLineGraph)

@@ -30,13 +30,16 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
     var timeBucket = 30;
 
     var apiPostBody = {
-           "topics": arg.topics,
-           "technologies": ["agriculture"],
-           "numberOfTopLanguages": numberOfTopLanguages,
-           "numberOfTopSubEcosystems": numberOfTopSubEcosystems,
-           "numberOfTopContributors": numberOfTopContributors,
-           "numberOfTopTechnologies": 5,
-           "numberOfTopProjects": 5,
+           topics: arg.topics,
+           technologies: arg.technologies,
+           numberOfTopLanguages: numberOfTopLanguages,
+           numberOfTopSubEcosystems: numberOfTopSubEcosystems,
+           numberOfTopContributors: numberOfTopContributors,
+           numberOfTopTechnologies: 5,
+           numberOfTopProjects: 5,
+           startTime: previousDateISO,
+           endTime: currentDateISO,
+           timeBucket: timeBucket
     }
     //Make fetch call to url that returns promise
     //Resolve promise by awaiting 
