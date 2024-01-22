@@ -1,7 +1,7 @@
 "use client"
 import dynamic from 'next/dynamic'
 import { CartesianGrid, XAxis, YAxis, Line, Legend, ResponsiveContainer, Tooltip} from 'recharts'
-import { lineData } from '@/mockData/mockAgriculture'
+import { lineData } from '@/app/interfaces/lineData'
 
 //Need to import recharts dynamicly so that SSR can be disabled
 const LineChart = dynamic(() => import('recharts').then(mod => mod.LineChart), {
@@ -14,6 +14,7 @@ const LineChart = dynamic(() => import('recharts').then(mod => mod.LineChart), {
   */
 interface graphLineProps{
     items: lineData[],
+    labels: string[]
 }
 
 const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
@@ -26,19 +27,18 @@ const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e
  * @param color - The color of the line.
  * @returns The JSX element representing the line.
  */
-function lineFunctionTopic(index : number, datakey: string, color: string ) : JSX.Element{
-    const topics = ["DAO", "protocols", "Wallets", "DApps", "Finance"]
+function lineFunctionTopic(index : number, datakey: string, color: string, labels: string[] ) : JSX.Element{
     const newDataKey = datakey + index.toString();
     return(
-        <Line key={index} name={topics[index]} type="monotone" dataKey={newDataKey} stroke={color} />
+        <Line key={index} name={labels[index]} type="monotone" dataKey={newDataKey} stroke={color} />
     )
 }
 
-function drawLines(amount : number) : JSX.Element{
+function drawLines(amount : number, labels: string[]) : JSX.Element{
     var dataKey = "topic"
     var lines : JSX.Element[]  = []
     for(var i = 0 ; i < amount; i++){ 
-        lines.push(lineFunctionTopic(i, dataKey, COLORS[i]))
+        lines.push(lineFunctionTopic(i, dataKey, COLORS[i], labels))
     }
     return(
     < >
@@ -66,7 +66,7 @@ export default function GraphLine(props: graphLineProps){
                         //-1 to sort in descending order
                         return (item.value as number) * -1;
                     }}/>
-                    {drawLines(5)}               
+                    {drawLines(5, props.labels)}               
                 </LineChart>
             </ResponsiveContainer>
            

@@ -13,7 +13,23 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
     const numberOfTopLanguages = 5;
     const numberOfTopSubEcosystems = 5;
 
-   var apiPostBody = {
+    //Get current date minus 1 month
+    const currentDate = new Date();
+    const lastMonthDate = new Date(currentDate.setMonth(new Date().getMonth() - 1));
+    const currentDateISO = lastMonthDate.toISOString();
+    console.log(currentDateISO);
+    
+    //Get previous date 1 year ago
+    const previousDate = new Date();
+    previousDate.setFullYear(previousDate.getFullYear() - 1);
+    const previousDateISO = previousDate.toISOString();
+    
+    console.log(previousDateISO);
+ 
+    //Time bucket
+    var timeBucket = 30;
+
+    var apiPostBody = {
            "topics": arg.topics,
            "technologies": ["agriculture"],
            "numberOfTopLanguages": numberOfTopLanguages,
@@ -21,7 +37,7 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
            "numberOfTopContributors": numberOfTopContributors,
            "numberOfTopTechnologies": 5,
            "numberOfTopProjects": 5,
-   }
+    }
     //Make fetch call to url that returns promise
     //Resolve promise by awaiting 
     //Then convert result to JSON
