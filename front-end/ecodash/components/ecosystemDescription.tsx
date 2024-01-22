@@ -26,7 +26,7 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
     return(
         <div data-cy='ecosystem description' className='h-full w-full'>
             <Card className='h-full p-5 flex flex-col justify-between md:flex-row lg:flex-row'>
-                <div className='flex flex-col'>
+                <div className='flex flex-col '>
                     <h1 data-cy='welcome ecosystem' className='text-3xl'>
                         Welcome to the <b>{props.ecosystem}</b> ecosystem page
                     </h1>
@@ -39,9 +39,9 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                              />
                         </form>}
                     {!props.editMode &&
-                        <p data-cy='description ecosystem'>
+                        <div data-cy='description ecosystem'>
                             {props.description}
-                        </p>
+                        </div>
                     }
                 </div>
 
