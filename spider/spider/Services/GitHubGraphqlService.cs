@@ -31,12 +31,6 @@ public class GitHubGraphqlService : IGitHubGraphqlService
   /// <returns>list of repositories in the form of List&lt;SpiderData&gt;</returns>
   public async Task<List<SpiderData>> QueryRepositoriesByNameHelper(String name, int amount, string? startCursor)
   {
-    var result = await QueryRepositoryByName("ekylibre", "ekylibre");
-    while (result.RateLimit.Remaining > 10)
-    {
-      result = await QueryRepositoryByName("ekylibre", "ekylibre");
-    }
-
 var projects = new List<SpiderData>();
         string? cursor = startCursor;
       
@@ -511,6 +505,11 @@ var projects = new List<SpiderData>();
         };
 
         var response = await _client.SendQueryAsync<RepositoryWrapper>(repositoriesQuery);
+        if (response.Data == null)
+        {
+          await CheckRatelimit<RepositoryWrapper>(response.AsGraphQLHttpResponse());
+          return await QueryRepositoryByName(repositoryName, ownerName);
+        }
         return response.Data;
     }
     
