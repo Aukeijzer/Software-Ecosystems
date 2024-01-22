@@ -51,7 +51,7 @@ public class UsersController(ILogger<UsersController> logger, UsersService users
     /// Handle a login request by checking the user database and returning the UserType.
     /// </summary>
     [HttpPost("LoginRequest")]
-    [SwaggerOperation("Return user type")]
+    [SwaggerOperation("Return user type and ecosystems that the user can edit.")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
     public async Task<ActionResult<UserPermissionsDto>> LoginRequest(UserTypeRequestDto req)
     {
