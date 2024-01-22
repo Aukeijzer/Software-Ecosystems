@@ -13,25 +13,31 @@ namespace spider.Services;
 /// </summary>
 public class GitHubGraphqlService : IGitHubGraphqlService
 {
-    private readonly IClientWrapper _client;
-    private readonly ILogger<GitHubGraphqlService>? _logger;
-    
-    public GitHubGraphqlService(IClientWrapper clientWrapper)
+  private readonly IClientWrapper _client;
+  private readonly ILogger<GitHubGraphqlService>? _logger;
+
+  public GitHubGraphqlService(IClientWrapper clientWrapper)
+  {
+    _client = clientWrapper;
+    _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
+  }
+
+  /// <summary>
+  /// QueryRepositoriesByNameHelper splits the incoming request into smaller parts
+  /// </summary>
+  /// <param name="name">Keyword to search by</param>
+  /// <param name="amount">Amount of repositories to return</param>
+  /// <param name="startCursor">The cursor to start the search from</param>
+  /// <returns>list of repositories in the form of List&lt;SpiderData&gt;</returns>
+  public async Task<List<SpiderData>> QueryRepositoriesByNameHelper(String name, int amount, string? startCursor)
+  {
+    var result = await QueryRepositoryByName("ekylibre", "ekylibre");
+    while (result.RateLimit.Remaining > 10)
     {
-      _client = clientWrapper;
-      _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
+      result = await QueryRepositoryByName("ekylibre", "ekylibre");
     }
-  
-    /// <summary>
-    /// QueryRepositoriesByNameHelper splits the incoming request into smaller parts
-    /// </summary>
-    /// <param name="name">Keyword to search by</param>
-    /// <param name="amount">Amount of repositories to return</param>
-    /// <param name="startCursor">The cursor to start the search from</param>
-    /// <returns>list of repositories in the form of List&lt;SpiderData&gt;</returns>
-    public async Task<List<SpiderData>> QueryRepositoriesByNameHelper(String name, int amount, string? startCursor)
-    {
-        var projects = new List<SpiderData>();
+
+var projects = new List<SpiderData>();
         string? cursor = startCursor;
       
         while (amount > 0)
@@ -172,7 +178,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             var response = await _client.SendQueryAsync<SpiderData>(repositoriesQuery);
             if (response.Data == null)
             {
-              await checkRatelimit<SpiderData>(response.AsGraphQLHttpResponse());
+              await CheckRatelimit<SpiderData>(response.AsGraphQLHttpResponse());
               return await QueryRepositoriesByName(repositoryName, amount, cursor, tries);
             }
 
@@ -365,7 +371,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
 
           if (response.Data == null)
           {
-            await checkRatelimit<TopicSearchData>(response.AsGraphQLHttpResponse());
+            await CheckRatelimit<TopicSearchData>(response.AsGraphQLHttpResponse());
             response = await _client.SendQueryAsync<TopicSearchData>(topicRepositoriesQuery);
           }
           
@@ -542,7 +548,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
       return (data);
     }
 
-    public async Task checkRatelimit<TResponse>(GraphQLHttpResponse<TResponse> response)
+    private async Task CheckRatelimit<TResponse>(GraphQLHttpResponse<TResponse> response)
     {
       
       var header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "X-RateLimit-Remaining");
@@ -553,7 +559,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value.First()));
         DateTime retryTime = utcTime.DateTime;
         _logger.LogWarning("Primary rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
-        Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
+        await Task.Delay(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds + 10));
         return;
       }
       
@@ -561,7 +567,10 @@ public class GitHubGraphqlService : IGitHubGraphqlService
       if (header.Value != null)
       {
         _logger.LogWarning("Secondary rate limit reached. Retrying in {seconds} seconds", header.Value);
-        Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
+        await Task.Delay(TimeSpan.FromSeconds(int.Parse(header.Value.ToString()) + 10));
+        return;
       }
+
+      throw new BadHttpRequestException("Unknown error");
     }
 }
