@@ -10,6 +10,7 @@ const hostName = new URL(process.env.NEXTAUTH_URL!).hostname;
 
 export interface ExtendedUser extends User {
     userType: string;
+    ecosystems: string[];
 }
 
 
@@ -62,8 +63,11 @@ export const authOptions: NextAuthOptions = {
          */
         async jwt({token , user }) {
             if(user){
+                const data = await fetchIsAdmin(user.id, user.email!);
                 token.id = user.id;
-                token.userType = await fetchIsAdmin(user.id, user.email!);
+                token.userType = data.userType;
+                token.ecosystems = data.ecosystems;
+            
             }
             //token.userType = "Admin"
             return token;
@@ -75,7 +79,9 @@ export const authOptions: NextAuthOptions = {
             if (session.user) {
                 const user = session.user as ExtendedUser;
                 user.userType = token.userType as string;
+                user.ecosystems = token.ecosystems as string[];
                 user.id = token.id as string;
+               
             }
             return session;
         }
@@ -114,6 +120,6 @@ async function fetchIsAdmin(userId: string, username: string) {
     let userTypeResult = convertedResponse.userType;
     let enumType = userType[userTypeResult];
     console.log(enumType);
-    return  enumType;
+    return  {userType: enumType, ecosystems: convertedResponse.ecosystems}
 }
 

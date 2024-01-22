@@ -287,7 +287,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Prepare variables before we have data so we can render before data is gathered
     var cardList  = []
     if(data){
-        if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin")) {
+        if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") && (user.ecosystems.includes(props.ecosystem))) {
             const ecosystemEdit = (
                 <div className="rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-3">
                     <form className="flex flex-col">
