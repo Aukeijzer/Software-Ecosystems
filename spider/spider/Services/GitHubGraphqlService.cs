@@ -67,7 +67,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     /// <param name="tries">amount of retries before failing</param>
     /// <returns>list of repositories in the form of SpiderData</returns>
     /// <exception cref="BadHttpRequestException">If it fails after tries amount of retries throw</exception>
-    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string? cursor = null, int tries = 3)
+    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string? cursor = null,
+      int tries = 3)
     {
         // GraphQL query to search the repositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
@@ -190,7 +191,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             switch (e)
             {
                 case GraphQLHttpRequestException error:
-                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", this, repositoryName);
+                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", 
+                      this, repositoryName);
                     if (error.StatusCode == HttpStatusCode.BadGateway)
                     {
                         if (tries > 1)
@@ -202,11 +204,73 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                     }
                     break;
                 default:
-                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", this, repositoryName);
+                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", 
+                      this, repositoryName);
                     break;
             }
             throw; 
         }
+    }
+    
+    /// <summary>
+    /// This method gets the amount of repositories that match the keyword with the included filters
+    /// </summary>
+    /// <param name="keyword">The keyword to search for</param>
+    /// <param name="starCountLower">lower bound for the amount of stars</param>
+    /// <param name="starCountUpper">upper bound for the amount of stars</param>
+    /// <param name="tries">amount of retries before failing</param>
+    /// <returns>the amount of repositories in the form of an int</returns>
+    /// <exception cref="BadHttpRequestException">If it fails after tries amount of retries throw</exception>
+    public async Task<int?> GetRepoCount(string keyword, int starCountLower, int starCountUpper, int tries = 3)
+    {
+      var rateLimitQuery = new GraphQLHttpRequest()
+      {
+        Query = @"query repositoriesQueryRequest($name: String!, $_cursor: String) {
+                    search(query: $name, type: REPOSITORY, after: $_cursor) {
+                      repositoryCount
+                    }
+                  }",
+        Variables = new{name = keyword + "stars:" + starCountLower + ".." + starCountUpper}
+      };
+      
+      try
+      {
+        var response = await _client.SendQueryAsync<SearchCountData>(rateLimitQuery);
+
+        if (response is GraphQLHttpResponse<SearchCountData> httpResponse && httpResponse.Errors == null)
+        {
+          return response.Data.Search.RepositoryCount;
+        }
+
+        foreach (var error in response.Errors)
+        {
+          _logger.LogError("{origin}.GetRepoCount has failed with graphql error" + error.Message, this);
+        }
+
+        return response.Data.Search.RepositoryCount;
+      }
+      catch (Exception e)
+      {
+        switch (e)
+        {
+          case GraphQLHttpRequestException error:
+            _logger.LogError(e.Message + " in {origin}.GetRepoCount", this);
+            if (error.StatusCode == HttpStatusCode.BadGateway)
+            {
+              if (tries > 1)
+              {
+                return await GetRepoCount(keyword, starCountLower, starCountUpper, tries - 1);
+              }
+
+              throw new BadHttpRequestException(e.Message);
+            }
+            break;
+          default:
+            _logger.LogError(e.Message + " in {origin}.GetRepoCount", this);
+            break;
+        }
+        throw;
+      }
     }
     
     /// <summary>
