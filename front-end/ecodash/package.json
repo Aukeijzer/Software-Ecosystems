@@ -19,6 +19,7 @@
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.4",
     "next": "^13.5.4",
+    "number-abbreviate": "^2.0.0",
     "next-auth": "^4.24.5",
     "postcss": "^8.4.30",
     "react": "18.2.0",
