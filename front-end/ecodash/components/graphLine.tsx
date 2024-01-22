@@ -55,19 +55,19 @@ function drawLines(amount : number) : JSX.Element{
  */
 export default function GraphLine(props: graphLineProps){
     return(
-        <div data-cy='line-graph' className='grid w-full h-full'>
-            <ResponsiveContainer  >
-                <LineChart height={250} data={props.items} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date"/>
-                <YAxis />
-                <Legend />
-                <Tooltip itemSorter={(item) => {
-                    //-1 to sort in descending order
-                    return (item.value as number) * -1;
-                }}/>
-                {drawLines(5)}               
-            </LineChart>
+        <div data-cy='line-graph' className='relative h-80'>
+            <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={props.items} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date"/>
+                    <YAxis />
+                    <Legend />
+                    <Tooltip itemSorter={(item) => {
+                        //-1 to sort in descending order
+                        return (item.value as number) * -1;
+                    }}/>
+                    {drawLines(5)}               
+                </LineChart>
             </ResponsiveContainer>
            
         </div>
