@@ -3,6 +3,7 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Hangfire;
 using Hangfire.AspNetCore;
+using Hangfire.Dashboard;
 using Hangfire.PostgreSql;
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
@@ -73,14 +74,25 @@ builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Log
 
 // Configure the Hangfire scheduler
 builder.Services.AddHangfire((provider, config) => config
-    .UsePostgreSqlStorage(c =>
-        c.UseNpgsqlConnection(builder.Configuration.GetConnectionString("Hangfire")))
+    .UsePostgreSqlStorage(c => c
+        .UseNpgsqlConnection(builder.Configuration.GetConnectionString("Hangfire")))
     .UseActivator(new AspNetCoreJobActivator(provider.GetRequiredService<IServiceScopeFactory>()))
     .UseRecommendedSerializerSettings()
-    .UseSimpleAssemblyNameTypeSerializer());
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseDashboardMetric(DashboardMetrics.FailedCount)
+    .UseDashboardMetrics(DashboardMetrics.RecurringJobCount)
+    .UseDashboardMetrics(DashboardMetrics.RetriesCount));
+
+// Configure the Hangfire scheduler to retry failed jobs three times with a delay of 2 minutes, 1 hour, and 12 hours.
+GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute
+{
+    Attempts = 3, 
+    DelaysInSeconds = [120, 60 * 60 * 1, 60 * 60 * 12]
+});
 
 // Add the Hangfire server that is responsible for executing the scheduled jobs.
 builder.Services.AddHangfireServer();
+
 builder.Services.AddScoped<IScheduler, HangfireScheduler>();
 
 var app = builder.Build();
