@@ -93,9 +93,6 @@ export interface lineData{
     topic4Name: string,
     topic5: number,
     topic5Name: string,
-
-  
-
 }
 
 export const topicGrowthLine: lineData[] = [
