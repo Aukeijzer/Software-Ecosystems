@@ -62,12 +62,12 @@ public class UsersController(ILogger<UsersController> logger, UsersService users
     /// <summary>
     /// Handle the request for changing the users permissions level.
     /// </summary>
-    [HttpPost("UpgradeUser")]
+    [HttpPost("NewAdmin")]
     [SwaggerOperation("Update the permission level of User to Admin")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<string> UpgradeUser(string rootAdminId, string userName)
+    public async Task<string> NewAdmin(string userName, User.UserType userType)
     {
-       var result = await usersService.UpgradeUser(rootAdminId, userName);
+       var result = await usersService.UpdateUserType(userName, userType);
        return result;
     }
     /// <summary>

@@ -90,24 +90,22 @@ public class UsersService(EcosystemsContext userContext, ILogger<UsersService> _
     }
 
     /// <summary>
-    /// Upgrade a Users permissions Type from 'User' to 'Admin'.
+    /// Change the UserType of the provided UserName to the new UserType.
     /// </summary>
-    public async Task<string> UpgradeUser(string rootAdminId, string userName)
+    public async Task<string> UpdateUserType(string userName, User.UserType newUserType)
     {
-        var rootAdmin = await userContext.Users.AsNoTracking().SingleOrDefaultAsync(e => e.Id == rootAdminId);
-        if (rootAdmin is not { Type: User.UserType.RootAdmin })
-        {
-            return $"{rootAdminId} is not a RootAdmin.";
-        }
         var userToUpgrade = await userContext.Users.AsNoTracking().SingleOrDefaultAsync(e => e.UserName == userName);
-        if (userToUpgrade is not {Type: User.UserType.User} )
+        if (userToUpgrade is {Type: User.UserType.RootAdmin} )
         {
-            return $"{userToUpgrade} is not available for upgrading.";
+            return $"{userToUpgrade} is a RootAdmin and cannot be changed.";
         }
-        userToUpgrade.Type = User.UserType.Admin;
+
+        if (userToUpgrade.Type == newUserType)
+            return $"{userToUpgrade} is already of type {newUserType}.";
+        userToUpgrade.Type = newUserType;
         userContext.Update(userToUpgrade);
         await userContext.SaveChangesAsync();
-        return $"{userToUpgrade.UserName} has been promoted to Admin.";
+        return $"{userToUpgrade.UserName} has been updated.";
     }
 
     /// <summary>
