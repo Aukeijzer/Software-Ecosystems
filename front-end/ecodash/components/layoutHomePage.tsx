@@ -4,14 +4,12 @@ import { useEffect} from "react"
 import { useRouter } from 'next/navigation'
 import { fetcherHomePage } from '@/app/utils/apiFetcher';
 import useSWRMutation from 'swr/mutation'
-import { cardWrapper } from "@/app/interfaces/cardWrapper";
 import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
-import GridLayout from "./gridLayout";
-import { useSession} from "next-auth/react";
 import { ExtendedUser } from "@/app/utils/authOptions";
+import { useSession } from "next-auth/react";
 
 /**
  * Renders the layout for the home page.
@@ -75,21 +73,9 @@ export default function LayoutHomePage(){
         Router.push('/' + ecosystem);
     }
 
-    let staticProp = true;
-    var cardWrappedList : cardWrapper[] = [];
+    var cardWrappedList = [];
     if(data){
-        if(user){
-            //If user is admin, make cards draggable
-            if(user.userType === "Admin" || user.userType === "RootAdmin"){
-                staticProp = false;
-        
-                //Create new dashboard card
-                const newDashboardButton = <div  onClick={() => Router.push('/newDashboard')}>Create </div>
-                const newDashboardButtonCard = <InfoCard title="Create new Dashboard" data={newDashboardButton}/>
-                const newDashboardButtonWrapped : cardWrapper = {card: newDashboardButtonCard, width: 2, height: 3, x: 2, y: 5, static:true}
-                cardWrappedList.push(newDashboardButtonWrapped);
-            }
-        }
+        const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
         //General information about SECODash
         const info = (<div className="flex flex-col"> 
@@ -99,27 +85,66 @@ export default function LayoutHomePage(){
             </div>
         )
 
-        const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
-        const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0, static: staticProp}
-        cardWrappedList.push(infoCardWrapped);
+        const infoCard = <div className="col-span-3">
+            <InfoCard title="Information about SECODash" data={info} />
+        </div>
+        cardWrappedList.push(infoCard);
 
          //Agriculture card
         const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
-        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem}/>
-        const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:staticProp}
-        cardWrappedList.push(agricultureButtonCardWrapped)
+        const agricultureButtonCard = <div className="col-span-1">
+                <InfoCard title="agriculture" 
+                data={agricultureButton}
+                onClick={onClickEcosystem}
+                Color={COLORS[0]}/>
+            </div>
+        cardWrappedList.push(agricultureButtonCard)
         
         //Quantum card
         const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
-        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} />
-        const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: staticProp}
-        cardWrappedList.push(quantumButtonCardWrapped)
+        const quantumButtonCard = <div className="col-span-1">
+            <InfoCard title="quantum" 
+            data={quantumButton}
+            onClick={onClickEcosystem} 
+            Color={COLORS[1]} />
+        </div>
+        cardWrappedList.push(quantumButtonCard)
         
         //Artificial-intelligence card
         const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem}/>
-        const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: staticProp}
-        cardWrappedList.push(aiButtonCardWrapped);
+        const aiButtonCard =  <div className="col-span-1 h-44"> 
+            <InfoCard title="artificial-intelligence"
+            data={aiButton}
+            onClick={onClickEcosystem} 
+            Color={COLORS[2]}/>
+        </div>
+        cardWrappedList.push(aiButtonCard);
+        
+        if(user){
+            //If user is admin, make cards draggable
+            if(user.userType === "Admin" || user.userType === "RootAdmin"){
+                //Create new dashboard card
+                const newDashboardButton = <div className="h-36" onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButtonCard = <div>
+                    <InfoCard 
+                    title="Create new Dashboard"
+                    data={newDashboardButton}
+                    Color={COLORS[3]}/>
+                </div> 
+                cardWrappedList.push(newDashboardButtonCard);
+                if(user.userType === "RootAdmin"){
+                    //Create new add admin card
+                    const addAdminButton = <div onClick={() => Router.push('/newAdmin')}>Add admin </div>
+                    const addAdminButtonCard = <div>
+                        <InfoCard 
+                        title="Add new admin"
+                        data={addAdminButton}
+                        Color={COLORS[4]}/>
+                    </div>
+                    cardWrappedList.push(addAdminButtonCard);
+                }
+            }
+        }
     } else {
         //When still loading display spinner
         return(
@@ -128,10 +153,13 @@ export default function LayoutHomePage(){
             </div>
         )
     }
-
     return(
-        <div>
-            <GridLayout cards={cardWrappedList} />
+        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32">
+            <div className="grid gap-3 grid-cols-3" >
+             {cardWrappedList.map((card, i) => (
+                 card
+             ))}
         </div>
+     </div>   
     )
 }

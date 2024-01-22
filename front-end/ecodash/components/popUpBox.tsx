@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react";
+import Button from "./button";
 
 interface PopUpBoxProps{
     buttonText: string,
@@ -34,7 +35,7 @@ export default function PopUpBox(props: PopUpBoxProps){
     } else {
         return(
          <div>
-                <button data-cy="loginButton" onClick={() => setShow(true)} className="bg-gray-500 border-2 p-2 border-gray-900">{props.buttonText}</button>
+                <Button data-cy="loginButton" text={props.buttonText} onClick={() => setShow(true)} />
          </div>)
     }
 }

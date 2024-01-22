@@ -30,4 +30,30 @@ export default class technologyClass implements displayableListItem {
             </p>
         )
     }
+
+    renderTableHeaders(): React.JSX.Element {
+        return(
+            <tr className="flex flex-row justify-between py-3 px-5">
+                <th key={'technology'}>
+                    technology
+                </th>
+                <th key={'projects'} className="text-right">
+                    projects
+                </th>
+            </tr>
+        )
+    }
+
+    renderAsTableItem(onClick: (sub: string) => void): React.JSX.Element {
+        return(
+            <tr className="bg-white border-b px-5 flex flex-row justify-between hover:bg-amber" onClick={() => onClick(this.technology)}>
+                <th className="py-4 font-medium text-gray-900">
+                    {this.technology}
+                </th>
+                <td className="py-4 text-right">
+                    {this.projectCount}
+                </td>
+            </tr>
+        )
+    }
 }
