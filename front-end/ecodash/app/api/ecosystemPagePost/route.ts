@@ -2,14 +2,6 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest){
-      //Get session 
-      const token = await getToken({req});
-    
-      //Check if user is RootAdmin
-    if (!token || (token.userType !== "Admin" && token.userType !== "RootAdmin")) {
-        return(new NextResponse("Unauthorized", {status: 401}));
-    }
-      
     //Get variables from POST body
     const data = await req.json();
 
