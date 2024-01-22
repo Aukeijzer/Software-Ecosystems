@@ -3,10 +3,28 @@ import { useSession } from "next-auth/react";
 import { ExtendedUser } from "../utils/authOptions";
 import { error } from "console";
 import Button from "@/components/button";
+import SpinnerComponent from "@/components/spinner";
 
 
 export default function NewDashboardPage(){
     //Check if isAdmin
+    const { data: session, status } = useSession()
+    const user = session?.user as ExtendedUser;
+    if(status === "loading"){
+        return(
+            <div>
+                <SpinnerComponent/>
+            </div>
+        )
+    }
+    if(!user || (user.userType !== "Admin" && user.userType !== "RootAdmin")){
+        return(
+            <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0 bg-white p-10">
+                <h1 className="text-2xl font-bold mb-4">Create a new dashboard</h1>
+                <p className="text-gray-600 mb-4">You do not have permission to access this page</p>
+            </div>
+        )
+    }
 
     const handleFormSubmit = async (event : any) => {
         event.preventDefault();

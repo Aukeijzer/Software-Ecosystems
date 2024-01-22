@@ -114,7 +114,7 @@ export default function LayoutHomePage(){
         
         //Artificial-intelligence card
         const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard =  <div className="col-span-1"> 
+        const aiButtonCard =  <div className="col-span-1 h-44"> 
             <InfoCard title="artificial-intelligence"
             data={aiButton}
             onClick={onClickEcosystem} 
@@ -127,7 +127,7 @@ export default function LayoutHomePage(){
             if(user.userType === "Admin" || user.userType === "RootAdmin"){
  
                 //Create new dashboard card
-                const newDashboardButton = <div onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButton = <div className="h-44" onClick={() => Router.push('/newDashboard')}>Create </div>
                 const newDashboardButtonCard = <div>
                     <InfoCard 
                     title="Create new Dashboard"
@@ -135,7 +135,19 @@ export default function LayoutHomePage(){
                     Color={COLORS[3]}/>
                 </div> 
                 cardWrappedList.push(newDashboardButtonCard);
+                if(user.userType === "RootAdmin"){
+                    //Create new add admin card
+                    const addAdminButton = <div onClick={() => Router.push('/newAdmin')}>Add admin </div>
+                    const addAdminButtonCard = <div>
+                        <InfoCard 
+                        title="Add new admin"
+                        data={addAdminButton}
+                        Color={COLORS[4]}/>
+                    </div>
+                    cardWrappedList.push(addAdminButtonCard);
+                }
             }
+
         }
 
     } else {
