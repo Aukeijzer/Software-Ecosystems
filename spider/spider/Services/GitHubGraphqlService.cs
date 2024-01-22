@@ -241,6 +241,12 @@ var projects = new List<SpiderData>();
       try
       {
         var response = await _client.SendQueryAsync<SearchCountData>(rateLimitQuery);
+        
+        if (response.Data == null)
+        {
+          await CheckRatelimit<SearchCountData>(response.AsGraphQLHttpResponse());
+          return await GetRepoCount(keyword, starCountLower, starCountUpper, tries);
+        }
 
         if (response is GraphQLHttpResponse<SearchCountData> httpResponse && httpResponse.Errors == null)
         {
