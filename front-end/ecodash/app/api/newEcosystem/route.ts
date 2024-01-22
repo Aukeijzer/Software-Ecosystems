@@ -8,11 +8,21 @@ export async function POST(req: NextRequest) {
     const data = await req.formData();
     console.log(data);
     //Read through json file
-    var file = data.get('taxonomy') as File;
-    if(file){
-        console.log(file.name);
 
+    //I have not checked if these files have data in them
+    //I dont want to implement reading the file here
+    //Just send to backend
+    const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/newEcosystem", {
+        method: 'POST',
+        body: data
+    })
+
+    if (response.status === 500) {
+        throw new Error(response.statusText)
     }
 
-    return new NextResponse("succesful", {status: 200})
+    const messages : any = await response.json();
+
+
+    return new NextResponse(JSON.stringify(messages), {status: 200})
 }
