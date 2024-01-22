@@ -61,9 +61,6 @@ public class SpiderProjectService : ISpiderProjectService
     /// BinarySplit splits the search space into smaller chunks by using an algorithm based on binary search.
     /// </summary>
     /// <param name="name">keyword to search by</param>
-    /// <param name="amount">Amount of repositories to return</param>
-    /// <param name="startCursor">The cursor to start searching from. If startCursor is null it starts searching from
-    ///     the start</param>
     /// <param name="min">The lower bound of the search space</param>
     /// <param name="max">The upper bound of the search space</param>
     /// <returns>Returns a list of lower and upper bounds that each contain no more than 1000 repositories</returns>
