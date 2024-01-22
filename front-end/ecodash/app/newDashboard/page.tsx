@@ -1,10 +1,8 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { ExtendedUser } from "../utils/authOptions";
-import { error } from "console";
 import Button from "@/components/button";
 import SpinnerComponent from "@/components/spinner";
-
 
 export default function NewDashboardPage(){
     //Check if isAdmin
@@ -17,6 +15,7 @@ export default function NewDashboardPage(){
             </div>
         )
     }
+    
     if(!user || (user.userType !== "Admin" && user.userType !== "RootAdmin")){
         return(
             <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0 bg-white p-10">
@@ -27,6 +26,7 @@ export default function NewDashboardPage(){
     }
 
     const handleFormSubmit = async (event : any) => {
+        //Prevent default form submit
         event.preventDefault();
 
         //Get taxonomy.json file
@@ -52,7 +52,6 @@ export default function NewDashboardPage(){
             throw new Error("File excluded input not found");
         }
         const fileExcluded = fileExcludedInput.files[0];
-
 
         if (fileTaxonomy && fileTechnology && fileExcluded) {
             const formData = new FormData();
@@ -118,7 +117,6 @@ export default function NewDashboardPage(){
                     <label className="block text-sm font-medium text-gray-700">Excluded topic list</label>
                     <input className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="excluded" accept=".json" multiple={false} />
                 </div>
-
                 <Button text={"Submit"} onClick={() => handleFormSubmit} />
             </form>
         </div>

@@ -11,7 +11,7 @@ enum UserType {
     RootAdmin = "RootAdmin"
 }
 
-export default function newAdminPage(){
+export default function NewAdminPage(){
     const [userType, setUserType] = useState<UserType>(UserType.Admin);
     const [email, setEmail] = useState<string>("");
 
@@ -33,20 +33,29 @@ export default function newAdminPage(){
             </div>
         )
     }
-
-    
-    function isEmail(email : string) {
+    /**
+     * Checks if a given string is a valid email address.
+     * 
+     * @param email - The email address to validate.
+     * @returns True if the email is valid, false otherwise.
+     */
+    function isEmail(email: string) {
         var emailFormat = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
         if (email !== '' && email.match(emailFormat)) { return true; }
         
         return false;
     }
-
-
+     
+    /**
+    * Handles the form submission event.
+    * 
+    * @param event - The form submission event.
+    */
     const handleFormSubmit = async (event : any) => {
+        //Prevent default form submit
         event.preventDefault();
 
-
+        //Get email and validate
         var email = event.target.email.value;
         var validEmail : boolean = isEmail(email);
         if(!validEmail){
@@ -87,7 +96,6 @@ export default function newAdminPage(){
         setEmail(event.target.value);
     }
 
-
     return(
         <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0 bg-white p-10">
             <h1 className="text-2xl font-bold mb-4">Add user as admin</h1>
@@ -114,5 +122,4 @@ export default function newAdminPage(){
             </form>
         </div>
     )
-
 }

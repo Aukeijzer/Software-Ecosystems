@@ -13,7 +13,6 @@ export interface ExtendedUser extends User {
     ecosystems: string[];
 }
 
-
 /**
  * Configuration options for authentication in the application.
  */
@@ -35,7 +34,6 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GITHUB_CLIENT_SECRET!
         })
     ],
-
     session: {
         /**
          * Session strategy configuration.
@@ -63,7 +61,7 @@ export const authOptions: NextAuthOptions = {
          */
         async jwt({token , user }) {
             if(user){
-                const data = await fetchIsAdmin(user.id, user.email!);
+                const data = await fetchUserData(user.id, user.email!);
                 token.id = user.id;
                 token.userType = data.userType;
                 token.ecosystems = data.ecosystems;
@@ -81,7 +79,6 @@ export const authOptions: NextAuthOptions = {
                 user.userType = token.userType as string;
                 user.ecosystems = token.ecosystems as string[];
                 user.id = token.id as string;
-               
             }
             return session;
         }
@@ -95,7 +92,7 @@ export const authOptions: NextAuthOptions = {
  * @returns A Promise that resolves to string of userType (Options are: User, Admin, RootAdmin).
  */
 
-async function fetchIsAdmin(userId: string, username: string) {
+async function fetchUserData(userId: string, username: string) {
     const apiPostBody = {
         id: userId,
         userName: username
@@ -114,9 +111,7 @@ async function fetchIsAdmin(userId: string, username: string) {
         "Admin",
         "RootAdmin"
     }
-
     const convertedResponse = await response.json();
-    console.log(convertedResponse);
     let userTypeResult = convertedResponse.userType;
     let enumType = userType[userTypeResult];
     console.log(enumType);
