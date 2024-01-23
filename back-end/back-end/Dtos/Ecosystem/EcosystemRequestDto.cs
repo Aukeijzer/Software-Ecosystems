@@ -15,5 +15,5 @@ public class EcosystemRequestDto
     [DataMember(Name = "numberOfTopProjects")] public int? NumberOfTopProjects { get; set; }
     [DataMember(Name = "startTime")] public DateTime StartTime { get; set; }
     [DataMember(Name = "endTime")] public DateTime EndTime { get; set; }
-    [DataMember(Name = "timeBucket")] public int TimeBucket { get; set; }
+    [DataMember(Name = "numbersOfDaysPerBucket")] public int? NumbersOfDaysPerBucket { get; set; }
 }

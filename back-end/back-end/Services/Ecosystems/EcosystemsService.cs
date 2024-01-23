@@ -17,6 +17,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
     : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
+    private const int DefaultNumberOfDaysPerBucket = 30;
 
     /// <summary>
     /// Get all top-level ecosystems, i.e., Agriculture, Quantum, Artificial Intelligence.
@@ -62,7 +63,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
             dto.NumberOfTopProjects ?? DefaultNumberOfTopItems,
             dto.StartTime,
             dto.EndTime,
-            dto.TimeBucket);
+            dto.NumbersOfDaysPerBucket ?? DefaultNumberOfDaysPerBucket);
 
         // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
         if (dto.Topics.Count != 1) return ecosystemDto;

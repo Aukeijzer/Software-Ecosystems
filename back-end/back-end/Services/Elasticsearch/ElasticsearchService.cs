@@ -36,30 +36,41 @@ public class ElasticsearchService(ElasticsearchClient client) : IElasticsearchSe
     }
     
     /// <summary>
-    /// Returns a project count of the projects that were created in the given DateRange and contain the given topic
+    /// Queries the Elasticsearch index for the number of projects that were created before the given start time,
+    /// updated since the start time and contain all the given topics.
     /// </summary>
-    public async Task<long> GetProjectsByDate(DateTime rawStartTime, DateTime rawEndTime, string topic)
+    /// <param name="rawStartTime">The start of the date range</param>
+    /// <param name="topics">The topics to search for</param>
+    /// <returns>The number of projects that were created before the given start time,
+    /// updated since the start time and contain the given topics</returns>
+    public async Task<long> GetProjectCountByDate(DateTime rawStartTime, List<string> topics)
     {
-        string endTime = rawEndTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff"),
-            startTime = rawStartTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
+        var startTime = rawStartTime.ToString("yyyy-MM-dd'T'HH:mm:ss.ff");
         
         // Create a query that searches for project count in the given DateRange with the give topic. 
         var response = await client.CountAsync<ProjectDto>(s => s
             .Query(q => q
-                .Bool(b => b.
-                    Must(mu => mu
-                            .Match(m => m
-                                .Field(f => f.Topics)
-                                .Query(topic)
-                            ),
+                .Bool(b => b
+                    .Must(m => m
+                        .TermsSet(c => c
+                            .Field("topics.keyword")
+                            .Terms(topics)
+                            .MinimumShouldMatchScript(new Script(new InlineScript("params.num_terms")))
+                        ),
                         mu => mu
-                            .Range(r => r
-                                .DateRange(dr => dr
+                            .Range(r => r.
+                                DateRange(dr => dr
+                                    .Field(f => f.CreatedAt)
+                                    .Lte(startTime)
+                            )
+                        ),
+                        mu => mu
+                            .Range(r => r.
+                                DateRange(dr => dr
                                     .Field(f => f.LatestDefaultBranchCommitDate)
                                     .Gte(startTime)
-                                    .Lte(endTime)
-                                )
                             )
+                        )
                     )
                 )
             )

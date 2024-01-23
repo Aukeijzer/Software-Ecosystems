@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
@@ -225,8 +226,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             NumberOfProjects = result.Total,
             NumberOfContributors = contributors.Count,
             NumberOfContributions = contributors.Sum(c => c.Contributions),
-            TimedDataTopics = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, topXSubEcosystems.Select(s => s.Topic).ToList()),
-            TimedDataEcosystems = await GetTimedData(startTime, endTime, elasticsearchService, timeBucket, topics)
+            TimedDataTopics = await GetTimedData(startTime, endTime, timeBucket, topics, 
+                topXSubEcosystems.Select(s => s.Topic).ToList()),
+            TimedDataEcosystem = await GetTimedData(startTime, endTime, timeBucket, topics, topics) // TODO: clean up
         };
     }
     
@@ -393,7 +395,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     public static List<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies)
     {
         return subEcosystemDtos
-            .Where(s => !topics.Contains(s.Topic))
+            .Where(s => !topics.Contains(s.Topic)) // TODO: check if this is correct
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic))
             .Where(s => !technologies.Contains(s.Topic))
@@ -426,7 +428,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="subEcosystemDtos">This is a list of found sub-ecosystems.</param>
     /// <param name="technologies">This is the list of technologies that define an ecosystem.</param>
     /// <returns></returns>
-    public static List<SubEcosystemDto> FilterTechnologies(List<SubEcosystemDto> subEcosystemDtos, List<string> technologies)
+    private static List<SubEcosystemDto> FilterTechnologies(List<SubEcosystemDto> subEcosystemDtos, List<string> technologies)
     {
         return subEcosystemDtos
             .Where(s => technologies.Contains(s.Topic))
@@ -442,42 +444,38 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// Lastly, it adds the TimedDateDto object to the response list.
     /// <param name="startTime">The start date of the period of time to retrieve.</param>
     /// <param name="endTime">The end date of the period of time to retrieve.</param>
-    /// <param name="elasticsearchService">The elasticsearch service.</param>
     /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
     /// <param name="topXTopics">The list of top x sub-ecosystems/topics.</param>
     /// </summary>
-    private static async Task<List<TimedDataDto>> GetTimedData(DateTime startTime, DateTime endTime, 
-        IElasticsearchService elasticsearchService, int timeBucket, List<string> topXTopics)
+    private async Task<List<TopicsBucketDto>> GetTimedData(DateTime startTime, DateTime endTime, int timeBucket, List<string> ecosystemTopics, List<string> topXTopics)
     {
-        var response = new List<TimedDataDto>();
-        
+        var buckets = new List<TopicsBucketDto>();
         while (startTime < endTime)
         {
-            var tasks = new List<Task<TimedDataDto>>();
+            var startTimeString = startTime.ToString("MM-yyyy");
+            var subEcosystemDtos = new ConcurrentBag<SubEcosystemDto>();
+            var tasks = new List<Task>();
+            
             foreach(var topic in topXTopics)
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    var timedTopics = await elasticsearchService.GetProjectsByDate(startTime, endTime, topic);
-                    return new TimedDataDto()
-                    {
-                        Topic = topic,
-                        TimeBucket = startTime.ToString("MM-yyyy"),
-                        ProjectCount = timedTopics
-                    };
+                    var projectsCount = await elasticsearchService.GetProjectCountByDate(startTime,
+                        [..ecosystemTopics, topic]);
+                    var subEcosystemDto = new SubEcosystemDto{ Topic = topic, ProjectCount = projectsCount };
+                    subEcosystemDtos.Add(subEcosystemDto);
                 }));
             }
             
-            var timedDates = await Task.WhenAll(tasks);
-            response.AddRange(timedDates);
+            await Task.WhenAll(tasks);
+            
+            buckets.Add(new TopicsBucketDto{ BucketDateLabel = startTimeString, Topics = subEcosystemDtos.ToList() });
             
             startTime = startTime.AddDays(timeBucket);
         }
-        
-        
-        return response;
+
+        return buckets;
     }
-    
     
     #endregion
   

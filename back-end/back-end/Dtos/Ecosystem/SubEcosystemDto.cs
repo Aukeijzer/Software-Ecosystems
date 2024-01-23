@@ -8,7 +8,7 @@ namespace SECODashBackend.Dtos.Ecosystem;
 public class SubEcosystemDto
 {
     [DataMember(Name = "topic")] public required string Topic { get; init; }
-    [DataMember(Name = "projectCount")] public int ProjectCount { get; init; }
+    [DataMember(Name = "projectCount")] public required long ProjectCount { get; init; }
 
     public override bool Equals(object? obj)
     {
