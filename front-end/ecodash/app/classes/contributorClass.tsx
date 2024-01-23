@@ -12,8 +12,8 @@ export default class contributorClass implements displayableTableItem {
 
     renderTableHeaders(): React.JSX.Element {
         return(
-            <tr className="flex flex-row justify-between py-3">
-                <th key={'username'} className="px-6 py-3">
+            <tr className="flex flex-row justify-between">
+                <th key={'username'} className="px-5 py-3">
                     username
                 </th>
                 <th key={'contributions'} className="px-6 py-3 text-right">

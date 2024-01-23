@@ -1,5 +1,7 @@
 export interface lineData{
     date: string,
+    topic0: number,
+    topic0Name: string,
     topic1: number,
     topic1Name: string,
     topic2: number,
@@ -8,7 +10,6 @@ export interface lineData{
     topic3Name: string,
     topic4: number,
     topic4Name: string,
-    topic5: number,
-    topic5Name: string,
+
     [key: string]: number | string;
 }

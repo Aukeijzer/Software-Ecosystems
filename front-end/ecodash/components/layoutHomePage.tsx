@@ -104,6 +104,7 @@ export default function LayoutHomePage(){
         const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
         const quantumButtonCard = <div className="col-span-1">
             <InfoCard title="quantum" 
+            title="quantum"
             data={quantumButton}
             onClick={onClickEcosystem} 
             Color={COLORS[1]} />

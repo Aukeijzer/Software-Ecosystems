@@ -2,6 +2,7 @@
 import dynamic from 'next/dynamic'
 import { CartesianGrid, XAxis, YAxis, Line, Legend, ResponsiveContainer, Tooltip, LineChart} from 'recharts'
 import { lineData } from '@/mockData/mockAgriculture'
+import { COLORS } from '@/app/interfaces/colors'
 //Need to import recharts dynamicly so that SSR can be disabled
 
 
@@ -13,7 +14,7 @@ interface graphLineProps{
     labels: string[]
 }
 
-const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
+//const COLORS = [ "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"]
 
 /**
  * Renders a line element for a specific topic.
@@ -36,6 +37,7 @@ function drawLines(amount : number, labels: string[]) : JSX.Element{
     for(var i = 0 ; i < amount; i++){ 
         lines.push(lineFunctionTopic(i, dataKey, COLORS[i], labels))
     }
+    console.log(lines)
     return(
     < >
         {lines}
@@ -69,7 +71,7 @@ export default function GraphLine(props: graphLineProps){
                             //-1 to sort in descending order
                             return (item.value as number) * -1;
                         }}/>
-                        {drawLines(5, props.labels)}               
+                        {drawLines(props.labels.length, props.labels)}               
                     </LineChart>
                 </ResponsiveContainer>
         
