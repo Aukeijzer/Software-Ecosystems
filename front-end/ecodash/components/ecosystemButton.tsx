@@ -18,7 +18,7 @@ interface ecosystemButtonProps{
 
 export default function EcosystemButton(props: ecosystemButtonProps){
     return(
-        <div className="">
+        <div>
             <ul>
                 <li data-cy='ecosystem-projects'>
                     <b>projects</b>: {props.projectCount}
