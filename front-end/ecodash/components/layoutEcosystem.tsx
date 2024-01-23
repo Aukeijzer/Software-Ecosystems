@@ -23,6 +23,7 @@ import { colors } from "@/app/enums/filterColor"
 import { useSession} from "next-auth/react"
 import { ExtendedUser } from "@/app/utils/authOptions"
 import Button from "./button"
+import { lineData } from "@/app/interfaces/lineData"
 
 var abbreviate = require('number-abbreviate');
 
@@ -282,6 +283,41 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             </>
         )
     }
+
+    function convertTimedData(data: any[], topicCount : number, timeCount: number){
+        var pointer : number = 0;
+        var convertedData : lineData[] = []
+        for(var i = 0; i < timeCount; i++){
+          
+            var date;
+            var lineData : lineData = {date: date, topic1: 0, topic1Name: "", topic2: 0, topic2Name: "", topic3: 0, topic3Name: "", topic4: 0, topic4Name: "", topic5: 0, topic5Name: ""}
+            for(var j = 0; j < topicCount; j++){
+                date = data[pointer].timeBucket;
+                lineData.date = date;
+                var topic = data[pointer];
+               
+                lineData["topic" + (j+1)] = topic.projectCount;
+                lineData["topic" + (j+1) + "Name"] = topic.topic;
+                
+                pointer++;
+            }
+            convertedData.push(lineData)
+        }
+        console.log(convertedData);
+        return convertedData;
+    }
+
+    function getLabels(data: lineData[]){
+        var labels : string[] = [];
+        
+        labels.push(data[0].topic1Name);
+        labels.push(data[0].topic2Name);
+        labels.push(data[0].topic3Name);
+        labels.push(data[0].topic4Name);
+        labels.push(data[0].topic5Name);
+
+        return labels;
+    }
   
     //Prepare variables before we have data so we can render before data is gathered
     var cardList  = []
@@ -400,10 +436,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         cardList.push(risingTopicsCard)
         
         //Line graph topicsGrowing 
-        //For now no data conversion needed as Mock data is already in correct format 
+        var topicsGrowing = convertTimedData(data.timedDataTopics,5 , 12);
+        console.log(topicsGrowing);
+        var topicLabels = getLabels(topicsGrowing);
+
         //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const lineGraphTopicsGrowing = <GraphLine items={topicGrowthLine} />
-        const cardLineGraph = <div className="col-span-full">
+        const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
+        const cardLineGraph = <div className="col-span-full h-96">
             <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
         </div>
         cardList.push(cardLineGraph)
