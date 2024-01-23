@@ -8,7 +8,7 @@ from a taxonomy. It uses cosine similarity between TF-IDF vectors of project
 
 Functions:
 - get_taxonomy: Retrieve and return the predefined taxonomy from a JSON file.
-- flatten_taxonomy_to_strings: Flatten the structure of the taxonomy into a 
+- flatten_taxonomy_to_strings: Flatten the structure of the taxonomy into a
 list of strings.
 - map_topics: Map the topics in a collection of projects to the closest
  predefined topics in the taxonomy.
@@ -17,7 +17,6 @@ list of strings.
 import json
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
-
 
 def get_taxonomy(file_path):
     """
@@ -70,22 +69,20 @@ def flatten_taxonomy_to_strings(json_data):
     flattened_values = flatten(json_data)
     return flattened_values
 
-
-# Map the found topics to the topics in the taxonomy
-def map_topics(projects):
+def map_topics_cosine(projects):
     """
     Map the topics in a collection of projects to the closest predefined topics
-      in the taxonomy.
+      in the taxonomy using cosine similarity.
 
     Parameters
     ----------
-    projects : list 
+    projects : list
         A list of dictionaries, each representing a project with
         associated topics.
 
     Returns
     -------
-    list: 
+    list:
         A list of dictionaries, each containing mapped topics for the
         corresponding project.
     """
@@ -97,22 +94,30 @@ def map_topics(projects):
         topics = project["topics"]
         result = {}
         # Combine keywords into strings for each topic
-        topic_texts = [' '.join(topic["keywords"]) for topic in topics]
+        topic_texts = [' '.join(topic["keywords"]) for topic in topics
+                       if topic.get("keywords")
+                       and any(keyword.strip() for keyword in topic["keywords"])]
 
-        # Vectorize the combined keywords
-        vectorizer = TfidfVectorizer()
-        topic_vectors = vectorizer.fit_transform(topic_texts)
+        if topic_texts:
+            # Vectorize the combined keywords
+            vectorizer = TfidfVectorizer()
+            topic_vectors = vectorizer.fit_transform(topic_texts)
 
-        # Calculate cosine similarity between each topic and predefined topics
-        mapped_topics = []
-        for topic_vector in topic_vectors:
-            similarities = cosine_similarity(
-                topic_vector,
-                vectorizer.transform(predefined_topics))
-            most_similar_index = similarities.argmax()
-            mapped_topics.append(predefined_topics[most_similar_index])
+            # Calculate cosine similarity between each topic and predefined topics
+            mapped_topics = []
+            for topic_vector in topic_vectors:
+                similarities = cosine_similarity(
+                    topic_vector,
+                    vectorizer.transform(predefined_topics))
+                most_similar_index = similarities.argmax()
+                threshold = 0.5 # Experimenting with this value is needed
+                if similarities.max() > threshold:
+                    if predefined_topics[most_similar_index] not in mapped_topics:
+                        mapped_topics.append(predefined_topics[most_similar_index])
+                        # mapped_topics.append(topic_keywords)
 
-        result["topics"] = mapped_topics
-        results.append(result)
+            project["added_topics"] = mapped_topics
+            result["added_topics"] = mapped_topics
+            results.append(result)
 
-    return results
+    return projects

@@ -11,9 +11,9 @@ Classes:
 - TopicService: A class for extracting and mapping topics from a list of
  projects' data.
 """
-from topic_model import extract_topics_lda
+from topic_model import extract_topics_bertopic
 from preprocessing import preprocess_docs
-from map_topic import map_topics
+# from map_topic import map_topics_cosine
 
 
 def get_data(data):
@@ -40,8 +40,8 @@ def get_data(data):
             doc += dto["name"] + " "
         if dto.get("description"):
             doc += dto["description"] + " "
-        if dto.get("readme"):
-            doc += dto["readme"] + " "
+        if dto.get("readMe"):
+            doc += dto["readMe"] + " "
         docs.append(doc)
     return ids, docs
 
@@ -77,13 +77,19 @@ class TopicService:
             A list of dictionaries containing project IDs and their
               corresponding mapped topics.
         """
+        print("request received")
+
         ids, docs = get_data(self.data)
+        print("data extracted")
+        
         preprocessed_docs = preprocess_docs(docs)
-        topics = extract_topics_lda(preprocessed_docs, 5)
-        mapped_topics = map_topics(topics)
+        print("data preprocessed")
+
+        topics = extract_topics_bertopic(preprocessed_docs,5)
+        print("topics extracted")
 
         response = []
-        for id_, topic in zip(ids, mapped_topics):
+        for id_, topic in zip(ids, topics):
             dict_ = {"projectId": id_}
             dict_.update(topic)
             response.append(dict_)
