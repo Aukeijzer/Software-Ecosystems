@@ -62,7 +62,6 @@ export const authOptions: NextAuthOptions = {
         async jwt({token , user }) {
             if(user){
                 const data = await fetchUserData(user.id, user.email!);
-                console.log(data)
                 token.id = user.id;
                 token.userType = data.userType;
                 token.ecosystems = data.ecosystems;
