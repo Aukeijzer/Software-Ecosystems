@@ -1,18 +1,12 @@
 """
-Module: map_topic
+map_topic.py
+============
 
-This module provides functionality for mapping topics in a collection of
- projects to predefined topics
-from a taxonomy. It uses cosine similarity between TF-IDF vectors of project
- topics and predefined topics in the taxonomy.
-
-Functions:
-- get_taxonomy: Retrieve and return the predefined taxonomy from a JSON file.
-- flatten_taxonomy_to_strings: Flatten the structure of the taxonomy into a
-list of strings.
-- map_topics: Map the topics in a collection of projects to the closest
- predefined topics in the taxonomy.
+This module provides functionality for mapping topics in a collection of projects
+to predefined topics from a taxonomy. It uses cosine similarity between TF-IDF
+vectors of project topics and predefined topics in the taxonomy.
 """
+
 
 import json
 from sklearn.metrics.pairwise import cosine_similarity
@@ -21,6 +15,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 def get_taxonomy(file_path):
     """
     Retrieve and return the predefined taxonomy from a JSON file.
+
+    Parameters
+    ----------
+    file_path : str
+        The string containing the name of the file path
 
     Returns
     -------
