@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
              */
             name: `${cookiePrefix}next-auth.session-token`,
             options: {
-              httpOnly: true,
+              httpOnly: false,
               sameSite: 'lax',
               path: '/',
               domain: "."+ hostName,
