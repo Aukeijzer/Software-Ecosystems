@@ -39,9 +39,9 @@ export default function EcosystemDescription(props: ecoSystemDescriptionProps){
                              />
                         </form>}
                     {!props.editMode &&
-                        <p data-cy='description ecosystem'>
+                        <div data-cy='description ecosystem'>
                             {props.description}
-                        </p>
+                        </div>
                     }
                 </div>
 

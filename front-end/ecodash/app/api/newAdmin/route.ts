@@ -2,10 +2,18 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest){
-    //Get variables from POST body
+    //Get session 
+    const token = await getToken({req});
+    
+    //Check if user is RootAdmin
+    if (!token || token.userType !== "RootAdmin") {
+        return(new NextResponse("Unauthorized", {status: 401}));
+    }
+
     const data = await req.json();
-   
-    const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/ecosystems", {
+    console.log(data)
+
+    const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/newAdmin", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -16,11 +24,6 @@ export async function POST(req: NextRequest){
     if (response.status === 500) {
         throw new Error(response.statusText)
     }
-
     const messages : any = await response.json();
-
-    return new NextResponse(JSON.stringify(messages), {status: 200,
-         headers: {'Access-Control-Allow-Origin': '*'}
-    });
-
+    return new NextResponse(JSON.stringify(messages), {status: 200})
 }

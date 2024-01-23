@@ -24,6 +24,7 @@ import { useSession} from "next-auth/react"
 import { ExtendedUser } from "@/app/utils/authOptions"
 import Button from "./button"
 import { lineData } from "@/app/interfaces/lineData"
+import listprojectDTOConverter from "@/app/utils/Converters/projectConverter"
 
 var abbreviate = require('number-abbreviate');
 
@@ -258,6 +259,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             console.log("Failed to update description");
             throw new Error(response.statusText)
         }
+        alert("Description updated successfully")
         Router.refresh();
     }
 
@@ -322,7 +324,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     //Prepare variables before we have data so we can render before data is gathered
     var cardList  = []
     if(data){
-        if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin")) {
+        if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") && (user.ecosystems.includes(props.ecosystem))) {
             const ecosystemEdit = (
                 <div className="rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-3">
                     <form className="flex flex-col">
@@ -419,13 +421,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         </div>
         cardList.push(technologyCard)
 
-        //List of rising technologies
-        const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesTable = <TableComponent items={risingTechnologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
-        const risingTechnologiesCard = <div>
-            <InfoCard title={""} data={risingTechnologiesTable} Color={colors.technology} />
+        //List of projects
+        const projects = listprojectDTOConverter(data.topProjects);
+        const projectTable = <TableComponent items={projects} onClick={(project : string) => (console.log(project))}/>
+        const projectCard = <div>
+            <InfoCard title={""} data={projectTable} Color={colors.project}/>
         </div>
-        cardList.push(risingTechnologiesCard)
+        cardList.push(projectCard)
  
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
