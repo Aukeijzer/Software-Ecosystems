@@ -1,17 +1,12 @@
 """
-Module: topic_model
+topic_model
+===========
 
 This module provides functions for extracting topics from a collection of
- preprocessed documents
-using Latent Dirichlet Allocation (LDA) and finding the optimal number of
- topics.
-
-Functions:
-- extract_topics_lda: Extract topics from a collection of preprocessed documents
- using LDA.
-- find_optimal_num_topics: Find the optimal number of topics using model
- perplexity.
+preprocessed documents using Latent Dirichlet Allocation (LDA) and finding
+the optimal number of topics.
 """
+
 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation

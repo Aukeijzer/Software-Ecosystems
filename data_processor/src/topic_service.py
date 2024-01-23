@@ -1,16 +1,11 @@
 """
-Module: topic_service
+topic_service
+=============
 
 This module provides a service class for extracting and mapping topics from a
- list of projects' data.
-
-Functions:
-- get_data: xtract document information and ids from json data.
-
-Classes:
-- TopicService: A class for extracting and mapping topics from a list of
- projects' data.
+list of projects' data.
 """
+
 from topic_model import extract_topics_lda
 from preprocessing import preprocess_docs
 from map_topic import map_topics

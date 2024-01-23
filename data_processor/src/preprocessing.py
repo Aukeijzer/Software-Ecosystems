@@ -1,23 +1,21 @@
 """
-Module: preprocessing
+preprocessing
+=============
 
-This module provides functions for preprocessing text data, including the
- removal of Markdown layout, tokenization, removal of punctuation and
- non-alphabetic characters and lemmatization.
-
-Functions:
-- preprocess_docs: Preprocess a list of documents using the preprocess_document
- function.
-- preprocess_document: Preprocess a single document by removing Markdown
- layout, tokenizing text, removing punctuation and non-alphabetic characters
- and lemmatizing words.
+This module provides functions for preprocessing text data, including the removal
+of Markdown layout, tokenization, removal of punctuation and non-alphabetic
+characters, and lemmatization.
 """
 
+
 import markdown
+import nltk
 from bs4 import BeautifulSoup
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
+nltk.download('punkt')
+nltk.download('wordnet')
 
 def preprocess_docs(docs):
     """

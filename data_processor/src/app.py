@@ -1,18 +1,35 @@
 """
-Module: app
+app
+===
 
-This module defines a Flask application for extracting topics from
- preprocessed data.
-
+This module defines a Flask application for extracting topics from preprocessed data.
 """
 
 from flask import Flask, request, jsonify
 from flasgger import Swagger
 from topic_service import TopicService
 
-app = Flask(__name__)
+# app = Flask(__name__)
+
+app = Flask(__name__, static_url_path='/', static_folder='_build/html/')
 swagger = Swagger(app)
 
+@app.route('/')
+def serve_sphinx_docs(path='index.html'):
+    """
+    Shows documentation when starting the application.
+
+    Parameters
+    ----------
+    path : str, optional
+        The path to the static file, by default 'index.html'.
+
+    Returns
+    -------
+    Response
+        The static file response.
+    """
+    return app.send_static_file(path)
 
 # Handles POST request
 @app.route("/extract-topics", methods=["POST"])
@@ -64,4 +81,4 @@ def extract_topics():
 
 if __name__ == "__main__":
     print("Swagger UI on: http://localhost:5000/apidocs/")
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
