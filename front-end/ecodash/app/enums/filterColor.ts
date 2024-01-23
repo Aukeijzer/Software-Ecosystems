@@ -3,4 +3,6 @@ export enum colors {
     language = "#f9d4bb",
     contributor = "#f8e3a1",
     technology = "#c9e4ca",
+    project = "#cfc0cb",
+    
 }
