@@ -97,7 +97,6 @@ _[Ss]cripts
 
 # misc
 /front-end/ecodash.DS_Store
-*.pem
 
 # debug
 /front-end/ecodash/npm-debug.log*

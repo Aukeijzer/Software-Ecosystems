@@ -1,4 +1,6 @@
 using RestSharp;
+using SECODashBackend.Dtos;
+using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Services.Spider;

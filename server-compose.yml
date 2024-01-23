@@ -1,6 +1,7 @@
-# 
-# This is the compose file used for development purposes. For more information read the documentation
-# 
+#
+# This file is used to compose the project on the server
+# It has some server specific server-side only specifications
+#
 services:
 ####
   # Frontend
@@ -8,11 +9,10 @@ services:
     build:
       context: ./front-end/ecodash/
       dockerfile: ./Dockerfile
-    ports:
-      - 3000:3000
     networks:
       - secodash-network
-        
+    restart: always
+    
 ####
   # nginx proxy server
   nginx:
@@ -27,11 +27,11 @@ services:
      - ssl-private-key
     networks:
       - secodash-network
-
+    restart: always
+    
 #####
   # Spider
   spider-app:
-    container_name: spider-app
     build:
       context: ./spider/
       dockerfile: ./Dockerfile
@@ -42,57 +42,35 @@ services:
     environment:
       API_Token_File: /run/secrets/git-api-token
       ASPNETCORE_URLS: http://*:5205
-      Docker_Enviroment: local
-    ports:
-      - 5205:5205
+      Docker_Enviroment: server
 
 #####
-  # SQL Database 
+  # Backend 
   db:
-    container_name: db
     image: postgres
     networks:
       - secodash-network
     restart: always
-    build:
-      context: ./database
-      dockerfile: db.Dockerfile
-    secrets:
-      - db-password
     environment:
       POSTGRES_Username: postgres
       POSTGRES_PASSWORD_FILE: /run/secrets/db-password
     volumes:
       - postgres-data:/var/lib/postgresql/data
-        
-####
-  # Database browser
-  adminer:
-    image: adminer
-    ports:
-      - 8080:8080
-    networks:
-      - secodash-network
-    restart: always
-  
-####
+ ####
   # Backend (service) layer application
   backend-app:
-    container_name: backend-app
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile
     environment:
       ASPNETCORE_URLS: http://*:5003
-      Docker_Enviroment: local
-    ports:
-      - 5003:5003
+      Docker_Enviroment: server
     networks:
       - secodash-network
     restart: always
     depends_on:
       - db
-    
+      
 ####
   # Volumes, networks and secrets
 volumes:
@@ -107,7 +85,6 @@ secrets:
     file: secrets/certs/fullchain.pem
   ssl-private-key:
     file: secrets/certs/privkey.pem
-    
 
 networks:
   secodash-network:

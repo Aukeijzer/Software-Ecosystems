@@ -135,6 +135,7 @@ public class GitHubRestService : IGitHubRestService
             DateTime retryTime = utcTime.DateTime;
             _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
             Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
+            _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
             return;
         }
 
@@ -143,6 +144,7 @@ public class GitHubRestService : IGitHubRestService
         {
             _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", header.Value);
             Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
+            _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", header.Value);
             return;
         }
 
