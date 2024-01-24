@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using SECODashBackend.Dtos.Ecosystem;
 
 namespace SECODashBackend.Dtos.TimedData;
