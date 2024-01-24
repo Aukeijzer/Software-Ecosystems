@@ -19,15 +19,6 @@ def serve_sphinx_docs(path='index.html'):
     """
     Shows documentation when starting the application.
 
-    Parameters
-    ----------
-    path : str, optional
-        The path to the static file, by default 'index.html'.
-
-    Returns
-    -------
-    Response
-        The static file response.
     """
     return app.send_static_file(path)
 
@@ -61,9 +52,11 @@ def extract_topics():
           type: object
           properties:
             result:
-              type: string
-      500:
-        description: Internal Server Error
+              type: array
+              items: 
+                type: string
+      400:
+        description: Bad Request
         schema:
           type: object
           properties:
