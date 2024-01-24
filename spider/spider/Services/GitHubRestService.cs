@@ -127,7 +127,7 @@ public class GitHubRestService : IGitHubRestService
     private void HandleError(RestResponse restResponse)
     {
         var header = restResponse.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");
-        if (Convert.ToInt32(header.Value) == 0)
+        if (header.Value != null && Convert.ToInt32(header.Value) == 0)
         {
             header = restResponse.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Reset");
             

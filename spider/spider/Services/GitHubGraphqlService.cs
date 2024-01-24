@@ -174,7 +174,7 @@ var projects = new List<SpiderData>();
             if (response.Data == null)
             {
               await CheckRatelimit<SpiderData>(response.AsGraphQLHttpResponse());
-              return await QueryRepositoriesByName(repositoryName, amount, cursor, tries);
+              return await QueryRepositoriesByName(repositoryName, amount, cursor, tries - 1);
             }
 
             if (response is GraphQLHttpResponse<SpiderData> httpResponse && httpResponse.Errors == null)
@@ -245,7 +245,7 @@ var projects = new List<SpiderData>();
         if (response.Data == null)
         {
           await CheckRatelimit<SearchCountData>(response.AsGraphQLHttpResponse());
-          return await GetRepoCount(keyword, starCountLower, starCountUpper, tries);
+          return await GetRepoCount(keyword, starCountLower, starCountUpper, tries - 1);
         }
 
         if (response is GraphQLHttpResponse<SearchCountData> httpResponse && httpResponse.Errors == null)
@@ -436,7 +436,7 @@ var projects = new List<SpiderData>();
           if (response.Data == null)
           {
             await CheckRatelimit<TopicSearchData>(response.AsGraphQLHttpResponse());
-            response = await _client.SendQueryAsync<TopicSearchData>(topicRepositoriesQuery);
+            return await QueryRepositoriesByTopic(topic, amount, cursor, tries - 1);
           }
           
           if (response is GraphQLHttpResponse<TopicSearchData> httpResponse && httpResponse.Errors == null)
@@ -617,11 +617,15 @@ var projects = new List<SpiderData>();
       return (data);
     }
 
+    /// <summary>
+    /// HandleErrors checks if there is a rate-limit error and if there is, it retries
+    /// </summary>
+    /// <param name="response">The response with the headers that need to be checked</param>
+    /// <typeparam name="TResponse">The type of the graphql request</typeparam>
     private async Task CheckRatelimit<TResponse>(GraphQLHttpResponse<TResponse> response)
     {
-      
       var header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "X-RateLimit-Remaining");
-      if (int.Parse(header.Value.First()) == 0)
+      if (header.Value != null && int.Parse(header.Value.First()) == 0)
       {
         header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "X-RateLimit-Reset");
             
@@ -637,9 +641,6 @@ var projects = new List<SpiderData>();
       {
         _logger.LogWarning("Secondary rate limit reached. Retrying in {seconds} seconds", header.Value);
         await Task.Delay(TimeSpan.FromSeconds(int.Parse(header.Value.ToString()) + 10));
-        return;
       }
-
-      throw new BadHttpRequestException("Unknown error");
     }
 }
