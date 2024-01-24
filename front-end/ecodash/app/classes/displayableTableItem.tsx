@@ -1,6 +1,7 @@
 import React from "react";
 
 export default interface displayableTableItem {
-    renderAsTableItem() : React.JSX.Element
+    renderTableHeaders() : React.JSX.Element
+    renderAsTableItem(onClick: (sub: string) => void) : React.JSX.Element
 }
 
