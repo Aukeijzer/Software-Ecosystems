@@ -70,6 +70,17 @@ services:
     depends_on:
       - db
     
+  #####
+  # Data processor docker.
+  data-processor-app:
+    container_name: data-processor-app
+    build:
+      context: ./data_processor/
+      dockerfile: ./Dockerfile
+    networks:
+      - secodash-network
+    ports:
+      - 5000:5000
     
 volumes:
   postgres-data:
