@@ -63,8 +63,20 @@ builder.Services.AddAuthentication(CertificateAuthenticationDefaults.Authenticat
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false)
     .AddJsonOptions(options =>  options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+var connectionString = builder.Configuration.GetConnectionString("PostgresDb");
+// If running in docker, get the password from a file
+if (Environment.GetEnvironmentVariable("Docker_Enviroment") != null)
+{
+    var path = Environment.GetEnvironmentVariable("Postgres_Password_File");
+    if (path == null)
+        throw new InvalidOperationException("Missing password file location for Postgres");
+    connectionString = String.Format(connectionString, File.ReadAllText(path));
+}
+    
 builder.Services.AddDbContext<EcosystemsContext>(
-    o => o.UseNpgsql(builder.Configuration.GetConnectionString("DevelopmentDb")));
+    o => o.UseNpgsql(connectionString)
+    );
 builder.Services.AddScoped<IEcosystemsService, EcosystemsService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<UsersService>();
