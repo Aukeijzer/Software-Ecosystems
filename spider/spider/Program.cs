@@ -17,7 +17,9 @@ if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
     token = Environment.GetEnvironmentVariable("API_Token");
 else
 {
-    string? tokenPath = Environment.GetEnvironmentVariable("API_Token_File");
+    var tokenPath = Environment.GetEnvironmentVariable("API_Token_File");
+	if (tokenPath == null)
+        throw new InvalidOperationException("Missing api token file location");
     token = File.ReadAllText(tokenPath);
 }
 
