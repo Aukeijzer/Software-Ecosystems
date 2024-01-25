@@ -17,6 +17,6 @@ public class TopicRequestDto
     [DataMember(Name = "description")] 
     public string? Description { get; set; }
     
-    [DataMember(Name = "readme")]
+    [DataMember(Name = "readMe")]
     public required string Readme { get; init; }
 }
