@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
+using SECODashBackend.Dtos.User;
 using SECODashBackend.Models;
 
 namespace SECODashBackend.Services.Users;
@@ -7,7 +8,7 @@ namespace SECODashBackend.Services.Users;
 /// This service is responsible for handling all user-related requests.
 /// </summary>
 /// <param name="userContext">Is used to interact with the database.</param>
-public class UsersService(EcosystemsContext userContext)
+public class UsersService(EcosystemsContext userContext, ILogger<UsersService> _logger)
 {
     /// <summary>
     /// Retrieve all users from the database.
@@ -65,15 +66,81 @@ public class UsersService(EcosystemsContext userContext)
     /// <param name="id">The Id of the <see cref="User"/> that is trying to log in.</param>
     /// <param name="userName">The UserName of the <see cref="User"/> that is trying to log in.</param>
     /// <returns>Returns the <see cref="User.Type"/> of the <see cref="User"/> that is logging in.</returns>
-    public async Task<User.UserType> LoginRequest(string id, string userName)
+    public async Task<UserPermissionsDto> LoginRequest(string id, string userName)
     {
         //Check if the User already exists.
         var user = await userContext.Users.AsNoTracking().SingleOrDefaultAsync(e => e.Id == id);
-        //Return the UserType,
-        if (user != null) return user.Type;
+        //Return the UserType, and the ecosystems the User can edit.
+        if (user != null)
+        {
+            var ecosystems = await GetAdminEcosystems(userName);
+            return new UserPermissionsDto
+            {
+                Ecosystems = ecosystems,
+                UserType = user.Type
+            };
+        }
         //Or create a new User from the Id and UserName, and return the default value.
         await AddUserAsync(id, userName);
-        return User.UserType.User;
+        return new UserPermissionsDto
+        {
+            Ecosystems = new List<string>(),
+            UserType = User.UserType.User
+        };
+    }
 
+    /// <summary>
+    /// Change the UserType of the provided UserName to the new UserType.
+    /// </summary>
+    public async Task<string> UpdateUserType(string userName, User.UserType newUserType)
+    {
+        var userToUpgrade = await userContext.Users.AsNoTracking().SingleOrDefaultAsync(e => e.UserName == userName);
+        if (userToUpgrade is {Type: User.UserType.RootAdmin} )
+        {
+            return $"{userToUpgrade} is a RootAdmin and cannot be changed.";
+        }
+
+        if (userToUpgrade.Type == newUserType)
+            return $"{userToUpgrade} is already of type {newUserType}.";
+        userToUpgrade.Type = newUserType;
+        userContext.Update(userToUpgrade);
+        await userContext.SaveChangesAsync();
+        return $"{userToUpgrade.UserName} has been updated.";
+    }
+
+    /// <summary>
+    /// Add an Admin to an ecosystem as an editor.
+    /// </summary>
+    public async Task<string> AddEditorToEcosystem(string rootAdminId, string userName, string topEcosystem)
+    {
+        var rootAdmin = await userContext.Users.AsNoTracking().SingleOrDefaultAsync(e => e.Id == rootAdminId);
+        if (rootAdmin is not { Type: User.UserType.RootAdmin })
+        {
+            return $"{rootAdminId} is not a RootAdmin.";
+        }
+        var user = await userContext.Users.SingleOrDefaultAsync(e => e.UserName == userName);
+        if(user is not {Type: User.UserType.Admin} )
+        {
+            return $"{user} is not available to become an Editor.";
+        }
+
+        var ecosystem = await userContext.Ecosystems.SingleOrDefaultAsync(e => e.Name == topEcosystem);
+        if (ecosystem == null)
+        {
+            return $"{topEcosystem} is not a top-level ecosystem.";
+        }
+        ecosystem.Users.Add(user);
+        user.Ecosystems.Add(ecosystem);
+        await userContext.SaveChangesAsync();
+        return "has been successfully added as Editor";
+    }
+
+    /// <summary>
+    /// Return a list of ecosystems the admin is allowed to edit.
+    /// </summary>
+    private async Task<List<string>> GetAdminEcosystems(string adminName)
+    {
+        var user = await userContext.Users.AsNoTracking().Include(user => user.Ecosystems).SingleOrDefaultAsync(e => e.UserName == adminName);
+        return user.Ecosystems.Select(ecosystem => ecosystem.Name).ToList();
     }
 }

@@ -51,18 +51,33 @@ public class UsersController(ILogger<UsersController> logger, UsersService users
     /// Handle a login request by checking the user database and returning the UserType.
     /// </summary>
     [HttpPost("LoginRequest")]
-    [SwaggerOperation("Return user type")]
+    [SwaggerOperation("Return user type and ecosystems that the user can edit.")]
     [SwaggerResponse(statusCode: 200, description: "successful operation")]
-    public async Task<ActionResult<UserTypeDto>> LoginRequest(UserTypeRequestDto req)
+    public async Task<ActionResult<UserPermissionsDto>> LoginRequest(UserTypeRequestDto req)
     {
         var result = await usersService.LoginRequest(req.Id, req.Username);
-        var final = new UserTypeDto
-        {
-            UserType = result
-        };
-    return new ObjectResult(final);
-    }
 
- 
-    
+    return new ObjectResult(result);
+    }
+    /// <summary>
+    /// Handle the request for changing the users permissions level.
+    /// </summary>
+    [HttpPost("NewAdmin")]
+    [SwaggerOperation("Update the permission level of User to Admin")]
+    [SwaggerResponse(statusCode: 200, description: "successful operation")]
+    public async Task<string> NewAdmin(string userName, User.UserType userType)
+    {
+       var result = await usersService.UpdateUserType(userName, userType);
+       return result;
+    }
+    /// <summary>
+    /// Handle the request to give an 'Admin' editorial rights of an ecosystem.
+    /// </summary>
+    [HttpPost("PermitEditor")]
+    [SwaggerOperation("Give Admin permission to edit a top-level ecosystem")]
+    [SwaggerResponse(statusCode: 200, description: "successful operation")]
+    public async Task<string> PermitEditor(string rootAdminId, string userName, string topEcosystem)
+    {
+        return await usersService.AddEditorToEcosystem(rootAdminId,userName,topEcosystem);
+    }
 }
