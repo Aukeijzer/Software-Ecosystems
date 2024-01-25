@@ -3,8 +3,11 @@ import { useSession } from "next-auth/react";
 import { ExtendedUser } from "../utils/authOptions";
 import Button from "@/components/button";
 import SpinnerComponent from "@/components/spinner";
-
+/**
+ * Represents the page component for creating a new dashboard.
+ */
 export default function NewDashboardPage(){
+   
     //Check if isAdmin
     const { data: session, status } = useSession()
     const user = session?.user as ExtendedUser;
@@ -24,50 +27,71 @@ export default function NewDashboardPage(){
             </div>
         )
     }
+    
+    interface inputFileDTO {
+        topics: string[],
+        technologies: string[],
+        excludedTopics: string[]
+    }
 
+
+    /**
+     * Handles the form submission event.
+     * 
+     * @param event - The form submission event.
+     * @returns {Promise<void>}
+     */
     const handleFormSubmit = async (event : any) => {
         //Prevent default form submit
         event.preventDefault();
 
-        //Get taxonomy.json file
-        const fileTaxonomyInput : HTMLInputElement | null = document.querySelector('input[name="taxonomy"]');
+        //Get ecosystem .json file
+        const fileTaxonomyInput : HTMLInputElement | null = document.querySelector('input[name="ecosystemJSON"]');
         if(fileTaxonomyInput === null || fileTaxonomyInput.files === null){
             alert("File taxonomy input not found")
             throw new Error("File taxonomy input not found");
-        }
+        }   
         const fileTaxonomy = fileTaxonomyInput.files[0];
 
-        //Get technology.json file
-        const fileTechnologyInput : HTMLInputElement | null = document.querySelector('input[name="technology"]');
-        if(fileTechnologyInput === null || fileTechnologyInput.files === null){
-            alert("File technology input not found")
-            throw new Error("File technology input not found");
-        }
-        const fileTechnology = fileTechnologyInput.files[0];
+        //Read file
+        var ecosystemInformation : inputFileDTO  | null = null;
+        const fileReader = new FileReader();
+        fileReader.readAsText(fileTaxonomy, "UTF-8");
+        fileReader.onload = async function (e) {
+            console.log(e.target?.result);
+            const content = e.target?.result as string;
+            console.log(content);
+            if(content === null){
+                alert("Error reading file");
+                throw new Error("Error reading file");
+            }
+            try {
+                ecosystemInformation = JSON.parse(content) as inputFileDTO;
+                console.log(ecosystemInformation);
+                
+                //Prepare api post body
+                 var apiPostBody = {
+                    topics: (ecosystemInformation as inputFileDTO)?.topics,
+                    technologies: (ecosystemInformation as inputFileDTO)?.technologies,
+                    excludedTopics: (ecosystemInformation as inputFileDTO)?.excludedTopics,
+                    ecosystem: event.target.ecosystem.value,
+                    description: event.target.description.value
+                }
+            } catch(err){
+                throw new Error("Error parsing file");
+            }
 
-        //Get excluded topic.json file
-        const fileExcludedInput : HTMLInputElement | null = document.querySelector('input[name="excluded"]');
-        if(fileExcludedInput === null || fileExcludedInput.files === null){
-            alert("File excluded input not found")
-            throw new Error("File excluded input not found");
-        }
-        const fileExcluded = fileExcludedInput.files[0];
-
-        if (fileTaxonomy && fileTechnology && fileExcluded) {
-            const formData = new FormData();
-            formData.append('taxonomy', fileTaxonomy);
-            formData.append('technology', fileTechnology);
-            formData.append('excluded', fileExcluded);
-            formData.append('ecosystem', event.target.ecosystem.value);
-            formData.append('description', event.target.description.value);
-            
-            console.log(formData);
+            console.log("api post body incoming")
+            console.log(apiPostBody)
+            //send to node backend
             try {
                 const response = await fetch('/api/newEcosystem', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(apiPostBody),
                 });
-
                 if (response.ok) {
                     // Handle success
                     const data = await response.json();
@@ -81,10 +105,7 @@ export default function NewDashboardPage(){
             } catch (error ) {
                 throw new Error("Error in fetch");
             }
-        } else {
-            // Handle no file chosen
-            alert("Not all files were selected");
-            throw new Error("Not all files were selected");
+            
         }
     }
 
@@ -92,6 +113,17 @@ export default function NewDashboardPage(){
         <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0 bg-white p-10">
             <h1 className="text-2xl font-bold mb-4">Create a new dashboard</h1>
             <p className="text-gray-600 mb-4">Text here explaining the steps to create a new dashboard</p>
+            <div className="mt-4">
+                <h2 className="text-lg font-bold mb-2">JSON Structure:</h2>
+                <pre className="bg-gray-100 p-4 rounded-md">
+    {
+    `{   
+    "topics": [],
+    "technologies": [],
+    "bannedTopics": []
+}`}
+            </pre>
+        </div>
             <form className="space-y-4" onSubmit={handleFormSubmit}>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Ecosystem name</label>
@@ -104,19 +136,10 @@ export default function NewDashboardPage(){
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Topic taxonomy list</label>
-                    <input className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="taxonomy" accept=".json" multiple={false} />
+                    <label className="block text-sm font-medium text-gray-700"> Ecosystem json </label>
+                    <input className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="ecosystemJSON" accept=".json" multiple={false} />
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Technology taxonomy list</label>
-                    <input className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="technology" accept=".json" multiple={false} />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Excluded topic list</label>
-                    <input className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="file" name="excluded" accept=".json" multiple={false} />
-                </div>
                 <Button text={"Submit"} onClick={() => handleFormSubmit} />
             </form>
         </div>

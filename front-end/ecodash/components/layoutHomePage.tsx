@@ -71,7 +71,7 @@ export default function LayoutHomePage(){
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
         */
-        Router.push('/' + ecosystem.toLowerCase());
+        Router.push('/' + ecosystem.toLowerCase().replaceAll(" ", "-"));
     }
 
     function removeEcosystem(event: any, ecosystem: string){
@@ -100,11 +100,11 @@ export default function LayoutHomePage(){
 
         //Prepare card for each ecosystem availlable
         for(var i = 0; i < data.length; i++){
-           
+            //const ecosystemname = data[i].displayName.toLowerCase().replaceAll(" ", "-");
             var removable = false;
             if(user && userEcosystems){
                 console.log(userEcosystems);
-                removable = userEcosystems.includes(data[i].displayName.toLowerCase());
+                removable = userEcosystems.includes(data[i].displayName);
             }
             
             const button = <EcosystemButton ecosystem={data[i].displayName} projectCount={data[i].numberOfStars} topics={100} />

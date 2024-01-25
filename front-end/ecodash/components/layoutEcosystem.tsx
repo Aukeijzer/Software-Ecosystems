@@ -246,7 +246,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         }
 
         //Send to node backend,
-        const response : Response = await fetch(process.env.NEXT_PUBLIC_LOCAL_ADRESS + "/api/saveEdit", {
+        const response : Response = await fetch("/api/saveEdit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
