@@ -1,6 +1,6 @@
 import languageClass from '@/app/classes/languageClass';
 import displayableGraphItem from "@/app/classes/displayableGraphItem";
-import { lineData } from "@/mockData/mockAgriculture";
+import { lineData } from '@/app/interfaces/lineData';
 import displayableListItem from '@/app/classes/displayableListItem';
 import subEcosystemClass from '@/app/classes/subEcosystemClass';
 
@@ -35,12 +35,12 @@ export const mockLanguages : displayableGraphItem[] = [
 export const languages : string[] = ['Javascript', 'Python'];
 
 export const mockDataOverTime : lineData[] = [
-    {date: "1-1-2023", topic1: 30, topic1Name: "Ehtereum", topic2: 28, topic2Name: "BlockChain", topic3: 130, topic3Name: "Wallets", topic4: 90, topic4Name: "DApps", topic5: 55, topic5Name: "Finance"},
-    {date: "10-1-2023", topic1: 40, topic1Name: "Ethereum", topic2: 38, topic2Name: "BlockChain", topic3: 150, topic3Name: "Wallets", topic4: 95, topic4Name: "DApps", topic5: 61, topic5Name: "Finance"},
-    {date: "20-1-2023", topic1: 42, topic1Name: "Ethereum", topic2: 39, topic2Name: "BlockChain", topic3: 180, topic3Name: "Wallets", topic4: 99, topic4Name: "DApps", topic5: 99, topic5Name: "Finance"},
-    {date: "30-1-2023", topic1: 56, topic1Name: "Ethereum", topic2: 40, topic2Name: "BlockChain", topic3: 210, topic3Name: "Wallets", topic4: 112, topic4Name: "DApps", topic5: 122, topic5Name: "Finance"},
-    {date: "10-2-2023", topic1: 91, topic1Name: "Ethereum", topic2: 42, topic2Name: "BlockChain", topic3: 210, topic3Name: "Wallets", topic4: 145, topic4Name: "DApps", topic5: 155, topic5Name: "Finance"},
-    {date: "20-2-2023", topic1: 116, topic1Name: "Ethereum", topic2: 44, topic2Name: "BlockChain", topic3: 215, topic3Name: "Wallets", topic4: 166, topic4Name: "DApps", topic5: 177, topic5Name: "Finance"}
+    {date: "1-1-2023", topic0: 55, topic0Name: "Finance", topic1: 30, topic1Name: "Ehtereum", topic2: 28, topic2Name: "BlockChain", topic3: 130, topic3Name: "Wallets", topic4: 90, topic4Name: "DApps", topic5: 55, topic5Name: "Finance"},
+    {date: "10-1-2023", topic0: 55, topic0Name: "Finance", topic1: 40, topic1Name: "Ethereum", topic2: 38, topic2Name: "BlockChain", topic3: 150, topic3Name: "Wallets", topic4: 95, topic4Name: "DApps", topic5: 61, topic5Name: "Finance"},
+    {date: "20-1-2023",topic0: 55, topic0Name: "Finance",  topic1: 42, topic1Name: "Ethereum", topic2: 39, topic2Name: "BlockChain", topic3: 180, topic3Name: "Wallets", topic4: 99, topic4Name: "DApps", topic5: 99, topic5Name: "Finance"},
+    {date: "30-1-2023", topic0: 55, topic0Name: "Finance", topic1: 56, topic1Name: "Ethereum", topic2: 40, topic2Name: "BlockChain", topic3: 210, topic3Name: "Wallets", topic4: 112, topic4Name: "DApps", topic5: 122, topic5Name: "Finance"},
+    {date: "10-2-2023", topic0: 55, topic0Name: "Finance", topic1: 91, topic1Name: "Ethereum", topic2: 42, topic2Name: "BlockChain", topic3: 210, topic3Name: "Wallets", topic4: 145, topic4Name: "DApps", topic5: 155, topic5Name: "Finance"},
+    {date: "20-2-2023", topic0: 55, topic0Name: "Finance", topic1: 116, topic1Name: "Ethereum", topic2: 44, topic2Name: "BlockChain", topic3: 215, topic3Name: "Wallets", topic4: 166, topic4Name: "DApps", topic5: 177, topic5Name: "Finance"}
 ] 
 
 export const mockCardsStatic = [

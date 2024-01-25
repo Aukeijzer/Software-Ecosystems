@@ -20,13 +20,10 @@ export default function SmallDataBox({ item, count, increase, className }: small
                 <div className="flex flex-col  ">
                     <div className="flex flex-row gap-2 ">
                         <div className="flex text-2xl text-center">{count}</div>
-                        <div className="flex text-lg text-center text-green-500">{increase}% &#8593;</div>
                     </div>
                     <div className="text-xl">{item}</div>
                 </div>
             </div>
-            
-          
         </div>
     );
 }

@@ -25,6 +25,21 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
         logger.LogInformation("{Origin}: Return all ecosystems.", this);
         return new ObjectResult(result);
     }
+    
+    /// <summary>
+    /// Returns the technology taxonomy of the given ecosystem.
+    /// This list was saved in the postgres database when the ecosystem was created.
+    /// </summary>
+    /// <param name="ecosystemName">The name of the ecosystem you want to find technologies for.</param>
+    /// <returns>A list of technologies of the given ecosystem.</returns>
+    [HttpGet("taxonomy/technologies")]
+    public async Task<ActionResult<List<string>>> GetTechnologyTaxonomy(string ecosystemName)
+    {
+        logger.LogInformation("{Origin}: Technology taxonomy of ecosystem '{ecosystemName}' requested.", this, ecosystemName);
+        var result = await ecosystemsService.GetTechnologyTaxonomy(ecosystemName);
+        logger.LogInformation("{Origin}: Return technology taxonomy of ecosystem '{ecosystemName}'.", this, ecosystemName);
+        return new ObjectResult(result);
+    }
 
     /// <summary>
     /// Returns an ecosystem defined by the topics in the dto.

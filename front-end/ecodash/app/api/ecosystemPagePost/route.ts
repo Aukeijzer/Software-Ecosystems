@@ -4,8 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest){
     //Get variables from POST body
     const data = await req.json();
-
-    //Send to backend
+   
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/ecosystems", {
         method: 'POST',
         headers: {

@@ -39,9 +39,9 @@ export default function TopicSearch(props: TopicSearchProps){
                     onChange={handleSearchTypeChange}
                     className="mr-2 p-2 border border-gray-300 rounded-md"
                 >
-                    <option value={SearchType.ecosystems}>Topic</option>
-                    <option value={SearchType.technologies}>Technology</option>
-                    <option value={SearchType.languages}>Language</option>
+                    <option value={SearchType.ecosystems} className='font-sans'>Topic</option>
+                    <option value={SearchType.technologies} className='font-sans'>Technology</option>
+                    <option value={SearchType.languages} className='font-sans'>Language</option>
                 </select>
 
                 <input
