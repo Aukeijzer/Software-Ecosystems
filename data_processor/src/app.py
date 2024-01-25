@@ -67,12 +67,10 @@ def extract_topics():
         try:
             data = request.get_json()
             topic_service = TopicService(data)
-            response = topic_service.extract_topics()
+            response = topic_service.extract_topics_bertopic()
             return response, 200
-        except ValueError as ve:
-            return jsonify({"error": f"ValueError: {str(ve)}"}), 400
-        except KeyError as ke:
-            return jsonify({"error": f"KeyError: {str(ke)}"}), 400
+        except Exception as e:
+            return jsonify({"error": f"ValueError: {str(e)}"}), 500
 
 if __name__ == "__main__":
     print("Swagger UI on: http://localhost:5000/apidocs/")

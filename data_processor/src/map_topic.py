@@ -113,10 +113,8 @@ def map_topics_cosine(projects):
                 if similarities.max() > threshold:
                     if predefined_topics[most_similar_index] not in mapped_topics:
                         mapped_topics.append(predefined_topics[most_similar_index])
-                        # mapped_topics.append(topic_keywords)
 
-            project["added_topics"] = mapped_topics
-            result["added_topics"] = mapped_topics
+            result["topics"] = mapped_topics
             results.append(result)
 
-    return projects
+    return results

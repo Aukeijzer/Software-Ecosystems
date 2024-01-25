@@ -5,9 +5,9 @@ topic_service
 This module provides a service class for extracting and mapping topics from a
 list of projects' data.
 """
-from topic_model import extract_topics_bertopic
+from topic_model import extract_topics_bertopic, extract_topics_lda
 from preprocessing import preprocess_docs
-# from map_topic import map_topics_cosine
+from map_topic import map_topics_cosine
 
 
 def get_data(data):
@@ -60,7 +60,7 @@ class TopicService:
         """
         self.data = data
 
-    def extract_topics(self):
+    def extract_topics_bertopic(self):
         """
         Extract topics from the project data using preprocessing, topic
           modeling and topic mapping.
@@ -75,7 +75,7 @@ class TopicService:
 
         ids, docs = get_data(self.data)
         print("data extracted")
-        
+
         preprocessed_docs = preprocess_docs(docs)
         print("data preprocessed")
 
@@ -84,6 +84,38 @@ class TopicService:
 
         response = []
         for id_, topic in zip(ids, topics):
+            dict_ = {"projectId": id_}
+            dict_.update(topic)
+            response.append(dict_)
+        return response
+
+    def extract_topics_lda(self):
+        """
+        Extract topics from the project data using preprocessing, topic
+          modeling and topic mapping.
+
+        Returns
+        -------
+        list
+            A list of dictionaries containing project IDs and their
+              corresponding mapped topics.
+        """
+        print("request received")
+
+        ids, docs = get_data(self.data)
+        print("data extracted")
+
+        preprocessed_docs = preprocess_docs(docs)
+        print("data preprocessed")
+
+        topics = extract_topics_lda(preprocessed_docs,5)
+        print("topics extracted")
+
+        mapped_topics = map_topics_cosine(topics,5)
+        print("topics mapped")
+
+        response = []
+        for id_, topic in zip(ids, mapped_topics):
             dict_ = {"projectId": id_}
             dict_.update(topic)
             response.append(dict_)
