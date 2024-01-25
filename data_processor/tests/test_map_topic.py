@@ -8,7 +8,7 @@ import unittest
 import sys
 import json
 sys.path.append('./src')
-from map_topic import flatten_taxonomy_to_strings, map_topics, get_taxonomy
+from map_topic import flatten_taxonomy_to_strings, map_topics_cosine, get_taxonomy
 
 
 class TestTaxonomyFunctions(unittest.TestCase):
@@ -68,7 +68,7 @@ class TestTaxonomyFunctions(unittest.TestCase):
         self.assertIsInstance(flattened_topics, list)
         self.assertEqual(flattened_topics, expected_flattened)
 
-    def test_map_topics(self):
+    def test_map_topics_cosine(self):
         """Test the map_topics function by providing sample projects data and checking the modified 
         project data.
         """
@@ -79,7 +79,7 @@ class TestTaxonomyFunctions(unittest.TestCase):
         ]
 
         # Map topics to taxonomy
-        mapped_topics = map_topics(sample_projects)
+        mapped_topics = map_topics_cosine(sample_projects)
 
         # Assertions to the modified project data
         for project in mapped_topics:
