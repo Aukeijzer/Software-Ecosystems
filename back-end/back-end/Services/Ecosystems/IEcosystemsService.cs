@@ -20,5 +20,6 @@ public interface IEcosystemsService
    /// <returns>The ecosystem defined by the given topics.</returns>
    public Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto);
    public Task<string> UpdateDescription(DescriptionRequestDto dto);
-   public Task CreateEcosystem(EcosystemCreationDto dto);
+   public Task<string> CreateEcosystem(EcosystemCreationDto dto);
+   public Task<string> UpdateEcosystem(EcosystemCreationDto dto);
 }

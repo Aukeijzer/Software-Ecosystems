@@ -100,29 +100,57 @@ public class EcosystemsService(EcosystemsContext dbContext,
     /// Create an ecosystem and add it to the Database for top-level ecosystems.
     /// </summary>
     /// <param name="dto">The data transfer object containing all required information.</param>
-    public async Task CreateEcosystem(EcosystemCreationDto dto)
+    public async Task<string> CreateEcosystem(EcosystemCreationDto dto)
     {
         var newEcosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Users).FirstOrDefault(e => e.Name == dto.EcosystemName);
-        if(newEcosystem == null)
+        if (newEcosystem != null)
         {
-            newEcosystem = new Ecosystem
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = dto.EcosystemName,
-                DisplayName = dto.EcosystemName,
-            };
+            return "Ecosystem Already exists, try updating the ecosystem.";
         }
-        newEcosystem.Description = dto.Description;
+        newEcosystem = new Ecosystem
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = dto.EcosystemName,
+            DisplayName = dto.EcosystemName,
+            Description = dto.Description,
+            Taxonomy = ParseTopics(dto.Topics),
+            Technologies = ParseTechnologies(dto.Technologies),
+            BannedTopics = ParseExcluded(dto.Excluded)
+        };
+        var admin = await dbContext.Users.SingleOrDefaultAsync(e => e.UserName == dto.Email);
+        newEcosystem.Users.Add(admin);
+
+        dbContext.Ecosystems.Add(newEcosystem);
+        await dbContext.SaveChangesAsync();
+        return "Successfully created the ecosystem";
+    }
+
+    /// <summary>
+    /// Update an existing top-level ecosystem.
+    /// </summary>
+    /// <param name="dto">The data transfer object containing all required information</param>
+    /// <returns>A <see cref="string"/> status message.</returns>
+    public async Task<string> UpdateEcosystem(EcosystemCreationDto dto)
+    {
+        var newEcosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Users).FirstOrDefault(e => e.Name == dto.EcosystemName);
+        if (newEcosystem == null)
+        {
+            return "Ecosystem does not exists, try creating the ecosystem.";
+        }
         var admin = await dbContext.Users.SingleOrDefaultAsync(e => e.UserName == dto.Email);
         if (!newEcosystem.Users.Contains(admin))
         {
-            newEcosystem.Users.Add(admin);
+            return "You are not an Admin of this ecosystem.";
         }
+        newEcosystem.Description = dto.Description;
+
         newEcosystem.Taxonomy = ParseTopics(dto.Topics);
         newEcosystem.Technologies = ParseTechnologies(dto.Technologies);
         newEcosystem.BannedTopics = ParseExcluded(dto.Excluded);
+
         dbContext.Ecosystems.Update(newEcosystem);
         await dbContext.SaveChangesAsync();
+        return "Successfully updated the ecosystem";
     }
 
     /// <summary>

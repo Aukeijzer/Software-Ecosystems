@@ -88,4 +88,15 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     {
         await ecosystemsService.CreateEcosystem(dto);
     }
+    /// <summary>
+    /// Update an existing ecosystem from provided information.
+    /// </summary>
+    /// <param name="dto">All information needed to update the ecosystem </param>
+    [HttpPost("UpdateEcosystem")]
+    [SwaggerOperation("Update an ecosystem")]
+    [SwaggerResponse(statusCode: 200, description: "successfully updated the ecosystem.")]
+    public async Task UpdateEcosystem(EcosystemCreationDto dto)
+    {
+        await ecosystemsService.UpdateEcosystem(dto);
+    }
 }

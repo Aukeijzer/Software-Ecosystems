@@ -12,6 +12,7 @@ public class EcosystemCreationDto
     
     [DataMember(Name = "description")]
     public string Description { get; set; }
+    
     [DataMember(Name = "email")]
     public string Email { get; set; }
     
