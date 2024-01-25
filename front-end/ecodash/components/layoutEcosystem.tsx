@@ -23,6 +23,7 @@ import { colors } from "@/app/enums/filterColor"
 import { useSession} from "next-auth/react"
 import { ExtendedUser } from "@/app/utils/authOptions"
 import Button from "./button"
+import listprojectDTOConverter from "@/app/utils/Converters/projectConverter"
 
 var abbreviate = require('number-abbreviate');
 
@@ -384,13 +385,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         </div>
         cardList.push(technologyCard)
 
-        //List of rising technologies
-        const risingTechnologies = listRisingDTOConverter(topTechnologyGrowing); 
-        const risingTechnologiesTable = <TableComponent items={risingTechnologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
-        const risingTechnologiesCard = <div>
-            <InfoCard title={""} data={risingTechnologiesTable} Color={colors.technology} />
+        //List of projects
+        const projects = listprojectDTOConverter(data.topProjects);
+        const projectTable = <TableComponent items={projects} onClick={(project : string) => (console.log(project))}/>
+        const projectCard = <div>
+            <InfoCard title={""} data={projectTable} Color={colors.project}/>
         </div>
-        cardList.push(risingTechnologiesCard)
+        cardList.push(projectCard)
  
         //List of rising topics
         const risingTopics = listRisingDTOConverter(topTopicsGrowing);
