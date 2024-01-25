@@ -17,6 +17,9 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Scheduler;
 using SECODashBackend.Services.Spider;
 using SECODashBackend.Services.Users;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Certificate;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -28,6 +31,33 @@ builder.Services.AddCors(options =>
                 policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
             });
 });
+
+//TODO: configure authentication below to only accept certain urls/certs.
+builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+    .AddCertificate(options =>
+    {
+        options.Events = new CertificateAuthenticationEvents
+        {
+            OnCertificateValidated = context =>
+            {
+                var claims = new[]
+                {
+                    new Claim(
+                        ClaimTypes.NameIdentifier,
+                        context.ClientCertificate.Subject,
+                        ClaimValueTypes.String, context.Options.ClaimsIssuer),
+                    new Claim(
+                        ClaimTypes.Name,
+                        context.ClientCertificate.Subject,
+                        ClaimValueTypes.String, context.Options.ClaimsIssuer)
+                };
+                context.Principal = new ClaimsPrincipal(
+                    new ClaimsIdentity(claims, context.Scheme.Name));
+                context.Success();
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -103,7 +133,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
+if ( app.Environment.IsDevelopment() || local )
 
 // TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
