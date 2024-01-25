@@ -2,6 +2,7 @@
 using SECODashBackend.Dtos.Contributors;
 using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Dtos.Project;
+using SECODashBackend.Dtos.TimedData;
 
 namespace SECODashBackend.Dtos.Ecosystem;
 
@@ -23,7 +24,13 @@ public class EcosystemDto
     [DataMember(Name = "numberOfTopics")] public int? NumberOfTopics { get; set; }
     [DataMember(Name = "numberOfContributors")] public int? NumberOfContributors { get; set; }
     [DataMember(Name = "numberOfContributions")] public int? NumberOfContributions { get; set; }
-    
-    
+    /// <summary>
+    /// The number of active projects in the sub ecosystems over time
+    /// </summary>
+    [DataMember(Name = "timedDataTopics")] public List<TopicsBucketDto>? TimedDataTopics { get; set; }
+    /// <summary>
+    /// The number of active projects in the ecosystem over time
+    /// </summary>
+    [DataMember(Name = "timedDataEcosystem")] public List<TopicsBucketDto>? TimedDataEcosystem { get; set; }
 }
    

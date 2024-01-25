@@ -16,13 +16,13 @@ export default class projectClass implements displayableTableItem {
         return(
             <tr className="grid-cols-3">
                 <th key={'name'} className="py-3 px-5">
-                    name
+                    Project
                 </th>
                 <th key={'owner'} className=" text-center py-3 px-5">
-                    owner
+                    Owner
                 </th>
                 <th key={'stars'} className="text-right py-3 px-5">
-                    stars
+                    Stars
                 </th>
             </tr>
         )

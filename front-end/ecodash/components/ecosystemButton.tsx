@@ -3,7 +3,8 @@
 interface ecosystemButtonProps{
     ecosystem: string,
     projectCount: number,
-    topics: number
+    topics: number,
+
 }
 
 /**
@@ -26,6 +27,7 @@ export default function EcosystemButton(props: ecosystemButtonProps){
                     <b>topics</b>: {props.topics} 
                 </li>
             </ul>
+           
         </div>
     )
 }
