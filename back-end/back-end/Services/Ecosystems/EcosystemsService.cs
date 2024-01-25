@@ -102,7 +102,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
     /// <param name="dto">The data transfer object containing all required information.</param>
     public async Task CreateEcosystem(EcosystemCreationDto dto)
     {
-        var newEcosystem = dbContext.Ecosystems.AsNoTracking().FirstOrDefault(e => e.Name == dto.EcosystemName);
+        var newEcosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Users).FirstOrDefault(e => e.Name == dto.EcosystemName);
         if(newEcosystem == null)
         {
             newEcosystem = new Ecosystem
@@ -114,7 +114,10 @@ public class EcosystemsService(EcosystemsContext dbContext,
         }
         newEcosystem.Description = dto.Description;
         var admin = await dbContext.Users.SingleOrDefaultAsync(e => e.UserName == dto.Email);
-        newEcosystem.Users.Add(admin);
+        if (!newEcosystem.Users.Contains(admin))
+        {
+            newEcosystem.Users.Add(admin);
+        }
         newEcosystem.Taxonomy = ParseTopics(dto.Topics);
         newEcosystem.Technologies = ParseTechnologies(dto.Technologies);
         newEcosystem.BannedTopics = ParseExcluded(dto.Excluded);
