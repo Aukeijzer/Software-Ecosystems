@@ -23,6 +23,7 @@ import { colors } from "@/app/enums/filterColor"
 import { useSession} from "next-auth/react"
 import { ExtendedUser } from "@/app/utils/authOptions"
 import Button from "./button"
+import { lineData } from "@/app/interfaces/lineData"
 import listprojectDTOConverter from "@/app/utils/Converters/projectConverter"
 
 var abbreviate = require('number-abbreviate');
@@ -283,12 +284,48 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
                 </div>
             </>
         )
+
+    }
+    interface topicDTO {
+        topic: string,
+        projectCount: number
+    }
+
+    interface timedDataDTO {
+        bucketDateLabel: string,
+        topics: topicDTO[]
+    }
+
+    function convertTimedData(data: timedDataDTO[],){
+        var convertedData : lineData[] = []
+        for(var i = 0; i < data.length; i++){
+            var date = data[i].bucketDateLabel;
+            var lineData : lineData = {date: date, topic0: 0, topic0Name: "", topic1: 0, topic1Name: "", topic2: 0, topic2Name: "", topic3: 0, topic3Name: "", topic4: 0, topic4Name: ""}
+
+            for(var j = 0; j < data[i].topics.length; j++){
+                var topic = data[i].topics[j];
+                lineData["topic" + (j)] = topic.projectCount;
+                lineData["topic" + (j) + "Name"] = topic.topic;
+            }
+            convertedData.push(lineData)
+        }    
+        console.log(convertedData);
+        return convertedData;
+    }
+
+    function getLabels(data: timedDataDTO[]){
+        var labels : string[] = [];
+        for(var i = 0; i < data[0].topics.length; i++){
+            labels.push(data[0].topics[i].topic);
+        }
+        return labels;
+       
     }
   
     //Prepare variables before we have data so we can render before data is gathered
     var cardList  = []
     if(data){
-        if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") && (user.ecosystems.includes(props.ecosystem))) {
+        if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") && user.ecosystems.includes(props.ecosystem)) {
             const ecosystemEdit = (
                 <div className="rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-3">
                     <form className="flex flex-col">
@@ -358,7 +395,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
                 <InfoCard title={""} data={subEcosystemComponent} Color={colors.topic}/>
         </div>
         cardList.push(subEcosystemCard)
-
+        
         //Top 5 contributors
         const contributors = listContributorDTOConverter(data.topContributors);
         var contributorTable = <TableComponent items={contributors} onClick={(contributor : string) => (console.log(contributor))}/>
@@ -366,7 +403,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
                 <InfoCard title={""} data={contributorTable} Color={colors.contributor}/>
         </div>
         cardList.push(contributorCard);
-
+      
         //Top 5 languages
         const languages = listLanguageDTOConverter(data.topLanguages);
         //Make graph card
@@ -377,6 +414,18 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Add card to list
         cardList.push(languageCard);
         
+        //Line graph topicsGrowing 
+        var topicsGrowing = convertTimedData(data.timedDataTopics);
+        console.log(topicsGrowing);
+        var topicLabels = getLabels(data.timedDataTopics);
+
+        //Timed data graph
+        const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
+        const cardLineGraph = <div className="col-span-full h-[450px]">
+            <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
+        </div>
+        cardList.push(cardLineGraph)
+
         //List of technologies
         const technologies = listTechnologyDTOConverter(topTechnologies)
         const technologyTable = <TableComponent items={technologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
@@ -388,27 +437,11 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //List of projects
         const projects = listprojectDTOConverter(data.topProjects);
         const projectTable = <TableComponent items={projects} onClick={(project : string) => (console.log(project))}/>
-        const projectCard = <div>
+        const projectCard = <div className="col-span-1">
             <InfoCard title={""} data={projectTable} Color={colors.project}/>
         </div>
         cardList.push(projectCard)
- 
-        //List of rising topics
-        const risingTopics = listRisingDTOConverter(topTopicsGrowing);
-        const risingTopicsTable = <TableComponent items={risingTopics} onClick={(topic : string) => onClickFilter(topic, "ecosystems")}/>
-        const risingTopicsCard = <div>
-            <InfoCard title={""} data={risingTopicsTable} Color={colors.topic} />
-        </div>
-        cardList.push(risingTopicsCard)
-        
-        //Line graph topicsGrowing 
-        //For now no data conversion needed as Mock data is already in correct format 
-        //When working with real data there should be a conversion from DTO to dataLineGraphModel
-        const lineGraphTopicsGrowing = <GraphLine items={topicGrowthLine} />
-        const cardLineGraph = <div className="col-span-full">
-            <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
-        </div>
-        cardList.push(cardLineGraph)
+       
         } else {
              cardList.push(<div className="col-span-full bg-white py-10 justify-center flex"> No data available with selected filters.</div>)
         }
@@ -424,7 +457,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
     //Normal render (No error)
     return(
-        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0">
+        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32 sm:ml-0 sm:mr-0 mb-16">
            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3" >
                 {cardList.map((card, i) => (
                     card

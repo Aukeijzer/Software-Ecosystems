@@ -30,6 +30,9 @@ interface InfoCardProps {
     className?: string,
     onClick?: any,
     Color?: string
+    remove?: boolean,
+    onRemove?: any,
+    ecoystem?: string
 }
 
 export default function InfoCard(props: InfoCardProps) {
@@ -40,9 +43,15 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal ' + props.className}>
+        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal cursor-pointer ' + props.className}>
             <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
             
+            {props.remove && 
+            <div className="absolute top-0 right-0 mt-2 mr-1">
+                <button className="hover:bg-red-500  z-10  p-1 rounded-sm" onClick={(e) => props.onRemove(e, props.ecoystem)}> ✖ </button>
+            </div>
+            }
+
             <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
                 {props.title}   
             </h5>

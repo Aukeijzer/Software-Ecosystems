@@ -4,7 +4,7 @@ import { mockDataOverTime } from "../fixtures/mockData";
 describe('GraphComponent', () => {
     it('renders a line chart with the provided data', () => {
         // Render component
-        cy.mount(<GraphLine items={mockDataOverTime} />);
+        cy.mount(<GraphLine items={mockDataOverTime}  labels={["test1", "test2", "test3", "test4", "test5"]} />);
         
         // Assertions on the rendered component
         cy.get('[data-cy="line-graph"]').should('exist');
