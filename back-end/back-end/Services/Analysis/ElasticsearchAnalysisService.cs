@@ -234,6 +234,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     
     #region Contributors
 
+    /// <summary>
+    /// Retrieves all the contributors from the search response and converts them into a list of TopContributorDto objects.
+    /// </summary>
+    /// <param name="searchResponse">The search response from Elasticsearch.</param>
+    /// <returns>A list of all the contributors in an ecosystem.</returns>
     private static List<TopContributorDto> GetAllContributors(SearchResponse<ProjectDto> searchResponse)
     {
         var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedContributorsAggregateName);
@@ -405,12 +410,12 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     
     #region Technologies
     /// <summary>
-    /// This method uses the FilterTechnologies and SortSubEcosystems methods to retrieve the top x technologies.
+    /// Retrieves the technologies from the search response and converts them into a Top x list
     /// </summary>
-    /// <param name="technologies">A list of technologies that define the ecosystem.</param>
-    /// <param name="numberOfTopTechnologies">The number of technologies we want to showcase.</param>
-    /// <param name="subEcosystemDtos">A list of given sub-ecosystems.</param>
-    /// <returns></returns>
+    /// <param name="technologies">The technologies of an ecosystem.</param>
+    /// <param name="numberOfTopTechnologies">The number of top technologies to retrieve.</param>
+    /// <param name="subEcosystemDtos">The list of sub-ecosystems found in an ecosystem.</param>
+    /// <returns>A list of the top x technologies in an ecosystem.</returns>
     private static List<SubEcosystemDto> GetTopXTechnologies(List<string> technologies, int numberOfTopTechnologies, List<SubEcosystemDto> subEcosystemDtos)
     {
         var filteredTechnologies = FilterTechnologies(subEcosystemDtos, technologies);
@@ -423,11 +428,11 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     }
     
     /// <summary>
-    /// Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects,
+    /// Filters out sub-ecosystems that are not in the technologies list that defines the ecosystem.
     /// </summary>
-    /// <param name="subEcosystemDtos">This is a list of found sub-ecosystems.</param>
-    /// <param name="technologies">This is the list of technologies that define an ecosystem.</param>
-    /// <returns></returns>
+    /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
+    /// <param name="technologies">A list of technologies that define the ecosystem.</param>
+    /// <returns>A list of sub-ecosystems filtered by the given technologies.</returns>
     private static List<SubEcosystemDto> FilterTechnologies(List<SubEcosystemDto> subEcosystemDtos, List<string> technologies)
     {
         return subEcosystemDtos
@@ -438,15 +443,14 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     
     #region TimedData
     /// <summary>
-    /// This method retrieves the timed data for a specific time frame.
-    /// For every topic in the sub-ecosystems/topics list, it retrieves the number of projects that contain that topic.
-    /// Then it creates a TimedDateDto object with the topic, the time bucket and the number of projects.
-    /// Lastly, it adds the TimedDateDto object to the response list.
+    /// Retrieves the timed data from the search response and converts them into a list of TimedDataBucketDto objects
+    /// </summary>
     /// <param name="startTime">The start date of the period of time to retrieve.</param>
     /// <param name="endTime">The end date of the period of time to retrieve.</param>
     /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
-    /// <param name="topXTopics">The list of top x sub-ecosystems/topics.</param>
-    /// </summary>
+    /// <param name="ecosystemTopics">A list of topics that define the ecosystem.</param>
+    /// <param name="topXTopics">A list of topics that define the top x sub-ecosystems.</param>
+    /// <returns>A list of timed data buckets.</returns>
     private async Task<List<TopicsBucketDto>> GetTimedData(DateTime startTime, DateTime endTime, int timeBucket, List<string> ecosystemTopics, List<string> topXTopics)
     {
         var buckets = new List<TopicsBucketDto>();
@@ -469,7 +473,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             
             await Task.WhenAll(tasks);
             
-            buckets.Add(new TopicsBucketDto{ BucketDateLabel = startTimeString, Topics = subEcosystemDtos.ToList() });
+            buckets.Add(new TopicsBucketDto{ DateLabel = startTimeString, Topics = subEcosystemDtos.ToList() });
             
             startTime = startTime.AddDays(timeBucket);
         }
