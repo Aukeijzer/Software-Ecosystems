@@ -56,12 +56,15 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         const string topic3 = "topic3";
         const string topic4 = "topic4";
         
+        const string language1 = "language1";
+        
         const string technology1 = "technology1";
         
         // Arrange
         var requestDto = new EcosystemRequestDto
         {
             Topics = [topic1],
+            Languages = [language1],
             NumberOfTopLanguages = 2,
             NumberOfTopSubEcosystems = 3,
             NumberOfTopContributors = 2,

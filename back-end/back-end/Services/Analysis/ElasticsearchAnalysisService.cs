@@ -107,6 +107,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <param name="languages">A list of languages that define the ecosystem.</param>
     /// <param name="technologies">The technologies of an ecosystem.</param>
     /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
@@ -117,7 +118,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="endTime">The end date of the period of time to retrieve.</param>
     /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<Technology> technologies, int numberOfTopLanguages, 
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<string> languages, List<Technology> technologies, int numberOfTopLanguages, 
     int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies, int numberOfTopProjects, 
     DateTime startTime, DateTime endTime, int timeBucket)
     {
@@ -126,6 +127,12 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var termsSetQuery = new TermsSetQuery(TopicField)
         {
             Terms = topics,
+            MinimumShouldMatchScript = new Script(new InlineScript(MatchAllParametersScript)),
+        };
+        
+        var termsSetQueryLanguages = new TermsSetQuery(LanguageNameField)
+        {
+            Terms = languages,
             MinimumShouldMatchScript = new Script(new InlineScript(MatchAllParametersScript)),
         };
 
@@ -191,7 +198,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         
         var searchRequest = new SearchRequest
         {
-            Query = termsSetQuery,
+            Query = termsSetQuery && termsSetQueryLanguages,
             Aggregations = new AggregationDictionary
             { 
                 nestedLanguagesAggregation,
