@@ -102,19 +102,23 @@ public class EcosystemsService(EcosystemsContext dbContext,
     /// <param name="dto">The data transfer object containing all required information.</param>
     public async Task CreateEcosystem(EcosystemCreationDto dto)
     {
-        var newEcosystem = new Ecosystem
+        var newEcosystem = dbContext.Ecosystems.AsNoTracking().FirstOrDefault(e => e.Name == dto.EcosystemName);
+        if(newEcosystem == null)
         {
-            Id = Guid.NewGuid().ToString(),
-            Name = dto.EcosystemName,
-            DisplayName = dto.EcosystemName,
-            Description = dto.Description,
-        };
+            newEcosystem = new Ecosystem
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = dto.EcosystemName,
+                DisplayName = dto.EcosystemName,
+            };
+        }
+        newEcosystem.Description = dto.Description;
         var admin = await dbContext.Users.SingleOrDefaultAsync(e => e.UserName == dto.Email);
         newEcosystem.Users.Add(admin);
         newEcosystem.Taxonomy = ParseTopics(dto.Topics);
         newEcosystem.Technologies = ParseTechnologies(dto.Technologies);
         newEcosystem.BannedTopics = ParseExcluded(dto.Excluded);
-        dbContext.Ecosystems.Add(newEcosystem);
+        dbContext.Ecosystems.Update(newEcosystem);
         await dbContext.SaveChangesAsync();
     }
 
