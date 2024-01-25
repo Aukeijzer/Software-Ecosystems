@@ -1,9 +1,11 @@
 import { languageDTO } from "./languageDTO"
 
 export interface ecosystemDTO{
-    displayName: string,
-    description: string,
-    numberOfStars: number,
+    displayName?: string,
+    description?: string,
+    numberOfStars?: number,
+    topLanguages: languageDTO[],
+    subEcosystems: subEcosystemDTO[]
 }
 
 export interface subEcosystemDTO{

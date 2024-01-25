@@ -19,5 +19,4 @@ public interface IElasticsearchService
    /// <param name="searchRequest">The search request.</param>
    /// <returns>A SearchResponse for the projects that match the search request.</returns>
    public Task<SearchResponse<ProjectDto>> QueryProjects(SearchRequest searchRequest);
-   public Task<long> GetProjectCountByDate(DateTime startTime, List<string> topic);
 }
