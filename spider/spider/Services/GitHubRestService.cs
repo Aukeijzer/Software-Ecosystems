@@ -65,7 +65,7 @@ public class GitHubRestService : IGitHubRestService
                     }
                     else
                     {
-                        HandleError(restResponse);
+                        await HandleError(restResponse);
                     }
                 }
                 catch (Exception e)
@@ -104,7 +104,7 @@ public class GitHubRestService : IGitHubRestService
                     }
                     else
                     {
-                        HandleError(temp);
+                        await HandleError(temp);
                     }
                 }
                 catch (Exception e)
@@ -124,7 +124,7 @@ public class GitHubRestService : IGitHubRestService
     /// HandleErrors checks if there is a rate-limit error and if there is, it retries
     /// </summary>
     /// <param name="restResponse">The restResponse that includes the necessary headers</param>
-    private void HandleError(RestResponse restResponse)
+    private async Task HandleError(RestResponse restResponse)
     {
         var header = restResponse.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");
         if (header.Value != null && Convert.ToInt32(header.Value) == 0)
@@ -134,7 +134,7 @@ public class GitHubRestService : IGitHubRestService
             DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
             DateTime retryTime = utcTime.DateTime;
             _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
-            Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
+            await Task.Delay(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds + 10));
             return;
         }
 
@@ -142,7 +142,7 @@ public class GitHubRestService : IGitHubRestService
         if (header is not null)
         {
             _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", header.Value);
-            Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
+            await Task.Delay(TimeSpan.FromSeconds(int.Parse(header.Value.ToString() + 1)));
             return;
         }
 
