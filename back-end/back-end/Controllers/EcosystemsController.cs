@@ -76,4 +76,16 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
             throw;
         }
     }
+
+    /// <summary>
+    /// Create a new ecosystem from provided information.
+    /// </summary>
+    /// <param name="dto">All information needed to create a new ecosystem </param>
+    [HttpPost("CreateEcosystem")]
+    [SwaggerOperation("Create a new ecosystem")]
+    [SwaggerResponse(statusCode: 200, description: "successfully created the ecosystem.")]
+    public async Task CreateEcosystem(EcosystemCreationDto dto)
+    {
+        await ecosystemsService.CreateEcosystem(dto);
+    }
 }

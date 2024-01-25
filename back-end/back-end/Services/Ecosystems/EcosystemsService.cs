@@ -95,4 +95,70 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         }
     }
+
+    /// <summary>
+    /// Create an ecosystem and add it to the Database for top-level ecosystems.
+    /// </summary>
+    /// <param name="dto">The data transfer object containing all required information.</param>
+    public async Task CreateEcosystem(EcosystemCreationDto dto)
+    {
+        var newEcosystem = new Ecosystem
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = dto.EcosystemName,
+            DisplayName = dto.EcosystemName,
+            Description = dto.Description,
+        };
+        var admin = await dbContext.Users.SingleOrDefaultAsync(e => e.UserName == dto.Email);
+        newEcosystem.Users.Add(admin);
+        newEcosystem.Taxonomy = ParseTopics(dto.Topics);
+        newEcosystem.Technologies = ParseTechnologies(dto.Technologies);
+        newEcosystem.BannedTopics = ParseExcluded(dto.Excluded);
+        dbContext.Ecosystems.Add(newEcosystem);
+        await dbContext.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Parse provided <see cref="string"/> information into <see cref="Taxonomy"/> objects.
+    /// </summary>
+    /// <param name="topics"> <see cref="List{T}"/> of <see cref="string"/> to parse.</param>
+    /// <returns>Return a <see cref="List{T}"/> of <see cref="Taxonomy"/>.</returns>
+    private static List<Taxonomy> ParseTopics(List<string> topics)
+    {
+        var taxonomy = new List<Taxonomy>();
+        foreach (var topic in topics)
+        {
+            taxonomy.Add(new Taxonomy{Term = topic});
+        }
+        return taxonomy;
+    }
+    /// <summary>
+    /// Parse provided <see cref="string"/> information into <see cref="Technology"/> objects.
+    /// </summary>
+    /// <param name="technologies"> <see cref="List{T}"/> of <see cref="string"/> to parse.</param>
+    /// <returns>Return a <see cref="List{T}"/> of <see cref="Technology"/>.</returns>
+    private static List<Technology> ParseTechnologies(List<string> technologies)
+    {
+        var techModels = new List<Technology>();
+        foreach (var technology in technologies)
+        {
+            techModels.Add(new Technology{Term = technology});
+        }
+        return techModels;
+    }
+
+    /// <summary>
+    /// Parse provided <see cref="string"/> information into <see cref="BannedTopic"/> objects.
+    /// </summary>
+    /// <param name="excluded"> <see cref="List{T}"/> of <see cref="string"/> to parse.</param>
+    /// <returns>Return a <see cref="List{T}"/> of <see cref="BannedTopic"/>.</returns>
+    private static List<BannedTopic> ParseExcluded(List<string> excluded)
+    {
+        var bannedTopics = new List<BannedTopic>();
+        foreach (var exclusion in excluded)
+        {
+            bannedTopics.Add(new BannedTopic{Term = exclusion});
+        }
+        return bannedTopics;
+    }
 }
