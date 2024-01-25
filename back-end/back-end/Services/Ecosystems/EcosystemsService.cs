@@ -147,7 +147,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
         newEcosystem.Taxonomy = ParseTopics(dto.Topics);
         newEcosystem.Technologies = ParseTechnologies(dto.Technologies);
         newEcosystem.BannedTopics = ParseExcluded(dto.Excluded);
-
         dbContext.Ecosystems.Update(newEcosystem);
         await dbContext.SaveChangesAsync();
         return "Successfully updated the ecosystem";

@@ -84,9 +84,9 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     [HttpPost("CreateEcosystem")]
     [SwaggerOperation("Create a new ecosystem")]
     [SwaggerResponse(statusCode: 200, description: "successfully created the ecosystem.")]
-    public async Task CreateEcosystem(EcosystemCreationDto dto)
+    public async Task<string> CreateEcosystem(EcosystemCreationDto dto)
     {
-        await ecosystemsService.CreateEcosystem(dto);
+        return await ecosystemsService.CreateEcosystem(dto);
     }
     /// <summary>
     /// Update an existing ecosystem from provided information.
@@ -95,8 +95,8 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
     [HttpPost("UpdateEcosystem")]
     [SwaggerOperation("Update an ecosystem")]
     [SwaggerResponse(statusCode: 200, description: "successfully updated the ecosystem.")]
-    public async Task UpdateEcosystem(EcosystemCreationDto dto)
+    public async Task<string> UpdateEcosystem(EcosystemCreationDto dto)
     {
-        await ecosystemsService.UpdateEcosystem(dto);
+        return await ecosystemsService.UpdateEcosystem(dto);
     }
 }
