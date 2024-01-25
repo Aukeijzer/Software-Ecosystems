@@ -54,14 +54,14 @@ services:
     networks:
       - secodash-network
     secrets:
-      - db-password
+      - postgres-password
     restart: always
     build:
       context: ./database
       dockerfile: db.Dockerfile
     environment:
       POSTGRES_Username: postgres
-      POSTGRES_PASSWORD_FILE: /run/secrets/db-password
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
     volumes:
       - postgres-data:/var/lib/postgresql/data
   
@@ -98,8 +98,8 @@ volumes:
   postgres-data:
 
 secrets:
-  db-password:
-    file: secrets/db-password.txt
+  postgres-password:
+    file: secrets/postgres-password.txt
   git-api-token:
     file: secrets/spider-git-api-token.txt
   ssl-certificate:
