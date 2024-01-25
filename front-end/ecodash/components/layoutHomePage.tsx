@@ -71,7 +71,7 @@ export default function LayoutHomePage(){
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
         */
-        Router.push('/' + ecosystem);
+        Router.push('/' + ecosystem.toLowerCase());
     }
 
     function removeEcosystem(event: any, ecosystem: string){

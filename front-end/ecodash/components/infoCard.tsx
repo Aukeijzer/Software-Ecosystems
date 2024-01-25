@@ -48,7 +48,7 @@ export default function InfoCard(props: InfoCardProps) {
             
             {props.remove && 
             <div className="absolute top-0 right-0 mt-2 mr-1">
-                <button className="hover:bg-red-500  z-10" onClick={(e) => props.onRemove(e, props.ecoystem)}> X </button>
+                <button className="hover:bg-red-500  z-10  p-1 rounded-sm" onClick={(e) => props.onRemove(e, props.ecoystem)}> ✖ </button>
             </div>
             }
 

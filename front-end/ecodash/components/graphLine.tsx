@@ -1,10 +1,9 @@
 "use client"
 import dynamic from 'next/dynamic'
 import { CartesianGrid, XAxis, YAxis, Line, Legend, ResponsiveContainer, Tooltip, LineChart} from 'recharts'
-import { lineData } from '@/mockData/mockAgriculture'
 import { COLORS } from '@/app/interfaces/colors'
 //Need to import recharts dynamicly so that SSR can be disabled
-
+import { lineData } from '@/app/interfaces/lineData'
 
 /** Interface for the props of the graphLine component
   * items: lineData[] - The data that should be displayed in the graph
@@ -55,8 +54,9 @@ export default function GraphLine(props: graphLineProps){
     const items = props.items;
     console.log("GraphLine");
     console.log(items);
-    if (!items || items.length === 0) {
-        return <p>Loading data...</p>;
+    
+    if (!items || props.labels.length == 0) {
+        return <p>No more data to show.</p>;
     }
     return(
         
