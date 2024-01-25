@@ -240,14 +240,18 @@ schema:</p>
 <div><p>type: object
 properties:</p>
 <blockquote>
-<div><dl class="simple">
-<dt>result:</dt><dd><p>type: string</p>
+<div><dl>
+<dt>result:</dt><dd><p>type: array
+items:</p>
+<blockquote>
+<div><p>type: string</p>
+</div></blockquote>
 </dd>
 </dl>
 </div></blockquote>
 </div></blockquote>
 </dd>
-<dt>500:</dt><dd><p>description: Internal Server Error
+<dt>400:</dt><dd><p>description: Bad Request
 schema:</p>
 <blockquote>
 <div><p>type: object
@@ -269,17 +273,6 @@ properties:</p>
 <dt class="sig sig-object py" id="app.serve_sphinx_docs">
 <span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">serve_sphinx_docs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'index.html'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.serve_sphinx_docs" title="Link to this definition">#</a></dt>
 <dd><p>Shows documentation when starting the application.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to the static file, by default ‘index.html’.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The static file response.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Response</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>
@@ -326,10 +319,10 @@ vectors of project topics and predefined topics in the taxonomy.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="map_topic.map_topics">
-<span class="sig-prename descclassname"><span class="pre">map_topic.</span></span><span class="sig-name descname"><span class="pre">map_topics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projects</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#map_topic.map_topics" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="map_topic.map_topics_cosine">
+<span class="sig-prename descclassname"><span class="pre">map_topic.</span></span><span class="sig-name descname"><span class="pre">map_topics_cosine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projects</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#map_topic.map_topics_cosine" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
-<dt>Map the topics in a collection of projects to the closest predefined topics</dt><dd><p>in the taxonomy.</p>
+<dt>Map the topics in a collection of projects to the closest predefined topics</dt><dd><p>in the taxonomy using cosine similarity.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -401,6 +394,26 @@ preprocessed documents using Latent Dirichlet Allocation (LDA) and finding
 the optimal number of topics.</p>
 </section>
 <dl class="py function">
+<dt class="sig sig-object py" id="topic_model.extract_topics_bertopic">
+<span class="sig-prename descclassname"><span class="pre">topic_model.</span></span><span class="sig-name descname"><span class="pre">extract_topics_bertopic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">documents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_x_topics</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#topic_model.extract_topics_bertopic" title="Link to this definition">#</a></dt>
+<dd><p>Extract topics from a collection of preprocessed documents using BERTopic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>documents</strong> (<em>list</em>) – A list of preprocessed documents.</p></li>
+<li><p><strong>top_x_topics</strong> (<em>int</em>) – Number of top topics to extract for each document.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries, each containing extracted topics for the corresponding document.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="topic_model.extract_topics_lda">
 <span class="sig-prename descclassname"><span class="pre">topic_model.</span></span><span class="sig-name descname"><span class="pre">extract_topics_lda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">documents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_x_topics</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#topic_model.extract_topics_lda" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
@@ -423,23 +436,6 @@ the optimal number of topics.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="topic_model.find_optimal_num_topics">
-<span class="sig-prename descclassname"><span class="pre">topic_model.</span></span><span class="sig-name descname"><span class="pre">find_optimal_num_topics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">documents</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#topic_model.find_optimal_num_topics" title="Link to this definition">#</a></dt>
-<dd><p>Find the optimal number of topics using model perplexity.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>documents</strong> (<em>list</em>) – List of preprocessed documents.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Optimal number of topics.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -468,10 +464,31 @@ list of projects’ data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="topic_service.TopicService.extract_topics">
-<span class="sig-name descname"><span class="pre">extract_topics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#topic_service.TopicService.extract_topics" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="topic_service.TopicService.extract_topics_bertopic">
+<span class="sig-name descname"><span class="pre">extract_topics_bertopic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#topic_service.TopicService.extract_topics_bertopic" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
-<dt>Extract topics from the project data using preprocessing, topic</dt><dd><p>modeling and topic mapping.</p>
+<dt>Extract topics from the project data using preprocessing, topic</dt><dd><p>modeling and topic mapping using BERTopic and zero-shot classification.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A list of dictionaries containing project IDs and their</dt><dd><p>corresponding mapped topics.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="topic_service.TopicService.extract_topics_lda">
+<span class="sig-name descname"><span class="pre">extract_topics_lda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#topic_service.TopicService.extract_topics_lda" title="Link to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Extract topics from the project data using preprocessing, topic</dt><dd><p>modeling and topic mapping using LDA and cosine similarity.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -568,7 +585,7 @@ list of projects’ data.</p>
 <li><a class="reference internal" href="#map-topic-py">map_topic.py</a></li>
 <li><a class="reference internal" href="#map_topic.flatten_taxonomy_to_strings"><code class="docutils literal notranslate"><span class="pre">flatten_taxonomy_to_strings()</span></code></a></li>
 <li><a class="reference internal" href="#map_topic.get_taxonomy"><code class="docutils literal notranslate"><span class="pre">get_taxonomy()</span></code></a></li>
-<li><a class="reference internal" href="#map_topic.map_topics"><code class="docutils literal notranslate"><span class="pre">map_topics()</span></code></a></li>
+<li><a class="reference internal" href="#map_topic.map_topics_cosine"><code class="docutils literal notranslate"><span class="pre">map_topics_cosine()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-preprocessing">Preprocessing</a><ul>
@@ -579,15 +596,16 @@ list of projects’ data.</p>
 </li>
 <li><a class="reference internal" href="#module-topic_model">Topic Model</a><ul>
 <li><a class="reference internal" href="#id2">topic_model</a></li>
+<li><a class="reference internal" href="#topic_model.extract_topics_bertopic"><code class="docutils literal notranslate"><span class="pre">extract_topics_bertopic()</span></code></a></li>
 <li><a class="reference internal" href="#topic_model.extract_topics_lda"><code class="docutils literal notranslate"><span class="pre">extract_topics_lda()</span></code></a></li>
-<li><a class="reference internal" href="#topic_model.find_optimal_num_topics"><code class="docutils literal notranslate"><span class="pre">find_optimal_num_topics()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-topic_service">Topic Service</a><ul>
 <li><a class="reference internal" href="#id3">topic_service</a></li>
 <li><a class="reference internal" href="#topic_service.TopicService"><code class="docutils literal notranslate"><span class="pre">TopicService</span></code></a><ul>
 <li><a class="reference internal" href="#topic_service.TopicService.data"><code class="docutils literal notranslate"><span class="pre">TopicService.data</span></code></a></li>
-<li><a class="reference internal" href="#topic_service.TopicService.extract_topics"><code class="docutils literal notranslate"><span class="pre">TopicService.extract_topics()</span></code></a></li>
+<li><a class="reference internal" href="#topic_service.TopicService.extract_topics_bertopic"><code class="docutils literal notranslate"><span class="pre">TopicService.extract_topics_bertopic()</span></code></a></li>
+<li><a class="reference internal" href="#topic_service.TopicService.extract_topics_lda"><code class="docutils literal notranslate"><span class="pre">TopicService.extract_topics_lda()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#topic_service.get_data"><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></a></li>

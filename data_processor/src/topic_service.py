@@ -63,7 +63,7 @@ class TopicService:
     def extract_topics_bertopic(self):
         """
         Extract topics from the project data using preprocessing, topic
-          modeling and topic mapping.
+          modeling and topic mapping using BERTopic and zero-shot classification.
 
         Returns
         -------
@@ -92,7 +92,7 @@ class TopicService:
     def extract_topics_lda(self):
         """
         Extract topics from the project data using preprocessing, topic
-          modeling and topic mapping.
+          modeling and topic mapping using LDA and cosine similarity.
 
         Returns
         -------
@@ -111,7 +111,7 @@ class TopicService:
         topics = extract_topics_lda(preprocessed_docs,5)
         print("topics extracted")
 
-        mapped_topics = map_topics_cosine(topics,5)
+        mapped_topics = map_topics_cosine(topics)
         print("topics mapped")
 
         response = []
