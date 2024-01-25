@@ -104,7 +104,9 @@ _[Ss]cripts
 /front-end/ecodash/yarn-error.log*
 
 # local env files
-/front-end/ecodash.env*.local
+/front-end/ecodash/.env.local
+/front-end/ecodash/.env.development
+/front-end/ecodash/.env.production
 
 # vercel
 /front-end/ecodash/.vercel

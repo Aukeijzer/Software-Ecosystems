@@ -52,9 +52,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
 
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
+            dto.Technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
-            dto.NumberOfTopContributors ?? DefaultNumberOfTopItems);
+            dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
+            dto.NumberOfTopTechnologies ?? DefaultNumberOfTopItems,
+            dto.NumberOfTopProjects ?? DefaultNumberOfTopItems);
 
         // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
         if (dto.Topics.Count != 1) return ecosystemDto;
@@ -69,5 +72,27 @@ public class EcosystemsService(EcosystemsContext dbContext,
         ecosystemDto.Description = ecosystem.Description;
         
         return ecosystemDto;
+    }
+    /// <summary>
+    /// Update description for ecosystem with given description
+    /// </summary>
+    /// <param name="dto">The <see cref="DescriptionDto"/> containts the new description to be saved to the database.</param>
+    /// <returns>Returns a <see cref="string"/> with the update status.</returns>
+    public async Task<string> UpdateDescription(DescriptionRequestDto dto)
+    {
+        
+        //To lower is because all names are without capital letters
+        var ecosystemToUpdate = dbContext.Ecosystems.FirstOrDefault(ecosystem => ecosystem.Name == dto.Ecosystem.ToLower());
+        if (ecosystemToUpdate != null)
+        {
+            ecosystemToUpdate.Description = dto.Description;
+            await dbContext.SaveChangesAsync();
+            return "updated successfully";
+        }
+        else
+        {
+            throw new Exception("Ecosystem not found");
+
+        }
     }
 }

@@ -133,6 +133,7 @@ public class GitHubRestService : IGitHubRestService
             
             DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
             DateTime retryTime = utcTime.DateTime;
+            _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
             Thread.Sleep(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds));
             _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
             return;
@@ -141,6 +142,7 @@ public class GitHubRestService : IGitHubRestService
         header = restResponse.Headers.FirstOrDefault(x => x.Name == "Retry-After");
         if (header is not null)
         {
+            _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", header.Value);
             Thread.Sleep(TimeSpan.FromSeconds(int.Parse(header.Value.ToString())));
             _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", header.Value);
             return;

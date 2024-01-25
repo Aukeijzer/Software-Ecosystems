@@ -31,6 +31,7 @@ services:
 #####
   # Spider
   spider-app:
+    container_name: spider-app
     build:
       context: ./spider/
       dockerfile: ./Dockerfile
@@ -48,11 +49,16 @@ services:
 #####
   # SQL Database 
   db:
+    container_name: db
     image: postgres
     networks:
       - secodash-network
     secrets:
       - db-password
+    restart: always
+    build:
+      context: ./database
+      dockerfile: db.Dockerfile
     environment:
       POSTGRES_Username: postgres
       POSTGRES_PASSWORD_FILE: /run/secrets/db-password
@@ -71,6 +77,7 @@ services:
 ####
   # Backend (service) layer application
   backend-app:
+    container_name: backend-app
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile

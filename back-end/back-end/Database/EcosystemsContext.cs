@@ -15,4 +15,7 @@ public class EcosystemsContext(DbContextOptions<EcosystemsContext> options) : Db
    /// The Ecosystems table.
    /// </summary>
    public DbSet<Ecosystem> Ecosystems { get; set; }
+
+   public DbSet<User> Users { get; set; }
+   
 }

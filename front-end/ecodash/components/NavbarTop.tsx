@@ -3,20 +3,27 @@
 import { Navbar } from 'flowbite-react';
 import logo from '../public/logo.png';
 import Image from 'next/image'
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link'
-
+import PopUpBox from './popUpBox';
+import LoginBox from './loginBox';
+import { ExtendedUser } from '@/app/utils/authOptions';
+import { useSession} from "next-auth/react";
+import Button from './button';
 /**
- * Renders a NavBar with clickable links to the main ecosystems.
- * @returns {JSX.Element} The rendered NavBar component.
+ * Renders the top navigation bar component. That contains login display and link to homepage.
+ * @returns The JSX element representing the top navigation bar.
  */
 
 export default function NavBarTop(){
+    const { data: session } = useSession()
+    const user = session?.user as ExtendedUser;
+    const Router = useRouter();
     //For now has the basepath 
     return(
-        <Navbar data-cy='navBar' fluid rounded className='border-b-2 border-odinAccent bg-amber shadow-xl' >
-            <Navbar.Brand as={Link} href="http://localhost:3000" >
+        <Navbar data-cy='navBar' fluid  className='bg-white shadow-sm mb-5 px-5 lg:px-32 md:px-20' >
+            <Navbar.Brand as={Link}  href={process.env.NEXT_PUBLIC_LOCAL_ADRESS} >
                 <Image
                     data-cy='navLogo'
                     src={logo}
@@ -25,10 +32,30 @@ export default function NavBarTop(){
                     width={40}
                     height={40}
                 />
-                <span className="self-center whitespace-nowrap text-l font-semibold dark:text-white">
+                <span className="self-center whitespace-nowrap text-l font-semibold">
                     SECODash
                 </span>
+
+            
             </Navbar.Brand>
+            {/* If logged in display user profile image / userType and present sign out button */}
+            {session && <div>
+                            <div data-cy={"loggedInSelector"}className='flex flex-col'>
+                                <Image src={session.user!.image!} 
+                                    className='rounded-full ml-2'
+                                    width={30}
+                                    height={30}
+                                    alt="Profile picture"
+                                />
+                               <b> {user.userType} </b>
+                            </div>            
+
+                            <Button text='Sign out' onClick={() =>  Router.push('/api/auth/signout')} />
+                        </div>}
+            {/* If not logged in display login button */}
+            {!session && <div className='flex flex-col'> 
+                            <PopUpBox buttonText='Login' data-cy="loginButton"> <LoginBox/> </PopUpBox>
+                         </div>}
         </Navbar>
-    )   
+    )    
 }
