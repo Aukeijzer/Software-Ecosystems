@@ -25,7 +25,7 @@ export default class contributorClass implements displayableTableItem {
 
     renderAsTableItem(): React.JSX.Element {
         return(
-            <tr className="bg-white border-b px-5 flex flex-row justify-between">
+            <tr className="bg-white border-b px-5 flex flex-row justify-between hover:bg-amber" onClick={() => window.open(`https://www.github.com/${this.username}`)}>
                 <th className="py-4 font-medium text-gray-900">
                     {this.username}
                 </th>

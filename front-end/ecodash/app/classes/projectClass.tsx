@@ -30,7 +30,7 @@ export default class projectClass implements displayableTableItem {
 
     renderAsTableItem(): React.JSX.Element {
         return(
-            <tr className="grid-cols-3  bg-white border-b hover:bg-amber" onClick={() => window.open(`http://www.github.com/${this.owner}/${this.name}`)}>
+            <tr className="grid-cols-3  bg-white border-b hover:bg-amber" onClick={() => window.open(`https://www.github.com/${this.owner}/${this.name}`)}>
                 <th className="pl-5 py-4 font-medium text-gray-900">
                     {this.name}
                 </th>
