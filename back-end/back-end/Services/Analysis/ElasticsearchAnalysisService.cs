@@ -214,8 +214,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var contributors = GetAllContributors(result);
         var topXSubEcosystems = GetTopXSubEcosystems(numberOfTopSubEcosystems, filteredSubEcosystems);
         
-        var projectCount = result.Total + subEcosystemDtos.Sum(s => s.ProjectCount);
-        
         return new EcosystemDto
         {
             Topics = topics,
@@ -225,7 +223,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             TopContributors = GetTopXContributors(contributors, numberOfTopContributors),
             TopProjects = GetTopXProjects(result),
             NumberOfTopics = filteredSubEcosystems.Count,
-            NumberOfProjects = projectCount,
+            NumberOfProjects =  subEcosystemDtos.Sum(s => s.ProjectCount),
             NumberOfContributors = contributors.Count,
             NumberOfContributions = contributors.Sum(c => c.Contributions),
             TimedDataTopics = await GetTimedData(startTime, endTime, timeBucket, topics, 
