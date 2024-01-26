@@ -38,8 +38,10 @@ Extract topics from the preprocessed data.
     - Schema:
       - Type: object
         - Properties:
-          - `result`:
-            - Type: string
+    - `result`:
+      - Type: array
+        - Items:
+          - Type: string
   - `500`:
     - Description: Internal Server Error
     - Schema:
@@ -48,18 +50,9 @@ Extract topics from the preprocessed data.
           - `error`:
             - Type: string
 
-- **Returns:**
-  - Type: list
-
 ### `app.serve_sphinx_docs(path='index.html')`
 
 Shows documentation when starting the application.
-
-- **Parameters:**
-  - `path` (str, optional): The path to the static file, by default ‘index.html’.
-
-- **Returns:**
-  - Type: Response
 
 ## Map Topic Module: `map_topic.py`
 
@@ -85,9 +78,9 @@ Retrieve and return the predefined taxonomy from a JSON file.
 - **Returns:**
   - Type: dict
 
-### `map_topic.map_topics(projects)`
+### `map_topic.map_topics_cosine(projects)`
 
-Map the topics in a collection of projects to the closest predefined topics in the taxonomy.
+Map the topics in a collection of projects to the closest predefined topics in the taxonomy using cosine similarity.
 
 - **Parameters:**
   - `projects` (list): A list of dictionaries, each representing a project with associated topics.
@@ -123,6 +116,17 @@ Preprocess a single document by removing Markdown layout, tokenizing text, remov
 
 This module provides functions for extracting topics from a collection of preprocessed documents using Latent Dirichlet Allocation (LDA) and finding the optimal number of topics.
 
+### `topic_model.extract_topics_bertopic(documents, top_x_topics)`
+
+Extract topics from a collection of preprocessed documents using BERTopic.
+
+- **Parameters:**
+  - `documents` (list): A list of preprocessed documents.
+  - `top_x_topics` (int): Number of top topics to extract for each document.
+
+- **Returns:**
+  - Type: list
+
 ### `topic_model.extract_topics_lda(documents, top_x_topics)`
 
 Extract topics from a collection of preprocessed documents using Latent Dirichlet Allocation (LDA).
@@ -133,16 +137,6 @@ Extract topics from a collection of preprocessed documents using Latent Dirichle
 
 - **Returns:**
   - Type: list
-
-### `topic_model.find_optimal_num_topics(documents)`
-
-Find the optimal number of topics using model perplexity.
-
-- **Parameters:**
-  - `documents` (list): List of preprocessed documents.
-
-- **Returns:**
-  - Type: int
 
 ## Topic Service Module: `topic_service.py`
 
@@ -155,16 +149,23 @@ A class for extracting and mapping topics from a list of projects data.
 - `data`:
   - Type: list
 
-### `topic_service.extract_topics()`
+### `topic_service.extract_topics_bertopic()`
 
-Extract topics from the project data using preprocessing, topic modeling, and topic mapping.
+Extract topics from the project data using preprocessing, topic modeling and topic mapping using BERTopic and zero-shot classification.
+
+- **Returns:**
+  - Type: list
+
+### `topic_service.extract_topics_lda()`
+
+Extract topics from the project data using preprocessing, topic modeling and topic mapping using LDA and cosine similarity.
 
 - **Returns:**
   - Type: list
 
 ### `topic_service.get_data(data)`
 
-Extract document information and ids from JSON data.
+Extract document information and ids from json data.
 
 - **Parameters:**
   - `data` (list): A list of dictionaries representing project data.
