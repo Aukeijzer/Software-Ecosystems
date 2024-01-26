@@ -77,7 +77,13 @@ if (string.IsNullOrEmpty(spiderConnectionString))
 
 builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")!));
 
-builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
+var dataProcessorConnectionString = builder.Configuration.GetConnectionString("DataProcessor");
+if (string.IsNullOrEmpty(dataProcessorConnectionString))
+{
+    throw new InvalidOperationException("Missing configuration for Data Processor");
+}
+
+builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
 var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
@@ -89,7 +95,7 @@ if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
 var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
-        .IndexName("projects-03")
+        .IndexName("projects-topic-test")
     );
 
 builder.Services.AddSingleton(
