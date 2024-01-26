@@ -50,9 +50,9 @@ Extract topics from the preprocessed data.
           - `error`:
             - Type: string
 
-### `app.serve_sphinx_docs(path='index.html')`
+### `app.redirect_to_swagger()`
 
-Shows documentation when starting the application.
+Redirect to swagger UI
 
 ## Map Topic Module: `map_topic.py`
 
