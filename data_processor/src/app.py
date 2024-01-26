@@ -9,18 +9,16 @@ from flask import Flask, request, jsonify
 from flasgger import Swagger
 from topic_service import TopicService
 
-# app = Flask(__name__)
-
-app = Flask(__name__, static_url_path='/', static_folder='_build/html/')
+app = Flask(__name__)
 swagger = Swagger(app)
 
 @app.route('/')
-def serve_sphinx_docs(path='index.html'):
+def redirect_to_swagger():
     """
-    Shows documentation when starting the application.
+    Redirect to swagger UI
 
     """
-    return app.send_static_file(path)
+    return app.redirect("/apidocs/")
 
 # Handles POST request
 @app.route("/extract-topics", methods=["POST"])
