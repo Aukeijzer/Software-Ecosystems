@@ -11,7 +11,7 @@ namespace SECODashBackend.Models;
 public class Technology
 {
     /// <summary>
-    /// The term used in taxonomy for software ecosystems.
+    /// The term used in taxonomy for technology.
     /// </summary>
     [DataMember(Name = "term")]
     [Key]

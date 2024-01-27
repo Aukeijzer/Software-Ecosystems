@@ -62,7 +62,6 @@ public class EcosystemsTest(BackendWebApplicationFactory<Program> factory) : ICl
         var requestDto = new EcosystemRequestDto
         {
             Topics = [topic1],
-            Technologies = [technology1],
             NumberOfTopLanguages = 2,
             NumberOfTopSubEcosystems = 3,
             NumberOfTopContributors = 2,

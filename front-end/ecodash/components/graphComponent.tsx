@@ -30,7 +30,7 @@ export default function GraphComponent(props: infoCardDataGraphProps){
     return(
         <div data-cy='pie-chart'>
               <PieChart width={400} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}} >
-                <Pie data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
+                <Pie className="cursor-pointer" data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
                     {props.items.map((entry, index) => (
                        entry.renderAsGraphItem(index, props.onClick)
                     ))}

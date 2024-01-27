@@ -43,12 +43,12 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal cursor-pointer ' + props.className}>
+        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal' + props.className}>
             <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
             
             {props.remove && 
             <div className="absolute top-0 right-0 mt-2 mr-1">
-                <button className="hover:bg-red-500  z-10" onClick={(e) => props.onRemove(e, props.ecoystem)}> X </button>
+                <button className="hover:bg-red-500  z-10  p-1 rounded-sm" onClick={(e) => props.onRemove(e, props.ecoystem)}> ✖ </button>
             </div>
             }
 
