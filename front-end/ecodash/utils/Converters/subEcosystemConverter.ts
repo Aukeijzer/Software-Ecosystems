@@ -1,5 +1,5 @@
-import subEcosystemClass from "../../classes/subEcosystemClass";
-import { subEcosystemDTO } from "../../interfaces/DTOs/ecosystemDTO";
+import subEcosystemClass from "@/classes/subEcosystemClass";
+import { subEcosystemDTO } from "@/interfaces/DTOs/ecosystemDTO";
 
 /**
  * Converts a subEcosystemDTO object to a subEcosystemClass object.

@@ -1,9 +1,8 @@
 "use client"
-import dynamic from 'next/dynamic'
 import { CartesianGrid, XAxis, YAxis, Line, Legend, ResponsiveContainer, Tooltip, LineChart} from 'recharts'
-import { COLORS } from '@/app/interfaces/colors'
+import { COLORS } from '@/interfaces/colors'
 //Need to import recharts dynamicly so that SSR can be disabled
-import { lineData } from '@/app/interfaces/lineData'
+import { lineData } from '@/interfaces/lineData'
 
 /** Interface for the props of the graphLine component
   * items: lineData[] - The data that should be displayed in the graph

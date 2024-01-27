@@ -1,4 +1,4 @@
-import { ecosystemDTO } from "../interfaces/DTOs/ecosystemDTO";
+import { ecosystemDTO } from "@/interfaces/DTOs/ecosystemDTO";
 
 /**
  * Fetches ecosystem data by topic from the specified URL.

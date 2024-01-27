@@ -1,7 +1,5 @@
-
-import { ecosystemDTO } from "@/app/interfaces/DTOs/ecosystemDTO";
+import { ecosystemDTO } from "@/interfaces/DTOs/ecosystemDTO"
 import { NextRequest, NextResponse } from "next/server"
-
 
 export async function GET(req: NextRequest){
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', {

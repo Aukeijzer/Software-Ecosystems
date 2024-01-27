@@ -2,13 +2,13 @@
 
 import { useEffect} from "react"
 import { useRouter } from 'next/navigation'
-import { fetcherHomePage } from '@/app/utils/apiFetcher';
+import { fetcherHomePage } from '@/utils/apiFetcher';
 import useSWRMutation from 'swr/mutation'
 import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
-import { ExtendedUser } from "@/app/utils/authOptions";
+import { ExtendedUser } from "@/utils/authOptions";
 import { useSession } from "next-auth/react";
 
 /**

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link'
 import PopUpBox from './popUpBox';
 import LoginBox from './loginBox';
-import { ExtendedUser } from '@/app/utils/authOptions';
+import { ExtendedUser } from '@/utils/authOptions';
 import { useSession} from "next-auth/react";
 import Button from './button';
 /**
