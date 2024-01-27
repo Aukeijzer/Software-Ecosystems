@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+const stringHash = require("string-hash");
 
 export async function POST(req: NextRequest){
     //Get session 
@@ -12,6 +13,8 @@ export async function POST(req: NextRequest){
 
     const data = await req.json();
     console.log(data)
+
+    data.email = stringHash(data.email);
 
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/newAdmin", {
         method: 'POST',

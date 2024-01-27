@@ -1,9 +1,7 @@
 import { NextResponse , NextRequest} from "next/server";
 import { getToken } from "next-auth/jwt";
-import { readFile } from "fs";
-import { buffer } from "stream/consumers";
-import path from "path";
-import { fileURLToPath } from "url";
+const stringHash = require("string-hash");
+
 export async function POST(req: NextRequest) {
     //Get session
     const token = await getToken({req});
@@ -15,6 +13,10 @@ export async function POST(req: NextRequest) {
     //Get data from post body
     const data = await req.json();
 
+    //Hash email and append user to data
+    data.email = stringHash(token.email);
+
+    //Send data to backend
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/newEcosystem", {
         method: 'POST',
         headers: {

@@ -1,6 +1,7 @@
 import { NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github"
+const stringHash = require("string-hash");
 
 
 //Set cookie prefix and secure cookies based on environment
@@ -63,6 +64,9 @@ export const authOptions: NextAuthOptions = {
             if(user){
                 const data = await fetchUserData(user.id, user.email!);
                 console.log(data);
+                //Name
+                //Email
+                //picture
                 token.id = user.id;
                 token.userType = data.userType;
                 token.ecosystems = data.ecosystems;
@@ -94,11 +98,14 @@ export const authOptions: NextAuthOptions = {
  */
 
 async function fetchUserData(userId: string, username: string) {
+    //Hash username
     const apiPostBody = {
         id: userId,
-        userName: username
+        userName: stringHash(username).toString()
     }
-    
+    console.log(apiPostBody);
+
+    //Send data to backend
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS! + '/users/loginrequest', {
         method: 'POST',
         headers: {
@@ -106,6 +113,7 @@ async function fetchUserData(userId: string, username: string) {
         },
         body: JSON.stringify(apiPostBody)
     });
+    console.log(response);
    
     enum userType{
         "User",
