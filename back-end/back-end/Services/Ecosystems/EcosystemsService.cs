@@ -196,10 +196,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
         var bannedTopics = new List<BannedTopic>();
         foreach (var exclusion in excluded)
         {
-            bannedTopics.Add(new BannedTopic{Term = exclusion});
+            bannedTopics.Add(new BannedTopic { Term = exclusion });
         }
+
         return bannedTopics;
-    
+    }
+
     public async Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName)
     {
         var ecosystem = await GetByNameAsync(ecosystemName);
