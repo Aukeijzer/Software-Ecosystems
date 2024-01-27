@@ -16,18 +16,33 @@ export async function POST(req: NextRequest) {
     //Hash email and append user to data
     data.email = stringHash(token.email);
 
+    var apiPostBody = {
+        topics: data. topics,
+        technologies: data.technologies,
+        excluded: data.excluded,
+        email: stringHash(token.email).toString(),
+        ecosystemName: data.ecosystemName,
+    
+        description: data.description,
+    }
+
+    console.log(apiPostBody);
+
     //Send data to backend
-    const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/newEcosystem", {
+    const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/ecosystems/CreateEcosystem", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(apiPostBody)
     })
 
-    if (response.status === 500) {
+    console.log(response)
+
+    if (response.status !== 200) {
         throw new Error(response.statusText)
     }
+
 
     const messages : any = await response.json();
 

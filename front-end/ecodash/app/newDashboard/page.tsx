@@ -73,10 +73,12 @@ export default function NewDashboardPage(){
                  var apiPostBody = {
                     topics: (ecosystemInformation as inputFileDTO)?.topics,
                     technologies: (ecosystemInformation as inputFileDTO)?.technologies,
-                    excludedTopics: (ecosystemInformation as inputFileDTO)?.excludedTopics,
-                    ecosystem: event.target.ecosystem.value,
+                    excluded: (ecosystemInformation as inputFileDTO)?.excludedTopics,
+                    ecosystemName: event.target.ecosystem.value,
                     description: event.target.description.value
                 }
+                console.log("Pre ")
+                console.log(apiPostBody);
             } catch(err){
                 throw new Error("Error parsing file");
             }
@@ -93,11 +95,13 @@ export default function NewDashboardPage(){
                     body: JSON.stringify(apiPostBody),
                 });
                 if (response.ok) {
-                    // Handle success
-                    const data = await response.json();
-                    console.log(data);
-                    //Alert user that ecosystem was created
-                    alert("Ecosystem created");
+                   if(response.status === 200){
+                        alert("Ecosystem created");
+                        const data = await response.json();
+                    } else {
+                        alert("Error creating ecosystem");
+                    }
+            
                 } else {
                     // Handle error
                     throw new Error("Error in response");

@@ -79,7 +79,8 @@ export default function NewAdminPage(){
             });
 
             if(response.status === 200){
-                alert("Admin created successfully");
+
+                alert(response.text);
             } else {
                 alert("Error creating admin");
             }
