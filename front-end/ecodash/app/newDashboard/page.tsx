@@ -3,11 +3,13 @@ import { useSession } from "next-auth/react";
 import { ExtendedUser } from "../utils/authOptions";
 import Button from "@/components/button";
 import SpinnerComponent from "@/components/spinner";
+import { useRouter } from "next/navigation";
 /**
  * Represents the page component for creating a new dashboard.
  */
 export default function NewDashboardPage(){
    
+    const router = useRouter();
     //Check if isAdmin
     const { data: session, status } = useSession()
     const user = session?.user as ExtendedUser;
@@ -67,18 +69,18 @@ export default function NewDashboardPage(){
             }
             try {
                 ecosystemInformation = JSON.parse(content) as inputFileDTO;
-                console.log(ecosystemInformation);
+
+                //Prepare ecosystem name
+                const ecosystemName = event.target.ecosystem.value.toLowerCase().replaceAll(" ", "-")
                 
                 //Prepare api post body
                  var apiPostBody = {
                     topics: (ecosystemInformation as inputFileDTO)?.topics,
                     technologies: (ecosystemInformation as inputFileDTO)?.technologies,
                     excluded: (ecosystemInformation as inputFileDTO)?.excludedTopics,
-                    ecosystemName: event.target.ecosystem.value,
+                    ecosystemName: ecosystemName,
                     description: event.target.description.value
                 }
-                console.log("Pre ")
-                console.log(apiPostBody);
             } catch(err){
                 throw new Error("Error parsing file");
             }
@@ -96,8 +98,8 @@ export default function NewDashboardPage(){
                 });
                 if (response.ok) {
                    if(response.status === 200){
-                        alert("Ecosystem created");
-                        const data = await response.json();
+                        alert("Ecosystem created, in order to edit your ecosystem you need to relog");
+                        router.push("/")
                     } else {
                         alert("Error creating ecosystem");
                     }

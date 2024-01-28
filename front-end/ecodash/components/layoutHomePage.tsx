@@ -93,6 +93,7 @@ export default function LayoutHomePage(){
                 if(response.ok){
                     if(response.status === 200){
                         alert("Ecosystem removed");
+                        window.location.reload();
                     } else {
                         alert("Error removing ecosystem");
                     }

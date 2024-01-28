@@ -39,6 +39,5 @@ export async function POST(req: NextRequest){
         throw new Error(response.statusText)
     }
 
-    const messages : any = await response.json();
-    return new NextResponse(JSON.stringify(messages), {status: 200})
+    return new NextResponse("succesfull", {status: 200})
 }
