@@ -78,6 +78,30 @@ export default function LayoutHomePage(){
         event.stopPropagation()
         if(confirm("Are you sure you want to remove this ecosystem?")){
             //Remove ecosystem from user
+            //Make api call to remove ecosystem from user
+            var apiPostBody = {
+                ecosystem: ecosystem,
+                userEcosystems: user.ecosystems
+            }
+            fetch('/api/removeEcosystem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(apiPostBody)
+            }).then(response => {
+                if(response.ok){
+                    if(response.status === 200){
+                        alert("Ecosystem removed");
+                    } else {
+                        alert("Error removing ecosystem");
+                    }
+                } else {
+                    throw new Error("Error in response");
+                }
+            }).catch(error => {
+                throw new Error("Error in fetch");
+            })
         }
     }
 

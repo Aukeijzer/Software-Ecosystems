@@ -255,12 +255,15 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         })
 
         //Check if response is ok, if not throw error 500
-        if (response.status == 500){
-            console.log("Failed to update description");
-            throw new Error(response.statusText)
+        if(response.ok){
+            if(response.status === 200){
+                alert("Description updated");
+            } else {
+                alert("Error updating description");
+            }
+        } else {
+            throw new Error("Error in response");
         }
-        alert("Description updated successfully")
-        Router.refresh();
     }
 
     function changeDescription(description: string){
