@@ -1,4 +1,8 @@
-﻿namespace SECODashBackend.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using SECODashBackend.Models;
+using SECODashBackend.Services.Scheduler;
+
+namespace SECODashBackend.Database;
 
 public static class Extensions
 {
@@ -14,6 +18,32 @@ public static class Extensions
          ecosystemsContext.Database.EnsureCreated();
          UserDbInitializer.Initialize(ecosystemsContext);
          DbInitializer.Initialize(ecosystemsContext);
+      }
+   }
+
+   public static void ScheduleInitialJobs(this IHost host)
+   {
+      using (var scope = host.Services.CreateScope())
+      {
+         var services = scope.ServiceProvider;
+         var ecosystemsContext = services.GetRequiredService<EcosystemsContext>();
+         var scheduler = services.GetRequiredService<HangfireScheduler>();
+         var ecosystems = ecosystemsContext.Ecosystems.Include("Taxonomy").Include(ecosystem => ecosystem.Technologies);
+         var miningList = new List<string>();
+         foreach (var ecosystem in ecosystems)
+         {
+            foreach (var tax in ecosystem.Taxonomy)
+            {
+               miningList.Add(tax.Term);
+            }
+
+            foreach (var tech in ecosystem.Technologies)
+            {
+               miningList.Add(tech.Term);
+            }
+
+            scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+         }
       }
    }
 }
