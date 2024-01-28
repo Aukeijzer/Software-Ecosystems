@@ -12,7 +12,7 @@ using SECODashBackend.Database;
 namespace SECODashBackend.Migrations
 {
     [DbContext(typeof(EcosystemsContext))]
-    [Migration("20240125004953_Initial")]
+    [Migration("20240128102554_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -92,7 +92,7 @@ namespace SECODashBackend.Migrations
 
                     b.HasKey("Term");
 
-                    b.ToTable("BannedTopic");
+                    b.ToTable("BannedTopics");
                 });
 
             modelBuilder.Entity("SECODashBackend.Models.Ecosystem", b =>
@@ -144,7 +144,7 @@ namespace SECODashBackend.Migrations
                     b.HasIndex("Term")
                         .IsUnique();
 
-                    b.ToTable("Technology");
+                    b.ToTable("Technologies");
                 });
 
             modelBuilder.Entity("SECODashBackend.Models.User", b =>

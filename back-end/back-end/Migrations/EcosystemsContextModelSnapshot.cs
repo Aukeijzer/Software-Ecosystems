@@ -89,7 +89,7 @@ namespace SECODashBackend.Migrations
 
                     b.HasKey("Term");
 
-                    b.ToTable("BannedTopic");
+                    b.ToTable("BannedTopics");
                 });
 
             modelBuilder.Entity("SECODashBackend.Models.Ecosystem", b =>
@@ -141,7 +141,7 @@ namespace SECODashBackend.Migrations
                     b.HasIndex("Term")
                         .IsUnique();
 
-                    b.ToTable("Technology");
+                    b.ToTable("Technologies");
                 });
 
             modelBuilder.Entity("SECODashBackend.Models.User", b =>
