@@ -87,7 +87,13 @@ if (string.IsNullOrEmpty(spiderConnectionString))
 
 builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")!));
 
-builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
+var dataProcessorConnectionString = builder.Configuration.GetConnectionString("DataProcessor");
+if (string.IsNullOrEmpty(dataProcessorConnectionString))
+{
+    throw new InvalidOperationException("Missing configuration for Data Processor");
+}
+
+builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
 ElasticsearchClientSettings settings;
 if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
@@ -101,7 +107,7 @@ if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
     settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
         // set default index for ProjectDtos
         .DefaultMappingFor<ProjectDto>(i => i
-            .IndexName("projects-03")
+            .IndexName("projects-topic-test")
         );
 }
 else

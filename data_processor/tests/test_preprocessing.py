@@ -21,7 +21,7 @@ class TestTextPreprocessing(unittest.TestCase):
         # Test whether markdown is removed
         document = "# Heading\nThis is a *test* document."
         processed = preprocess_document(document)
-        expected_processed = "Heading This is a test document"
+        expected_processed = "Heading test document"
         self.assertEqual(processed, expected_processed)
 
     def test_lemmatization(self):
@@ -31,7 +31,7 @@ class TestTextPreprocessing(unittest.TestCase):
         # Test lemmatization
         document = "Lemmatize these words."
         processed = preprocess_document(document)
-        expected_processed = "Lemmatize these word"
+        expected_processed = "Lemmatize word"
         self.assertEqual(processed, expected_processed)
 
     def test_preprocess_docs(self):
@@ -44,8 +44,8 @@ class TestTextPreprocessing(unittest.TestCase):
             "# Doc 2\nThis is *document* two."
         ]
         processed_documents = preprocess_docs(documents)
-        expected_processed = ["Doc This is document one",
-                              "Doc This is document two"]
+        expected_processed = ["Doc document one",
+                              "Doc document two"]
         self.assertEqual(processed_documents, expected_processed)
 
 
