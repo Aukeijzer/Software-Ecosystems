@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 
+/**
+ * Handles the POST request to remove an ecosystem.
+ * 
+ * @param req - The NextRequest object representing the incoming request.
+ *              ecosystem: string - The ecosystem to remove.
+ * @returns A NextResponse object representing the response to the request.
+ */
 export async function POST(req: NextRequest){
     //Get session
     const token = await getToken({req});
@@ -19,7 +26,6 @@ export async function POST(req: NextRequest){
         ecosystem: data.ecosystem,
     }
 
-    console.log(postBody)
     //Send data to backend
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/ecosystems/removeEcosystem", {
         method: 'POST',
@@ -35,5 +41,4 @@ export async function POST(req: NextRequest){
 
     const messages : any = await response.json();
     return new NextResponse(JSON.stringify(messages), {status: 200})
-
 }
