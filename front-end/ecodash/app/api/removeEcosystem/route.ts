@@ -16,10 +16,17 @@ export async function POST(req: NextRequest){
     //Get data from post body
     const data = await req.json();
 
-    //Check if user is admin and check if ecosystem is owned by user
-    if (!token || (token.userType !== "Admin" && token.userType !== "RootAdmin") || !data.userEcosystems.includes(data.ecosystem)){
+    //Check if user is admin or rootadmin
+    if (!token || (token.userType !== "Admin" && token.userType !== "RootAdmin") ){
         return(new NextResponse("Unauthorized", {status: 401}));
     }
+
+    //Check if user is admin of ecosystem
+    //Rootadmins can delete each ecosytem
+    if(token.userType == "Admin" && !data.userEcosystems.includes(data.ecosystem)){
+        return(new NextResponse("Unauthorized", {status: 401}));
+    }
+    
 
     //Prepare post body
     var postBody = {

@@ -130,6 +130,9 @@ export default function LayoutHomePage(){
             if(user && userEcosystems){
                 console.log(userEcosystems);
                 removable = userEcosystems.includes(data[i].displayName);
+                if(user.userType === "RootAdmin"){
+                    removable = true;
+                }
             }
             
             const button = <EcosystemButton ecosystem={data[i].displayName} projectCount={data[i].numberOfStars} topics={100} />
