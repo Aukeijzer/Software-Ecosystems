@@ -26,12 +26,17 @@ public class DataProcessorService : IDataProcessorService
    public async Task<List<ProjectDto>> GetTopics(List<ProjectDto> projectDtos)
    {
       var readmeDtos = ConvertToTopicDto(projectDtos);
-      var request = new RestRequest("extract-topics", Method.Post).AddJsonBody(readmeDtos);
-      var responseDtos = await _client.PostAsync<List<TopicResponseDto>>(request) ?? throw new HttpRequestException();
       
-      var newDtos = AddTopicsToProjects(responseDtos, projectDtos);
-
-      return newDtos;
+      // Only extract topics if more than 10 readmes are found
+      if (readmeDtos.Count > 10)
+      {
+         var request = new RestRequest("extract-topics", Method.Post).AddJsonBody(readmeDtos);
+         var responseDtos = await _client.PostAsync<List<TopicResponseDto>>(request) ??
+                            throw new HttpRequestException();
+         var newDtos = AddTopicsToProjects(responseDtos, projectDtos);
+         return newDtos;
+      }
+      return projectDtos;
    }
    
    /// <summary>
