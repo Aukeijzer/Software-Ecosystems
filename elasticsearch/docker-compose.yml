@@ -70,8 +70,6 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
-    networks:
-      - secodash-network
     ports:
       - ${ES_PORT}:9200
     environment:
@@ -114,8 +112,6 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata02:/usr/share/elasticsearch/data
-    networks:
-      - secodash-network
     environment:
       - node.name=es02
       - cluster.name=${CLUSTER_NAME}
@@ -155,8 +151,6 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata03:/usr/share/elasticsearch/data
-    networks:
-      - secodash-network
     environment:
       - node.name=es03
       - cluster.name=${CLUSTER_NAME}
@@ -203,8 +197,6 @@ services:
       - kibanadata:/usr/share/kibana/data
     ports:
       - ${KIBANA_PORT}:5601
-    networks:
-      - secodash-network
     environment:
       - SERVERNAME=kibana
       - ELASTICSEARCH_HOSTS=https://es01:9200
@@ -233,13 +225,3 @@ volumes:
     driver: local
   kibanadata:
     driver: local
- 
-secrets:
-  elasticsearch-password:
-    file: secrets/elasticsearch-password.txt
-
-networks:
-  secodash-network:
-    name: secodash-network
-    driver: bridge
-    external: true

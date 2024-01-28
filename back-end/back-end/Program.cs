@@ -68,10 +68,8 @@ var connectionString = builder.Configuration.GetConnectionString("PostgresDb");
 // If running in docker, get the password from a file
 if (Environment.GetEnvironmentVariable("Docker_Enviroment") != null)
 {
-    var path = Environment.GetEnvironmentVariable("Postgres_Password_File");
-    if (path == null)
-        throw new InvalidOperationException("Missing password file location for Postgres");
-    connectionString = String.Format(connectionString, File.ReadAllText(path));
+    var password = GetSecret("Postgres_Password_File");
+    connectionString = String.Format(connectionString, password);
 }
     
 builder.Services.AddDbContext<EcosystemsContext>(
@@ -91,18 +89,36 @@ builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Config
 
 builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
 
-// TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
-var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
-if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
+ElasticsearchClientSettings settings;
+if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
 {
-    throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+    var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+    if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
+    {
+        throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    }
+    settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
+        // set default index for ProjectDtos
+        .DefaultMappingFor<ProjectDto>(i => i
+            .IndexName("projects-03")
+        );
 }
-var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
-    // set default index for ProjectDtos
-    .DefaultMappingFor<ProjectDto>(i => i
-        .IndexName("projects-03")
-    );
+else
+{
+    var nodes = new Uri[]
+    {
+        new ("https://es01:9200"),
+        new ("https://es02:9200"),
+        new ("https://es03:9200")
+    };
+    var pool = new StaticNodePool(nodes);
+    
+    var password = GetSecret("Elasticsearch_Password_File");
+    settings = new ElasticsearchClientSettings(pool)
+        .CertificateFingerprint("1d4903c26c88badd55d250d54bd6b3e6c291c033")
+        .Authentication(new BasicAuthentication("elastic", password));
+}
 
 builder.Services.AddSingleton(
     new ElasticsearchClient(settings));
@@ -139,8 +155,8 @@ builder.Services.AddScoped<IScheduler, HangfireScheduler>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Use swagger if not in production
+if ( Environment.GetEnvironmentVariable("Docker_Enviroment") != "server")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -166,6 +182,18 @@ app.MapHangfireDashboard();
 
 app.CreateDbIfNotExists();
 app.Run();
+
+/// <summary>
+/// Reads the contents of a secret file. 
+/// </summary>
+/// <param name="name"> Name of the secret. </param>
+string GetSecret(string name)
+{
+    var path = Environment.GetEnvironmentVariable(name);
+    if (path == null)
+        throw new InvalidOperationException("Secret file location not specified");
+    return File.ReadAllText(path);
+}
 
 // Necessary for integration testing.
 // See https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-8.0#basic-tests-with-the-default-webapplicationfactory
