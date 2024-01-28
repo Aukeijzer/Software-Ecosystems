@@ -254,17 +254,25 @@ public class EcosystemsService(EcosystemsContext dbContext,
         await UnScheduleEcosystem(ecosystem);
         return "Ecosystem has been deleted";
     }
+    /// <summary>
+    /// Returns a list of topics that are Technologies in this ecosystem.
+    /// </summary>
+    /// <param name="ecosystemName"></param>
+    /// <returns><see cref="List{T}"/> of <see cref="Technology"/>.</returns>
     public async Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName)
     {
         var ecosystem = await GetByNameAsync(ecosystemName);
         if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
         return ecosystem.Technologies;
     }
-
-    public async Task ScheduleEcosystem(string _ecosystem)
+    /// <summary>
+    /// Schedule the mining job for the new ecosystem.
+    /// </summary>
+    /// <param name="ecosystemName">Name of the new ecosystem.</param>
+    public Task ScheduleEcosystem(string ecosystemName)
     {
         var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy)
-            .Include(ecosystem => ecosystem.Technologies).FirstOrDefault(e => e.Name == _ecosystem);
+            .Include(ecosystem => ecosystem.Technologies).FirstOrDefault(e => e.Name == ecosystemName);
         var miningList = new List<string>();
             foreach (var tax in ecosystem.Taxonomy)
             {
@@ -275,10 +283,15 @@ public class EcosystemsService(EcosystemsContext dbContext,
                 miningList.Add(tech.Term);
             }
             scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+            return Task.CompletedTask;
     }
-
-    public async Task UnScheduleEcosystem(string ecosystem)
+    /// <summary>
+    /// Unschedule the mining job for the deleted ecosystem.
+    /// </summary>
+    /// <param name="ecosystem">Name of the deleted ecosystem.</param>
+    public Task UnScheduleEcosystem(string ecosystem)
     {
         scheduler.RemoveRecurringTaxonomyMiningJob(ecosystem);
+        return Task.CompletedTask;
     }
 }

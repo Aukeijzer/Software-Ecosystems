@@ -34,5 +34,5 @@ public interface IEcosystemsService
 
    public Task<string> UpdateTopics(EcosystemCreationDto dto);
    public Task<string> RemoveEcosystem(string ecosystem);
-   public Task ScheduleEcosystem(string ecosystem);
+   public Task ScheduleEcosystem(string ecosystemName);
 }
