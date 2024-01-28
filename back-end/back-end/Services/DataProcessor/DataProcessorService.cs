@@ -19,51 +19,69 @@ public class DataProcessorService : IDataProcessorService
    }
    
    /// <summary>
-   /// Sends the readme data to the data processor and returns the resulting topics.
+   /// Sends the readme data to the data processor and modifies projectDTOS by adding the resulting topics.
    /// </summary>
-   /// <param name="readmeDtos">The readme data.</param>
-   /// <returns>The resulting topics.</returns>
+   /// <param name="projectDtos">List of project data.</param>
    /// <exception cref="HttpRequestException">Thrown if the request cannot be deserialized into a List of ProjectTopicsDtos.</exception>
-   public async Task<IEnumerable<TopicResponseDto>> GetTopics(IEnumerable<ProjectDto> projectDtos)
+   public async Task<List<ProjectDto>> GetTopics(List<ProjectDto> projectDtos)
    {
       var readmeDtos = ConvertToTopicDto(projectDtos);
-      var request = new RestRequest("extract-topics", Method.Post).AddJsonBody(readmeDtos);
       
-      return await _client.PostAsync<List<TopicResponseDto>>(request) ?? throw new HttpRequestException();
+      // Only extract topics if more than 10 readmes are found
+      if (readmeDtos.Count > 10)
+      {
+         var request = new RestRequest("extract-topics", Method.Post).AddJsonBody(readmeDtos);
+         var responseDtos = await _client.PostAsync<List<TopicResponseDto>>(request) ??
+                            throw new HttpRequestException();
+         var newDtos = AddTopicsToProjects(responseDtos, projectDtos);
+         return newDtos;
+      }
+      return projectDtos;
    }
    
    /// <summary>
    /// Adds topics from topics extracted from data processor to the projects
    /// </summary>
-   /// <param name="topicDtos"></param>
-   /// <param name="projectDtos"></param>
-   public void AddTopicsToProjects(IEnumerable<TopicResponseDto> topicDtos, IEnumerable<ProjectDto> projectDtos)
+   /// <param name="topicDtos"> List of extracted topics per project.</param>
+   /// <param name="projectDtos">List of project data.</param>
+   private List<ProjectDto> AddTopicsToProjects(List<TopicResponseDto> topicDtos, List<ProjectDto> projectDtos)
    {
-      foreach (var dto in projectDtos) 
+      // Create a dictionary using ProjectId as the key
+      Dictionary<string, TopicResponseDto> topicDictionary = topicDtos.ToDictionary(t => t.ProjectId);
+
+      foreach (var dto in projectDtos)
       {
-         var topicDto = topicDtos.FirstOrDefault(t => t.ProjectId == dto.Id);
-         if (topicDto != null)
+         // Check if the projectID exists in the dictionary
+         if (topicDictionary.TryGetValue(dto.Id, out var topicDto))
          {
             dto.AdditionalTopics = topicDto.Topics;
          }
       }
+
+      return projectDtos;
    }
+
    
    /// <summary>
    /// Converts a list projectDto to a list of topicRequestDtos
    /// </summary>
-   /// <param name="projectDtos"></param>
+   /// <param name="projectDtos">List of project data.</param>
    /// <returns> List of TopicRquestDtos </returns>
-   private IEnumerable<TopicRequestDto> ConvertToTopicDto(IEnumerable<ProjectDto> projectDtos)
+   private List<TopicRequestDto> ConvertToTopicDto(List<ProjectDto> projectDtos)
    {
-      var readmeDtos = projectDtos.Select(dto => new TopicRequestDto
-      {
-         Id = dto.Id, 
-         Name = dto.Name, 
-         Description = dto.Description, 
-         Readme = dto.ReadMe
-      }).ToList();
+      // Filter out projects with empty readme
+      var readmeDtos = projectDtos
+         .Where(dto => !string.IsNullOrEmpty(dto.ReadMe))
+         .Select(dto => new TopicRequestDto
+         {
+            Id = dto.Id,
+            Name = dto.Name,
+            Description = dto.Description,
+            Readme = dto.ReadMe
+         })
+         .ToList();
 
       return readmeDtos;
    }
+
 }
