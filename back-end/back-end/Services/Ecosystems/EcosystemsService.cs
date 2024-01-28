@@ -4,6 +4,7 @@ using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Analysis;
+using SECODashBackend.Services.Scheduler;
 
 namespace SECODashBackend.Services.Ecosystems;
     
@@ -13,7 +14,7 @@ namespace SECODashBackend.Services.Ecosystems;
 /// It uses the AnalysisService to analyze ecosystems.
 /// </summary>
 public class EcosystemsService(EcosystemsContext dbContext,
-        IAnalysisService analysisService)
+        IAnalysisService analysisService, IScheduler scheduler)
     : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
@@ -250,6 +251,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
         }
         dbContext.Ecosystems.Remove(deleted);
         await dbContext.SaveChangesAsync();
+        await UnScheduleEcosystem(ecosystem);
         return "Ecosystem has been deleted";
     }
     public async Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName)
@@ -257,5 +259,26 @@ public class EcosystemsService(EcosystemsContext dbContext,
         var ecosystem = await GetByNameAsync(ecosystemName);
         if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
         return ecosystem.Technologies;
+    }
+
+    public async Task ScheduleEcosystem(string _ecosystem)
+    {
+        var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy)
+            .Include(ecosystem => ecosystem.Technologies).FirstOrDefault(e => e.Name == _ecosystem);
+        var miningList = new List<string>();
+            foreach (var tax in ecosystem.Taxonomy)
+            {
+                miningList.Add(tax.Term);
+            }
+            foreach (var tech in ecosystem.Technologies)
+            {
+                miningList.Add(tech.Term);
+            }
+            scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+    }
+
+    public async Task UnScheduleEcosystem(string ecosystem)
+    {
+        scheduler.RemoveRecurringTaxonomyMiningJob(ecosystem);
     }
 }

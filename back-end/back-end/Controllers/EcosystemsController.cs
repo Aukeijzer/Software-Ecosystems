@@ -110,7 +110,8 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
         }
         var update = await ecosystemsService.UpdateTopics(dto);
         logger.LogInformation("{Origin}: Successfully updated the topics for {ecosystem}.",this,dto.EcosystemName);
-        return "Ecosystem created" + " and " + update;
+        await ecosystemsService.ScheduleEcosystem(dto.EcosystemName);
+        return "Ecosystem created";
     }
 
     [HttpPost("RemoveEcosystem")]

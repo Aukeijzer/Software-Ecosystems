@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Models;
+using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.Scheduler;
 
 namespace SECODashBackend.Database;
@@ -27,8 +28,9 @@ public static class Extensions
       {
          var services = scope.ServiceProvider;
          var ecosystemsContext = services.GetRequiredService<EcosystemsContext>();
-         var scheduler = services.GetRequiredService<HangfireScheduler>();
-         var ecosystems = ecosystemsContext.Ecosystems.Include("Taxonomy").Include(ecosystem => ecosystem.Technologies);
+         var scheduler = services.GetRequiredService<IScheduler>();
+         var ecosystems = ecosystemsContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy)
+            .Include(ecosystem => ecosystem.Technologies).ToList();
          var miningList = new List<string>();
          foreach (var ecosystem in ecosystems)
          {
