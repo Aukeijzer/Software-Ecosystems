@@ -1,6 +1,6 @@
 "use client"
 
-import { ecosystemDTO } from "@/app/interfaces/DTOs/ecosystemDTO";
+import { ecosystemDTO } from "@/interfaces/DTOs/ecosystemDTO";
 import InfoCard from "./infoCard";
 
 /**

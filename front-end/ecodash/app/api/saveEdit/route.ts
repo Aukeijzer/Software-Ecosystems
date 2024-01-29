@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/utils/authOptions";
+import { authOptions } from "@/utils/authOptions";
 import { getServerSession } from "next-auth";
 import { NextResponse , NextRequest} from "next/server";
 import { getToken } from "next-auth/jwt";

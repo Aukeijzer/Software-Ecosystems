@@ -6,7 +6,9 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     "./node_modules/flowbite/**/*.js",
-    './app/*.css'
+    './app/*.css',
+    './components/*.tsx',
+    './classes/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     colors: {

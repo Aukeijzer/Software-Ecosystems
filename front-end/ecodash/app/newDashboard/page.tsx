@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { ExtendedUser } from "../utils/authOptions";
+import { ExtendedUser } from "@/utils/authOptions";
 import Button from "@/components/button";
 import SpinnerComponent from "@/components/spinner";
 import { useRouter } from "next/navigation";

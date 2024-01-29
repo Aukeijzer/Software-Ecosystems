@@ -1,5 +1,5 @@
-import contributorClass from "@/app/classes/contributorClass";
-import { contributorDTO } from "@/app/interfaces/DTOs/contributorDTO";
+import contributorClass from "@/classes/contributorClass";
+import { contributorDTO } from "@/interfaces/DTOs/contributorDTO";
 
 export function contributorDTOConverter(contributor: contributorDTO){
     return new contributorClass(contributor.login, contributor.contributions);

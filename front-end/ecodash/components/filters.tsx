@@ -1,4 +1,4 @@
-import { colors } from "@/app/enums/filterColor"
+import { colors } from "@/enums/filterColor"
 /**
  * Props for the Filters component.
  */

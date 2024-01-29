@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { Pie, Legend, Tooltip } from "recharts";
-import displayableGraphItem from '@/app/classes/displayableGraphItem';
+import displayableGraphItem from '@/classes/displayableGraphItem';
 
 //This must be imported dynamicly so that SSR can be disabled
 //TODO: Maybe add a spinner to loading time?
