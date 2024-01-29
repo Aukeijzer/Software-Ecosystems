@@ -384,9 +384,9 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         cardList.push(languageCard);
         
         //Line graph topicsGrowing 
-        var topicsGrowing = convertTimedData(data.timedDataTopics);
+        var topicsGrowing = convertTimedData(data.topicsActivityTimeSeries);
         console.log(topicsGrowing);
-        var topicLabels = getLabels(data.timedDataTopics);
+        var topicLabels = getLabels(data.topicsActivityTimeSeries);
 
         //Timed data graph
         const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
