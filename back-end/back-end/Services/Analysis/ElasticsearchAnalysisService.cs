@@ -109,7 +109,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
-    /// <param name="excludedTopics">A list of topics that define the ecosystem.</param>
+    /// <param name="excludedTopics">A list of topics to exclude from the ecosystem.</param>
     /// <param name="technologies">The technologies of an ecosystem.</param>
     /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
@@ -544,7 +544,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
     /// <param name="technologies">A list of technologies that define the ecosystem.</param>
-    /// <param name="excludedTopics">A list of technologies that define the ecosystem.</param>
+    /// <param name="excludedTopics">A list of topics to exclude from the ecosystem.</param>
     /// <returns>A list of sub-ecosystems filtered by the given topics.</returns>
     public static List<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies, List<string> excludedTopics)
     {

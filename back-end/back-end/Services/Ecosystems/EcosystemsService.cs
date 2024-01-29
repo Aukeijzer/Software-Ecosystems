@@ -55,7 +55,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
             .Include(e => e.Taxonomy)
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
-            
     }
 
     /// <summary>
@@ -84,7 +83,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
             dto.EndTime,
             dto.NumbersOfDaysPerBucket ?? DefaultNumberOfDaysPerBucket);
 
-        // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
+        // If the ecosystem has exactly 1 topic, we know it is one of the "main" ecosystems
         if (dto.Topics.Count == 1)
         {
             ecosystemDto.DisplayName = ecosystem.DisplayName;
@@ -112,7 +111,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
         else
         {
             throw new Exception("Ecosystem not found");
-
         }
     }
 
@@ -280,11 +278,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
         return ecosystem.Technologies;
     }
     
-    public async Task<List<BannedTopic>> GetExcludedTopics(string ecosystemName)
-    {
-        var ecosystem = await GetByNameAsync(ecosystemName);
-        if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
-        return ecosystem.BannedTopics;}
     /// <summary>
     /// Schedule the mining job for the new ecosystem.
     /// </summary>
@@ -315,5 +308,4 @@ public class EcosystemsService(EcosystemsContext dbContext,
         scheduler.RemoveRecurringTaxonomyMiningJob(ecosystem);
         return Task.CompletedTask;
     }
-    
 }
