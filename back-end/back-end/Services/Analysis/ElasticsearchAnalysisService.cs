@@ -226,6 +226,20 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         var (ecosystemData, subEcosystemData) = await GetActiveProjectsTimeSeries(startTime, endTime, timeBucket, topics, 
             topXSubEcosystems.Select(s => s.Topic).ToList());
         
+        long numberOfTopics;
+        
+        // This is necessary because for some reason the size of the terms aggregation influences "sum_other_doc_count"
+        // resulting in an inconsistent number of topics
+        if (topics.Count > 1)
+        {
+            numberOfTopics = GetNumberOfTopics(searchResponse);
+        }
+        else
+        {
+            var metrics = await GetEcosystemMetricsAsync(topics.First());
+            numberOfTopics = metrics.NumberOfSubTopics;
+        }
+
         return new EcosystemDto
         {
             Topics = topics,
@@ -235,7 +249,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             TopContributors = GetTopXContributors(allContributors, numberOfTopContributors),
             TopProjects = GetTopXProjects(searchResponse),
             NumberOfStars = GetNumberOfStars(searchResponse),
-            NumberOfTopics = GetNumberOfTopics(searchResponse),
+            NumberOfTopics = numberOfTopics,
             NumberOfProjects = GetNumberOfProjects(searchResponse),
             NumberOfContributors = GetNumberOfContributors(searchResponse),
             NumberOfContributions = allContributors.Sum(c => c.Contributions),
@@ -326,7 +340,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         
         return numberOfTopics;
     }
-
 
     /// <summary>
     /// Retrieves the total number of stars of all projects in the ecosystem from the search response.
