@@ -128,7 +128,7 @@ To start testing with jest follow these steps:
 
 ## Spider
 
-[Go to spider documentation](documentation/spider/_Sidebar.md)
+[Go to spider documentation](documentation/spider/index.html)
 
 ### Running outside of a container
 In order to run the spider you need to install [C# .net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0). 
