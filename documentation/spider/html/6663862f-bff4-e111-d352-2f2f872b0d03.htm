@@ -217,7 +217,24 @@
             <br />(Inherited from <span class="noLink">ControllerBase</span>)</td></tr><tr><td><span class="noLink">Forbid(AuthenticationProperties, <span id="LST80C96291_52" data-languageSpecificText="cpp=array&lt;"></span>String<span id="LST80C96291_53" data-languageSpecificText="cpp=&gt;|cs=[]|vb=()|nu=[]|fs=[]"></span>)</span></td><td>
             Creates a <span class="noLink">ForbidResult</span> (<span class="noLink">Status403Forbidden</span> by default) with the
             specified authentication schemes and <span class="parameter">properties</span>.
-            <br />(Inherited from <span class="noLink">ControllerBase</span>)</td></tr><tr><td><a href="db08f019-2c9d-be9e-edae-4b73da73dc31.htm">GetByKeyword(String, Int32)</a></td><td> </td></tr><tr><td><a href="c4a8bc0d-49bc-3c27-77ae-56e1ad222d83.htm">GetByKeyword(String, Int32, String)</a></td><td> </td></tr><tr><td><a href="f548a973-eee0-95a8-f697-e0e9eb353bc4.htm">GetByName</a></td><td> </td></tr><tr><td><a href="e925addc-8e00-ffc0-d031-389fa4adfe2f.htm">GetByNames</a></td><td> </td></tr><tr><td><a href="02ed50d5-7597-0424-332a-f4f0605ffd6b.htm">GetByTopic(String, Int32)</a></td><td> </td></tr><tr><td><a href="b6a4e97f-ae8c-390a-98ba-ccd131d5fb0f.htm">GetByTopic(String, Int32, String)</a></td><td> </td></tr><tr><td><a href="9d276509-74ed-1070-bc61-d845509fcbb6.htm">GetContributorsByName</a></td><td> </td></tr><tr><td><span class="noLink">GetHashCode</span></td><td>Serves as the default hash function.<br />(Inherited from <span class="noLink">Object</span>)</td></tr><tr><td><span class="noLink">GetType</span></td><td>Gets the <span class="noLink">Type</span> of the current instance.<br />(Inherited from <span class="noLink">Object</span>)</td></tr><tr><td><span class="noLink">LocalRedirect</span></td><td>
+            <br />(Inherited from <span class="noLink">ControllerBase</span>)</td></tr><tr><td><a href="db08f019-2c9d-be9e-edae-4b73da73dc31.htm">GetByKeyword(String, Int32)</a></td><td>
+            GetByKeyword receives a HttpGet request and returns a list of repositories. This method calls the GetByKeyword
+            method with a startCursor of null
+            </td></tr><tr><td><a href="c4a8bc0d-49bc-3c27-77ae-56e1ad222d83.htm">GetByKeyword(String, Int32, String)</a></td><td>
+            GetByKeyword receives a HttpGet request and returns a list of repositories
+            </td></tr><tr><td><a href="f548a973-eee0-95a8-f697-e0e9eb353bc4.htm">GetByName</a></td><td>
+            GetByName receives a HttpGet request and returns a repository
+            </td></tr><tr><td><a href="e925addc-8e00-ffc0-d031-389fa4adfe2f.htm">GetByNames</a></td><td>
+            GetContributersByName receives a HttpPost request with a list of ProjectRequestDtos and then returns a list of
+            repositories for each ProjectRequestDto
+            </td></tr><tr><td><a href="02ed50d5-7597-0424-332a-f4f0605ffd6b.htm">GetByTopic(String, Int32)</a></td><td>
+            GetByTopic receives a HttpGet request and returns a list of repositories. This method calls the GetByTopic
+            method with a startCursor of null
+            </td></tr><tr><td><a href="b6a4e97f-ae8c-390a-98ba-ccd131d5fb0f.htm">GetByTopic(String, Int32, String)</a></td><td>
+            GetByTopic receives a HttpGet request and returns a list of repositories
+            </td></tr><tr><td><a href="9d276509-74ed-1070-bc61-d845509fcbb6.htm">GetContributorsByName</a></td><td>
+            GetContributersByName receives a HttpGet request and returns a list of contributors
+            </td></tr><tr><td><span class="noLink">GetHashCode</span></td><td>Serves as the default hash function.<br />(Inherited from <span class="noLink">Object</span>)</td></tr><tr><td><span class="noLink">GetType</span></td><td>Gets the <span class="noLink">Type</span> of the current instance.<br />(Inherited from <span class="noLink">Object</span>)</td></tr><tr><td><span class="noLink">LocalRedirect</span></td><td>
             Creates a <span class="noLink">LocalRedirectResult</span> object that redirects
             (<span class="noLink">Status302Found</span>) to the specified local <span class="parameter">localUrl</span>.
             <br />(Inherited from <span class="noLink">ControllerBase</span>)</td></tr><tr><td><span class="noLink">LocalRedirectPermanent</span></td><td>
