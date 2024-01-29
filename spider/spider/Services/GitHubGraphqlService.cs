@@ -85,6 +85,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                             ... on Repository {
                                 name
                                 id
+                                pushedAt
                                 defaultBranchRef {
                                   name
                                   target {
@@ -345,6 +346,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                             nodes {
                               name
                               id
+                              pushedAt
                               defaultBranchRef {
                                 name
                                 target {
@@ -493,6 +495,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                         repository(name: $name, owner: $_ownerName) {
                             name
                             id
+                            pushedAt
                             defaultBranchRef {
                               name
                               target {
