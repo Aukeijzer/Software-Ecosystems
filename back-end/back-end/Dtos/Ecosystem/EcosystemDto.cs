@@ -7,30 +7,30 @@ using SECODashBackend.Dtos.TimedData;
 namespace SECODashBackend.Dtos.Ecosystem;
 
 /// <summary>
-/// Represents a data transfer object for an Ecosystem.
+/// A data transfer object for an Ecosystem with all its supplementary data.
 /// </summary>
 public class EcosystemDto
 {
     [DataMember(Name = "displayName")] public string? DisplayName { get; set; }
     [DataMember(Name = "description")] public string? Description { get; set; }
-    [DataMember(Name = "numberOfStars")] public int? NumberOfStars { get; set; }
     [DataMember(Name = "topics")] public required List<string> Topics { get; init; }
     [DataMember(Name = "topTechnologies")] public required List<SubEcosystemDto> TopTechnologies { get; init; }
     [DataMember(Name = "topLanguages")] public required List<ProgrammingLanguageDto> TopLanguages { get; init; }
     [DataMember(Name = "subEcosystems")] public required List<SubEcosystemDto> TopSubEcosystems { get; init; }
     [DataMember(Name = "topContributors")] public required List<TopContributorDto> TopContributors { get; init; }
     [DataMember(Name = "topProjects")] public required List<TopProjectDto> TopProjects { get; init; }
+    [DataMember(Name = "numberOfStars")] public long NumberOfStars { get; set; }
     [DataMember(Name = "numberOfProjects")] public long NumberOfProjects { get; set; }
-    [DataMember(Name = "numberOfTopics")] public int? NumberOfTopics { get; set; }
-    [DataMember(Name = "numberOfContributors")] public int? NumberOfContributors { get; set; }
-    [DataMember(Name = "numberOfContributions")] public int? NumberOfContributions { get; set; }
+    [DataMember(Name = "numberOfTopics")] public long NumberOfTopics { get; set; }
+    [DataMember(Name = "numberOfContributors")] public long NumberOfContributors { get; set; }
+    [DataMember(Name = "numberOfContributions")] public long NumberOfContributions { get; set; }
     /// <summary>
     /// The number of active projects in the sub ecosystems over time
     /// </summary>
-    [DataMember(Name = "timedDataTopics")] public List<TopicsBucketDto>? TimedDataTopics { get; set; }
+    [DataMember(Name = "topicsActivityTimeSeries")] public List<TopicsBucketDto>? TopicsActivityTimeSeries { get; set; }
     /// <summary>
     /// The number of active projects in the ecosystem over time
     /// </summary>
-    [DataMember(Name = "timedDataEcosystem")] public List<TopicsBucketDto>? TimedDataEcosystem { get; set; }
+    [DataMember(Name = "ecosystemActivityTimeSeries")] public List<TopicsBucketDto>? EcosystemActivityTimeSeries { get; set; }
 }
    
