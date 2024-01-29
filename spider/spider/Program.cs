@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
 string? token;
-if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
+if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
     token = Environment.GetEnvironmentVariable("API_Token");
 else
 {
