@@ -273,17 +273,23 @@ public class EcosystemsService(EcosystemsContext dbContext,
     {
         var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy)
             .Include(ecosystem => ecosystem.Technologies).FirstOrDefault(e => e.Name == ecosystemName);
+        //Merge taxonomy and technology terms into one list for scheduled mining
         var miningList = new List<string>();
-            foreach (var tax in ecosystem.Taxonomy)
-            {
-                miningList.Add(tax.Term);
-            }
-            foreach (var tech in ecosystem.Technologies)
-            {
-                miningList.Add(tech.Term);
-            }
-            scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
-            return Task.CompletedTask;
+        foreach (var tax in ecosystem.Taxonomy)
+        {
+            miningList.Add(tax.Term);
+        }
+        foreach (var tech in ecosystem.Technologies)
+        {
+            miningList.Add(tech.Term);
+        }
+        //Ensure the ecosystem name is included in the mined topics.
+        if(!miningList.Contains(ecosystemName))
+        {
+            miningList.Add(ecosystemName);
+        }
+        scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+        return Task.CompletedTask;
     }
     /// <summary>
     /// Unschedule the mining job for the deleted ecosystem.

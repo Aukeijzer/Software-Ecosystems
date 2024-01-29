@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SECODashBackend.Models;
-using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.Scheduler;
 
 namespace SECODashBackend.Database;
@@ -21,7 +19,9 @@ public static class Extensions
          DbInitializer.Initialize(ecosystemsContext);
       }
    }
-
+   /// <summary>
+   /// Schedule jobs for the ecosystems that exist on startup.
+   /// </summary>
    public static void ScheduleInitialJobs(this IHost host)
    {
       using (var scope = host.Services.CreateScope())
@@ -31,6 +31,7 @@ public static class Extensions
          var scheduler = services.GetRequiredService<IScheduler>();
          var ecosystems = ecosystemsContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy)
             .Include(ecosystem => ecosystem.Technologies).ToList();
+         //For all ecosystems: Merge taxonomy and technology terms into one List for scheduled mining.
          var miningList = new List<string>();
          foreach (var ecosystem in ecosystems)
          {
@@ -43,7 +44,11 @@ public static class Extensions
             {
                miningList.Add(tech.Term);
             }
-
+            //Ensure the ecosystem name is included in the mined topics.
+            if (!miningList.Contains(ecosystem.Name))
+            {
+               miningList.Add(ecosystem.Name);
+            }
             scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
          }
       }
