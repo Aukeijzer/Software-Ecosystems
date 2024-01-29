@@ -137,6 +137,83 @@ public class GitHubGraphqlServiceTests
             await _gitHubGraphqlService.QueryRepositoriesByNameHelper("test", 25, "test"));
     }
 
+    [Test]
+    public async Task GetRepoCount()
+    {
+        var client = new Mock<IClientWrapper>();
+        client.Setup<Task<GraphQLResponse<SearchCountData>>>(x => x.SendQueryAsync<SearchCountData>(
+            It.IsAny<GraphQLHttpRequest>())).ReturnsAsync(new GraphQLHttpResponse<SearchCountData>(
+            new GraphQLResponse<SearchCountData>()
+            {
+                Data = new SearchCountData()
+                {
+                    Search = new RepositoryCountData()
+                    {
+                        RepositoryCount = 100
+                    }
+                }
+            }, null!,
+            HttpStatusCode.Accepted));
+        _gitHubGraphqlService = new GitHubGraphqlService(client.Object);
+        var result = await _gitHubGraphqlService.GetRepoCount("test", 5, 10);
+        Assert.AreEqual(100, result);
+    }
+
+    [Test]
+    public async Task GetRepoCountErrorTest()
+    {
+        //Test where the response has errors
+        var client = new Mock<IClientWrapper>();
+        client.Setup<Task<GraphQLResponse<SearchCountData>>>(x => x.SendQueryAsync<SearchCountData>(
+            It.IsAny<GraphQLHttpRequest>())).ReturnsAsync(new GraphQLHttpResponse<SearchCountData>(
+            new GraphQLResponse<SearchCountData>()
+            {
+                Data = new SearchCountData()
+                {
+                    Search = new RepositoryCountData()
+                    {
+                        RepositoryCount = 100
+                    }
+                },
+                Errors = _errors.ToArray()
+            }, null!,
+            HttpStatusCode.Accepted));
+        _gitHubGraphqlService = new GitHubGraphqlService(client.Object);
+        var result = await _gitHubGraphqlService.GetRepoCount("test", 5, 10);
+        Assert.AreEqual(100, result);
+        
+        //Test where the client throws a bad gateway exception
+        client.Setup<Task<GraphQLResponse<SearchCountData>>>(x => x.SendQueryAsync<SearchCountData>(
+            It.IsAny<GraphQLHttpRequest>())).Throws(new GraphQLHttpRequestException(
+            HttpStatusCode.BadGateway, null!, "Bad Gateway"));
+
+        _gitHubGraphqlService = new GitHubGraphqlService(client.Object);
+        
+        Assert.ThrowsAsync<BadHttpRequestException>(async () =>
+            await _gitHubGraphqlService.GetRepoCount("test", 5, 10));
+        client.Verify(x => x.SendQueryAsync<SearchCountData>(It.IsAny<GraphQLHttpRequest>()),
+            Times.Exactly(4));
+
+        //Test where the client throws a not found exception
+        client.Setup<Task<GraphQLResponse<SearchCountData>>>(x => x.SendQueryAsync<SearchCountData>(
+            It.IsAny<GraphQLHttpRequest>())).Throws(new GraphQLHttpRequestException(
+            HttpStatusCode.NotFound, null!, "Not Found"));
+
+        _gitHubGraphqlService = new GitHubGraphqlService(client.Object);
+
+        Assert.ThrowsAsync<GraphQLHttpRequestException>(async () =>
+            await _gitHubGraphqlService.GetRepoCount("test", 5, 10));
+
+        //Test where the client throws a null reference exception
+        client.Setup<Task<GraphQLResponse<SearchCountData>>>(x => x.SendQueryAsync<SearchCountData>(
+            It.IsAny<GraphQLHttpRequest>())).Throws(new NullReferenceException());
+
+        _gitHubGraphqlService = new GitHubGraphqlService(client.Object);
+
+        Assert.ThrowsAsync<NullReferenceException>(async () =>
+            await _gitHubGraphqlService.GetRepoCount("test", 5, 10));
+    }
+
     /// <summary>
     /// This tests the QueryRepositoriesByTopicHelper method of the GitHubGraphqlService.
     /// It tests if the method calls the SendQueryAsync method of the client.
