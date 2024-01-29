@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SECODashBackend.Services.Ecosystems;
 using SECODashBackend.Services.Scheduler;
 
 namespace SECODashBackend.Database;
@@ -15,8 +16,9 @@ public static class Extensions
          var services = scope.ServiceProvider;
          var ecosystemsContext = services.GetRequiredService<EcosystemsContext>();
          ecosystemsContext.Database.EnsureCreated();
+         var ecosystemService = services.GetRequiredService<IEcosystemsService>();
          UserDbInitializer.Initialize(ecosystemsContext);
-         DbInitializer.Initialize(ecosystemsContext);
+         DbInitializer.Initialize(ecosystemsContext, ecosystemService);
       }
    }
    /// <summary>
