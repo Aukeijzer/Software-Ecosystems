@@ -1,4 +1,4 @@
-import { ecosystemDTO } from "@/app/interfaces/DTOs/ecosystemDTO";
+import { ecosystemDTO } from "@/interfaces/DTOs/ecosystemDTO";
 
 export interface totalInformation {
     totalProjects : number,

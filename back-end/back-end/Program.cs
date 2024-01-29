@@ -95,7 +95,7 @@ if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
 var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
-        .IndexName("projects-topic-test")
+        .IndexName("projects-03")
     );
 
 builder.Services.AddSingleton(
@@ -159,6 +159,7 @@ app.MapControllers();
 app.MapHangfireDashboard();
 
 app.CreateDbIfNotExists();
+app.ScheduleInitialJobs();
 app.Run();
 
 // Necessary for integration testing.

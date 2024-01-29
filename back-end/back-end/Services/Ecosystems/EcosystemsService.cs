@@ -4,6 +4,7 @@ using SECODashBackend.DataConverters;
 using SECODashBackend.Dtos.Ecosystem;
 using SECODashBackend.Models;
 using SECODashBackend.Services.Analysis;
+using SECODashBackend.Services.Scheduler;
 
 namespace SECODashBackend.Services.Ecosystems;
     
@@ -13,7 +14,7 @@ namespace SECODashBackend.Services.Ecosystems;
 /// It uses the AnalysisService to analyze ecosystems.
 /// </summary>
 public class EcosystemsService(EcosystemsContext dbContext,
-        IAnalysisService analysisService)
+        IAnalysisService analysisService, IScheduler scheduler)
     : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
@@ -27,7 +28,18 @@ public class EcosystemsService(EcosystemsContext dbContext,
         var ecosystems = await dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
-        return ecosystems.Select(EcosystemConverter.ToDto).ToList();
+        var dtos = ecosystems.Select(EcosystemConverter.ToDto).ToList();
+
+        foreach (var dto in dtos)
+        {
+           var metric = await analysisService.GetEcosystemMetricsAsync(dto.Name);
+           dto.NumberOfStars = metric.NumberOfStars;
+           dto.NumberOfContributors = metric.NumberOfContributors;
+           dto.NumberOfProjects = metric.NumberOfProjects;
+           dto.NumberOfSubTopics = metric.NumberOfSubTopics;
+        }
+        
+        return dtos;
     }
 
     /// <summary>
@@ -38,6 +50,9 @@ public class EcosystemsService(EcosystemsContext dbContext,
     private async Task<Ecosystem?> GetByNameAsync(string name)
     {
         return await dbContext.Ecosystems
+            .Include(e => e.Technologies)
+            .Include(e => e.BannedTopics)
+            .Include(e => e.Taxonomy)
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
     }
@@ -51,11 +66,14 @@ public class EcosystemsService(EcosystemsContext dbContext,
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
         
-        var technologies = await GetTechnologyTaxonomy(dto.Topics.First());
+        var ecosystem = await GetByNameAsync(dto.Topics.First());
+
+        if (ecosystem == null) throw new Exception();
         
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
-            dto.Topics,
-            technologies,
+            dto.Topics, 
+            ecosystem.BannedTopics,
+            ecosystem.Technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
@@ -65,17 +83,13 @@ public class EcosystemsService(EcosystemsContext dbContext,
             dto.EndTime,
             dto.NumbersOfDaysPerBucket ?? DefaultNumberOfDaysPerBucket);
 
-        // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
-        if (dto.Topics.Count != 1) return ecosystemDto;
-        
-        // Check if the database has additional data regarding this ecosystem
-        var ecosystem = await GetByNameAsync(dto.Topics.First());
-        // If it doesn't, return the dto as is, else add the additional data
-        if (ecosystem == null) return ecosystemDto;
-        ecosystemDto.DisplayName = ecosystem.DisplayName;
-        ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
-        ecosystemDto.Description = ecosystem.Description;
-        
+        // If the ecosystem has exactly 1 topic, we know it is one of the "main" ecosystems
+        if (dto.Topics.Count == 1)
+        {
+            ecosystemDto.DisplayName = ecosystem.DisplayName;
+            ecosystemDto.Description = ecosystem.Description;
+        }
+
         return ecosystemDto;
     }
     /// <summary>
@@ -97,7 +111,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
         else
         {
             throw new Exception("Ecosystem not found");
-
         }
     }
 
@@ -250,12 +263,49 @@ public class EcosystemsService(EcosystemsContext dbContext,
         }
         dbContext.Ecosystems.Remove(deleted);
         await dbContext.SaveChangesAsync();
+        await UnScheduleEcosystem(ecosystem);
         return "Ecosystem has been deleted";
     }
+    /// <summary>
+    /// Returns a list of topics that are Technologies in this ecosystem.
+    /// </summary>
+    /// <param name="ecosystemName"></param>
+    /// <returns><see cref="List{T}"/> of <see cref="Technology"/>.</returns>
     public async Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName)
     {
         var ecosystem = await GetByNameAsync(ecosystemName);
         if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
         return ecosystem.Technologies;
+    }
+    
+    /// <summary>
+    /// Schedule the mining job for the new ecosystem.
+    /// </summary>
+    /// <param name="ecosystemName">Name of the new ecosystem.</param>
+    public Task ScheduleEcosystem(string ecosystemName)
+    {
+        var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy).FirstOrDefault(e => e.Name == ecosystemName);
+        //Add taxonomy terms to a list for scheduled mining
+        var miningList = new List<string>();
+        foreach (var tax in ecosystem.Taxonomy)
+        {
+            miningList.Add(tax.Term);
+        }
+        //Ensure the ecosystem name is included in the mined topics.
+        if(!miningList.Contains(ecosystemName))
+        {
+            miningList.Add(ecosystemName);
+        }
+        scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+        return Task.CompletedTask;
+    }
+    /// <summary>
+    /// Unschedule the mining job for the deleted ecosystem.
+    /// </summary>
+    /// <param name="ecosystem">Name of the deleted ecosystem.</param>
+    public Task UnScheduleEcosystem(string ecosystem)
+    {
+        scheduler.RemoveRecurringTaxonomyMiningJob(ecosystem);
+        return Task.CompletedTask;
     }
 }

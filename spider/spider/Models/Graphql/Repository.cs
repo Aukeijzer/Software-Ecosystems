@@ -7,6 +7,8 @@ public class Repository
     
     public required string Id { get; init; }
     
+    public DateTime? PushedAt { get; init; }
+    
     public required LatestRelease DefaultBranchRef { get; init; }
     
     public DateTime CreatedAt { get; init; }

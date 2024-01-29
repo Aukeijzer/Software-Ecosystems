@@ -7,7 +7,7 @@ describe('Ecosystem Button',() => {
         cy.wrap(mockEcosystem.projectCount).should('be.a', 'number')
         cy.wrap(mockEcosystem.topics).should('be.a', 'number')
 
-        cy.mount(<EcosystemButton {...mockEcosystem}> </EcosystemButton>)
+        cy.mount(<EcosystemButton ecosystem={"test"} projectCount={100} topics={100} contributors={100} stars={100}/> )
 
         cy.get('[data-cy="ecosystem-projects"]')
             .then($value => {

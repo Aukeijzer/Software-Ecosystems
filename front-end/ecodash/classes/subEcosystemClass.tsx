@@ -35,7 +35,7 @@ export default class subEcosystemClass implements displayableListItem {
         return(
             <tr className="flex flex-row justify-between py-3 px-5">
                 <th key={'topic'}>
-                    topic
+                    sub-ecosystem
                 </th>
                 <th key={'projects'} className="text-right">
                     projects

@@ -81,6 +81,16 @@ public class GraphqlDataConverter : IGraphqlDataConverter
             mostRecentCommit = null;
         }
 
+        DateTime? pushedAt;
+        try
+        {
+            pushedAt = repository.PushedAt;
+        }
+        catch (Exception e)
+        {
+            pushedAt = null;
+        }
+
         string? readme = repository.ReadmeCaps?.Text 
                          ?? repository.ReadmeLower?.Text 
                          ?? repository.ReadmeFstCaps?.Text
@@ -92,6 +102,7 @@ public class GraphqlDataConverter : IGraphqlDataConverter
         {
             Name = repository.Name,
             Id = repository.Id,
+            PushedAt = pushedAt,
             LatestDefaultBranchCommitDate = mostRecentCommit,
             CreatedAt = repository.CreatedAt,
             ReadMe = readme,
