@@ -20,6 +20,10 @@ public static class DbInitializer
       if (ecosystem != null) return;
       Task.Run(() => ecosystemsService.CreateEcosystem(InitialDatabases.agriculture)).Wait();
       Task.Run(() => ecosystemsService.UpdateTopics(InitialDatabases.agriculture)).Wait();
+      Task.Run(() => ecosystemsService.CreateEcosystem(InitialDatabases.quantum)).Wait();
+      Task.Run(() => ecosystemsService.UpdateTopics(InitialDatabases.quantum)).Wait();
+      Task.Run(() => ecosystemsService.CreateEcosystem(InitialDatabases.artificialintelligence)).Wait();
+      Task.Run(() => ecosystemsService.UpdateTopics(InitialDatabases.artificialintelligence)).Wait();
       //context.Ecosystems.Add(new Ecosystem
       // {
       //    Id = Guid.NewGuid().ToString(),
