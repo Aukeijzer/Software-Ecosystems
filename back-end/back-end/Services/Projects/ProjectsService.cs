@@ -19,8 +19,9 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// and saves them to Elasticsearch.
     /// </summary>
     /// <param name="topic">The topic to to search for. </param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount">The amount of repos to search for. </param>
-    public async Task MineByTopicAsync(string topic, int amount)
+    public async Task MineByTopicAsync(string topic, string ecosystem, int amount)
     {
         // Request the Spider for projects related to this topic.
         var newDtos = await spiderService.GetProjectsByTopicAsync(topic, amount);
@@ -28,6 +29,13 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         // Request the data processor for additional topics 
         var topicDtos = await dataProcessorService.GetTopics(newDtos);
         
+        foreach (var dto in newDtos)
+        {
+            if (!dto.Topics.Contains(ecosystem))
+            {
+                dto.Topics.Add(ecosystem);
+            }
+        }
         // Save these projects to elasticsearch
         await elasticsearchService.AddProjects(topicDtos);
     }
@@ -36,12 +44,20 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// and saves them to Elasticsearch.
     /// </summary>
     /// <param name="keyword">The keyword to to search for. </param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount">The amount of repos to search for. </param>
-    public async Task MineByKeywordAsync(string keyword, int amount)
+    public async Task MineByKeywordAsync(string keyword, string ecosystem, int amount)
     {
         // Request the Spider for projects related to this topic.
         var newDtos = await spiderService.GetProjectsByKeywordAsync(keyword, amount);
         
+        foreach (var dto in newDtos)
+        {
+            if (!dto.Topics.Contains(ecosystem))
+            {
+                dto.Topics.Add(ecosystem);
+            }
+        }
         // Request the data processor for additional topics 
         var topicDtos = await dataProcessorService.GetTopics(newDtos);
         
@@ -54,9 +70,10 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     /// and saves them to Elasticsearch.
     /// </summary>
     /// <param name="taxonomy">The list of strings to mine off of github</param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
     /// <param name="topicAmount">The amount of repos to search for with topic search</param>
-    public async Task MineByTaxonomyAsync(List<string> taxonomy, int keywordAmount, int topicAmount)
+    public async Task MineByTaxonomyAsync(List<string> taxonomy, string ecosystem, int keywordAmount, int topicAmount)
     {
         ConcurrentDictionary<string,ProjectDto> newDtos = new ConcurrentDictionary<string, ProjectDto>();
         // Request the Spider for projects related to each of the terms in the taxonomy.
@@ -68,6 +85,10 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
                 var newKeywordDtos = await spiderService.GetProjectsByKeywordAsync(term, keywordAmount);
                 foreach (var newKeywordDto in newKeywordDtos)
                 {
+                    if (!newKeywordDto.Topics.Contains(ecosystem))
+                    {
+                        newKeywordDto.Topics.Add(ecosystem);
+                    }
                     newDtos.TryAdd(newKeywordDto.Id, newKeywordDto);
                 }
             }));
@@ -77,6 +98,10 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
                 var newTopicDtos = await spiderService.GetProjectsByTopicAsync(term, topicAmount);
                 foreach (var newTopicDto in newTopicDtos)
                 {
+                    if (!newTopicDto.Topics.Contains(ecosystem))
+                    {
+                        newTopicDto.Topics.Add(ecosystem);
+                    }
                     newDtos.TryAdd(newTopicDto.Id, newTopicDto);
                 }
             }));

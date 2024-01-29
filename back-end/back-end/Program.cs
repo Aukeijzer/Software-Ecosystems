@@ -107,7 +107,7 @@ if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
     settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
         // set default index for ProjectDtos
         .DefaultMappingFor<ProjectDto>(i => i
-            .IndexName("projects-topic-test")
+            .IndexName("projects-03")
         );
 }
 else
@@ -187,6 +187,7 @@ app.MapControllers();
 app.MapHangfireDashboard();
 
 app.CreateDbIfNotExists();
+app.ScheduleInitialJobs();
 app.Run();
 
 /// <summary>

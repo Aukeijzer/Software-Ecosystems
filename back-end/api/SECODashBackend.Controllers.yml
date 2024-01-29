@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Controllers
+  commentId: N:SECODashBackend.Controllers
+  id: SECODashBackend.Controllers
+  children:
+  - SECODashBackend.Controllers.EcosystemsController
+  - SECODashBackend.Controllers.MineController
+  - SECODashBackend.Controllers.UsersController
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Controllers
+  nameWithType: SECODashBackend.Controllers
+  fullName: SECODashBackend.Controllers
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Controllers.EcosystemsController
+  commentId: T:SECODashBackend.Controllers.EcosystemsController
+  href: SECODashBackend.Controllers.EcosystemsController.html
+  name: EcosystemsController
+  nameWithType: EcosystemsController
+  fullName: SECODashBackend.Controllers.EcosystemsController
+- uid: SECODashBackend.Controllers.MineController
+  commentId: T:SECODashBackend.Controllers.MineController
+  href: SECODashBackend.Controllers.MineController.html
+  name: MineController
+  nameWithType: MineController
+  fullName: SECODashBackend.Controllers.MineController
+- uid: SECODashBackend.Controllers.UsersController
+  commentId: T:SECODashBackend.Controllers.UsersController
+  href: SECODashBackend.Controllers.UsersController.html
+  name: UsersController
+  nameWithType: UsersController
+  fullName: SECODashBackend.Controllers.UsersController

@@ -20,6 +20,9 @@ public interface IEcosystemsService
    /// <returns>The ecosystem defined by the given topics.</returns>
    public Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto);
    public Task<string> UpdateDescription(DescriptionRequestDto dto);
+
+   public Task<bool> CreateEcosystem(EcosystemCreationDto dto);
+
    /// <summary>
    /// This method returns the technology taxonomy of the given ecosystem.
    /// That is, the list of technologies that were used to create the ecosystem,
@@ -28,4 +31,8 @@ public interface IEcosystemsService
    /// <param name="ecosystemName">The name of the ecosystem we want to find technologies for.</param>
    /// <returns>A list of technologies for a given ecosystem.</returns>
    public Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName);
+
+   public Task<string> UpdateTopics(EcosystemCreationDto dto);
+   public Task<string> RemoveEcosystem(string ecosystem);
+   public Task ScheduleEcosystem(string ecosystemName);
 }

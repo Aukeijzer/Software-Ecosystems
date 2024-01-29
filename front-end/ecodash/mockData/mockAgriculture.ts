@@ -1,5 +1,5 @@
-import { risingDTO } from "@/app/interfaces/DTOs/risingDTO"
-import { technologyDTO } from "@/app/interfaces/DTOs/technologyDTO"
+import { risingDTO } from "@/interfaces/DTOs/risingDTO"
+import { technologyDTO } from "@/interfaces/DTOs/technologyDTO"
 
 export interface topTopic {
     name: string,

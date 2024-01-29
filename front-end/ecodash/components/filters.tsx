@@ -1,4 +1,4 @@
-import { colors } from "@/app/enums/filterColor"
+import { colors } from "@/enums/filterColor"
 /**
  * Props for the Filters component.
  */
@@ -19,7 +19,7 @@ interface filterProps{
  */
 export default function Filters(props: filterProps){
     return(
-        <div className=" w-full h-8 overflow-x-scroll">
+        <div className=" w-full h-10">
             <ul className="flex flex-row gap-3">
                 {props.subEcosystems != null && props.subEcosystems.length > 0 && (
                     <>

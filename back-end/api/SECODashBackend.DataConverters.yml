@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.DataConverters
+  commentId: N:SECODashBackend.DataConverters
+  id: SECODashBackend.DataConverters
+  children:
+  - SECODashBackend.DataConverters.EcosystemConverter
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.DataConverters
+  nameWithType: SECODashBackend.DataConverters
+  fullName: SECODashBackend.DataConverters
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.DataConverters.EcosystemConverter
+  commentId: T:SECODashBackend.DataConverters.EcosystemConverter
+  href: SECODashBackend.DataConverters.EcosystemConverter.html
+  name: EcosystemConverter
+  nameWithType: EcosystemConverter
+  fullName: SECODashBackend.DataConverters.EcosystemConverter

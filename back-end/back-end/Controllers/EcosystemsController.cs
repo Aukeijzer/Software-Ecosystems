@@ -91,4 +91,36 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
             throw;
         }
     }
+
+    /// <summary>
+    /// Create a new ecosystem from provided information.
+    /// </summary>
+    /// <param name="dto">All information needed to create a new ecosystem </param>
+    [HttpPost("CreateEcosystem")]
+    [SwaggerOperation("Create a new ecosystem")]
+    [SwaggerResponse(statusCode: 200, description: "successfully created the ecosystem.")]
+    public async Task<string> CreateEcosystem(EcosystemCreationDto dto)
+    {
+        logger.LogInformation("{Origin}: Trying to create the {ecosystem} ecosystem.", this, dto.EcosystemName);
+        var create = await ecosystemsService.CreateEcosystem(dto);
+        if (!create)
+        {
+            logger.LogInformation("{Origin}: The {ecosystem} ecosystem already exists.", this, dto.EcosystemName);
+            return "Ecosystem already exists.";
+        }
+        var update = await ecosystemsService.UpdateTopics(dto);
+        logger.LogInformation("{Origin}: Successfully updated the topics for {ecosystem}.",this,dto.EcosystemName);
+        await ecosystemsService.ScheduleEcosystem(dto.EcosystemName);
+        return "Ecosystem created";
+    }
+
+    [HttpPost("RemoveEcosystem")]
+    [SwaggerOperation("Remove an existing ecosystem")]
+    [SwaggerResponse(statusCode: 200, description: "Successfully removed the ecosystem")]
+    public async Task<string> RemoveEcosystem(RemoveEcosystemDto dto)
+    { 
+        var result = await ecosystemsService.RemoveEcosystem(dto.Ecosystem);
+        logger.LogInformation("{Origin}:" + result ,this);
+        return result;
+    }
 }

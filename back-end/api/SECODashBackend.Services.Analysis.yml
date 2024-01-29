@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Analysis
+  commentId: N:SECODashBackend.Services.Analysis
+  id: SECODashBackend.Services.Analysis
+  children:
+  - SECODashBackend.Services.Analysis.ElasticsearchAnalysisService
+  - SECODashBackend.Services.Analysis.IAnalysisService
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.Analysis
+  nameWithType: SECODashBackend.Services.Analysis
+  fullName: SECODashBackend.Services.Analysis
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.Analysis.ElasticsearchAnalysisService
+  commentId: T:SECODashBackend.Services.Analysis.ElasticsearchAnalysisService
+  href: SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.html
+  name: ElasticsearchAnalysisService
+  nameWithType: ElasticsearchAnalysisService
+  fullName: SECODashBackend.Services.Analysis.ElasticsearchAnalysisService
+- uid: SECODashBackend.Services.Analysis.IAnalysisService
+  commentId: T:SECODashBackend.Services.Analysis.IAnalysisService
+  parent: SECODashBackend.Services.Analysis
+  href: SECODashBackend.Services.Analysis.IAnalysisService.html
+  name: IAnalysisService
+  nameWithType: IAnalysisService
+  fullName: SECODashBackend.Services.Analysis.IAnalysisService
+- uid: SECODashBackend.Services.Analysis
+  commentId: N:SECODashBackend.Services.Analysis
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Analysis
+  nameWithType: SECODashBackend.Services.Analysis
+  fullName: SECODashBackend.Services.Analysis
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Analysis
+    name: Analysis
+    href: SECODashBackend.Services.Analysis.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Analysis
+    name: Analysis
+    href: SECODashBackend.Services.Analysis.html

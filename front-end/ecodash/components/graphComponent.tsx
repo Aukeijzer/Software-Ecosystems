@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { Pie, Legend, Tooltip } from "recharts";
-import displayableGraphItem from '@/app/classes/displayableGraphItem';
+import displayableGraphItem from '@/classes/displayableGraphItem';
 
 //This must be imported dynamicly so that SSR can be disabled
 //TODO: Maybe add a spinner to loading time?
@@ -29,8 +29,8 @@ export default function GraphComponent(props: infoCardDataGraphProps){
     if(props.items.length > 1){
     return(
         <div data-cy='pie-chart'>
-              <PieChart width={400} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}} >
-                <Pie data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
+              <PieChart width={350} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}} >
+                <Pie className="cursor-pointer" data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
                     {props.items.map((entry, index) => (
                        entry.renderAsGraphItem(index, props.onClick)
                     ))}

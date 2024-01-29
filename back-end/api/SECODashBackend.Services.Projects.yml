@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Projects
+  commentId: N:SECODashBackend.Services.Projects
+  id: SECODashBackend.Services.Projects
+  children:
+  - SECODashBackend.Services.Projects.IProjectsService
+  - SECODashBackend.Services.Projects.ProjectsService
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.Projects
+  nameWithType: SECODashBackend.Services.Projects
+  fullName: SECODashBackend.Services.Projects
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.Projects.IProjectsService
+  commentId: T:SECODashBackend.Services.Projects.IProjectsService
+  parent: SECODashBackend.Services.Projects
+  href: SECODashBackend.Services.Projects.IProjectsService.html
+  name: IProjectsService
+  nameWithType: IProjectsService
+  fullName: SECODashBackend.Services.Projects.IProjectsService
+- uid: SECODashBackend.Services.Projects.ProjectsService
+  commentId: T:SECODashBackend.Services.Projects.ProjectsService
+  href: SECODashBackend.Services.Projects.ProjectsService.html
+  name: ProjectsService
+  nameWithType: ProjectsService
+  fullName: SECODashBackend.Services.Projects.ProjectsService
+- uid: SECODashBackend.Services.Projects
+  commentId: N:SECODashBackend.Services.Projects
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Projects
+  nameWithType: SECODashBackend.Services.Projects
+  fullName: SECODashBackend.Services.Projects
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Projects
+    name: Projects
+    href: SECODashBackend.Services.Projects.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Projects
+    name: Projects
+    href: SECODashBackend.Services.Projects.html

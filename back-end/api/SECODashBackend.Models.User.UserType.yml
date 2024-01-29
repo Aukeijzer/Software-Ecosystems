@@ -1,0 +1,155 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Models.User.UserType
+  commentId: T:SECODashBackend.Models.User.UserType
+  id: User.UserType
+  parent: SECODashBackend.Models
+  children:
+  - SECODashBackend.Models.User.UserType.Admin
+  - SECODashBackend.Models.User.UserType.RootAdmin
+  - SECODashBackend.Models.User.UserType.User
+  langs:
+  - csharp
+  - vb
+  name: User.UserType
+  nameWithType: User.UserType
+  fullName: SECODashBackend.Models.User.UserType
+  type: Enum
+  source:
+    remote:
+      path: back-end/back-end/Models/User.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UserType
+    path: back-end/Models/User.cs
+    startLine: 32
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: public enum User.UserType
+    content.vb: Public Enum User.UserType
+- uid: SECODashBackend.Models.User.UserType.User
+  commentId: F:SECODashBackend.Models.User.UserType.User
+  id: User
+  parent: SECODashBackend.Models.User.UserType
+  langs:
+  - csharp
+  - vb
+  name: User
+  nameWithType: User.UserType.User
+  fullName: SECODashBackend.Models.User.UserType.User
+  type: Field
+  source:
+    remote:
+      path: back-end/back-end/Models/User.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: User
+    path: back-end/Models/User.cs
+    startLine: 34
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: User = 0
+    return:
+      type: SECODashBackend.Models.User.UserType
+- uid: SECODashBackend.Models.User.UserType.Admin
+  commentId: F:SECODashBackend.Models.User.UserType.Admin
+  id: Admin
+  parent: SECODashBackend.Models.User.UserType
+  langs:
+  - csharp
+  - vb
+  name: Admin
+  nameWithType: User.UserType.Admin
+  fullName: SECODashBackend.Models.User.UserType.Admin
+  type: Field
+  source:
+    remote:
+      path: back-end/back-end/Models/User.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Admin
+    path: back-end/Models/User.cs
+    startLine: 35
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: Admin = 1
+    return:
+      type: SECODashBackend.Models.User.UserType
+- uid: SECODashBackend.Models.User.UserType.RootAdmin
+  commentId: F:SECODashBackend.Models.User.UserType.RootAdmin
+  id: RootAdmin
+  parent: SECODashBackend.Models.User.UserType
+  langs:
+  - csharp
+  - vb
+  name: RootAdmin
+  nameWithType: User.UserType.RootAdmin
+  fullName: SECODashBackend.Models.User.UserType.RootAdmin
+  type: Field
+  source:
+    remote:
+      path: back-end/back-end/Models/User.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: RootAdmin
+    path: back-end/Models/User.cs
+    startLine: 36
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: RootAdmin = 2
+    return:
+      type: SECODashBackend.Models.User.UserType
+references:
+- uid: SECODashBackend.Models
+  commentId: N:SECODashBackend.Models
+  href: SECODashBackend.html
+  name: SECODashBackend.Models
+  nameWithType: SECODashBackend.Models
+  fullName: SECODashBackend.Models
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+- uid: SECODashBackend.Models.User.UserType
+  commentId: T:SECODashBackend.Models.User.UserType
+  parent: SECODashBackend.Models
+  href: SECODashBackend.Models.User.html
+  name: User.UserType
+  nameWithType: User.UserType
+  fullName: SECODashBackend.Models.User.UserType
+  spec.csharp:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html
+  spec.vb:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html

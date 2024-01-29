@@ -130,7 +130,6 @@ public class UsersService(EcosystemsContext userContext, ILogger<UsersService> _
             return $"{topEcosystem} is not a top-level ecosystem.";
         }
         ecosystem.Users.Add(user);
-        user.Ecosystems.Add(ecosystem);
         await userContext.SaveChangesAsync();
         return "has been successfully added as Editor";
     }
