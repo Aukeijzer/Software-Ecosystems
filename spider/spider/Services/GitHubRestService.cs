@@ -127,15 +127,19 @@ public class GitHubRestService : IGitHubRestService
     private async Task HandleError(RestResponse restResponse)
     {
         var header = restResponse.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Remaining");
-        if (header.Value != null && Convert.ToInt32(header.Value) == 0)
+        if (header is not null && Convert.ToInt32(header.Value) == 0)
         {
             header = restResponse.Headers.FirstOrDefault(x => x.Name == "X-RateLimit-Reset");
-            
-            DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
-            DateTime retryTime = utcTime.DateTime;
-            _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
-            await Task.Delay(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds + 10));
-            return;
+
+            if (header is not null)
+            {
+                DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value));
+                DateTime retryTime = utcTime.DateTime;
+                _logger.LogWarning("Rate limit reached. Retrying in {seconds} seconds",
+                    (int)(retryTime - DateTime.UtcNow).TotalSeconds);
+                await Task.Delay(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds + 10));
+                return;
+            }
         }
 
         header = restResponse.Headers.FirstOrDefault(x => x.Name == "Retry-After");
