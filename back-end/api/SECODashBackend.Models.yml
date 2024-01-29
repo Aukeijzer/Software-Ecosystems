@@ -1,0 +1,105 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Models
+  commentId: N:SECODashBackend.Models
+  id: SECODashBackend.Models
+  children:
+  - SECODashBackend.Models.BannedTopic
+  - SECODashBackend.Models.Ecosystem
+  - SECODashBackend.Models.Taxonomy
+  - SECODashBackend.Models.Technology
+  - SECODashBackend.Models.Topic
+  - SECODashBackend.Models.User
+  - SECODashBackend.Models.User.UserType
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Models
+  nameWithType: SECODashBackend.Models
+  fullName: SECODashBackend.Models
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Models.BannedTopic
+  commentId: T:SECODashBackend.Models.BannedTopic
+  href: SECODashBackend.Models.BannedTopic.html
+  name: BannedTopic
+  nameWithType: BannedTopic
+  fullName: SECODashBackend.Models.BannedTopic
+- uid: SECODashBackend.Models.Ecosystem
+  commentId: T:SECODashBackend.Models.Ecosystem
+  parent: SECODashBackend.Models
+  href: SECODashBackend.Models.Ecosystem.html
+  name: Ecosystem
+  nameWithType: Ecosystem
+  fullName: SECODashBackend.Models.Ecosystem
+- uid: SECODashBackend.Models.Taxonomy
+  commentId: T:SECODashBackend.Models.Taxonomy
+  href: SECODashBackend.Models.Taxonomy.html
+  name: Taxonomy
+  nameWithType: Taxonomy
+  fullName: SECODashBackend.Models.Taxonomy
+- uid: SECODashBackend.Models.Technology
+  commentId: T:SECODashBackend.Models.Technology
+  href: SECODashBackend.Models.Technology.html
+  name: Technology
+  nameWithType: Technology
+  fullName: SECODashBackend.Models.Technology
+- uid: SECODashBackend.Models.Topic
+  commentId: T:SECODashBackend.Models.Topic
+  href: SECODashBackend.Models.Topic.html
+  name: Topic
+  nameWithType: Topic
+  fullName: SECODashBackend.Models.Topic
+- uid: SECODashBackend.Models.User
+  commentId: T:SECODashBackend.Models.User
+  href: SECODashBackend.Models.User.html
+  name: User
+  nameWithType: User
+  fullName: SECODashBackend.Models.User
+- uid: SECODashBackend.Models.User.UserType
+  commentId: T:SECODashBackend.Models.User.UserType
+  parent: SECODashBackend.Models
+  href: SECODashBackend.Models.User.html
+  name: User.UserType
+  nameWithType: User.UserType
+  fullName: SECODashBackend.Models.User.UserType
+  spec.csharp:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html
+  spec.vb:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html
+- uid: SECODashBackend.Models
+  commentId: N:SECODashBackend.Models
+  href: SECODashBackend.html
+  name: SECODashBackend.Models
+  nameWithType: SECODashBackend.Models
+  fullName: SECODashBackend.Models
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html

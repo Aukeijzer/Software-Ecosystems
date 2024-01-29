@@ -1,0 +1,54 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Users
+  commentId: N:SECODashBackend.Services.Users
+  id: SECODashBackend.Services.Users
+  children:
+  - SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.Users
+  nameWithType: SECODashBackend.Services.Users
+  fullName: SECODashBackend.Services.Users
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.Users.UsersService
+  commentId: T:SECODashBackend.Services.Users.UsersService
+  parent: SECODashBackend.Services.Users
+  href: SECODashBackend.Services.Users.UsersService.html
+  name: UsersService
+  nameWithType: UsersService
+  fullName: SECODashBackend.Services.Users.UsersService
+- uid: SECODashBackend.Services.Users
+  commentId: N:SECODashBackend.Services.Users
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Users
+  nameWithType: SECODashBackend.Services.Users
+  fullName: SECODashBackend.Services.Users
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Users
+    name: Users
+    href: SECODashBackend.Services.Users.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Users
+    name: Users
+    href: SECODashBackend.Services.Users.html

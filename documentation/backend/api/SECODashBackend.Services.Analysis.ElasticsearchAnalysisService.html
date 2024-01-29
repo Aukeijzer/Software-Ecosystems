@@ -1,0 +1,426 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ElasticsearchAnalysisService | SECODash Backend </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ElasticsearchAnalysisService | SECODash Backend ">
+      
+      <meta name="description" content="Service that analyses an ecosystem by querying the Elasticsearch index for projects that contain the given topics. The service is responsible for retrieving the relevant data from the search response and converting it to the correct format.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aukeijzer/Software-Ecosystems/new/sprint10/c#-documentation/apiSpec/new?filename=SECODashBackend_Services_Analysis_ElasticsearchAnalysisService.md&amp;value=---%0Auid%3A%20SECODashBackend.Services.Analysis.ElasticsearchAnalysisService%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="SECODash Backend">
+            SECODash Backend
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService">
+
+
+
+  <h1 id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService" class="text-break">
+Class ElasticsearchAnalysisService  <a class="header-action link-secondary" title="View source" href="https://github.com/Aukeijzer/Software-Ecosystems/blob/sprint10/c#-documentation/back-end/back-end/Services/Analysis/ElasticsearchAnalysisService.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="SECODashBackend.html">SECODashBackend</a>.<a class="xref" href="SECODashBackend.Services.html">Services</a>.<a class="xref" href="SECODashBackend.Services.Analysis.html">Analysis</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>SECODashBackend.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Service that analyses an ecosystem by querying the Elasticsearch index for projects that contain the given topics.
+The service is responsible for retrieving the relevant data from the search response and converting it to the
+correct format.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ElasticsearchAnalysisService : IAnalysisService</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ElasticsearchAnalysisService</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="SECODashBackend.Services.Analysis.IAnalysisService.html">IAnalysisService</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService__ctor_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.#ctor*"></a>
+
+  <h3 id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService__ctor_SECODashBackend_Services_ElasticSearch_IElasticsearchService_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.#ctor(SECODashBackend.Services.ElasticSearch.IElasticsearchService)">
+  ElasticsearchAnalysisService(IElasticsearchService)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aukeijzer/Software-Ecosystems/blob/sprint10/c#-documentation/back-end/back-end/Services/Analysis/ElasticsearchAnalysisService.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Service that analyses an ecosystem by querying the Elasticsearch index for projects that contain the given topics.
+The service is responsible for retrieving the relevant data from the search response and converting it to the
+correct format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ElasticsearchAnalysisService(IElasticsearchService elasticsearchService)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>elasticsearchService</code> <a class="xref" href="SECODashBackend.Services.ElasticSearch.IElasticsearchService.html">IElasticsearchService</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_AnalyzeEcosystemAsync_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.AnalyzeEcosystemAsync*"></a>
+
+  <h3 id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_AnalyzeEcosystemAsync_System_Collections_Generic_List_System_String__System_Collections_Generic_List_SECODashBackend_Models_Technology__System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_DateTime_System_DateTime_System_Int32_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.AnalyzeEcosystemAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.DateTime,System.DateTime,System.Int32)">
+  AnalyzeEcosystemAsync(List&lt;string&gt;, List&lt;Technology&gt;, int, int, int, int, int, DateTime, DateTime, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aukeijzer/Software-Ecosystems/blob/sprint10/c#-documentation/back-end/back-end/Services/Analysis/ElasticsearchAnalysisService.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Queries the Elasticsearch index for projects that contain the given topics and analyses the ecosystem.
+The analysis consists of two parts:</p>
+<ol>
+<li>Retrieving the top x programming languages</li>
+<li>Retrieving the top x sub-ecosystems/topics</li>
+</ol>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;EcosystemDto&gt; AnalyzeEcosystemAsync(List&lt;string&gt; topics, List&lt;Technology&gt; technologies, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies, int numberOfTopProjects, DateTime startTime, DateTime endTime, int timeBucket)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>topics</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of topics that define the ecosystem.</p>
+</dd>
+    <dt><code>technologies</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="SECODashBackend.Models.Technology.html">Technology</a>&gt;</dt>
+    <dd><p>The technologies of an ecosystem.</p>
+</dd>
+    <dt><code>numberOfTopLanguages</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of top programming languages to retrieve.</p>
+</dd>
+    <dt><code>numberOfTopSubEcosystems</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of top sub-ecosystems to retrieve.</p>
+</dd>
+    <dt><code>numberOfTopContributors</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of top contributors to retrieve.</p>
+</dd>
+    <dt><code>numberOfTopTechnologies</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of top technologies to retrieve.</p>
+</dd>
+    <dt><code>numberOfTopProjects</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of top projects to retrieve</p>
+</dd>
+    <dt><code>startTime</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></dt>
+    <dd><p>The start date of the period of time to retrieve.</p>
+</dd>
+    <dt><code>endTime</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></dt>
+    <dd><p>The end date of the period of time to retrieve.</p>
+</dd>
+    <dt><code>timeBucket</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The time frame (in days) we want to use to retrieve projects between the start and end time.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="SECODashBackend.Dtos.Ecosystem.EcosystemDto.html">EcosystemDto</a>&gt;</dt>
+    <dd><p>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_FilterSubEcosystems_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.FilterSubEcosystems*"></a>
+
+  <h3 id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_FilterSubEcosystems_System_Collections_Generic_IEnumerable_SECODashBackend_Dtos_Ecosystem_SubEcosystemDto__System_Collections_Generic_List_System_String__System_Collections_Generic_List_System_String__" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.FilterSubEcosystems(System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Ecosystem.SubEcosystemDto},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String})">
+  FilterSubEcosystems(IEnumerable&lt;SubEcosystemDto&gt;, List&lt;string&gt;, List&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aukeijzer/Software-Ecosystems/blob/sprint10/c#-documentation/back-end/back-end/Services/Analysis/ElasticsearchAnalysisService.cs/#L400"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Filters out sub-ecosystems that are in the topics list that defines the ecosystem, have fewer than the minimum number of projects,
+are programming languages or are technologies.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;SubEcosystemDto&gt; FilterSubEcosystems(IEnumerable&lt;SubEcosystemDto&gt; subEcosystemDtos, List&lt;string&gt; topics, List&lt;string&gt; technologies)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>subEcosystemDtos</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="SECODashBackend.Dtos.Ecosystem.SubEcosystemDto.html">SubEcosystemDto</a>&gt;</dt>
+    <dd><p>A list of sub-ecosystems.</p>
+</dd>
+    <dt><code>topics</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of topics that define the ecosystem.</p>
+</dd>
+    <dt><code>technologies</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>A list of technologies that define the ecosystem.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="SECODashBackend.Dtos.Ecosystem.SubEcosystemDto.html">SubEcosystemDto</a>&gt;</dt>
+    <dd><p>A list of sub-ecosystems filtered by the given topics.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_SortAndNormalizeLanguages_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.SortAndNormalizeLanguages*"></a>
+
+  <h3 id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_SortAndNormalizeLanguages_System_Collections_Generic_List_SECODashBackend_Dtos_ProgrammingLanguage_ProgrammingLanguageDto__System_Int32_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.SortAndNormalizeLanguages(System.Collections.Generic.List{SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto},System.Int32)">
+  SortAndNormalizeLanguages(List&lt;ProgrammingLanguageDto&gt;, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aukeijzer/Software-Ecosystems/blob/sprint10/c#-documentation/back-end/back-end/Services/Analysis/ElasticsearchAnalysisService.cs/#L324"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts a list of all the programming languages in an ecosystem with the sum of their usage percentages over
+all projects to a &quot;Top x&quot; list of x length in descending order of percentage with the percentages normalised.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;ProgrammingLanguageDto&gt; SortAndNormalizeLanguages(List&lt;ProgrammingLanguageDto&gt; programmingLanguageDtos, int numberOfTopLanguages)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>programmingLanguageDtos</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto.html">ProgrammingLanguageDto</a>&gt;</dt>
+    <dd><p>A list of all the programming languages in an ecosystem with the sum of their usage percentages over all projects.</p>
+</dd>
+    <dt><code>numberOfTopLanguages</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The number of top languages to retrieve.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto.html">ProgrammingLanguageDto</a>&gt;</dt>
+    <dd><p>A Top x list of the top languages in an ecosystem.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_SortSubEcosystems_" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.SortSubEcosystems*"></a>
+
+  <h3 id="SECODashBackend_Services_Analysis_ElasticsearchAnalysisService_SortSubEcosystems_System_Collections_Generic_IEnumerable_SECODashBackend_Dtos_Ecosystem_SubEcosystemDto__" data-uid="SECODashBackend.Services.Analysis.ElasticsearchAnalysisService.SortSubEcosystems(System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Ecosystem.SubEcosystemDto})">
+  SortSubEcosystems(IEnumerable&lt;SubEcosystemDto&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aukeijzer/Software-Ecosystems/blob/sprint10/c#-documentation/back-end/back-end/Services/Analysis/ElasticsearchAnalysisService.cs/#L384"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sorts a list of sub-ecosystems in descending order of the number of projects and returns the sorted list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;SubEcosystemDto&gt; SortSubEcosystems(IEnumerable&lt;SubEcosystemDto&gt; subEcosystemDtos)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>subEcosystemDtos</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="SECODashBackend.Dtos.Ecosystem.SubEcosystemDto.html">SubEcosystemDto</a>&gt;</dt>
+    <dd><p>A list of sub-ecosystems.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="SECODashBackend.Dtos.Ecosystem.SubEcosystemDto.html">SubEcosystemDto</a>&gt;</dt>
+    <dd><p>A list of sub-ecosystems sorted in descending order of the number of projects.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aukeijzer/Software-Ecosystems/blob/sprint10/c#-documentation/back-end/back-end/Services/Analysis/ElasticsearchAnalysisService.cs/#L20" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

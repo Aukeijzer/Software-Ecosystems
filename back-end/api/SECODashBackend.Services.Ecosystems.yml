@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Ecosystems
+  commentId: N:SECODashBackend.Services.Ecosystems
+  id: SECODashBackend.Services.Ecosystems
+  children:
+  - SECODashBackend.Services.Ecosystems.EcosystemsService
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.Ecosystems
+  nameWithType: SECODashBackend.Services.Ecosystems
+  fullName: SECODashBackend.Services.Ecosystems
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService
+  commentId: T:SECODashBackend.Services.Ecosystems.EcosystemsService
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html
+  name: EcosystemsService
+  nameWithType: EcosystemsService
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  commentId: T:SECODashBackend.Services.Ecosystems.IEcosystemsService
+  parent: SECODashBackend.Services.Ecosystems
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html
+  name: IEcosystemsService
+  nameWithType: IEcosystemsService
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService
+- uid: SECODashBackend.Services.Ecosystems
+  commentId: N:SECODashBackend.Services.Ecosystems
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Ecosystems
+  nameWithType: SECODashBackend.Services.Ecosystems
+  fullName: SECODashBackend.Services.Ecosystems
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Ecosystems
+    name: Ecosystems
+    href: SECODashBackend.Services.Ecosystems.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Ecosystems
+    name: Ecosystems
+    href: SECODashBackend.Services.Ecosystems.html

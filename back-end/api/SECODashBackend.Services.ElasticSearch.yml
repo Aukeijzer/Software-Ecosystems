@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.ElasticSearch
+  commentId: N:SECODashBackend.Services.ElasticSearch
+  id: SECODashBackend.Services.ElasticSearch
+  children:
+  - SECODashBackend.Services.ElasticSearch.ElasticsearchService
+  - SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.ElasticSearch
+  nameWithType: SECODashBackend.Services.ElasticSearch
+  fullName: SECODashBackend.Services.ElasticSearch
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.ElasticSearch.ElasticsearchService
+  commentId: T:SECODashBackend.Services.ElasticSearch.ElasticsearchService
+  href: SECODashBackend.Services.ElasticSearch.ElasticsearchService.html
+  name: ElasticsearchService
+  nameWithType: ElasticsearchService
+  fullName: SECODashBackend.Services.ElasticSearch.ElasticsearchService
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  commentId: T:SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  parent: SECODashBackend.Services.ElasticSearch
+  href: SECODashBackend.Services.ElasticSearch.IElasticsearchService.html
+  name: IElasticsearchService
+  nameWithType: IElasticsearchService
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+- uid: SECODashBackend.Services.ElasticSearch
+  commentId: N:SECODashBackend.Services.ElasticSearch
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.ElasticSearch
+  nameWithType: SECODashBackend.Services.ElasticSearch
+  fullName: SECODashBackend.Services.ElasticSearch
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.ElasticSearch
+    name: ElasticSearch
+    href: SECODashBackend.Services.ElasticSearch.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.ElasticSearch
+    name: ElasticSearch
+    href: SECODashBackend.Services.ElasticSearch.html
