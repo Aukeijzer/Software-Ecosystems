@@ -3,7 +3,7 @@
 import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import SpinnerComponent from "./spinner"
-import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
+import { topTechnologies} from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
 import  listLanguageDTOConverter  from "@/utils/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -24,6 +24,7 @@ import { ExtendedUser } from "@/utils/authOptions"
 import Button from "./button"
 import { lineData } from "@/interfaces/lineData"
 import listprojectDTOConverter from "@/utils/Converters/projectConverter"
+import { convertTimedData, getLabels, timedDataDTO } from "@/utils/Converters/timedDataConverter"
 
 var abbreviate = require('number-abbreviate');
 
@@ -130,14 +131,15 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             }
 
             trigger({topics: [...selectedItems.ecosystems, ...topics ], 
-                technologies:  [...selectedItems.technologies, ...technologies ]}
+                technologies:  [...selectedItems.technologies, ...technologies ],
+                languages: [...selectedItems.languages, ...languages]}
             )
             setSelectedItems({ecosystems: [...selectedItems.ecosystems, ...topics ] , 
                 technologies: [...selectedItems.technologies, ...technologies], 
                 languages: [...selectedItems.languages, ...languages]}
             )
         } else {
-            trigger({topics: selectedItems.ecosystems, technologies: selectedItems.technologies},)
+            trigger({topics: selectedItems.ecosystems, technologies: selectedItems.technologies, languages: selectedItems.languages},)
         }
 
     },[]) 
@@ -152,7 +154,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
      * @returns A Promise that resolves when the filter is applied.
      */
     async function onClickFilter(filter: string, filterType: string){
-        await trigger({topics: [...selectedItems.ecosystems, filter], technologies: selectedItems.technologies});
+        await trigger({topics: [...selectedItems.ecosystems, filter], technologies: selectedItems.technologies, languages: selectedItems.languages});
         setSelectedItems(prevState => ({
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems], filter]
@@ -207,7 +209,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
      */
     async function removeFilter(filter: string, filterType: string){
         //Solve trigger function
-        await trigger({topics: selectedItems.ecosystems.filter(n => n != filter), technologies: []});
+        await trigger({topics: selectedItems.ecosystems.filter(n => n != filter), technologies: selectedItems.technologies, languages: selectedItems.languages});
         setSelectedItems(prevState => ({
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems].filter(n => n != filter)]
@@ -285,42 +287,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         )
 
     }
-    interface topicDTO {
-        topic: string,
-        projectCount: number
-    }
-
-    interface timedDataDTO {
-        bucketDateLabel: string,
-        topics: topicDTO[]
-    }
-
-    function convertTimedData(data: timedDataDTO[],){
-        var convertedData : lineData[] = []
-        for(var i = 0; i < data.length; i++){
-            var date = data[i].bucketDateLabel;
-            var lineData : lineData = {date: date, topic0: 0, topic0Name: "", topic1: 0, topic1Name: "", topic2: 0, topic2Name: "", topic3: 0, topic3Name: "", topic4: 0, topic4Name: ""}
-
-            for(var j = 0; j < data[i].topics.length; j++){
-                var topic = data[i].topics[j];
-                lineData["topic" + (j)] = topic.projectCount;
-                lineData["topic" + (j) + "Name"] = topic.topic;
-            }
-            convertedData.push(lineData)
-        }    
-        console.log(convertedData);
-        return convertedData;
-    }
-
-    function getLabels(data: timedDataDTO[]){
-        var labels : string[] = [];
-        for(var i = 0; i < data[0].topics.length; i++){
-            labels.push(data[0].topics[i].topic);
-        }
-        return labels;
-       
-    }
-  
+   
     //Prepare variables before we have data so we can render before data is gathered
     var cardList  = []
     if(data){
