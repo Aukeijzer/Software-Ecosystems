@@ -1,4 +1,5 @@
 ﻿using SECODashBackend.Dtos.Topic;
+using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Services.DataProcessor;
 
@@ -12,5 +13,5 @@ public interface IDataProcessorService
     /// </summary>
     /// <param name="readmeDtos">The readme data to be sent to the data processor.</param>
     /// <returns>The resulting topics.</returns>
-    public Task<IEnumerable<TopicResponseDto>> GetTopics(IEnumerable<TopicRequestDto> readmeDtos);
+    public Task<List<ProjectDto>> GetTopics(List<ProjectDto> projectDtos);
 }

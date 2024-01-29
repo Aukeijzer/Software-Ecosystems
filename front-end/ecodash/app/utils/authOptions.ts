@@ -64,9 +64,6 @@ export const authOptions: NextAuthOptions = {
             if(user){
                 const data = await fetchUserData(user.id, user.email!);
                 console.log(data);
-                //Name
-                //Email
-                //picture
                 token.id = user.id;
                 token.userType = data.userType;
                 token.ecosystems = data.ecosystems;

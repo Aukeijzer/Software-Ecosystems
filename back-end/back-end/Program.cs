@@ -17,6 +17,9 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Scheduler;
 using SECODashBackend.Services.Spider;
 using SECODashBackend.Services.Users;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Certificate;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -28,6 +31,33 @@ builder.Services.AddCors(options =>
                 policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();;
             });
 });
+
+//TODO: configure authentication below to only accept certain urls/certs.
+builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+    .AddCertificate(options =>
+    {
+        options.Events = new CertificateAuthenticationEvents
+        {
+            OnCertificateValidated = context =>
+            {
+                var claims = new[]
+                {
+                    new Claim(
+                        ClaimTypes.NameIdentifier,
+                        context.ClientCertificate.Subject,
+                        ClaimValueTypes.String, context.Options.ClaimsIssuer),
+                    new Claim(
+                        ClaimTypes.Name,
+                        context.ClientCertificate.Subject,
+                        ClaimValueTypes.String, context.Options.ClaimsIssuer)
+                };
+                context.Principal = new ClaimsPrincipal(
+                    new ClaimsIdentity(claims, context.Scheme.Name));
+                context.Success();
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -47,7 +77,13 @@ if (string.IsNullOrEmpty(spiderConnectionString))
 
 builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")!));
 
-builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
+var dataProcessorConnectionString = builder.Configuration.GetConnectionString("DataProcessor");
+if (string.IsNullOrEmpty(dataProcessorConnectionString))
+{
+    throw new InvalidOperationException("Missing configuration for Data Processor");
+}
+
+builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
 // TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
 var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
@@ -59,7 +95,7 @@ if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
 var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
-        .IndexName("projects-03")
+        .IndexName("projects-topic-test")
     );
 
 builder.Services.AddSingleton(
@@ -103,7 +139,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
+if ( app.Environment.IsDevelopment() || local )
 
 // TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
