@@ -1,6 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch.Analysis;
-using SECODashBackend.Models;
-using SECODashBackend.Services.Ecosystems;
+﻿using SECODashBackend.Services.Ecosystems;
 
 namespace SECODashBackend.Database;
 
