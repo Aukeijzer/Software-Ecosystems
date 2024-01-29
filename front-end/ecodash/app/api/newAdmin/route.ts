@@ -12,10 +12,6 @@ export async function POST(req: NextRequest){
     }
 
     const data = await req.json();
-    console.log(data)
-
-    console.log(token.email)
-    console.log(stringHash(data.email).toString())
     
     var userEnum = 0;
     if(data.userType == "Admin"){
@@ -29,8 +25,6 @@ export async function POST(req: NextRequest){
         userType: userEnum
     }
 
-    console.log(apiPostBody)
-
     const response : Response = await fetch(process.env.NEXT_PUBLIC_BACKEND_ADRESS + "/users/updatepermissions", {
         method: 'POST',
         headers: {
@@ -38,8 +32,6 @@ export async function POST(req: NextRequest){
         },
         body: JSON.stringify(apiPostBody)
     })
-
-    console.log(response)
 
     if(response.status == 200){
         const messages : any = await response.json();

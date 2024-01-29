@@ -1,7 +1,6 @@
 "use client"
 
-import displayableTableItem from "@/app/classes/displayableTableItem";
-import { Table } from "flowbite-react";
+import displayableTableItem from "@/classes/displayableTableItem";
 
 interface infoCardDataTableProps<T>{
     /**

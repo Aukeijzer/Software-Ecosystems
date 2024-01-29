@@ -46,11 +46,11 @@ class TestApp(unittest.TestCase):
             {"id": "1",
              "name": "Project 1",
              "description": "quantum",
-             "readme": "Readme about quantum software"},
+             "readMe": "Readme about quantum software"},
             {"id": "2",
              "name": "Project 2",
              "description": "agriculture",
-             "readme": "Readme about agriculture software"},
+             "readMe": "Readme about agriculture software"},
         ]
         response = self.app.post("/extract-topics", json=valid_input)
         self.assertEqual(response.status_code, 200)

@@ -2,13 +2,13 @@
 
 import { useEffect} from "react"
 import { useRouter } from 'next/navigation'
-import { fetcherHomePage } from '@/app/utils/apiFetcher';
+import { fetcherHomePage } from '@/utils/apiFetcher';
 import useSWRMutation from 'swr/mutation'
 import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
-import { ExtendedUser } from "@/app/utils/authOptions";
+import { ExtendedUser } from "@/utils/authOptions";
 import { useSession } from "next-auth/react";
 
 /**
@@ -93,6 +93,7 @@ export default function LayoutHomePage(){
                 if(response.ok){
                     if(response.status === 200){
                         alert("Ecosystem removed");
+                        window.location.reload();
                     } else {
                         alert("Error removing ecosystem");
                     }
@@ -127,13 +128,15 @@ export default function LayoutHomePage(){
             //const ecosystemname = data[i].displayName.toLowerCase().replaceAll(" ", "-");
             var removable = false;
             if(user && userEcosystems){
-                console.log(userEcosystems);
                 removable = userEcosystems.includes(data[i].displayName);
+                if(user.userType === "RootAdmin"){
+                    removable = true;
+                }
             }
             
             const button = <EcosystemButton ecosystem={data[i].displayName} projectCount={data[i].numberOfStars} topics={100} />
         
-            const card = <div className="col-span-1 h-36">
+            const card = <div className="col-span-1 h-36 cursor-pointer">
                 <InfoCard title={data[i].displayName!} data={button} onClick={onClickEcosystem} Color={COLORS[i]} remove={removable} onRemove={removeEcosystem} ecoystem={data[i].displayName} />
             </div>
             cardList.push(card);
@@ -144,7 +147,7 @@ export default function LayoutHomePage(){
             if(user.userType === "Admin" || user.userType === "RootAdmin"){
                 //Create new dashboard card
                 const newDashboardButton = <div className="h-32">Create </div>
-                const newDashboardButtonCard = <div>
+                const newDashboardButtonCard = <div className="cursor-pointer">
                     <InfoCard 
                     title="Create new Dashboard"
                     data={newDashboardButton}
@@ -156,7 +159,7 @@ export default function LayoutHomePage(){
                 if(user.userType === "RootAdmin"){
                     //Create new add admin card
                     const addAdminButton = <div> Add admin </div>
-                    const addAdminButtonCard = <div>
+                    const addAdminButtonCard = <div className="cursor-pointer">
                         <InfoCard 
                         title="Add new admin"
                         data={addAdminButton}

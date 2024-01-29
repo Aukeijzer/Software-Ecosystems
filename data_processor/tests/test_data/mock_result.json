@@ -1,414 +1,802 @@
-{
-  "result": [
-    {
-      "projectId": "R_kgDOBP8EZQ",
+[
+  {
+      "projectId": "R_kgDOJKSTjA",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        }
+          "Intelligent automation",
+          "Chatbots",
+          "Robot programming",
+          "Software prototyping",
+          "Virtual assistants"
       ]
-    },
-    {
-      "projectId": "R_kgDOBo8b9A",
+  },
+  {
+      "projectId": "R_kgDOH3JoLw",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        }
+          "Visualization",
+          "User interfaces",
+          "Natural language processing",
+          "Deep learning",
+          "Chatbots"
       ]
-    },
-    {
-      "projectId": "R_kgDOBVU5mQ",
+  },
+  {
+      "projectId": "R_kgDOJc1_Sg",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        }
+          "Intelligent automation",
+          "Chatbots",
+          "Software prototyping",
+          "Virtual assistants",
+          "Robot programming"
       ]
-    },
-    {
-      "projectId": "R_kgDOBxGUUg",
+  },
+  {
+      "projectId": "R_kgDOIksATQ",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        }
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
       ]
-    },
-    {
-      "projectId": "R_kgDOAhDtqA",
+  },
+  {
+      "projectId": "R_kgDOGStmJA",
       "topics": [
-        {
-          "keywords": [
-            "scheduler",
-            "job scheduler",
-            "job",
-            "watch job",
-            "watch"
-          ],
-          "mapped_topic": "On the job training",
-          "probability": 0.032607832255878225,
-          "topicId": 3
-        },
-        {
-          "keywords": [
-            "programming",
-            "enterprise programming",
-            "language",
-            "programming language",
-            "enterprise"
-          ],
-          "mapped_topic": "Application programming interfaces",
-          "probability": 0.0067119482834759265,
-          "topicId": 2
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        }
+          "Deep architecture",
+          "Learning (artificial intelligence)",
+          "Natural language processing",
+          "Convolutional neural networks",
+          "Chatbots"
       ]
-    },
-    {
-      "projectId": "R_kgDOB76r6A",
+  },
+  {
+      "projectId": "R_kgDOIm2Jlg",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        }
+          "Chatbots",
+          "Virtual assistants",
+          "Intelligent automation",
+          "Community networks",
+          "Software prototyping"
       ]
-    },
-    {
-      "projectId": "R_kgDOCI-v9A",
+  },
+  {
+      "projectId": "R_kgDOArZ5HQ",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        },
-        {
-          "keywords": [
-            "programming",
-            "enterprise programming",
-            "language",
-            "programming language",
-            "enterprise"
-          ],
-          "mapped_topic": "Application programming interfaces",
-          "probability": 0.0067119482834759265,
-          "topicId": 2
-        }
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
       ]
-    },
-    {
-      "projectId": "R_kgDOAF2hxQ",
+  },
+  {
+      "projectId": "R_kgDOF3VtDw",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        }
+          "Speech synthesis",
+          "Personal voice assistants",
+          "Deep learning",
+          "Visualization",
+          "Virtual assistants"
       ]
-    },
-    {
-      "projectId": "R_kgDOCB1nKA",
+  },
+  {
+      "projectId": "R_kgDOCQmIhQ",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        },
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        }
+          "Search engines",
+          "Collaborative software",
+          "Learning (artificial intelligence)",
+          "Virtual assistants",
+          "Collaborative tools"
       ]
-    },
-    {
-      "projectId": "R_kgDOFAft8g",
+  },
+  {
+      "projectId": "R_kgDOBxo-6Q",
       "topics": [
-        {
-          "keywords": [
-            "quantum",
-            "machine",
-            "quantum machine",
-            "machine learning",
-            "framework"
-          ],
-          "mapped_topic": "Machine-to-machine communications",
-          "probability": 0.07049676554864681,
-          "topicId": 0
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computer",
-            "computer",
-            "pennylane",
-            "qiskit"
-          ],
-          "mapped_topic": "Computer networks",
-          "probability": 0.058549981600014664,
-          "topicId": 4
-        },
-        {
-          "keywords": [
-            "quantum",
-            "quantum computing",
-            "computing",
-            "learning",
-            "open source"
-          ],
-          "mapped_topic": "Quantum computing",
-          "probability": 0.05971227656303385,
-          "topicId": 1
-        }
+          "Decentralized autonomous organization",
+          "Virtual assistants",
+          "Community networks",
+          "Intelligent automation",
+          "Chatbots"
       ]
-    }
-  ]
-}
+  },
+  {
+      "projectId": "R_kgDOAUeP5g",
+      "topics": [
+          "Natural language processing",
+          "Learning (artificial intelligence)",
+          "Chatbots",
+          "Virtual assistants",
+          "Collaborative tools"
+      ]
+  },
+  {
+      "projectId": "R_kgDOEkwbYQ",
+      "topics": [
+          "Digital intelligence",
+          "Learning (artificial intelligence)",
+          "Robot programming",
+          "Intelligent automation",
+          "Microprogramming"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJibVLQ",
+      "topics": [
+          "Virtual assistants",
+          "Turnkey project",
+          "Chatbots",
+          "Collaborative software",
+          "Intelligent automation"
+      ]
+  },
+  {
+      "projectId": "R_kgDOFIPuDg",
+      "topics": [
+          "Learning (artificial intelligence)",
+          "Robot programming",
+          "Digital intelligence",
+          "Convolutional neural networks",
+          "Natural language processing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCcA0bg",
+      "topics": [
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCqWgoA",
+      "topics": [
+          "Deep learning",
+          "Collaborative software",
+          "Microprogramming",
+          "Convolutional neural networks",
+          "Learning (artificial intelligence)"
+      ]
+  },
+  {
+      "projectId": "R_kgDOABJJyw",
+      "topics": [
+          "Technetium",
+          "Deep learning",
+          "Convolutional neural networks",
+          "Learning (artificial intelligence)",
+          "Natural language processing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJRAMAg",
+      "topics": [
+          "Courseware",
+          "Chatbots",
+          "Learning (artificial intelligence)",
+          "Intelligent automation",
+          "Virtual assistants"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJoiDfg",
+      "topics": [
+          "Face recognition",
+          "Active appearance model",
+          "Convolutional neural networks",
+          "Visualization",
+          "Learning (artificial intelligence)"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJxbR3A",
+      "topics": [
+          "Learning (artificial intelligence)",
+          "Robot programming",
+          "Natural language processing",
+          "Virtual assistants",
+          "Chatbots"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJHyA4Q",
+      "topics": [
+          "Speech synthesis",
+          "Personal voice assistants",
+          "Visualization",
+          "Virtual assistants",
+          "Chatbots"
+      ]
+  },
+  {
+      "projectId": "R_kgDOHvghIw",
+      "topics": [
+          "System-in-package",
+          "Deep learning",
+          "Visualization",
+          "Collaborative software",
+          "Application virtualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOKHxYbg",
+      "topics": [
+          "Turnkey project",
+          "Collaborative software",
+          "Virtual assistants",
+          "Software prototyping",
+          "Intelligent automation"
+      ]
+  },
+  {
+      "projectId": "R_kgDOHx-ACA",
+      "topics": [
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOAdedfg",
+      "topics": [
+          "Convolutional neural networks",
+          "Learning (artificial intelligence)",
+          "Autonomous driving",
+          "Deep architecture",
+          "Robot programming"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCIsEOw",
+      "topics": [
+          "Business intelligence",
+          "Database systems",
+          "Virtual assistants",
+          "Chatbots",
+          "Learning (artificial intelligence)"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJlox8w",
+      "topics": [
+          "Personal voice assistants",
+          "Chatbots",
+          "Virtual assistants",
+          "Speech synthesis",
+          "Natural language processing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJF_VYg",
+      "topics": [
+          "Chatbots",
+          "Virtual assistants",
+          "Courseware",
+          "Personal voice assistants",
+          "Computer languages"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJcq7QA",
+      "topics": [
+          "Programming",
+          "Collaborative software",
+          "Software prototyping",
+          "Microprogramming",
+          "Intelligent automation"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCB5Jxw",
+      "topics": [
+          "Data flow computing",
+          "Application virtualization",
+          "Microprogramming",
+          "Deep learning",
+          "Military computing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJDJ_YQ",
+      "topics": [
+          "Computer languages",
+          "Chatbots",
+          "Software prototyping",
+          "Virtual assistants",
+          "Intelligent automation"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJLVrdQ",
+      "topics": [
+          "IEEE Local activities",
+          "Virtual assistants",
+          "Chatbots",
+          "Natural language processing",
+          "Intelligent automation"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJFedeg",
+      "topics": [
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOBaaN5A",
+      "topics": [
+          "Cyber espionage",
+          "Learning (artificial intelligence)",
+          "Digital intelligence",
+          "Robot programming",
+          "Military computing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOBOGC9w",
+      "topics": [
+          "Military aircraft",
+          "Intelligent automation",
+          "Robot programming",
+          "Autonomous driving",
+          "Learning (artificial intelligence)"
+      ]
+  },
+  {
+      "projectId": "R_kgDOIjDrHQ",
+      "topics": [
+          "WebRTC",
+          "Chatbots",
+          "Collaborative software",
+          "Computer languages",
+          "Database systems"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJKSO2A",
+      "topics": [
+          "Automatic programming",
+          "Collaborative software",
+          "Chatbots",
+          "Virtual assistants",
+          "Programming"
+      ]
+  },
+  {
+      "projectId": "R_kgDOBpHGog",
+      "topics": [
+          "Community networks",
+          "Virtual assistants",
+          "Chatbots",
+          "Collaborative software",
+          "Decentralized autonomous organization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOIIh3hQ",
+      "topics": [
+          "User interfaces",
+          "Visualization",
+          "Chatbots",
+          "Graphical user interfaces",
+          "Desktop publishing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCiGecg",
+      "topics": [
+          "Virtual assistants",
+          "Chatbots",
+          "Natural language processing",
+          "Community networks",
+          "Business intelligence"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJVxJug",
+      "topics": [
+          "Virtual assistants",
+          "Collaborative software",
+          "Chatbots",
+          "Application virtualization",
+          "Turnkey project"
+      ]
+  },
+  {
+      "projectId": "R_kgDOI44gKw",
+      "topics": [
+          "Collaborative software",
+          "Virtual assistants",
+          "Turnkey project",
+          "Chatbots",
+          "Collaborative tools"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJihq1Q",
+      "topics": [
+          "Hyper-intelligent systems",
+          "Intelligent automation",
+          "Business intelligence",
+          "Digital intelligence",
+          "Chatbots"
+      ]
+  },
+  {
+      "projectId": "R_kgDOC_3jGg",
+      "topics": [
+          "Graphical user interfaces",
+          "User interfaces",
+          "Visualization",
+          "Desktop publishing",
+          "Active appearance model"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCf7Pcg",
+      "topics": [
+          "Motion detection",
+          "Convolutional neural networks",
+          "Face recognition",
+          "Autonomous driving",
+          "Active appearance model"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJPtzfg",
+      "topics": [
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJIrLTQ",
+      "topics": [
+          "Home computing",
+          "Reconfigurable architectures",
+          "IEEE Local activities",
+          "Application virtualization",
+          "Computer languages"
+      ]
+  },
+  {
+      "projectId": "R_kgDOBP_hfQ",
+      "topics": [
+          "Software development management",
+          "Deep learning",
+          "Search engines",
+          "Data flow computing",
+          "Robot programming"
+      ]
+  },
+  {
+      "projectId": "R_kgDODTYulg",
+      "topics": [
+          "Semantic search",
+          "Virtual assistants",
+          "Chatbots",
+          "Database systems",
+          "Computer languages"
+      ]
+  },
+  {
+      "projectId": "R_kgDOKqSOig",
+      "topics": [
+          "Web design",
+          "Software prototyping",
+          "Collaborative software",
+          "Virtual assistants",
+          "Chatbots"
+      ]
+  },
+  {
+      "projectId": "R_kgDOFqlEBQ",
+      "topics": [
+          "Learning (artificial intelligence)",
+          "Convolutional neural networks",
+          "Military computing",
+          "Robot programming",
+          "Digital intelligence"
+      ]
+  },
+  {
+      "projectId": "R_kgDOBGidXw",
+      "topics": [
+          "Chatbots",
+          "Software prototyping",
+          "Personal voice assistants",
+          "Virtual assistants",
+          "Intelligent automation"
+      ]
+  },
+  {
+      "projectId": "R_kgDODpSb7Q",
+      "topics": [
+          "Military computing",
+          "Learning (artificial intelligence)",
+          "Microprogramming",
+          "Convolutional neural networks",
+          "Robot programming"
+      ]
+  },
+  {
+      "projectId": "R_kgDOHmU15w",
+      "topics": [
+          "Keyword search",
+          "User interfaces",
+          "Community networks",
+          "Visualization",
+          "Virtual assistants"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJx09RA",
+      "topics": [
+          "Database systems",
+          "Virtual assistants",
+          "Chatbots",
+          "Turnkey project",
+          "Business intelligence"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCH0y0w",
+      "topics": [
+          "Reinforcement learning",
+          "Learning (artificial intelligence)",
+          "Deep architecture",
+          "Convolutional neural networks",
+          "Autonomous driving"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCVFx0Q",
+      "topics": [
+          "Automatic programming",
+          "Chatbots",
+          "Virtual assistants",
+          "User interfaces",
+          "Collaborative software"
+      ]
+  },
+  {
+      "projectId": "R_kgDOKIX9_g",
+      "topics": [
+          "Active appearance model",
+          "Face recognition",
+          "Video signal processing",
+          "Graphical user interfaces",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOBnGEqg",
+      "topics": [
+          "Autonomous driving",
+          "Convolutional neural networks",
+          "Learning (artificial intelligence)",
+          "Military aircraft",
+          "Robot programming"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJ-lOyQ",
+      "topics": [
+          "Reconfigurable architectures",
+          "Application virtualization",
+          "Virtual assistants",
+          "Chatbots",
+          "Computer languages"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCm8VwQ",
+      "topics": [
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJaA_Jg",
+      "topics": [
+          "Data visualization",
+          "Collaborative tools",
+          "Natural language processing",
+          "Chatbots",
+          "Virtual assistants"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJN9KGA",
+      "topics": [
+          "Natural language processing",
+          "Virtual assistants",
+          "Chatbots",
+          "Learning (artificial intelligence)",
+          "IEEE Local activities"
+      ]
+  },
+  {
+      "projectId": "R_kgDOI-atyg",
+      "topics": [
+          "Chatbots",
+          "Personal voice assistants",
+          "Computer languages",
+          "WebRTC",
+          "Virtual assistants"
+      ]
+  },
+  {
+      "projectId": "R_kgDOAhL66w",
+      "topics": [
+          "Programming",
+          "Chatbots",
+          "Intelligent automation",
+          "Learning (artificial intelligence)",
+          "Collaborative software"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJMLjFw",
+      "topics": [
+          "Avatars",
+          "Desktop publishing",
+          "Decentralized autonomous organization",
+          "User interfaces",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOAchXmg",
+      "topics": [
+          "Learning (artificial intelligence)",
+          "Convolutional neural networks",
+          "Digital intelligence",
+          "Robot programming",
+          "Military computing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOAkTYng",
+      "topics": [
+          "Deep architecture",
+          "Convolutional neural networks",
+          "Technetium",
+          "Deep learning",
+          "Learning (artificial intelligence)"
+      ]
+  },
+  {
+      "projectId": "R_kgDOG1WDQQ",
+      "topics": [
+          "Business intelligence",
+          "Application virtualization",
+          "Computer languages",
+          "Virtual assistants",
+          "Chatbots"
+      ]
+  },
+  {
+      "projectId": "R_kgDOF-4pvw",
+      "topics": [
+          "Video signal processing",
+          "Active appearance model",
+          "Convolutional neural networks",
+          "Face recognition",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJYk1Cg",
+      "topics": [
+          "Application virtualization",
+          "Virtual assistants",
+          "Reconfigurable architectures",
+          "Computer languages",
+          "Software prototyping"
+      ]
+  },
+  {
+      "projectId": "R_kgDOCHfrSw",
+      "topics": [
+          "Robot programming",
+          "Learning (artificial intelligence)",
+          "Intelligent automation",
+          "Chatbots",
+          "Microprogramming"
+      ]
+  },
+  {
+      "projectId": "R_kgDODAEuEw",
+      "topics": [
+          "Convolutional neural networks",
+          "Learning (artificial intelligence)",
+          "Virtual assistants",
+          "Natural language processing",
+          "Military computing"
+      ]
+  },
+  {
+      "projectId": "R_kgDOH9k83g",
+      "topics": [
+          "Surface texture",
+          "Visualization",
+          "System-in-package",
+          "Video signal processing",
+          "Convolutional neural networks"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJxj6wg",
+      "topics": [
+          "Chatbots",
+          "Computer languages",
+          "Software prototyping",
+          "Intelligent automation",
+          "Personal voice assistants"
+      ]
+  },
+  {
+      "projectId": "R_kgDOArLLYA",
+      "topics": [
+          "Collaborative tools",
+          "Collaborative software",
+          "Natural language processing",
+          "Data visualization",
+          "Visualization"
+      ]
+  },
+  {
+      "projectId": "R_kgDODHbtfQ",
+      "topics": [
+          "Microprogramming",
+          "Learning (artificial intelligence)",
+          "Robot programming",
+          "Software prototyping",
+          "Intelligent automation"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJxtHSw",
+      "topics": [
+          "Chatbots",
+          "Natural language processing",
+          "Virtual assistants",
+          "Collaborative software",
+          "Business intelligence"
+      ]
+  },
+  {
+      "projectId": "R_kgDOJ15Eog",
+      "topics": [
+          "Software prototyping",
+          "Chatbots",
+          "Intelligent automation",
+          "Computer languages",
+          "Turnkey project"
+      ]
+  },
+  {
+      "projectId": "R_kgDOICZtAA",
+      "topics": [
+          "Desktop publishing",
+          "User interfaces",
+          "Graphical user interfaces",
+          "Visualization",
+          "Chatbots"
+      ]
+  }
+]

@@ -1,5 +1,5 @@
-import languageClass from "../../classes/languageClass";
-import { languageDTO } from "../../interfaces/DTOs/languageDTO";
+import languageClass from "@/classes/languageClass";
+import { languageDTO } from "@/interfaces/DTOs/languageDTO";
 
 /**
  * Converts a languageDTO object to a languageClass object.

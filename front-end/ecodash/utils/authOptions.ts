@@ -64,9 +64,6 @@ export const authOptions: NextAuthOptions = {
             if(user){
                 const data = await fetchUserData(user.id, user.email!);
                 console.log(data);
-                //Name
-                //Email
-                //picture
                 token.id = user.id;
                 token.userType = data.userType;
                 token.ecosystems = data.ecosystems;
@@ -123,7 +120,6 @@ async function fetchUserData(userId: string, username: string) {
     const convertedResponse = await response.json();
     let userTypeResult = convertedResponse.userType;
     let enumType = userType[userTypeResult];
-    console.log(enumType);
     return  {userType: enumType, ecosystems: convertedResponse.ecosystems}
 }
 

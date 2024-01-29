@@ -1,5 +1,5 @@
-import risingClass from "../../classes/risingClass";
-import { risingDTO } from "../../interfaces/DTOs/risingDTO";
+import risingClass from "@/classes/risingClass";
+import { risingDTO } from "@/interfaces/DTOs/risingDTO";
 
 /**
  * Converts a risingDTO object to a risingClass object.

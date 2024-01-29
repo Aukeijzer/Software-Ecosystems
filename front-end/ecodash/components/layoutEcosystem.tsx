@@ -3,15 +3,14 @@
 import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import SpinnerComponent from "./spinner"
-import { topTopicsGrowing, topTechnologyGrowing, topTechnologies, topicGrowthLine } from "@/mockData/mockAgriculture"
+import { topTechnologies} from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
-import  listLanguageDTOConverter  from "@/app/utils/Converters/languageConverter"
+import  listLanguageDTOConverter  from "@/utils/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
-import listTechnologyDTOConverter from "@/app/utils/Converters/technologyConverter"
-import  listRisingDTOConverter  from "@/app/utils/Converters/risingConverter"
-import listSubEcosystemDTOConverter from "@/app/utils/Converters/subEcosystemConverter"
-import { fetcherEcosystemByTopic } from "@/app/utils/apiFetcher"
-import listContributorDTOConverter from "@/app/utils/Converters/contributorConverter"
+import listTechnologyDTOConverter from "@/utils/Converters/technologyConverter"
+import listSubEcosystemDTOConverter from "@/utils/Converters/subEcosystemConverter"
+import { fetcherEcosystemByTopic } from "@/utils/apiFetcher"
+import listContributorDTOConverter from "@/utils/Converters/contributorConverter"
 import Filters from "./filters"
 import SmallDataBox from "./smallDataBox"
 import TopicSearch from "./topicSearch"
@@ -19,12 +18,13 @@ import InfoCard from "./infoCard"
 import TableComponent from "./tableComponent"
 import GraphComponent from "./graphComponent"
 import GraphLine from "./graphLine"
-import { colors } from "@/app/enums/filterColor"
+import { colors } from "@/enums/filterColor"
 import { useSession} from "next-auth/react"
-import { ExtendedUser } from "@/app/utils/authOptions"
+import { ExtendedUser } from "@/utils/authOptions"
 import Button from "./button"
-import { lineData } from "@/app/interfaces/lineData"
-import listprojectDTOConverter from "@/app/utils/Converters/projectConverter"
+import { lineData } from "@/interfaces/lineData"
+import listprojectDTOConverter from "@/utils/Converters/projectConverter"
+import { convertTimedData, getLabels, timedDataDTO } from "@/utils/Converters/timedDataConverter"
 
 var abbreviate = require('number-abbreviate');
 
@@ -131,14 +131,15 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
             }
 
             trigger({topics: [...selectedItems.ecosystems, ...topics ], 
-                technologies:  [...selectedItems.technologies, ...technologies ]}
+                technologies:  [...selectedItems.technologies, ...technologies ],
+                languages: [...selectedItems.languages, ...languages]}
             )
             setSelectedItems({ecosystems: [...selectedItems.ecosystems, ...topics ] , 
                 technologies: [...selectedItems.technologies, ...technologies], 
                 languages: [...selectedItems.languages, ...languages]}
             )
         } else {
-            trigger({topics: selectedItems.ecosystems, technologies: selectedItems.technologies},)
+            trigger({topics: selectedItems.ecosystems, technologies: selectedItems.technologies, languages: selectedItems.languages},)
         }
 
     },[]) 
@@ -153,7 +154,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
      * @returns A Promise that resolves when the filter is applied.
      */
     async function onClickFilter(filter: string, filterType: string){
-        await trigger({topics: [...selectedItems.ecosystems, filter], technologies: selectedItems.technologies});
+        await trigger({topics: [...selectedItems.ecosystems, filter], technologies: selectedItems.technologies, languages: selectedItems.languages});
         setSelectedItems(prevState => ({
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems], filter]
@@ -208,7 +209,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
      */
     async function removeFilter(filter: string, filterType: string){
         //Solve trigger function
-        await trigger({topics: selectedItems.ecosystems.filter(n => n != filter), technologies: []});
+        await trigger({topics: selectedItems.ecosystems.filter(n => n != filter), technologies: selectedItems.technologies, languages: selectedItems.languages});
         setSelectedItems(prevState => ({
             ...prevState,
             [filterType]: [...prevState[filterType as keyof typeof selectedItems].filter(n => n != filter)]
@@ -289,42 +290,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         )
 
     }
-    interface topicDTO {
-        topic: string,
-        projectCount: number
-    }
-
-    interface timedDataDTO {
-        bucketDateLabel: string,
-        topics: topicDTO[]
-    }
-
-    function convertTimedData(data: timedDataDTO[],){
-        var convertedData : lineData[] = []
-        for(var i = 0; i < data.length; i++){
-            var date = data[i].bucketDateLabel;
-            var lineData : lineData = {date: date, topic0: 0, topic0Name: "", topic1: 0, topic1Name: "", topic2: 0, topic2Name: "", topic3: 0, topic3Name: "", topic4: 0, topic4Name: ""}
-
-            for(var j = 0; j < data[i].topics.length; j++){
-                var topic = data[i].topics[j];
-                lineData["topic" + (j)] = topic.projectCount;
-                lineData["topic" + (j) + "Name"] = topic.topic;
-            }
-            convertedData.push(lineData)
-        }    
-        console.log(convertedData);
-        return convertedData;
-    }
-
-    function getLabels(data: timedDataDTO[]){
-        var labels : string[] = [];
-        for(var i = 0; i < data[0].topics.length; i++){
-            labels.push(data[0].topics[i].topic);
-        }
-        return labels;
-       
-    }
-  
+   
     //Prepare variables before we have data so we can render before data is gathered
     var cardList  = []
     if(data){
@@ -365,7 +331,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const smallBoxes = (
                  <div className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
                     <SmallDataBox item={"Topics"} count={abbreviate(data.numberOfTopics)} increase={5}  />
-                    <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfTopics)} increase={5} />
+                    <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfProjects)} increase={5} />
                     <SmallDataBox item={"Contributors"} count={abbreviate(data.numberOfContributors)} increase={5} />
                     <SmallDataBox item={"Contributions"} count={abbreviate(data.numberOfContributions)} increase={5} />
                 </div>
@@ -424,7 +390,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
         //Timed data graph
         const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
-        const cardLineGraph = <div className="col-span-full h-[450px]">
+        const cardLineGraph = <div className="col-span-full h-[500px]">
             <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
         </div>
         cardList.push(cardLineGraph)
