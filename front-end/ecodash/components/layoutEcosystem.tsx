@@ -387,7 +387,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
         //Timed data graph
         const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
-        const cardLineGraph = <div className="col-span-full h-[450px]">
+        const cardLineGraph = <div className="col-span-full h-[500px]">
             <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
         </div>
         cardList.push(cardLineGraph)

@@ -13,9 +13,9 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
     const numberOfTopLanguages = 5;
     const numberOfTopSubEcosystems = 5;
 
-    //Get current date minus 2 month
+    //Get current date minus 1 month
     const currentDate = new Date();
-    const lastMonthDate = new Date(currentDate.setMonth(new Date().getMonth() - 2));
+    const lastMonthDate = new Date(currentDate.setMonth(new Date().getMonth() - 1));
     const currentDateISO = lastMonthDate.toISOString();
     console.log(currentDateISO);
     

@@ -6,7 +6,7 @@ export interface topicDTO {
 }
 
 export interface timedDataDTO {
-    bucketDateLabel: string,
+    dateLabel: string,
     topics: topicDTO[]
 }
 
@@ -19,7 +19,9 @@ export interface timedDataDTO {
 export function convertTimedData(data: timedDataDTO[],){
     var convertedData : lineData[] = []
     for(var i = 0; i < data.length; i++){
-        var date = data[i].bucketDateLabel;
+        //Sort topics by name
+        data[i].topics.sort((a, b) => (a.topic > b.topic) ? 1 : -1)
+        var date = data[i].dateLabel;
         var lineData : lineData = {date: date, topic0: 0, topic0Name: "", topic1: 0, topic1Name: "", topic2: 0, topic2Name: "", topic3: 0, topic3Name: "", topic4: 0, topic4Name: ""}
 
         for(var j = 0; j < data[i].topics.length; j++){

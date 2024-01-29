@@ -59,18 +59,19 @@ export default function GraphLine(props: graphLineProps){
     }
     return(
         
-            <div data-cy='line-graph' className='h-[400px] ' >
+            <div data-cy='line-graph' className='h-[450px] ' >
                 <ResponsiveContainer width="100%" >
-                    <LineChart  width={400} height={400} data={props.items} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
+                    <LineChart  width={450} height={400} data={props.items} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date"/>
+                        <XAxis dataKey={"date"}/>  
                         <YAxis />
-                        <Legend />
+                        <Legend wrapperStyle={{ position: 'relative' }}/>
                         <Tooltip itemSorter={(item) => {
                             //-1 to sort in descending order
                             return (item.value as number) * -1;
                         }}/>
-                        {drawLines(props.labels.length, props.labels)}               
+                        {drawLines(props.labels.length, props.labels)}  
+                                   
                     </LineChart>
                 </ResponsiveContainer>
         
