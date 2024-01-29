@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * handles POST request from layoutEcosystem. 
+ * @param req 
+ * @returns ecosystem data
+ */
 export async function POST(req: NextRequest){
     //Get variables from POST body
     const data = await req.json();

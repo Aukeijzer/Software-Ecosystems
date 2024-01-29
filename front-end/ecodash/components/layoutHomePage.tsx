@@ -71,13 +71,38 @@ export default function LayoutHomePage(){
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
         */
-        Router.push('/' + ecosystem.toLowerCase());
+        Router.push('/' + ecosystem.toLowerCase().replaceAll(" ", "-"));
     }
 
     function removeEcosystem(event: any, ecosystem: string){
         event.stopPropagation()
         if(confirm("Are you sure you want to remove this ecosystem?")){
             //Remove ecosystem from user
+            //Make api call to remove ecosystem from user
+            var apiPostBody = {
+                ecosystem: ecosystem,
+                userEcosystems: user.ecosystems
+            }
+            fetch('/api/removeEcosystem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(apiPostBody)
+            }).then(response => {
+                if(response.ok){
+                    if(response.status === 200){
+                        alert("Ecosystem removed");
+                        window.location.reload();
+                    } else {
+                        alert("Error removing ecosystem");
+                    }
+                } else {
+                    throw new Error("Error in response");
+                }
+            }).catch(error => {
+                throw new Error("Error in fetch");
+            })
         }
     }
 
@@ -100,16 +125,18 @@ export default function LayoutHomePage(){
 
         //Prepare card for each ecosystem availlable
         for(var i = 0; i < data.length; i++){
-           
+            //const ecosystemname = data[i].displayName.toLowerCase().replaceAll(" ", "-");
             var removable = false;
             if(user && userEcosystems){
-                console.log(userEcosystems);
-                removable = userEcosystems.includes(data[i].displayName.toLowerCase());
+                removable = userEcosystems.includes(data[i].displayName);
+                if(user.userType === "RootAdmin"){
+                    removable = true;
+                }
             }
             
             const button = <EcosystemButton ecosystem={data[i].displayName} projectCount={data[i].numberOfStars} topics={100} />
         
-            const card = <div className="col-span-1 h-36">
+            const card = <div className="col-span-1 h-36 cursor-pointer">
                 <InfoCard title={data[i].displayName!} data={button} onClick={onClickEcosystem} Color={COLORS[i]} remove={removable} onRemove={removeEcosystem} ecoystem={data[i].displayName} />
             </div>
             cardList.push(card);
@@ -120,7 +147,7 @@ export default function LayoutHomePage(){
             if(user.userType === "Admin" || user.userType === "RootAdmin"){
                 //Create new dashboard card
                 const newDashboardButton = <div className="h-32">Create </div>
-                const newDashboardButtonCard = <div>
+                const newDashboardButtonCard = <div className="cursor-pointer">
                     <InfoCard 
                     title="Create new Dashboard"
                     data={newDashboardButton}
@@ -132,7 +159,7 @@ export default function LayoutHomePage(){
                 if(user.userType === "RootAdmin"){
                     //Create new add admin card
                     const addAdminButton = <div> Add admin </div>
-                    const addAdminButtonCard = <div>
+                    const addAdminButtonCard = <div className="cursor-pointer">
                         <InfoCard 
                         title="Add new admin"
                         data={addAdminButton}

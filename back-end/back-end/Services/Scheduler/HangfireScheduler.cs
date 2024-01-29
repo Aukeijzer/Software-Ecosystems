@@ -15,12 +15,13 @@ public class HangfireScheduler(
     /// Adds or updates a recurring job that mines projects by a topic.
     /// </summary>
     /// <param name="topic"> The topic to mine by</param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount"> The amount of projects to mine. </param>
     /// <param name="miningFrequency"> The frequency of mining. </param>
-    public void AddOrUpdateRecurringTopicMiningJob(string topic, int amount, MiningFrequency miningFrequency)
+    public void AddOrUpdateRecurringTopicMiningJob(string topic, string ecosystem, int amount, MiningFrequency miningFrequency)
     {
         var jobId = $"topic-mining_topic={topic}";
-        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTopicAsync(topic, amount), GetCronFrequency(miningFrequency));
+        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTopicAsync(topic, ecosystem, amount), GetCronFrequency(miningFrequency));
         logger.LogInformation($"Job Id: {jobId} added.");
     }
     
@@ -28,12 +29,13 @@ public class HangfireScheduler(
     /// Adds or updates a recurring job that mines projects by a keyword.
     /// </summary>
     /// <param name="keyword"> The keyword to mine by. </param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount"> The amount of projects to mine. </param>
     /// <param name="miningFrequency"> The frequency of mining. </param>
-    public void AddOrUpdateRecurringKeywordMiningJob(string keyword, int amount, MiningFrequency miningFrequency)
+    public void AddOrUpdateRecurringKeywordMiningJob(string keyword, string ecosystem, int amount, MiningFrequency miningFrequency)
     {
         var jobId = $"keyword-mining_keyword={keyword}";
-        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByKeywordAsync(keyword, amount), GetCronFrequency(miningFrequency));
+        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByKeywordAsync(keyword, ecosystem, amount), GetCronFrequency(miningFrequency));
         logger.LogInformation($"Job Id: {jobId} added.");
     }
     
@@ -69,7 +71,7 @@ public class HangfireScheduler(
     public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount)
     {
         var jobId = $"taxonomy-mining_ecosystem={ecosystemName}";
-        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTaxonomyAsync(taxonomy, keywordAmount, topicAmount), Cron.Minutely());
+        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTaxonomyAsync(taxonomy, ecosystemName, keywordAmount, topicAmount), Cron.Minutely());
         logger.LogInformation($"Job Id: {jobId} added.");
     }
 

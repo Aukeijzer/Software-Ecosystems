@@ -23,7 +23,7 @@ export default function NavBarTop(){
     //For now has the basepath 
     return(
         <Navbar data-cy='navBar' fluid  className='bg-white shadow-sm mb-5 px-5 lg:px-32 md:px-20' >
-            <Navbar.Brand as={Link}  href={process.env.NEXT_PUBLIC_LOCAL_ADRESS} >
+            <Navbar.Brand as={Link}  href={"/"} >
                 <Image
                     data-cy='navLogo'
                     src={logo}
