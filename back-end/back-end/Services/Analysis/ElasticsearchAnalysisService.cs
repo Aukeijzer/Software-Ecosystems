@@ -109,6 +109,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// 2. Retrieving the top x sub-ecosystems/topics
     /// </summary>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
+    /// <param name="excludedTopics">A list of topics that define the ecosystem.</param>
     /// <param name="technologies">The technologies of an ecosystem.</param>
     /// <param name="numberOfTopLanguages">The number of top programming languages to retrieve.</param>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
@@ -119,7 +120,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="endTime">The end date of the period of time to retrieve.</param>
     /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
     /// <returns>An EcosystemDto with the top x languages, sub-ecosystems and contributors.</returns>
-    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<Technology> technologies, int numberOfTopLanguages, 
+    public async Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<BannedTopic> excludedTopics, List<Technology> technologies, int numberOfTopLanguages, 
     int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies, int numberOfTopProjects, 
     DateTime startTime, DateTime endTime, int timeBucket)
     {
@@ -218,9 +219,12 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         // Transform the technologies list into a list of strings
         var technologyNames = technologies.Select(t => t.Term).ToList();
         
+        // Transform the bannedTopic list into a list of strings
+        var excludedTopicNames = excludedTopics.Select(s => s.Term).ToList();
+        
         var searchResponse = await elasticsearchService.QueryProjects(searchRequest);
         var subEcosystemDtos = GetSubEcosystems(searchResponse);
-        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologyNames);
+        var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologyNames, excludedTopicNames);
         var allContributors = GetAllContributors(searchResponse);
         var topXSubEcosystems = GetTopXSubEcosystems(numberOfTopSubEcosystems, filteredSubEcosystems);
         var (ecosystemData, subEcosystemData) = await GetActiveProjectsTimeSeries(startTime, endTime, timeBucket, topics, 
@@ -540,14 +544,16 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// <param name="subEcosystemDtos">A list of sub-ecosystems.</param>
     /// <param name="topics">A list of topics that define the ecosystem.</param>
     /// <param name="technologies">A list of technologies that define the ecosystem.</param>
+    /// <param name="excludedTopics">A list of technologies that define the ecosystem.</param>
     /// <returns>A list of sub-ecosystems filtered by the given topics.</returns>
-    public static List<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies)
+    public static List<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies, List<string> excludedTopics)
     {
         return subEcosystemDtos
             .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic))
             .Where(s => !technologies.Contains(s.Topic))
+            .Where(s => !excludedTopics.Contains(s.Topic))
             .ToList();
     }
     #endregion

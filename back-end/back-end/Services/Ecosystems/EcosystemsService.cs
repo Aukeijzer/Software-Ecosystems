@@ -49,8 +49,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
     private async Task<Ecosystem?> GetByNameAsync(string name)
     {
         return await dbContext.Ecosystems
+            .Include(e => e.Technologies)
+            .Include(e => e.BannedTopics)
+            .Include(e => e.Taxonomy)
             .AsNoTracking()
             .SingleOrDefaultAsync(e => e.Name == name);
+            
     }
 
     /// <summary>
@@ -62,11 +66,14 @@ public class EcosystemsService(EcosystemsContext dbContext,
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
         
-        var technologies = await GetTechnologyTaxonomy(dto.Topics.First());
+        var ecosystem = await GetByNameAsync(dto.Topics.First());
+
+        if (ecosystem == null) throw new Exception();
         
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
-            dto.Topics,
-            technologies,
+            dto.Topics, 
+            ecosystem.BannedTopics,
+            ecosystem.Technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
@@ -77,15 +84,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
             dto.NumbersOfDaysPerBucket ?? DefaultNumberOfDaysPerBucket);
 
         // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
-        if (dto.Topics.Count != 1) return ecosystemDto;
-        
-        // Check if the database has additional data regarding this ecosystem
-        var ecosystem = await GetByNameAsync(dto.Topics.First());
-        // If it doesn't, return the dto as is, else add the additional data
-        if (ecosystem == null) return ecosystemDto;
-        ecosystemDto.DisplayName = ecosystem.DisplayName;
-        ecosystemDto.Description = ecosystem.Description;
-        
+        if (dto.Topics.Count == 1)
+        {
+            ecosystemDto.DisplayName = ecosystem.DisplayName;
+            ecosystemDto.Description = ecosystem.Description;
+        }
+
         return ecosystemDto;
     }
     /// <summary>
@@ -267,5 +271,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
         var ecosystem = await GetByNameAsync(ecosystemName);
         if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
         return ecosystem.Technologies;
+    }
+    
+    public async Task<List<BannedTopic>> GetExcludedTopics(string ecosystemName)
+    {
+        var ecosystem = await GetByNameAsync(ecosystemName);
+        if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
+        return ecosystem.BannedTopics;
     }
 }
