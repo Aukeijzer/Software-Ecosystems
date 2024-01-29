@@ -1,0 +1,462 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.User.UpdatePermissionsDto
+  commentId: T:SECODashBackend.Dtos.User.UpdatePermissionsDto
+  id: UpdatePermissionsDto
+  parent: SECODashBackend.Dtos.User
+  children:
+  - SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName
+  - SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType
+  langs:
+  - csharp
+  - vb
+  name: UpdatePermissionsDto
+  nameWithType: UpdatePermissionsDto
+  fullName: SECODashBackend.Dtos.User.UpdatePermissionsDto
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Dtos/User/UpdatePermissionsDto.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UpdatePermissionsDto
+    path: back-end/Dtos/User/UpdatePermissionsDto.cs
+    startLine: 4
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Dtos.User
+  syntax:
+    content: public class UpdatePermissionsDto
+    content.vb: Public Class UpdatePermissionsDto
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName
+  commentId: P:SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName
+  id: UserName
+  parent: SECODashBackend.Dtos.User.UpdatePermissionsDto
+  langs:
+  - csharp
+  - vb
+  name: UserName
+  nameWithType: UpdatePermissionsDto.UserName
+  fullName: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Dtos/User/UpdatePermissionsDto.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UserName
+    path: back-end/Dtos/User/UpdatePermissionsDto.cs
+    startLine: 6
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Dtos.User
+  syntax:
+    content: >-
+      [DataMember(Name = "userName")]
+
+      public required string UserName { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <DataMember(Name:="userName")>
+
+      Public Property UserName As String
+  overload: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: userName
+- uid: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType
+  commentId: P:SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType
+  id: UserType
+  parent: SECODashBackend.Dtos.User.UpdatePermissionsDto
+  langs:
+  - csharp
+  - vb
+  name: UserType
+  nameWithType: UpdatePermissionsDto.UserType
+  fullName: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Dtos/User/UpdatePermissionsDto.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UserType
+    path: back-end/Dtos/User/UpdatePermissionsDto.cs
+    startLine: 9
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Dtos.User
+  syntax:
+    content: >-
+      [DataMember(Name = "userType")]
+
+      public required User.UserType UserType { get; init; }
+    parameters: []
+    return:
+      type: SECODashBackend.Models.User.UserType
+    content.vb: >-
+      <DataMember(Name:="userType")>
+
+      Public Property UserType As User.UserType
+  overload: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: userType
+references:
+- uid: SECODashBackend.Dtos.User
+  commentId: N:SECODashBackend.Dtos.User
+  href: SECODashBackend.html
+  name: SECODashBackend.Dtos.User
+  nameWithType: SECODashBackend.Dtos.User
+  fullName: SECODashBackend.Dtos.User
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.User
+    name: User
+    href: SECODashBackend.Dtos.User.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.User
+    name: User
+    href: SECODashBackend.Dtos.User.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName*
+  commentId: Overload:SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName
+  href: SECODashBackend.Dtos.User.UpdatePermissionsDto.html#SECODashBackend_Dtos_User_UpdatePermissionsDto_UserName
+  name: UserName
+  nameWithType: UpdatePermissionsDto.UserName
+  fullName: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType*
+  commentId: Overload:SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType
+  href: SECODashBackend.Dtos.User.UpdatePermissionsDto.html#SECODashBackend_Dtos_User_UpdatePermissionsDto_UserType
+  name: UserType
+  nameWithType: UpdatePermissionsDto.UserType
+  fullName: SECODashBackend.Dtos.User.UpdatePermissionsDto.UserType
+- uid: SECODashBackend.Models.User.UserType
+  commentId: T:SECODashBackend.Models.User.UserType
+  parent: SECODashBackend.Models
+  href: SECODashBackend.Models.User.html
+  name: User.UserType
+  nameWithType: User.UserType
+  fullName: SECODashBackend.Models.User.UserType
+  spec.csharp:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html
+  spec.vb:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html
+- uid: SECODashBackend.Models
+  commentId: N:SECODashBackend.Models
+  href: SECODashBackend.html
+  name: SECODashBackend.Models
+  nameWithType: SECODashBackend.Models
+  fullName: SECODashBackend.Models
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html

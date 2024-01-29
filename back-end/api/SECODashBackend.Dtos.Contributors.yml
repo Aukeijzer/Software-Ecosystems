@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.Contributors
+  commentId: N:SECODashBackend.Dtos.Contributors
+  id: SECODashBackend.Dtos.Contributors
+  children:
+  - SECODashBackend.Dtos.Contributors.ContributorDto
+  - SECODashBackend.Dtos.Contributors.TopContributorDto
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Dtos.Contributors
+  nameWithType: SECODashBackend.Dtos.Contributors
+  fullName: SECODashBackend.Dtos.Contributors
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Dtos.Contributors.ContributorDto
+  commentId: T:SECODashBackend.Dtos.Contributors.ContributorDto
+  href: SECODashBackend.Dtos.Contributors.ContributorDto.html
+  name: ContributorDto
+  nameWithType: ContributorDto
+  fullName: SECODashBackend.Dtos.Contributors.ContributorDto
+- uid: SECODashBackend.Dtos.Contributors.TopContributorDto
+  commentId: T:SECODashBackend.Dtos.Contributors.TopContributorDto
+  href: SECODashBackend.Dtos.Contributors.TopContributorDto.html
+  name: TopContributorDto
+  nameWithType: TopContributorDto
+  fullName: SECODashBackend.Dtos.Contributors.TopContributorDto

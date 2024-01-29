@@ -1,0 +1,527 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  commentId: T:SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  id: TopicsBucketDto
+  parent: SECODashBackend.Dtos.TimedData
+  children:
+  - SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel
+  - SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics
+  langs:
+  - csharp
+  - vb
+  name: TopicsBucketDto
+  nameWithType: TopicsBucketDto
+  fullName: SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Dtos/TimedData/TopicsBucketDto.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: TopicsBucketDto
+    path: back-end/Dtos/TimedData/TopicsBucketDto.cs
+    startLine: 8
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Dtos.TimedData
+  summary: Represents a data transfer object for a bucket that contains a list of topics with the number of active projects for a given time period.
+  example: []
+  syntax:
+    content: >-
+      [DataContract]
+
+      public class TopicsBucketDto
+    content.vb: >-
+      <DataContract>
+
+      Public Class TopicsBucketDto
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.Runtime.Serialization.DataContractAttribute
+    ctor: System.Runtime.Serialization.DataContractAttribute.#ctor
+    arguments: []
+- uid: SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel
+  commentId: P:SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel
+  id: DateLabel
+  parent: SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  langs:
+  - csharp
+  - vb
+  name: DateLabel
+  nameWithType: TopicsBucketDto.DateLabel
+  fullName: SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Dtos/TimedData/TopicsBucketDto.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: DateLabel
+    path: back-end/Dtos/TimedData/TopicsBucketDto.cs
+    startLine: 11
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Dtos.TimedData
+  syntax:
+    content: >-
+      [DataMember(Name = "bucketDateLabel")]
+
+      public string DateLabel { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <DataMember(Name:="bucketDateLabel")>
+
+      Public Property DateLabel As String
+  overload: SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: bucketDateLabel
+- uid: SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics
+  commentId: P:SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics
+  id: Topics
+  parent: SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  langs:
+  - csharp
+  - vb
+  name: Topics
+  nameWithType: TopicsBucketDto.Topics
+  fullName: SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Dtos/TimedData/TopicsBucketDto.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Topics
+    path: back-end/Dtos/TimedData/TopicsBucketDto.cs
+    startLine: 12
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Dtos.TimedData
+  syntax:
+    content: >-
+      [DataMember(Name = "topics")]
+
+      public List<SubEcosystemDto> Topics { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{SECODashBackend.Dtos.Ecosystem.SubEcosystemDto}
+    content.vb: >-
+      <DataMember(Name:="topics")>
+
+      Public Property Topics As List(Of SubEcosystemDto)
+  overload: SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: topics
+references:
+- uid: SECODashBackend.Dtos.TimedData
+  commentId: N:SECODashBackend.Dtos.TimedData
+  href: SECODashBackend.html
+  name: SECODashBackend.Dtos.TimedData
+  nameWithType: SECODashBackend.Dtos.TimedData
+  fullName: SECODashBackend.Dtos.TimedData
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.TimedData
+    name: TimedData
+    href: SECODashBackend.Dtos.TimedData.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.TimedData
+    name: TimedData
+    href: SECODashBackend.Dtos.TimedData.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel*
+  commentId: Overload:SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel
+  href: SECODashBackend.Dtos.TimedData.TopicsBucketDto.html#SECODashBackend_Dtos_TimedData_TopicsBucketDto_DateLabel
+  name: DateLabel
+  nameWithType: TopicsBucketDto.DateLabel
+  fullName: SECODashBackend.Dtos.TimedData.TopicsBucketDto.DateLabel
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics*
+  commentId: Overload:SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics
+  href: SECODashBackend.Dtos.TimedData.TopicsBucketDto.html#SECODashBackend_Dtos_TimedData_TopicsBucketDto_Topics
+  name: Topics
+  nameWithType: TopicsBucketDto.Topics
+  fullName: SECODashBackend.Dtos.TimedData.TopicsBucketDto.Topics
+- uid: System.Collections.Generic.List{SECODashBackend.Dtos.Ecosystem.SubEcosystemDto}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Dtos.Ecosystem.SubEcosystemDto}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<SubEcosystemDto>
+  nameWithType: List<SubEcosystemDto>
+  fullName: System.Collections.Generic.List<SECODashBackend.Dtos.Ecosystem.SubEcosystemDto>
+  nameWithType.vb: List(Of SubEcosystemDto)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Dtos.Ecosystem.SubEcosystemDto)
+  name.vb: List(Of SubEcosystemDto)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto
+    name: SubEcosystemDto
+    href: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto
+    name: SubEcosystemDto
+    href: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

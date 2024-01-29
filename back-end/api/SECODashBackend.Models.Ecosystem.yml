@@ -1,0 +1,1018 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Models.Ecosystem
+  commentId: T:SECODashBackend.Models.Ecosystem
+  id: Ecosystem
+  parent: SECODashBackend.Models
+  children:
+  - SECODashBackend.Models.Ecosystem.BannedTopics
+  - SECODashBackend.Models.Ecosystem.Description
+  - SECODashBackend.Models.Ecosystem.DisplayName
+  - SECODashBackend.Models.Ecosystem.Id
+  - SECODashBackend.Models.Ecosystem.Name
+  - SECODashBackend.Models.Ecosystem.NumberOfStars
+  - SECODashBackend.Models.Ecosystem.Taxonomy
+  - SECODashBackend.Models.Ecosystem.Technologies
+  - SECODashBackend.Models.Ecosystem.Users
+  langs:
+  - csharp
+  - vb
+  name: Ecosystem
+  nameWithType: Ecosystem
+  fullName: SECODashBackend.Models.Ecosystem
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Ecosystem
+    path: back-end/Models/Ecosystem.cs
+    startLine: 9
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  summary: >-
+    This class represents an Ecosystem.
+
+    An Ecosystem is a collection of projects that are related to each other.
+  example: []
+  syntax:
+    content: >-
+      [Index("Name", new string[] { }, IsUnique = true)]
+
+      public class Ecosystem
+    content.vb: >-
+      <Index("Name", New String() { }, IsUnique:=True)>
+
+      Public Class Ecosystem
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SECODashBackend.Models.Ecosystem.Id
+  commentId: P:SECODashBackend.Models.Ecosystem.Id
+  id: Id
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: Ecosystem.Id
+  fullName: SECODashBackend.Models.Ecosystem.Id
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Id
+    path: back-end/Models/Ecosystem.cs
+    startLine: 12
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "id")]
+
+      public required string Id { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <DataMember(Name:="id")>
+
+      Public Property Id As String
+  overload: SECODashBackend.Models.Ecosystem.Id*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: id
+- uid: SECODashBackend.Models.Ecosystem.Name
+  commentId: P:SECODashBackend.Models.Ecosystem.Name
+  id: Name
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Ecosystem.Name
+  fullName: SECODashBackend.Models.Ecosystem.Name
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Name
+    path: back-end/Models/Ecosystem.cs
+    startLine: 15
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "name")]
+
+      public required string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <DataMember(Name:="name")>
+
+      Public Property Name As String
+  overload: SECODashBackend.Models.Ecosystem.Name*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: name
+- uid: SECODashBackend.Models.Ecosystem.DisplayName
+  commentId: P:SECODashBackend.Models.Ecosystem.DisplayName
+  id: DisplayName
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: Ecosystem.DisplayName
+  fullName: SECODashBackend.Models.Ecosystem.DisplayName
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: DisplayName
+    path: back-end/Models/Ecosystem.cs
+    startLine: 18
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "displayName")]
+
+      public string? DisplayName { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <DataMember(Name:="displayName")>
+
+      Public Property DisplayName As String
+  overload: SECODashBackend.Models.Ecosystem.DisplayName*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: displayName
+- uid: SECODashBackend.Models.Ecosystem.Description
+  commentId: P:SECODashBackend.Models.Ecosystem.Description
+  id: Description
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: Ecosystem.Description
+  fullName: SECODashBackend.Models.Ecosystem.Description
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Description
+    path: back-end/Models/Ecosystem.cs
+    startLine: 21
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "description")]
+
+      public string? Description { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <DataMember(Name:="description")>
+
+      Public Property Description As String
+  overload: SECODashBackend.Models.Ecosystem.Description*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: description
+- uid: SECODashBackend.Models.Ecosystem.NumberOfStars
+  commentId: P:SECODashBackend.Models.Ecosystem.NumberOfStars
+  id: NumberOfStars
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: NumberOfStars
+  nameWithType: Ecosystem.NumberOfStars
+  fullName: SECODashBackend.Models.Ecosystem.NumberOfStars
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: NumberOfStars
+    path: back-end/Models/Ecosystem.cs
+    startLine: 24
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "numberOfStars")]
+
+      public int? NumberOfStars { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: >-
+      <DataMember(Name:="numberOfStars")>
+
+      Public Property NumberOfStars As Integer?
+  overload: SECODashBackend.Models.Ecosystem.NumberOfStars*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: numberOfStars
+- uid: SECODashBackend.Models.Ecosystem.Users
+  commentId: P:SECODashBackend.Models.Ecosystem.Users
+  id: Users
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: Users
+  nameWithType: Ecosystem.Users
+  fullName: SECODashBackend.Models.Ecosystem.Users
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Users
+    path: back-end/Models/Ecosystem.cs
+    startLine: 27
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "users")]
+
+      public List<User> Users { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{SECODashBackend.Models.User}
+    content.vb: >-
+      <DataMember(Name:="users")>
+
+      Public Property Users As List(Of User)
+  overload: SECODashBackend.Models.Ecosystem.Users*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: users
+- uid: SECODashBackend.Models.Ecosystem.Taxonomy
+  commentId: P:SECODashBackend.Models.Ecosystem.Taxonomy
+  id: Taxonomy
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: Taxonomy
+  nameWithType: Ecosystem.Taxonomy
+  fullName: SECODashBackend.Models.Ecosystem.Taxonomy
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Taxonomy
+    path: back-end/Models/Ecosystem.cs
+    startLine: 30
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "taxonomy")]
+
+      public List<Taxonomy> Taxonomy { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{SECODashBackend.Models.Taxonomy}
+    content.vb: >-
+      <DataMember(Name:="taxonomy")>
+
+      Public Property Taxonomy As List(Of Taxonomy)
+  overload: SECODashBackend.Models.Ecosystem.Taxonomy*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: taxonomy
+- uid: SECODashBackend.Models.Ecosystem.Technologies
+  commentId: P:SECODashBackend.Models.Ecosystem.Technologies
+  id: Technologies
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: Technologies
+  nameWithType: Ecosystem.Technologies
+  fullName: SECODashBackend.Models.Ecosystem.Technologies
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Technologies
+    path: back-end/Models/Ecosystem.cs
+    startLine: 33
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "technologies")]
+
+      public List<Technology> Technologies { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{SECODashBackend.Models.Technology}
+    content.vb: >-
+      <DataMember(Name:="technologies")>
+
+      Public Property Technologies As List(Of Technology)
+  overload: SECODashBackend.Models.Ecosystem.Technologies*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: technologies
+- uid: SECODashBackend.Models.Ecosystem.BannedTopics
+  commentId: P:SECODashBackend.Models.Ecosystem.BannedTopics
+  id: BannedTopics
+  parent: SECODashBackend.Models.Ecosystem
+  langs:
+  - csharp
+  - vb
+  name: BannedTopics
+  nameWithType: Ecosystem.BannedTopics
+  fullName: SECODashBackend.Models.Ecosystem.BannedTopics
+  type: Property
+  source:
+    remote:
+      path: back-end/back-end/Models/Ecosystem.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: BannedTopics
+    path: back-end/Models/Ecosystem.cs
+    startLine: 36
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Models
+  syntax:
+    content: >-
+      [DataMember(Name = "bannedTopic")]
+
+      public List<BannedTopic> BannedTopics { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{SECODashBackend.Models.BannedTopic}
+    content.vb: >-
+      <DataMember(Name:="bannedTopic")>
+
+      Public Property BannedTopics As List(Of BannedTopic)
+  overload: SECODashBackend.Models.Ecosystem.BannedTopics*
+  attributes:
+  - type: System.Runtime.Serialization.DataMemberAttribute
+    ctor: System.Runtime.Serialization.DataMemberAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: Name
+      type: System.String
+      value: bannedTopic
+references:
+- uid: SECODashBackend.Models
+  commentId: N:SECODashBackend.Models
+  href: SECODashBackend.html
+  name: SECODashBackend.Models
+  nameWithType: SECODashBackend.Models
+  fullName: SECODashBackend.Models
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Models.Ecosystem.Id*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.Id
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_Id
+  name: Id
+  nameWithType: Ecosystem.Id
+  fullName: SECODashBackend.Models.Ecosystem.Id
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SECODashBackend.Models.Ecosystem.Name*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.Name
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_Name
+  name: Name
+  nameWithType: Ecosystem.Name
+  fullName: SECODashBackend.Models.Ecosystem.Name
+- uid: SECODashBackend.Models.Ecosystem.DisplayName*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.DisplayName
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_DisplayName
+  name: DisplayName
+  nameWithType: Ecosystem.DisplayName
+  fullName: SECODashBackend.Models.Ecosystem.DisplayName
+- uid: SECODashBackend.Models.Ecosystem.Description*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.Description
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_Description
+  name: Description
+  nameWithType: Ecosystem.Description
+  fullName: SECODashBackend.Models.Ecosystem.Description
+- uid: SECODashBackend.Models.Ecosystem.NumberOfStars*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.NumberOfStars
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_NumberOfStars
+  name: NumberOfStars
+  nameWithType: Ecosystem.NumberOfStars
+  fullName: SECODashBackend.Models.Ecosystem.NumberOfStars
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SECODashBackend.Models.Ecosystem.Users*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.Users
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_Users
+  name: Users
+  nameWithType: Ecosystem.Users
+  fullName: SECODashBackend.Models.Ecosystem.Users
+- uid: System.Collections.Generic.List{SECODashBackend.Models.User}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.User}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<User>
+  nameWithType: List<User>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.User>
+  nameWithType.vb: List(Of User)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.User)
+  name.vb: List(Of User)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SECODashBackend.Models.Ecosystem.Taxonomy*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.Taxonomy
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_Taxonomy
+  name: Taxonomy
+  nameWithType: Ecosystem.Taxonomy
+  fullName: SECODashBackend.Models.Ecosystem.Taxonomy
+- uid: System.Collections.Generic.List{SECODashBackend.Models.Taxonomy}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.Taxonomy}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<Taxonomy>
+  nameWithType: List<Taxonomy>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.Taxonomy>
+  nameWithType.vb: List(Of Taxonomy)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.Taxonomy)
+  name.vb: List(Of Taxonomy)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.Taxonomy
+    name: Taxonomy
+    href: SECODashBackend.Models.Taxonomy.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.Taxonomy
+    name: Taxonomy
+    href: SECODashBackend.Models.Taxonomy.html
+  - name: )
+- uid: SECODashBackend.Models.Ecosystem.Technologies*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.Technologies
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_Technologies
+  name: Technologies
+  nameWithType: Ecosystem.Technologies
+  fullName: SECODashBackend.Models.Ecosystem.Technologies
+- uid: System.Collections.Generic.List{SECODashBackend.Models.Technology}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.Technology}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<Technology>
+  nameWithType: List<Technology>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.Technology>
+  nameWithType.vb: List(Of Technology)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.Technology)
+  name.vb: List(Of Technology)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: )
+- uid: SECODashBackend.Models.Ecosystem.BannedTopics*
+  commentId: Overload:SECODashBackend.Models.Ecosystem.BannedTopics
+  href: SECODashBackend.Models.Ecosystem.html#SECODashBackend_Models_Ecosystem_BannedTopics
+  name: BannedTopics
+  nameWithType: Ecosystem.BannedTopics
+  fullName: SECODashBackend.Models.Ecosystem.BannedTopics
+- uid: System.Collections.Generic.List{SECODashBackend.Models.BannedTopic}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.BannedTopic}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<BannedTopic>
+  nameWithType: List<BannedTopic>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.BannedTopic>
+  nameWithType.vb: List(Of BannedTopic)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.BannedTopic)
+  name.vb: List(Of BannedTopic)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.BannedTopic
+    name: BannedTopic
+    href: SECODashBackend.Models.BannedTopic.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.BannedTopic
+    name: BannedTopic
+    href: SECODashBackend.Models.BannedTopic.html
+  - name: )

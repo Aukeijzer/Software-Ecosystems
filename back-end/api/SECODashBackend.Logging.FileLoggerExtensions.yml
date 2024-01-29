@@ -1,0 +1,457 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Logging.FileLoggerExtensions
+  commentId: T:SECODashBackend.Logging.FileLoggerExtensions
+  id: FileLoggerExtensions
+  parent: SECODashBackend.Logging
+  children:
+  - SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{SECODashBackend.Logging.FileLoggerOptions})
+  langs:
+  - csharp
+  - vb
+  name: FileLoggerExtensions
+  nameWithType: FileLoggerExtensions
+  fullName: SECODashBackend.Logging.FileLoggerExtensions
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Logging/FileLoggerExtensions.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: FileLoggerExtensions
+    path: back-end/Logging/FileLoggerExtensions.cs
+    startLine: 4
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Logging
+  summary: This class configures and builds the <xref href="SECODashBackend.Logging.FileLoggerProvider" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public static class FileLoggerExtensions
+    content.vb: Public Module FileLoggerExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{SECODashBackend.Logging.FileLoggerOptions})
+  commentId: M:SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{SECODashBackend.Logging.FileLoggerOptions})
+  id: AddFileLogger(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{SECODashBackend.Logging.FileLoggerOptions})
+  isExtensionMethod: true
+  parent: SECODashBackend.Logging.FileLoggerExtensions
+  langs:
+  - csharp
+  - vb
+  name: AddFileLogger(ILoggingBuilder, Action<FileLoggerOptions>)
+  nameWithType: FileLoggerExtensions.AddFileLogger(ILoggingBuilder, Action<FileLoggerOptions>)
+  fullName: SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger(Microsoft.Extensions.Logging.ILoggingBuilder, System.Action<SECODashBackend.Logging.FileLoggerOptions>)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Logging/FileLoggerExtensions.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddFileLogger
+    path: back-end/Logging/FileLoggerExtensions.cs
+    startLine: 6
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Logging
+  syntax:
+    content: public static ILoggingBuilder AddFileLogger(this ILoggingBuilder builder, Action<FileLoggerOptions> configure)
+    parameters:
+    - id: builder
+      type: Microsoft.Extensions.Logging.ILoggingBuilder
+    - id: configure
+      type: System.Action{SECODashBackend.Logging.FileLoggerOptions}
+    return:
+      type: Microsoft.Extensions.Logging.ILoggingBuilder
+    content.vb: Public Shared Function AddFileLogger(builder As ILoggingBuilder, configure As Action(Of FileLoggerOptions)) As ILoggingBuilder
+  overload: SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger*
+  nameWithType.vb: FileLoggerExtensions.AddFileLogger(ILoggingBuilder, Action(Of FileLoggerOptions))
+  fullName.vb: SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger(Microsoft.Extensions.Logging.ILoggingBuilder, System.Action(Of SECODashBackend.Logging.FileLoggerOptions))
+  name.vb: AddFileLogger(ILoggingBuilder, Action(Of FileLoggerOptions))
+references:
+- uid: SECODashBackend.Logging.FileLoggerProvider
+  commentId: T:SECODashBackend.Logging.FileLoggerProvider
+  parent: SECODashBackend.Logging
+  href: SECODashBackend.Logging.FileLoggerProvider.html
+  name: FileLoggerProvider
+  nameWithType: FileLoggerProvider
+  fullName: SECODashBackend.Logging.FileLoggerProvider
+- uid: SECODashBackend.Logging
+  commentId: N:SECODashBackend.Logging
+  href: SECODashBackend.html
+  name: SECODashBackend.Logging
+  nameWithType: SECODashBackend.Logging
+  fullName: SECODashBackend.Logging
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Logging
+    name: Logging
+    href: SECODashBackend.Logging.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Logging
+    name: Logging
+    href: SECODashBackend.Logging.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger*
+  commentId: Overload:SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger
+  href: SECODashBackend.Logging.FileLoggerExtensions.html#SECODashBackend_Logging_FileLoggerExtensions_AddFileLogger_Microsoft_Extensions_Logging_ILoggingBuilder_System_Action_SECODashBackend_Logging_FileLoggerOptions__
+  name: AddFileLogger
+  nameWithType: FileLoggerExtensions.AddFileLogger
+  fullName: SECODashBackend.Logging.FileLoggerExtensions.AddFileLogger
+- uid: Microsoft.Extensions.Logging.ILoggingBuilder
+  commentId: T:Microsoft.Extensions.Logging.ILoggingBuilder
+  parent: Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.iloggingbuilder
+  name: ILoggingBuilder
+  nameWithType: ILoggingBuilder
+  fullName: Microsoft.Extensions.Logging.ILoggingBuilder
+- uid: System.Action{SECODashBackend.Logging.FileLoggerOptions}
+  commentId: T:System.Action{SECODashBackend.Logging.FileLoggerOptions}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<FileLoggerOptions>
+  nameWithType: Action<FileLoggerOptions>
+  fullName: System.Action<SECODashBackend.Logging.FileLoggerOptions>
+  nameWithType.vb: Action(Of FileLoggerOptions)
+  fullName.vb: System.Action(Of SECODashBackend.Logging.FileLoggerOptions)
+  name.vb: Action(Of FileLoggerOptions)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: SECODashBackend.Logging.FileLoggerOptions
+    name: FileLoggerOptions
+    href: SECODashBackend.Logging.FileLoggerOptions.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Logging.FileLoggerOptions
+    name: FileLoggerOptions
+    href: SECODashBackend.Logging.FileLoggerOptions.html
+  - name: )
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

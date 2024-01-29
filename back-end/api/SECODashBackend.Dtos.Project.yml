@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.Project
+  commentId: N:SECODashBackend.Dtos.Project
+  id: SECODashBackend.Dtos.Project
+  children:
+  - SECODashBackend.Dtos.Project.ProjectDto
+  - SECODashBackend.Dtos.Project.ProjectRequestDto
+  - SECODashBackend.Dtos.Project.TopProjectDto
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Dtos.Project
+  nameWithType: SECODashBackend.Dtos.Project
+  fullName: SECODashBackend.Dtos.Project
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Dtos.Project.ProjectDto
+  commentId: T:SECODashBackend.Dtos.Project.ProjectDto
+  href: SECODashBackend.Dtos.Project.ProjectDto.html
+  name: ProjectDto
+  nameWithType: ProjectDto
+  fullName: SECODashBackend.Dtos.Project.ProjectDto
+- uid: SECODashBackend.Dtos.Project.ProjectRequestDto
+  commentId: T:SECODashBackend.Dtos.Project.ProjectRequestDto
+  href: SECODashBackend.Dtos.Project.ProjectRequestDto.html
+  name: ProjectRequestDto
+  nameWithType: ProjectRequestDto
+  fullName: SECODashBackend.Dtos.Project.ProjectRequestDto
+- uid: SECODashBackend.Dtos.Project.TopProjectDto
+  commentId: T:SECODashBackend.Dtos.Project.TopProjectDto
+  href: SECODashBackend.Dtos.Project.TopProjectDto.html
+  name: TopProjectDto
+  nameWithType: TopProjectDto
+  fullName: SECODashBackend.Dtos.Project.TopProjectDto
