@@ -24,4 +24,16 @@ public class Ecosystem
    
    [DataMember(Name = "numberOfStars")]
    public int? NumberOfStars { get; set; }
+
+   [DataMember(Name = "users")]
+   public List<User> Users { get; set; } = [];
+
+   [DataMember(Name = "taxonomy")] 
+   public List<Taxonomy> Taxonomy { get; set; } = [];
+
+   [DataMember(Name = "technologies")] 
+   public List<Technology> Technologies { get; set; } = [];
+
+   [DataMember(Name = "bannedTopic")]
+   public List<BannedTopic> BannedTopics { get; set; } = [];
 }

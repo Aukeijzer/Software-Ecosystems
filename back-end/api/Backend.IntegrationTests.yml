@@ -1,0 +1,56 @@
+### YamlMime:ManagedReference
+items:
+- uid: Backend.IntegrationTests
+  commentId: N:Backend.IntegrationTests
+  id: Backend.IntegrationTests
+  children:
+  - Backend.IntegrationTests.BackendWebApplicationFactory`1
+  - Backend.IntegrationTests.EcosystemsTest
+  - Backend.IntegrationTests.ProjectsTest
+  langs:
+  - csharp
+  - vb
+  name: Backend.IntegrationTests
+  nameWithType: Backend.IntegrationTests
+  fullName: Backend.IntegrationTests
+  type: Namespace
+  assemblies:
+  - Backend.IntegrationTests
+references:
+- uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+  commentId: T:Backend.IntegrationTests.BackendWebApplicationFactory`1
+  href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  name: BackendWebApplicationFactory<TProgram>
+  nameWithType: BackendWebApplicationFactory<TProgram>
+  fullName: Backend.IntegrationTests.BackendWebApplicationFactory<TProgram>
+  nameWithType.vb: BackendWebApplicationFactory(Of TProgram)
+  fullName.vb: Backend.IntegrationTests.BackendWebApplicationFactory(Of TProgram)
+  name.vb: BackendWebApplicationFactory(Of TProgram)
+  spec.csharp:
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: <
+  - name: TProgram
+  - name: '>'
+  spec.vb:
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TProgram
+  - name: )
+- uid: Backend.IntegrationTests.EcosystemsTest
+  commentId: T:Backend.IntegrationTests.EcosystemsTest
+  href: Backend.IntegrationTests.EcosystemsTest.html
+  name: EcosystemsTest
+  nameWithType: EcosystemsTest
+  fullName: Backend.IntegrationTests.EcosystemsTest
+- uid: Backend.IntegrationTests.ProjectsTest
+  commentId: T:Backend.IntegrationTests.ProjectsTest
+  href: Backend.IntegrationTests.ProjectsTest.html
+  name: ProjectsTest
+  nameWithType: ProjectsTest
+  fullName: Backend.IntegrationTests.ProjectsTest

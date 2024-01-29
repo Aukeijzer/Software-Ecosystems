@@ -40,17 +40,59 @@ public class SpiderProjectServiceTests
             Description = "Agriculture is the science and art of cultivating plants and livestock.",
             DefaultBranchRef = null!,
             RepositoryTopics = new TopicsWrapper() {Nodes = Array.Empty<TopicWrapper>()},
-            Languages = new Languages() {Edges = Array.Empty<Language>(), TotalSize = 0}
+            Languages = new Languages() {Edges = Array.Empty<Language>(), TotalSize = 0},
+            StargazerCount = 2100
         };
         for (int i = 0; i < 25; i++)
         {
             _repositories.Add(_node);
         }
-        _keywordOutput = new SpiderData() { Search = new SearchResult() {Nodes = _repositories.ToArray()}};
+        _keywordOutput = new SpiderData() { Search = new SearchResult() {Nodes = _repositories.ToArray(), RepositoryCount = 10}};
         _topicOutput = new TopicSearchData() { Topic = new TopicSearch() {Repositories = new TopicRepository()
         {
             Nodes = _repositories.ToArray()
         }}};
+    }
+
+    /// <summary>
+    /// This test the GetByKeywordSplit method of the SpiderProjectService.
+    /// It tests if the method calls the correct services.
+    /// We test this by creating a mock of the GitHubGraphqlService and GitHubRestService.
+    /// After that we call the GetByKeywordSplit method in the SpiderProjectService.
+    /// Lastly we check if the correct methods have been called the correct amount of times.
+    /// </summary>
+    [Test]
+    public async Task GetByKeywordSplitTest()
+    {
+        _mockGitHubGraphqlService.SetupSequence(x => x.GetRepoCount(
+                It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+            .ReturnsAsync(8000)
+            .ReturnsAsync(7500)
+            .ReturnsAsync(6000)
+            .ReturnsAsync(500)
+            .ReturnsAsync(800)
+            .ReturnsAsync(700)
+            .ReturnsAsync(10);
+        _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByName(It.IsAny<string>(), It.IsAny<int>(), null, It.IsAny<int>()))
+            .ReturnsAsync(_keywordOutput);
+        _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByNameHelper(It.IsAny<string>(), It.IsAny<int>(), null))
+            .ReturnsAsync([_keywordOutput]);
+        _spiderProjectService = new SpiderProjectService(_mockGitHubGraphqlService.Object, _graphqlDataConverter,
+            _mockGitHubRestService.Object);
+
+        var result = await _spiderProjectService.GetByKeywordSplit("agriculture", 50, null);
+        Assert.That(result is not null);
+        _mockGitHubGraphqlService.Verify(x => x.GetRepoCount(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(7));
+        _mockGitHubGraphqlService.Verify(x => x.QueryRepositoriesByName(It.IsAny<string>(), It.IsAny<int>(), null, It.IsAny<int>()), Times.Exactly(1));
+        _mockGitHubGraphqlService.Verify(x => x.QueryRepositoriesByNameHelper(It.IsAny<string>(), It.IsAny<int>(), null), Times.Exactly(2));
+        
+        _mockGitHubGraphqlService.Setup(x => x.QueryRepositoriesByName(It.IsAny<string>(), It.IsAny<int>(), null, It.IsAny<int>()))
+            .ReturnsAsync(new SpiderData(){Search = new SearchResult(){Nodes = Array.Empty<Repository>()}});
+        _spiderProjectService = new SpiderProjectService(_mockGitHubGraphqlService.Object, _graphqlDataConverter,
+            _mockGitHubRestService.Object);
+        
+        result = await _spiderProjectService.GetByKeywordSplit("agriculture", 50, null);
+        Assert.That(result.Count == 0);
     }
 
     /// <summary>

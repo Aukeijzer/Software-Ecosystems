@@ -15,6 +15,7 @@ public static class EcosystemConverter
     {
         return new EcosystemOverviewDto
         {
+            Name = ecosystem.Name,
             Description = ecosystem.Description,
             DisplayName = ecosystem.DisplayName,
             NumberOfStars = ecosystem.NumberOfStars,

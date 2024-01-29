@@ -2,7 +2,7 @@
 
 
 import { ListGroup } from "flowbite-react"
-import displayableListItem from "@/app/classes/displayableListItem";
+import displayableListItem from "@/classes/displayableListItem";
 
 
 interface infoCardDataListProps{

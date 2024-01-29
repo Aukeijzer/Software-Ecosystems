@@ -15,10 +15,12 @@
  * @param {string} [alert] - If provided, renders a small alert box with the provided string.
  * @param {string} [className] - Additional CSS class name for the card.
  * @param {Function} [onClick] - The function to be called when the card is clicked.
+ * @param {string} [Color] - The color of the top of the card.
  * @returns {JSX.Element} The rendered InfoCard component.
  */
-import { Card, Alert } from 'flowbite-react'
-import React from 'react'
+import { Alert } from 'flowbite-react'
+import Card from './card'
+import React, { ReactNode } from 'react'
 import { HiInformationCircle } from 'react-icons/hi'
 
 interface InfoCardProps {
@@ -27,6 +29,11 @@ interface InfoCardProps {
     alert?: string,
     className?: string,
     onClick?: any,
+    Color?: string
+    remove?: boolean,
+    onRemove?: any,
+    ecoystem?: string
+    children?: ReactNode
 }
 
 export default function InfoCard(props: InfoCardProps) {
@@ -37,15 +44,25 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'flex h-full p-5 border-2 border-odinAccent bg-amber shadow-2xl resize content-evenly' + props.className}>
-            <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
-                {props.title}
+        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal' + props.className}>
+            <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
+            
+            {props.remove && 
+            <div className="absolute top-0 right-0 mt-2 mr-1">
+                <button className="hover:bg-red-500  z-10  p-1 rounded-sm" onClick={(e) => props.onRemove(e, props.ecoystem)}> ✖ </button>
+            </div>
+            }
+
+            <h5 className="flex text-2xl justify-center w-full m-3 font-medium text-gray-900 tracking-tight text-gray-900">
+                {props.title}   
             </h5>
 
+            {props.children? props.children : <></>}
+
             {props.alert && <Alert color="green" icon={HiInformationCircle} rounded className='mb-2 text-yellow-700 bg-yellow-100 border-yellow-500 dark:bg-yellow-200 dark:text-yellow-800'> <p>{props.alert}  </p></Alert>}
-
-            {props.data}
-
+            <div className='mt-3'>
+                {props.data}
+            </div>
         </Card>
     )
 }

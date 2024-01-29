@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.DataProcessor
+  commentId: N:SECODashBackend.Services.DataProcessor
+  id: SECODashBackend.Services.DataProcessor
+  children:
+  - SECODashBackend.Services.DataProcessor.DataProcessorService
+  - SECODashBackend.Services.DataProcessor.IDataProcessorService
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.DataProcessor
+  nameWithType: SECODashBackend.Services.DataProcessor
+  fullName: SECODashBackend.Services.DataProcessor
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.DataProcessor.DataProcessorService
+  commentId: T:SECODashBackend.Services.DataProcessor.DataProcessorService
+  href: SECODashBackend.Services.DataProcessor.DataProcessorService.html
+  name: DataProcessorService
+  nameWithType: DataProcessorService
+  fullName: SECODashBackend.Services.DataProcessor.DataProcessorService
+- uid: SECODashBackend.Services.DataProcessor.IDataProcessorService
+  commentId: T:SECODashBackend.Services.DataProcessor.IDataProcessorService
+  parent: SECODashBackend.Services.DataProcessor
+  href: SECODashBackend.Services.DataProcessor.IDataProcessorService.html
+  name: IDataProcessorService
+  nameWithType: IDataProcessorService
+  fullName: SECODashBackend.Services.DataProcessor.IDataProcessorService
+- uid: SECODashBackend.Services.DataProcessor
+  commentId: N:SECODashBackend.Services.DataProcessor
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.DataProcessor
+  nameWithType: SECODashBackend.Services.DataProcessor
+  fullName: SECODashBackend.Services.DataProcessor
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.DataProcessor
+    name: DataProcessor
+    href: SECODashBackend.Services.DataProcessor.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.DataProcessor
+    name: DataProcessor
+    href: SECODashBackend.Services.DataProcessor.html

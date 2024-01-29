@@ -87,6 +87,10 @@ public class ElasticsearchAnalysisServiceTests
     {
         // Arrange
         var topics = new List<string> { "agriculture", "crops" };
+
+        var technologies = new List<string> { "apple", "windows" };
+        
+        var excludedTopics = new List<string> { "banana", "linux" };
         
         var subEcosystemsDtos = new List<SubEcosystemDto>
         {
@@ -138,7 +142,7 @@ public class ElasticsearchAnalysisServiceTests
         
         // Act
         var result = ElasticsearchAnalysisService
-            .FilterSubEcosystems(subEcosystemsDtos, topics)
+            .FilterSubEcosystems(subEcosystemsDtos, topics, technologies, excludedTopics)
             .ToList();
         
         // Assert

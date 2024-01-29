@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.ProgrammingLanguage
+  commentId: N:SECODashBackend.Dtos.ProgrammingLanguage
+  id: SECODashBackend.Dtos.ProgrammingLanguage
+  children:
+  - SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Dtos.ProgrammingLanguage
+  nameWithType: SECODashBackend.Dtos.ProgrammingLanguage
+  fullName: SECODashBackend.Dtos.ProgrammingLanguage
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto
+  commentId: T:SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto
+  href: SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto.html
+  name: ProgrammingLanguageDto
+  nameWithType: ProgrammingLanguageDto
+  fullName: SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto

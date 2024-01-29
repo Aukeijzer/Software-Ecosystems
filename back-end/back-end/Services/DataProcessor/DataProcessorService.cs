@@ -1,5 +1,6 @@
-﻿using RestSharp;
+﻿   using RestSharp;
 using SECODashBackend.Dtos.Topic;
+using SECODashBackend.Dtos.Project;
 
 namespace SECODashBackend.Services.DataProcessor;
 
@@ -8,19 +9,79 @@ namespace SECODashBackend.Services.DataProcessor;
 /// </summary>
 public class DataProcessorService : IDataProcessorService
 {
-   private readonly RestClient _client = new("http://localhost:5000");
-
-   /// <summary>
-   /// Sends the readme data to the data processor and returns the resulting topics.
-   /// </summary>
-   /// <param name="readmeDtos">The readme data.</param>
-   /// <returns>The resulting topics.</returns>
-   /// <exception cref="HttpRequestException">Thrown if the request cannot be deserialized into a List of ProjectTopicsDtos.</exception>
-   public async Task<IEnumerable<TopicResponseDto>> GetTopics(IEnumerable<TopicRequestDto> readmeDtos)
+   private readonly RestClient _client;
+   
+   public DataProcessorService(string connectionString)
    {
-      var request = new RestRequest("extract-topics", Method.Post).AddJsonBody(readmeDtos);
-      
-      // Throw an exception if the request cannot be deserialized into a List of ProjectTopicsDtos
-      return await _client.PostAsync<List<TopicResponseDto>>(request) ?? throw new HttpRequestException();
+      var options = new RestClientOptions(connectionString);
+      options.MaxTimeout = 100000000;
+      _client = new RestClient(options);
    }
+   
+   /// <summary>
+   /// Sends the readme data to the data processor and modifies projectDTOS by adding the resulting topics.
+   /// </summary>
+   /// <param name="projectDtos">List of project data.</param>
+   /// <exception cref="HttpRequestException">Thrown if the request cannot be deserialized into a List of ProjectTopicsDtos.</exception>
+   public async Task<List<ProjectDto>> GetTopics(List<ProjectDto> projectDtos)
+   {
+      var readmeDtos = ConvertToTopicDto(projectDtos);
+      
+      // Only extract topics if more than 10 readmes are found
+      if (readmeDtos.Count > 10)
+      {
+         var request = new RestRequest("extract-topics", Method.Post).AddJsonBody(readmeDtos);
+         var responseDtos = await _client.PostAsync<List<TopicResponseDto>>(request) ??
+                            throw new HttpRequestException();
+         var newDtos = AddTopicsToProjects(responseDtos, projectDtos);
+         return newDtos;
+      }
+      return projectDtos;
+   }
+   
+   /// <summary>
+   /// Adds topics from topics extracted from data processor to the projects
+   /// </summary>
+   /// <param name="topicDtos"> List of extracted topics per project.</param>
+   /// <param name="projectDtos">List of project data.</param>
+   private List<ProjectDto> AddTopicsToProjects(List<TopicResponseDto> topicDtos, List<ProjectDto> projectDtos)
+   {
+      // Create a dictionary using ProjectId as the key
+      Dictionary<string, TopicResponseDto> topicDictionary = topicDtos.ToDictionary(t => t.ProjectId);
+
+      foreach (var dto in projectDtos)
+      {
+         // Check if the projectID exists in the dictionary
+         if (topicDictionary.TryGetValue(dto.Id, out var topicDto))
+         {
+            dto.AdditionalTopics = topicDto.Topics;
+         }
+      }
+
+      return projectDtos;
+   }
+
+   
+   /// <summary>
+   /// Converts a list projectDto to a list of topicRequestDtos
+   /// </summary>
+   /// <param name="projectDtos">List of project data.</param>
+   /// <returns> List of TopicRquestDtos </returns>
+   private List<TopicRequestDto> ConvertToTopicDto(List<ProjectDto> projectDtos)
+   {
+      // Filter out projects with empty readme
+      var readmeDtos = projectDtos
+         .Where(dto => !string.IsNullOrEmpty(dto.ReadMe))
+         .Select(dto => new TopicRequestDto
+         {
+            Id = dto.Id,
+            Name = dto.Name,
+            Description = dto.Description,
+            Readme = dto.ReadMe
+         })
+         .ToList();
+
+      return readmeDtos;
+   }
+
 }

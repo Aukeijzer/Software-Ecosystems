@@ -2,45 +2,71 @@
 # This is the compose file used for development purposes. For more information read the documentation
 # 
 services:
-  # Frontend docker.
-  server:
+####
+  # Frontend
+  nextjs:
     build:
       context: ./front-end/ecodash/
       dockerfile: ./Dockerfile
-    environment:
-      ASPNETCORE_URLS: http://+:3000
     ports:
       - 3000:3000
     networks:
       - secodash-network
-    restart: always
-    
+        
+####
+  # nginx proxy server
+  nginx:
+    build:
+      context: ./front-end/nginx/
+      dockerfile: ./Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    secrets:
+     - ssl-certificate
+     - ssl-private-key
+    networks:
+      - secodash-network
+
 #####
-  # Spider docker.
+  # Spider
   spider-app:
+    container_name: spider-app
     build:
       context: ./spider/
       dockerfile: ./Dockerfile
     networks:
       - secodash-network
+    secrets:
+      - git-api-token
     environment:
-      API_Token: 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
-      ASPNETCORE_URLS: http://+:5205
+      API_Token_File: /run/secrets/git-api-token
+      ASPNETCORE_URLS: http://*:5205
+      Docker_Enviroment: local
     ports:
       - 5205:5205
 
 #####
-  # Backend docker.
+  # SQL Database 
   db:
+    container_name: db
     image: postgres
     networks:
       - secodash-network
+    secrets:
+      - postgres-password
     restart: always
+    build:
+      context: ./database
+      dockerfile: db.Dockerfile
     environment:
       POSTGRES_Username: postgres
-      POSTGRES_PASSWORD: SECODash
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  
+####
+  # Database browser
   adminer:
     image: adminer
     ports:
@@ -48,12 +74,16 @@ services:
     networks:
       - secodash-network
     restart: always
+####
+  # Backend (service) layer application
   backend-app:
+    container_name: backend-app
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile
     environment:
-      ASPNETCORE_URLS: http://+:5003
+      ASPNETCORE_URLS: http://*:5003
+      Docker_Enviroment: local
     ports:
       - 5003:5003
     networks:
@@ -62,9 +92,33 @@ services:
     depends_on:
       - db
     
-    
+#####
+  # Data processor docker.
+  data-processor-app:
+    container_name: data-processor-app
+    build:
+      context: ./data_processor/
+      dockerfile: ./Dockerfile
+    networks:
+      - secodash-network
+    ports:
+      - 5000:5000
+
+####
+# Volumes, networks and secrets
 volumes:
   postgres-data:
+
+secrets:
+  postgres-password:
+    file: secrets/postgres-password.txt
+  git-api-token:
+    file: secrets/spider-git-api-token.txt
+  ssl-certificate:
+    file: secrets/certs/fullchain.pem
+  ssl-private-key:
+    file: secrets/certs/privkey.pem
+    
 
 networks:
   secodash-network:

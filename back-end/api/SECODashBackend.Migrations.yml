@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Migrations
+  commentId: N:SECODashBackend.Migrations
+  id: SECODashBackend.Migrations
+  children:
+  - SECODashBackend.Migrations.Initial
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Migrations
+  nameWithType: SECODashBackend.Migrations
+  fullName: SECODashBackend.Migrations
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Migrations.Initial
+  commentId: T:SECODashBackend.Migrations.Initial
+  href: SECODashBackend.Migrations.Initial.html
+  name: Initial
+  nameWithType: Initial
+  fullName: SECODashBackend.Migrations.Initial

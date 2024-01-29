@@ -1,0 +1,176 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency
+  commentId: T:SECODashBackend.Services.Scheduler.MiningFrequency
+  id: MiningFrequency
+  parent: SECODashBackend.Services.Scheduler
+  children:
+  - SECODashBackend.Services.Scheduler.MiningFrequency.Daily
+  - SECODashBackend.Services.Scheduler.MiningFrequency.Hourly
+  - SECODashBackend.Services.Scheduler.MiningFrequency.Minutely
+  - SECODashBackend.Services.Scheduler.MiningFrequency.Weekly
+  langs:
+  - csharp
+  - vb
+  name: MiningFrequency
+  nameWithType: MiningFrequency
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency
+  type: Enum
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/MiningFrequency.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: MiningFrequency
+    path: back-end/Services/Scheduler/MiningFrequency.cs
+    startLine: 5
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Enum that represents the frequency of mining projects.
+  example: []
+  syntax:
+    content: public enum MiningFrequency
+    content.vb: Public Enum MiningFrequency
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency.Minutely
+  commentId: F:SECODashBackend.Services.Scheduler.MiningFrequency.Minutely
+  id: Minutely
+  parent: SECODashBackend.Services.Scheduler.MiningFrequency
+  langs:
+  - csharp
+  - vb
+  name: Minutely
+  nameWithType: MiningFrequency.Minutely
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency.Minutely
+  type: Field
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/MiningFrequency.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Minutely
+    path: back-end/Services/Scheduler/MiningFrequency.cs
+    startLine: 8
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  syntax:
+    content: Minutely = 0
+    return:
+      type: SECODashBackend.Services.Scheduler.MiningFrequency
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency.Hourly
+  commentId: F:SECODashBackend.Services.Scheduler.MiningFrequency.Hourly
+  id: Hourly
+  parent: SECODashBackend.Services.Scheduler.MiningFrequency
+  langs:
+  - csharp
+  - vb
+  name: Hourly
+  nameWithType: MiningFrequency.Hourly
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency.Hourly
+  type: Field
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/MiningFrequency.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Hourly
+    path: back-end/Services/Scheduler/MiningFrequency.cs
+    startLine: 9
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  syntax:
+    content: Hourly = 1
+    return:
+      type: SECODashBackend.Services.Scheduler.MiningFrequency
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency.Daily
+  commentId: F:SECODashBackend.Services.Scheduler.MiningFrequency.Daily
+  id: Daily
+  parent: SECODashBackend.Services.Scheduler.MiningFrequency
+  langs:
+  - csharp
+  - vb
+  name: Daily
+  nameWithType: MiningFrequency.Daily
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency.Daily
+  type: Field
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/MiningFrequency.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Daily
+    path: back-end/Services/Scheduler/MiningFrequency.cs
+    startLine: 10
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  syntax:
+    content: Daily = 2
+    return:
+      type: SECODashBackend.Services.Scheduler.MiningFrequency
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency.Weekly
+  commentId: F:SECODashBackend.Services.Scheduler.MiningFrequency.Weekly
+  id: Weekly
+  parent: SECODashBackend.Services.Scheduler.MiningFrequency
+  langs:
+  - csharp
+  - vb
+  name: Weekly
+  nameWithType: MiningFrequency.Weekly
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency.Weekly
+  type: Field
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/MiningFrequency.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Weekly
+    path: back-end/Services/Scheduler/MiningFrequency.cs
+    startLine: 11
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  syntax:
+    content: Weekly = 3
+    return:
+      type: SECODashBackend.Services.Scheduler.MiningFrequency
+references:
+- uid: SECODashBackend.Services.Scheduler
+  commentId: N:SECODashBackend.Services.Scheduler
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Scheduler
+  nameWithType: SECODashBackend.Services.Scheduler
+  fullName: SECODashBackend.Services.Scheduler
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Scheduler
+    name: Scheduler
+    href: SECODashBackend.Services.Scheduler.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Scheduler
+    name: Scheduler
+    href: SECODashBackend.Services.Scheduler.html
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency
+  commentId: T:SECODashBackend.Services.Scheduler.MiningFrequency
+  parent: SECODashBackend.Services.Scheduler
+  href: SECODashBackend.Services.Scheduler.MiningFrequency.html
+  name: MiningFrequency
+  nameWithType: MiningFrequency
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency

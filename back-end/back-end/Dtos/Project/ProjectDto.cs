@@ -18,6 +18,9 @@ public class ProjectDto
    
    [DataMember(Name = "createdAt")]
    public DateTime CreatedAt { get; set; }
+    
+   [DataMember(Name = "pushedAt")]
+   public DateTime? PushedAt { get; set; }
    
    [DataMember(Name = "latestDefaultBranchCommitDate")]
    public DateTime? LatestDefaultBranchCommitDate { get; set; }
@@ -45,4 +48,7 @@ public class ProjectDto
    
    [DataMember(Name = "contributors")]
    public List<ContributorDto>? Contributors { get; set; }
+   
+   [DataMember(Name = "additionalTopics")]
+   public List<string>? AdditionalTopics { get; set; }
 }

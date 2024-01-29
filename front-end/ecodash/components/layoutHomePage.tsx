@@ -2,14 +2,15 @@
 
 import { useEffect} from "react"
 import { useRouter } from 'next/navigation'
-import { fetcherHomePage } from '@/app/utils/apiFetcher';
+import { fetcherHomePage } from '@/utils/apiFetcher';
 import useSWRMutation from 'swr/mutation'
-import { cardWrapper } from "@/app/interfaces/cardWrapper";
 import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
-import GridLayout from "./gridLayout";
+import { ExtendedUser } from "@/utils/authOptions";
+import { useSession } from "next-auth/react";
+var abbreviate = require('number-abbreviate');
 
 /**
  * Renders the layout for the home page.
@@ -43,8 +44,13 @@ export default function LayoutHomePage(){
     const Router = useRouter();
 
     //Set up API handler
-    const { data, trigger, error, isMutating} = useSWRMutation(process.env.NEXT_PUBLIC_BACKEND_ADRESS + '/ecosystems', fetcherHomePage)
+    const { data, trigger, error, isMutating} = useSWRMutation('/api/homePageGet', fetcherHomePage)
 
+    //Set up session
+    const { data: session } = useSession();
+    const user = session?.user as ExtendedUser;
+    const userEcosystems = user?.ecosystems;
+    
     //Trigger useEffect on load component. 
     useEffect(() => {
         trigger();
@@ -61,44 +67,129 @@ export default function LayoutHomePage(){
     }
     
     function onClickEcosystem(ecosystem: string){
-        //Get local adress and append ecosystem to it
+        /* Old code for when we had middleware 
         var url = process.env.NEXT_PUBLIC_LOCAL_ADRESS!.split("//");
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
+        */
+        Router.push('/' + ecosystem.toLowerCase().replaceAll(" ", "-"));
     }
 
-    var cardWrappedList : cardWrapper[] = [];
+    function removeEcosystem(event: any, ecosystem: string){
+        event.stopPropagation()
+        if(confirm("Are you sure you want to remove this ecosystem?")){
+            //Remove ecosystem from user
+            //Make api call to remove ecosystem from user
+            var apiPostBody = {
+                ecosystem: ecosystem,
+                userEcosystems: user.ecosystems
+            }
+            fetch('/api/removeEcosystem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(apiPostBody)
+            }).then(response => {
+                if(response.ok){
+                    if(response.status === 200){
+                        alert("Ecosystem removed");
+                        window.location.reload();
+                    } else {
+                        alert("Error removing ecosystem");
+                    }
+                } else {
+                    throw new Error("Error in response");
+                }
+            }).catch(error => {
+                throw new Error("Error in fetch");
+            })
+        }
+    }
+
+    var cardList = [];
     if(data){
+        const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
+
+        var totalProjects = 0;
+        var totalContributors = 0;
+        var totalTopics = 0;
+        var totalStars = 0;
+        for(var i = 0; i < data.length; i++){
+            totalProjects += data[i].numberOfProjects;
+            totalContributors += data[i].numberOfContributors;
+            totalTopics += data[i].numberOfSubTopics;
+            totalStars += data[i].numberOfStars;
+        }
 
         //General information about SECODash
-        const info = (<div className="flex flex-col"> 
-                <span> Total ecosystems: {totalInformation.totalEcosystems}</span>
-                <span> Total projects: {totalInformation.totalProjects} </span>
-                <span> Total topics: {totalInformation.totalTopics} </span>
+        const info = (<div className="flex flex-col "> 
+                <span> Total ecosystems: {data.length}</span>
+                <span> Total projects: {abbreviate(totalProjects)} </span>
+                <span> Total sub-ecosystems: {abbreviate(totalTopics)} </span>
+                <span> Total stars: {abbreviate(totalStars)} </span>
+                <span> Total contributors: {abbreviate(totalContributors)} </span>
             </div>
         )
 
-        const infoCard = <InfoCard title="Information about SECODash" data={info} alert="This is mock data!"/>
-        const infoCardWrapped : cardWrapper = {card: infoCard, width: 6, height: 2, x: 0, y: 0, static: false}
-        cardWrappedList.push(infoCardWrapped);
+        const infoCard = <div className="col-span-4">
+            <InfoCard title="Information about SECODash" data={info} />
+        </div>
+        cardList.push(infoCard);
 
-         //Agriculture card
-        const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
-        const agricultureButtonCard = <InfoCard title="agriculture" data={agricultureButton} onClick={onClickEcosystem}/>
-        const agricultureButtonCardWrapped : cardWrapper = { card: agricultureButtonCard, width: 2, height: 3, x: 0, y : 2, static:true}
-        cardWrappedList.push(agricultureButtonCardWrapped)
+        if(user){
+            //If user is admin, make cards draggable
+            if(user.userType === "Admin" || user.userType === "RootAdmin"){
+                //Create new dashboard card
+                const newDashboardButton = <div className="h-16"> </div>
+                const newDashboardButtonCard = <div className="cursor-pointer col-span-2">
+                    <InfoCard 
+                    title="Create new Dashboard"
+                    data={newDashboardButton}
+                    Color={COLORS[3]}
+                    onClick={() => Router.push('/newDashboard')}
+                    />
+                </div> 
+                cardList.push(newDashboardButtonCard);
+                if(user.userType === "RootAdmin"){
+                    //Create new add admin card
+                    const addAdminButton = <div> </div>
+                    const addAdminButtonCard = <div className="cursor-pointer col-span-2  ">
+                        <InfoCard 
+                        title="Add new admin"
+                        data={addAdminButton}
+                        Color={COLORS[4]}
+                        onClick={() => Router.push('/newAdmin')}
+                        />
+                    </div>
+                    cardList.push(addAdminButtonCard);
+                }
+            }
+        }
+
+        //Prepare card for each ecosystem availlable
+        for(var i = 0; i < data.length; i++){
+            var removable = false;
+            if(user && userEcosystems){
+                removable = userEcosystems.includes(data[i].displayName);
+                if(user.userType === "RootAdmin"){
+                    removable = true;
+                }
+            }
+            
+            const button = <EcosystemButton ecosystem={data[i].displayName}
+             projectCount={data[i].numberOfProjects}  
+             topics={data[i].numberOfSubTopics} 
+             contributors={data[i].numberOfContributors}
+             stars={data[i].numberOfStars} />
         
-        //Quantum card
-        const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
-        const quantumButtonCard = <InfoCard title="quantum" data={quantumButton}onClick={onClickEcosystem} />
-        const quantumButtonCardWrapped: cardWrapper = {card: quantumButtonCard, width: 2, height: 3, x: 2, y : 2, static: false}
-        cardWrappedList.push(quantumButtonCardWrapped)
-        
-        //Artificial-intelligence card
-        const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard = <InfoCard title="artificial-intelligence" data={aiButton} onClick={onClickEcosystem}/>
-        const aiButtonCardWrapped: cardWrapper = {card: aiButtonCard, width: 2, height: 3, x: 4, y : 2, static: false}
-        cardWrappedList.push(aiButtonCardWrapped);
+            const card = <div className="col-span-1  cursor-pointer">
+                <InfoCard title={data[i].displayName!} data={button} onClick={onClickEcosystem} Color={COLORS[i]} remove={removable} onRemove={removeEcosystem} ecoystem={data[i].displayName} />
+            </div>
+            cardList.push(card);
+        }
+
+      
     } else {
         //When still loading display spinner
         return(
@@ -107,10 +198,13 @@ export default function LayoutHomePage(){
             </div>
         )
     }
-
     return(
-        <div>
-            <GridLayout cards={cardWrappedList} />
+        <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32">
+            <div className="grid gap-3 grid-cols-4 " >
+             {cardList.map((card, i) => (
+                 card
+             ))}
         </div>
+     </div>   
     )
 }

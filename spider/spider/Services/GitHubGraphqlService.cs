@@ -14,14 +14,14 @@ namespace spider.Services;
 public class GitHubGraphqlService : IGitHubGraphqlService
 {
     private readonly IClientWrapper _client;
-    private readonly ILogger<GitHubGraphqlService>? _logger;
-    
+    private readonly ILogger<GitHubGraphqlService> _logger;
+
     public GitHubGraphqlService(IClientWrapper clientWrapper)
     {
-      _client = clientWrapper;
-      _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
+        _client = clientWrapper;
+        _logger = new Logger<GitHubGraphqlService>(new LoggerFactory());
     }
-  
+
     /// <summary>
     /// QueryRepositoriesByNameHelper splits the incoming request into smaller parts
     /// </summary>
@@ -67,7 +67,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     /// <param name="tries">amount of retries before failing</param>
     /// <returns>list of repositories in the form of SpiderData</returns>
     /// <exception cref="BadHttpRequestException">If it fails after tries amount of retries throw</exception>
-    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string? cursor = null, int tries = 3)
+    public async Task<SpiderData> QueryRepositoriesByName(string repositoryName, int amount = 10, string? cursor = null,
+        int tries = 3)
     {
         // GraphQL query to search the repositories with the given name.
         var repositoriesQuery = new GraphQLHttpRequest()
@@ -84,6 +85,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                             ... on Repository {
                                 name
                                 id
+                                pushedAt
                                 defaultBranchRef {
                                   name
                                   target {
@@ -170,6 +172,11 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         try
         {
             var response = await _client.SendQueryAsync<SpiderData>(repositoriesQuery);
+            if (response.Data == null!)
+            {
+                await CheckRatelimit(response.AsGraphQLHttpResponse());
+                return await QueryRepositoriesByName(repositoryName, amount, cursor, tries - 1);
+            }
 
             if (response is GraphQLHttpResponse<SpiderData> httpResponse && httpResponse.Errors == null)
             {
@@ -190,7 +197,8 @@ public class GitHubGraphqlService : IGitHubGraphqlService
             switch (e)
             {
                 case GraphQLHttpRequestException error:
-                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", this, repositoryName);
+                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", 
+                        this, repositoryName);
                     if (error.StatusCode == HttpStatusCode.BadGateway)
                     {
                         if (tries > 1)
@@ -202,10 +210,78 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                     }
                     break;
                 default:
-                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", this, repositoryName);
+                    _logger.LogError(e.Message + " in {origin} with request: \"{repositoryName}\"", 
+                        this, repositoryName);
                     break;
             }
             throw; 
+        }
+    }
+    
+    /// <summary>
+    /// This method gets the amount of repositories that match the keyword with the included filters
+    /// </summary>
+    /// <param name="keyword">The keyword to search for</param>
+    /// <param name="starCountLower">lower bound for the amount of stars</param>
+    /// <param name="starCountUpper">upper bound for the amount of stars</param>
+    /// <param name="tries">amount of retries before failing</param>
+    /// <returns>the amount of repositories in the form of an int</returns>
+    /// <exception cref="BadHttpRequestException">If it fails after tries amount of retries throw</exception>
+    public async Task<int?> GetRepoCount(string keyword, int starCountLower, int starCountUpper, int tries = 3)
+    {
+        var rateLimitQuery = new GraphQLHttpRequest()
+        {
+            Query = @"query repositoriesQueryRequest($name: String!, $_cursor: String) {
+                    search(query: $name, type: REPOSITORY, after: $_cursor) {
+                      repositoryCount
+                    }
+                  }",
+            Variables = new{name = keyword + "stars:" + starCountLower + ".." + starCountUpper}
+        };
+      
+        try
+        {
+            var response = await _client.SendQueryAsync<SearchCountData>(rateLimitQuery);
+        
+            if (response.Data == null!)
+            {
+                await CheckRatelimit(response.AsGraphQLHttpResponse());
+                return await GetRepoCount(keyword, starCountLower, starCountUpper, tries - 1);
+            }
+
+            if (response is GraphQLHttpResponse<SearchCountData> httpResponse && httpResponse.Errors == null)
+            {
+                return response.Data.Search.RepositoryCount;
+            }
+
+            foreach (var error in response.Errors)
+            {
+                _logger.LogError("{origin}.GetRepoCount has failed with graphql error" + error.Message, this);
+            }
+
+            return response.Data.Search.RepositoryCount;
+        }
+        catch (Exception e)
+        {
+            switch (e)
+            {
+                case GraphQLHttpRequestException error:
+                    _logger.LogError(e.Message + " in {origin}.GetRepoCount", this);
+                    if (error.StatusCode == HttpStatusCode.BadGateway)
+                    {
+                        if (tries > 1)
+                        {
+                            return await GetRepoCount(keyword, starCountLower, starCountUpper, tries - 1);
+                        }
+
+                        throw new BadHttpRequestException(e.Message);
+                    }
+                    break;
+                default:
+                    _logger.LogError(e.Message + " in {origin}.GetRepoCount", this);
+                    break;
+            }
+            throw;
         }
     }
     
@@ -230,7 +306,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                 projects.Add(temp);
                 if (temp.Topic == null || temp.Topic.Repositories.PageInfo?.HasNextPage != true)
                 {
-                  break;
+                    break;
                 }
                 cursor = temp.Topic?.Repositories.PageInfo?.EndCursor;
             }
@@ -270,6 +346,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                             nodes {
                               name
                               id
+                              pushedAt
                               defaultBranchRef {
                                 name
                                 target {
@@ -356,43 +433,49 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         
         try
         {
-          var response = await _client.SendQueryAsync<TopicSearchData>(topicRepositoriesQuery);
+            var response = await _client.SendQueryAsync<TopicSearchData>(topicRepositoriesQuery);
 
-          if (response is GraphQLHttpResponse<TopicSearchData> httpResponse && httpResponse.Errors == null)
-          {
+            if (response.Data == null!)
+            {
+                await CheckRatelimit(response.AsGraphQLHttpResponse());
+                return await QueryRepositoriesByTopic(topic, amount, cursor, tries - 1);
+            }
+          
+            if (response is GraphQLHttpResponse<TopicSearchData> httpResponse && httpResponse.Errors == null)
+            {
+                return response.Data;
+            }
+
+            foreach (var error in response.Errors)
+            {
+                _logger.LogError("{origin}.QueryRepositoriesByTopic with request: \"{topic}\" " +
+                                 "has failed with graphql error" + error.Message, this,
+                    topic);
+            }
+
             return response.Data;
-          }
-
-          foreach (var error in response.Errors)
-          {
-            _logger.LogError("{origin}.QueryRepositoriesByTopic with request: \"{topic}\" " +
-                             "has failed with graphql error" + error.Message, this,
-              topic);
-          }
-
-          return response.Data;
         }
         catch (Exception e)
         {
-          switch (e)
-          {
-            case GraphQLHttpRequestException error:
-              _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
-              if (error.StatusCode == HttpStatusCode.BadGateway)
-              {
-                if (tries > 1)
-                {
-                  return await QueryRepositoriesByTopic(topic, amount, cursor, tries - 1);
-                }
+            switch (e)
+            {
+                case GraphQLHttpRequestException error:
+                    _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
+                    if (error.StatusCode == HttpStatusCode.BadGateway)
+                    {
+                        if (tries > 1)
+                        {
+                            return await QueryRepositoriesByTopic(topic, amount, cursor, tries - 1);
+                        }
 
-                throw new BadHttpRequestException(e.Message);
-              }
-              break;
-            default:
-              _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
-              break;
-          }
-          throw;
+                        throw new BadHttpRequestException(e.Message);
+                    }
+                    break;
+                default:
+                    _logger.LogError(e.Message + " in {origin} with request: \"{topic}\"", this, topic);
+                    break;
+            }
+            throw;
         }
     }
     
@@ -412,6 +495,7 @@ public class GitHubGraphqlService : IGitHubGraphqlService
                         repository(name: $name, owner: $_ownerName) {
                             name
                             id
+                            pushedAt
                             defaultBranchRef {
                               name
                               target {
@@ -494,6 +578,11 @@ public class GitHubGraphqlService : IGitHubGraphqlService
         };
 
         var response = await _client.SendQueryAsync<RepositoryWrapper>(repositoriesQuery);
+        if (response.Data == null!)
+        {
+            await CheckRatelimit(response.AsGraphQLHttpResponse());
+            return await QueryRepositoryByName(repositoryName, ownerName);
+        }
         return response.Data;
     }
     
@@ -505,29 +594,56 @@ public class GitHubGraphqlService : IGitHubGraphqlService
     /// <returns>list of repositories in the form of SpiderData</returns>
     public async Task<List<SpiderData>> GetByNames(List<ProjectRequestDto> repos)
     {
-      Queue<ProjectRequestDto> queue = new Queue<ProjectRequestDto>(repos);
-      StringBuilder stringBuilder = new StringBuilder();
-      List<SpiderData> data = new List<SpiderData>();
-      while (queue.Count > 0)
-      {
-        for (int i = 0; i < 25; i++)
+        Queue<ProjectRequestDto> queue = new Queue<ProjectRequestDto>(repos);
+        StringBuilder stringBuilder = new StringBuilder();
+        List<SpiderData> data = new List<SpiderData>();
+        while (queue.Count > 0)
         {
-          if (queue.Count == 0)
-          {
-            break;
-          }
-          var repo = queue.Dequeue();
-          stringBuilder.Append("repo:");
-          stringBuilder.Append(repo.OwnerName);
-          stringBuilder.Append('/');
-          stringBuilder.Append(repo.RepoName);
-          stringBuilder.Append(' ');
-        }
+            for (int i = 0; i < 25; i++)
+            {
+                if (queue.Count == 0)
+                {
+                    break;
+                }
+                var repo = queue.Dequeue();
+                stringBuilder.Append("repo:");
+                stringBuilder.Append(repo.OwnerName);
+                stringBuilder.Append('/');
+                stringBuilder.Append(repo.RepoName);
+                stringBuilder.Append(' ');
+            }
         
-        string query = stringBuilder.ToString();
-        data.AddRange(await QueryRepositoriesByNameHelper(query, 25, null));
-      }
+            string query = stringBuilder.ToString();
+            data.AddRange(await QueryRepositoriesByNameHelper(query, 25, null));
+        }
       
-      return (data);
+        return (data);
+    }
+
+    /// <summary>
+    /// HandleErrors checks if there is a rate-limit error and if there is, it retries
+    /// </summary>
+    /// <param name="response">The response with the headers that need to be checked</param>
+    /// <typeparam name="TResponse">The type of the graphql request</typeparam>
+    private async Task CheckRatelimit<TResponse>(GraphQLHttpResponse<TResponse> response)
+    {
+        var header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "X-RateLimit-Remaining");
+        if (header.Value != null && int.Parse(header.Value.First()) == 0)
+        {
+            header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "X-RateLimit-Reset");
+            
+            DateTimeOffset utcTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(header.Value.First()));
+            DateTime retryTime = utcTime.DateTime;
+            _logger.LogWarning("Primary rate limit reached. Retrying in {seconds} seconds", (int)(retryTime - DateTime.UtcNow).TotalSeconds);
+            await Task.Delay(TimeSpan.FromSeconds((int)(retryTime - DateTime.UtcNow).TotalSeconds + 10));
+            return;
+        }
+      
+        header = response.ResponseHeaders.FirstOrDefault(x => x.Key == "Retry-After");
+        if (header.Value != null)
+        {
+            _logger.LogWarning("Secondary rate limit reached. Retrying in {seconds} seconds", header.Value);
+            await Task.Delay(TimeSpan.FromSeconds(int.Parse(header.Value.ToString()) + 10));
+        }
     }
 }
