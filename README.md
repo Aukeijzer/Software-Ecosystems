@@ -63,7 +63,7 @@ The structure of the project is made up of 4 different branches.
 
 ## Back-end (service)
 
-[Go to back-end documentation](back-end/README.md)
+[Go to back-end documentation](documentation/backend/index.html)
 
 ![UML diagram of the back-end](assets/backendUML.png)
 
