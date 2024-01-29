@@ -24,7 +24,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     // See https://www.elastic.co/guide/en/elasticsearch/reference/8.11/search-aggregations-bucket.html
     private const int MaxBucketSize = 10000;
     
-    // Minimum number of projects in sub-ecosystem for it to end up in the top x list\
+    // Minimum number of projects in sub-ecosystem for it to end up in the top x list
     private const int MinimumNumberOfProjects = 2;
     
     // Used to instruct elasticsearch where to find the field/properties in the Project document
@@ -48,6 +48,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     private const string NestedContributorsAggregateName = "nested_contributors";
     private const string TermsContributorsAggregateName = "contributors";
     private const string ContributionsSumAggregateName = "sum_contributions";
+    private const string NumberOfStarsAggregateName = "numberOfStars";
 
     // Dictionary of topics that are programming languages and need to be filtered out
     private static readonly HashSet<string> ProgrammingLanguageTopics = new()
@@ -151,9 +152,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                         new SumAggregation(PercentageSumAggregateName)
                         {
                             Field = LanguagePercentageField
-                        },
+                        }
                     }
-                },
+                }
             }
         };
         
@@ -189,6 +190,12 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             Size = topics.Count + numberOfTopSubEcosystems + ProgrammingLanguageTopics.Count + technologies.Count
         };
         
+        // Aggregation of the sum of the numberOfStars field of all projects
+        var numberOfStarsSumAggregation = new SumAggregation(NumberOfStarsAggregateName)
+        {
+            Field = NumberOfStarsField
+        };
+        
         var searchRequest = new SearchRequest
         {
             Query = termsSetQuery,
@@ -196,7 +203,9 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             { 
                 nestedLanguagesAggregation,
                 nestedContributorsAggregation,
-                topicAggregation
+                topicAggregation,
+                numberOfStarsSumAggregation
+                
             },
             // Sort the projects by the number of stars in descending order
             Sort = new List<SortOptions> {SortOptions.Field(NumberOfStarsField, new FieldSort{Order = SortOrder.Desc})},
@@ -208,27 +217,32 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
         // Transform the technologies list into a list of strings
         var technologyNames = technologies.Select(t => t.Term).ToList();
         
-        var result = await elasticsearchService.QueryProjects(searchRequest);
-        var subEcosystemDtos = GetSubEcosystems(result);
+        var searchResponse = await elasticsearchService.QueryProjects(searchRequest);
+        var subEcosystemDtos = GetSubEcosystems(searchResponse);
         var filteredSubEcosystems = FilterSubEcosystems(subEcosystemDtos, topics, technologyNames);
-        var contributors = GetAllContributors(result);
+        var allContributors = GetAllContributors(searchResponse);
         var topXSubEcosystems = GetTopXSubEcosystems(numberOfTopSubEcosystems, filteredSubEcosystems);
+        var (ecosystemData, subEcosystemData) = await GetActiveProjectsTimeSeries(startTime, endTime, timeBucket, topics, 
+            topXSubEcosystems.Select(s => s.Topic).ToList());
         
         return new EcosystemDto
         {
             Topics = topics,
             TopTechnologies = GetTopXTechnologies(technologyNames, numberOfTopTechnologies, subEcosystemDtos),
             TopSubEcosystems = topXSubEcosystems,
-            TopLanguages = GetTopXLanguages(result, numberOfTopLanguages),
-            TopContributors = GetTopXContributors(contributors, numberOfTopContributors),
-            TopProjects = GetTopXProjects(result),
-            NumberOfTopics = filteredSubEcosystems.Count,
-            NumberOfProjects = result.Total,
-            NumberOfContributors = contributors.Count,
-            NumberOfContributions = contributors.Sum(c => c.Contributions),
-            TimedDataTopics = await GetTimedData(startTime, endTime, timeBucket, topics, 
-                topXSubEcosystems.Select(s => s.Topic).ToList()),
-            TimedDataEcosystem = await GetTimedData(startTime, endTime, timeBucket, topics, topics) // TODO: clean up
+            TopLanguages = GetTopXLanguages(searchResponse, numberOfTopLanguages),
+            TopContributors = GetTopXContributors(allContributors, numberOfTopContributors),
+            TopProjects = GetTopXProjects(searchResponse),
+            NumberOfStars = GetNumberOfStars(searchResponse),
+            NumberOfTopics = GetNumberOfTopics(searchResponse),
+            NumberOfProjects = GetNumberOfProjects(searchResponse),
+            NumberOfContributors = GetNumberOfContributors(searchResponse),
+            NumberOfContributions = allContributors.Sum(c => c.Contributions),
+            EcosystemActivityTimeSeries = ecosystemData,
+            TopicsActivityTimeSeries =  subEcosystemData
+        };
+    }
+
     /// <summary>
     /// Gathers the metrics of a top-level/main ecosystem by querying the Elasticsearch index for projects that contain the given topics
     /// and aggregating the relevant data from the search response.
@@ -341,7 +355,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
 
         if (contributorsAggregate == null)
             throw new ArgumentException(
-                "Elasticsearch aggregate not found in search response");
+                "Elasticsearch aggregate for contributors not found in search response");
         
         var contributorDtos = contributorsAggregate
             .Buckets
@@ -459,7 +473,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// Retrieves the sub-ecosystems/topics from the search response and converts them into a Top x list
     /// </summary>
     /// <param name="numberOfTopSubEcosystems">The number of top sub-ecosystems to retrieve.</param>
-    /// <param name="filteredSubEcosystems">The list of filteres sub-ecosystems found in an ecosystem.</param>
+    /// <param name="filteredSubEcosystems">The list of filtered sub-ecosystems found in an ecosystem.</param>
     /// <returns>A list of the top x sub-ecosystems in an ecosystem.</returns>
     private static List<SubEcosystemDto> GetTopXSubEcosystems(int numberOfTopSubEcosystems, List<SubEcosystemDto> filteredSubEcosystems)
     {
@@ -476,7 +490,6 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     /// </summary>
     /// <param name="searchResponse">The search response from Elasticsearch.</param>
     /// <returns>A list of sub-ecosystems of an ecosystem.</returns>
-    /// <exception cref="ArgumentException"></exception>
     private static List<SubEcosystemDto> GetSubEcosystems( SearchResponse<ProjectDto> searchResponse)
     {
         var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
@@ -558,25 +571,43 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     }
     #endregion
     
-    #region TimedData
+    #region TimeSeriesData
     /// <summary>
-    /// Retrieves the timed data from the search response and converts them into a list of TimedDataBucketDto objects
+    /// Retrieves the time series data consisting of the number of active projects in the ecosystem and the top x sub-ecosystems over time.
     /// </summary>
-    /// <param name="startTime">The start date of the period of time to retrieve.</param>
-    /// <param name="endTime">The end date of the period of time to retrieve.</param>
-    /// <param name="timeBucket">The time frame (in days) we want to use to retrieve projects between the start and end time.</param>
+    /// <param name="startTime">The start date of the time period to retrieve.</param>
+    /// <param name="endTime">The end date of the time period to retrieve.</param>
+    /// <param name="timeBucket">The time frame in days between each point in the time series.</param>
     /// <param name="ecosystemTopics">A list of topics that define the ecosystem.</param>
     /// <param name="topXTopics">A list of topics that define the top x sub-ecosystems.</param>
-    /// <returns>A list of timed data buckets.</returns>
-    private async Task<List<TopicsBucketDto>> GetTimedData(DateTime startTime, DateTime endTime, int timeBucket, List<string> ecosystemTopics, List<string> topXTopics)
+    /// <returns>A tuple with the active projects time series of the ecosystem and the sub-ecosystems.</returns>
+    private async Task<(List<TopicsBucketDto> ecosystemData, List<TopicsBucketDto> subEcosystemData)>
+        GetActiveProjectsTimeSeries(DateTime startTime,
+            DateTime endTime,
+            int timeBucket,
+            List<string> ecosystemTopics,
+            List<string> topXTopics)
     {
-        var buckets = new List<TopicsBucketDto>();
+        var ecosystemBuckets = new List<TopicsBucketDto>();
+        var subEcosystemsBuckets = new List<TopicsBucketDto>();
+        
         while (startTime < endTime)
         {
             var startTimeString = startTime.ToString("MM-yyyy");
             var subEcosystemDtos = new ConcurrentBag<SubEcosystemDto>();
+            var ecosystemDtos = new ConcurrentBag<SubEcosystemDto>();
             var tasks = new List<Task>();
             
+            // Add the tasks that retrieves the data for the ecosystem
+            tasks.Add(Task.Run(async () =>
+            {
+                var projectsCount = await elasticsearchService.GetProjectCountByDate(startTime,
+                    ecosystemTopics);
+                var subEcosystemDto = new SubEcosystemDto{ Topic = ecosystemTopics.First(), ProjectCount = projectsCount };
+                ecosystemDtos.Add(subEcosystemDto);
+            }));
+            
+            // Add the tasks that retrieve the data for the top x sub-ecosystems
             foreach(var topic in topXTopics)
             {
                 tasks.Add(Task.Run(async () =>
@@ -590,12 +621,14 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             
             await Task.WhenAll(tasks);
             
-            buckets.Add(new TopicsBucketDto{ DateLabel = startTimeString, Topics = subEcosystemDtos.ToList() });
+            // Add the data to the correct lists
+            ecosystemBuckets.Add(new TopicsBucketDto{ DateLabel = startTimeString, Topics = ecosystemDtos.ToList() });
+            subEcosystemsBuckets.Add(new TopicsBucketDto{ DateLabel = startTimeString, Topics = subEcosystemDtos.ToList() });
             
             startTime = startTime.AddDays(timeBucket);
         }
 
-        return buckets;
+        return (ecosystemBuckets,subEcosystemsBuckets);
     }
     
     #endregion
@@ -616,6 +649,16 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
                 NumberOfStars = p.NumberOfStars
             })
             .ToList();
+    }
+    
+    /// <summary>
+    /// Retrieves the total number of projects in the ecosystem from the search response.
+    /// </summary>
+    /// <param name="searchResponse">The search response.</param>
+    /// <returns> The total number of projects in the ecosystem.</returns>
+    private static long GetNumberOfProjects(SearchResponse<ProjectDto> searchResponse)
+    {
+        return searchResponse.Total;
     }
     #endregion
 }

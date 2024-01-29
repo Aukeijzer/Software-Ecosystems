@@ -84,7 +84,6 @@ public class EcosystemsService(EcosystemsContext dbContext,
         // If it doesn't, return the dto as is, else add the additional data
         if (ecosystem == null) return ecosystemDto;
         ecosystemDto.DisplayName = ecosystem.DisplayName;
-        ecosystemDto.NumberOfStars = ecosystem.NumberOfStars;
         ecosystemDto.Description = ecosystem.Description;
         
         return ecosystemDto;
