@@ -45,4 +45,7 @@ public class ProjectDto
    
    [DataMember(Name = "contributors")]
    public List<ContributorDto>? Contributors { get; set; }
+   
+   [DataMember(Name = "additionalTopics")]
+   public List<string>? AdditionalTopics { get; set; }
 }

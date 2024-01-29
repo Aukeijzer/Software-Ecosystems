@@ -1,9 +1,8 @@
 """
-Module: app
+app
+===
 
-This module defines a Flask application for extracting topics from
- preprocessed data.
-
+This module defines a Flask application for extracting topics from preprocessed data.
 """
 
 from flask import Flask, request, jsonify
@@ -13,6 +12,13 @@ from topic_service import TopicService
 app = Flask(__name__)
 swagger = Swagger(app)
 
+@app.route('/')
+def redirect_to_swagger():
+    """
+    Redirect to swagger UI
+
+    """
+    return app.redirect("/apidocs/")
 
 # Handles POST request
 @app.route("/extract-topics", methods=["POST"])
@@ -44,7 +50,9 @@ def extract_topics():
           type: object
           properties:
             result:
-              type: string
+              type: array
+              items: 
+                type: string
       500:
         description: Internal Server Error
         schema:
@@ -57,11 +65,11 @@ def extract_topics():
         try:
             data = request.get_json()
             topic_service = TopicService(data)
-            response = topic_service.extract_topics()
+            response = topic_service.extract_topics_bertopic()
             return response, 200
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            return jsonify({"error": f"ValueError: {str(e)}"}), 500
 
 if __name__ == "__main__":
     print("Swagger UI on: http://localhost:5000/apidocs/")
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

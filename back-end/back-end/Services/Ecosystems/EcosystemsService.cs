@@ -17,6 +17,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
     : IEcosystemsService
 {
     private const int DefaultNumberOfTopItems = 10;
+    private const int DefaultNumberOfDaysPerBucket = 30;
 
     /// <summary>
     /// Get all top-level ecosystems, i.e., Agriculture, Quantum, Artificial Intelligence.
@@ -49,22 +50,26 @@ public class EcosystemsService(EcosystemsContext dbContext,
     public async Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
     {
         if (dto.Topics.Count == 0) throw new ArgumentException("Number of topics cannot be 0");
-
+        
+        var technologies = await GetTechnologyTaxonomy(dto.Topics.First());
+        
         var ecosystemDto = await analysisService.AnalyzeEcosystemAsync(
             dto.Topics,
-            dto.Technologies,
+            technologies,
             dto.NumberOfTopLanguages ?? DefaultNumberOfTopItems,
             dto.NumberOfTopSubEcosystems ?? DefaultNumberOfTopItems,
             dto.NumberOfTopContributors ?? DefaultNumberOfTopItems,
             dto.NumberOfTopTechnologies ?? DefaultNumberOfTopItems,
-            dto.NumberOfTopProjects ?? DefaultNumberOfTopItems);
+            dto.NumberOfTopProjects ?? DefaultNumberOfTopItems,
+            dto.StartTime,
+            dto.EndTime,
+            dto.NumbersOfDaysPerBucket ?? DefaultNumberOfDaysPerBucket);
 
         // If the ecosystem has more than 1 topic, we know it is not one of the "main" ecosystems
         if (dto.Topics.Count != 1) return ecosystemDto;
-            
+        
         // Check if the database has additional data regarding this ecosystem
         var ecosystem = await GetByNameAsync(dto.Topics.First());
-
         // If it doesn't, return the dto as is, else add the additional data
         if (ecosystem == null) return ecosystemDto;
         ecosystemDto.DisplayName = ecosystem.DisplayName;
@@ -94,5 +99,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
             throw new Exception("Ecosystem not found");
 
         }
+    }
+    
+    public async Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName)
+    {
+        var ecosystem = await GetByNameAsync(ecosystemName);
+        if (ecosystem == null) throw new ArgumentException("Ecosystem not found");
+        return ecosystem.Technologies;
     }
 }

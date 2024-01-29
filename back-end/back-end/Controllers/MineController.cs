@@ -18,12 +18,13 @@ public class MineController(
     /// This method returns a list of projects based on the given topic and amount.
     /// </summary>
     /// <param name="topic"> The topic that the projects should relate to.</param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount">The number of projects to be mined</param>
     [HttpPost("topic")]
-    public async Task<ActionResult> MineByTopic(string topic, int amount)
+    public async Task<ActionResult> MineByTopic(string topic, string ecosystem, int amount)
     {
         logger.LogInformation("{Origin}: Mining command received for topic: '{topic}'.", this,topic);
-        await projectsService.MineByTopicAsync(topic, amount);
+        await projectsService.MineByTopicAsync(topic, ecosystem, amount);
         return Accepted();
     }
     
@@ -31,12 +32,13 @@ public class MineController(
     /// This method returns a list of projects based on the given keyword and amount.
     /// </summary>
     /// <param name="keyword">The keyword that the projects should relate to.</param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount">The number of projects to be mined.</param>
     [HttpPost("search")]
-    public async Task<ActionResult> MineByKeyword(string keyword, int amount)
+    public async Task<ActionResult> MineByKeyword(string keyword, string ecosystem, int amount)
     {
         logger.LogInformation("{Origin}: Mining command received for topic: '{keyword}'.", this,keyword);
-        await projectsService.MineByKeywordAsync(keyword, amount);
+        await projectsService.MineByKeywordAsync(keyword, ecosystem, amount);
         return Accepted();
     }
     
@@ -44,13 +46,14 @@ public class MineController(
     /// This method returns a list of projects based on the given taxonomy and amounts.
     /// </summary>
     /// <param name="taxonomy">The list of strings to mine off of github</param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="keywordAmount">The amount of repos to search for with keyword search</param>
     /// <param name="topicAmount">The amount of repos to search for with topic search</param>
     [HttpPost("taxonomy")]
-    public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, int keywordAmount, int topicAmount)
+    public async Task<ActionResult> MineByTaxonomy(List<string> taxonomy, string ecosystem, int keywordAmount, int topicAmount)
     {
         logger.LogInformation("{Origin}: Mining command received for taxonomy.", this);
-        await projectsService.MineByTaxonomyAsync(taxonomy, keywordAmount, topicAmount);
+        await projectsService.MineByTaxonomyAsync(taxonomy, ecosystem, keywordAmount, topicAmount);
         return Accepted();
     }
     
@@ -58,12 +61,13 @@ public class MineController(
     /// This method schedules a recurring job that mines projects based on the given topic, amount and frequency.
     /// </summary>
     /// <param name="topic"> The topic to mine by. </param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount"> The amount of projects to mine. </param>
     /// <param name="miningFrequency"> The frequency of mining. </param>
     [HttpGet("schedule/topic")]
-    public IActionResult ScheduleMineByTopic(string topic, int amount, MiningFrequency miningFrequency)
+    public IActionResult ScheduleMineByTopic(string topic, int amount, string ecosystem, MiningFrequency miningFrequency)
     {
-        scheduler.AddOrUpdateRecurringTopicMiningJob(topic, amount, miningFrequency); 
+        scheduler.AddOrUpdateRecurringTopicMiningJob(topic, ecosystem, amount, miningFrequency); 
         logger.LogInformation($"{this}: Mining job for topic: {topic} with amount: {amount} and frequency: {miningFrequency} scheduled.");
         return Accepted();
     }
@@ -84,12 +88,13 @@ public class MineController(
     /// This method schedules a recurring job that mines projects based on the given keyword, amount and frequency.
     /// </summary>
     /// <param name="keyword"> The keyword to mine by. </param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount"> The amount of projects to mine. </param>
     /// <param name="miningFrequency"> The frequency of mining. </param>
     [HttpGet("schedule/keyword")]
-    public IActionResult ScheduleMineByKeyword(string keyword, int amount, MiningFrequency miningFrequency)
+    public IActionResult ScheduleMineByKeyword(string keyword, string ecosystem, int amount, MiningFrequency miningFrequency)
     {
-        scheduler.AddOrUpdateRecurringKeywordMiningJob(keyword, amount, miningFrequency); 
+        scheduler.AddOrUpdateRecurringKeywordMiningJob(keyword, ecosystem, amount, miningFrequency); 
         logger.LogInformation(
             $"{this}: Mining job for keyword: {keyword} with amount: {amount} and frequency: {miningFrequency} scheduled.");
         return Accepted();

@@ -48,6 +48,7 @@ export default function LayoutHomePage(){
     //Set up session
     const { data: session } = useSession();
     const user = session?.user as ExtendedUser;
+    const userEcosystems = user?.ecosystems;
     
     //Trigger useEffect on load component. 
     useEffect(() => {
@@ -70,16 +71,23 @@ export default function LayoutHomePage(){
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
         */
-        Router.push('/' + ecosystem);
+        Router.push('/' + ecosystem.toLowerCase());
     }
 
-    var cardWrappedList = [];
+    function removeEcosystem(event: any, ecosystem: string){
+        event.stopPropagation()
+        if(confirm("Are you sure you want to remove this ecosystem?")){
+            //Remove ecosystem from user
+        }
+    }
+
+    var cardList = [];
     if(data){
         const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
         //General information about SECODash
         const info = (<div className="flex flex-col"> 
-                <span> Total ecosystems: {totalInformation.totalEcosystems}</span>
+                <span> Total ecosystems: {data.length}</span>
                 <span> Total projects: {totalInformation.totalProjects} </span>
                 <span> Total topics: {totalInformation.totalTopics} </span>
             </div>
@@ -88,60 +96,51 @@ export default function LayoutHomePage(){
         const infoCard = <div className="col-span-3">
             <InfoCard title="Information about SECODash" data={info} />
         </div>
-        cardWrappedList.push(infoCard);
+        cardList.push(infoCard);
 
-         //Agriculture card
-        const agricultureButton = <EcosystemButton ecosystem="agriculture" projectCount={1000} topics={231} />
-        const agricultureButtonCard = <div className="col-span-1">
-                <InfoCard title="agriculture" 
-                data={agricultureButton}
-                onClick={onClickEcosystem}
-                Color={COLORS[0]}/>
+        //Prepare card for each ecosystem availlable
+        for(var i = 0; i < data.length; i++){
+           
+            var removable = false;
+            if(user && userEcosystems){
+                console.log(userEcosystems);
+                removable = userEcosystems.includes(data[i].displayName.toLowerCase());
+            }
+            
+            const button = <EcosystemButton ecosystem={data[i].displayName} projectCount={data[i].numberOfStars} topics={100} />
+        
+            const card = <div className="col-span-1 h-36">
+                <InfoCard title={data[i].displayName!} data={button} onClick={onClickEcosystem} Color={COLORS[i]} remove={removable} onRemove={removeEcosystem} ecoystem={data[i].displayName} />
             </div>
-        cardWrappedList.push(agricultureButtonCard)
-        
-        //Quantum card
-        const quantumButton = <EcosystemButton ecosystem="quantum" projectCount={1000} topics={231} />
-        const quantumButtonCard = <div className="col-span-1">
-            <InfoCard title="quantum" 
-            data={quantumButton}
-            onClick={onClickEcosystem} 
-            Color={COLORS[1]} />
-        </div>
-        cardWrappedList.push(quantumButtonCard)
-        
-        //Artificial-intelligence card
-        const aiButton = <EcosystemButton ecosystem="artificial-intelligence" projectCount={900} topics={231} />
-        const aiButtonCard =  <div className="col-span-1 h-44"> 
-            <InfoCard title="artificial-intelligence"
-            data={aiButton}
-            onClick={onClickEcosystem} 
-            Color={COLORS[2]}/>
-        </div>
-        cardWrappedList.push(aiButtonCard);
-        
+            cardList.push(card);
+        }
+
         if(user){
             //If user is admin, make cards draggable
             if(user.userType === "Admin" || user.userType === "RootAdmin"){
                 //Create new dashboard card
-                const newDashboardButton = <div className="h-36" onClick={() => Router.push('/newDashboard')}>Create </div>
+                const newDashboardButton = <div className="h-32">Create </div>
                 const newDashboardButtonCard = <div>
                     <InfoCard 
                     title="Create new Dashboard"
                     data={newDashboardButton}
-                    Color={COLORS[3]}/>
+                    Color={COLORS[3]}
+                    onClick={() => Router.push('/newDashboard')}
+                    />
                 </div> 
-                cardWrappedList.push(newDashboardButtonCard);
+                cardList.push(newDashboardButtonCard);
                 if(user.userType === "RootAdmin"){
                     //Create new add admin card
-                    const addAdminButton = <div onClick={() => Router.push('/newAdmin')}>Add admin </div>
+                    const addAdminButton = <div> Add admin </div>
                     const addAdminButtonCard = <div>
                         <InfoCard 
                         title="Add new admin"
                         data={addAdminButton}
-                        Color={COLORS[4]}/>
+                        Color={COLORS[4]}
+                        onClick={() => Router.push('/newAdmin')}
+                        />
                     </div>
-                    cardWrappedList.push(addAdminButtonCard);
+                    cardList.push(addAdminButtonCard);
                 }
             }
         }
@@ -156,7 +155,7 @@ export default function LayoutHomePage(){
     return(
         <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32">
             <div className="grid gap-3 grid-cols-3" >
-             {cardWrappedList.map((card, i) => (
+             {cardList.map((card, i) => (
                  card
              ))}
         </div>
