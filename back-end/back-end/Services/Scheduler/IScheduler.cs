@@ -9,16 +9,18 @@ public interface IScheduler
     /// Adds or updates a recurring job that mines projects by a topic.
     /// </summary>
     /// <param name="topic"> The topic to mine by</param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount"> The amount of projects to mine. </param>
     /// <param name="miningFrequency"> The frequency of mining. </param>
-    public void AddOrUpdateRecurringTopicMiningJob(string topic, int amount, MiningFrequency miningFrequency);
+    public void AddOrUpdateRecurringTopicMiningJob(string topic, string ecosystem, int amount, MiningFrequency miningFrequency);
     /// <summary>
     /// Adds or updates a recurring job that mines projects by a keyword.
     /// </summary>
     /// <param name="keyword"> The keyword to mine by. </param>
+    /// <param name="ecosystem">The ecosystem the request is linked to</param>
     /// <param name="amount"> The amount of projects to mine. </param>
     /// <param name="miningFrequency"> The frequency of mining. </param>
-    public void AddOrUpdateRecurringKeywordMiningJob(string keyword, int amount, MiningFrequency miningFrequency);
+    public void AddOrUpdateRecurringKeywordMiningJob(string keyword, string ecosystem, int amount, MiningFrequency miningFrequency);
     /// <summary>
     /// Removes a recurring job that mines projects by a topic.
     /// </summary>

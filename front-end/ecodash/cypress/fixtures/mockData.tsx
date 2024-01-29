@@ -1,8 +1,8 @@
-import languageClass from '@/app/classes/languageClass';
-import displayableGraphItem from "@/app/classes/displayableGraphItem";
-import { lineData } from '@/app/interfaces/lineData';
-import displayableListItem from '@/app/classes/displayableListItem';
-import subEcosystemClass from '@/app/classes/subEcosystemClass';
+import languageClass from '@/classes/languageClass';
+import displayableGraphItem from "@/classes/displayableGraphItem";
+import { lineData } from '@/interfaces/lineData';
+import displayableListItem from '@/classes/displayableListItem';
+import subEcosystemClass from '@/classes/subEcosystemClass';
 
 //Mock test data 
 export const mockEcosystem = {ecosystem: 'quantum', projectCount:1000, topics:16};

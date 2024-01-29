@@ -8,10 +8,10 @@ interface ecosystemPageProps{
 
 //This whole block has functions that are defined by Next. Dont change any of the spelling! this will break things
 // Do not enable params that are not defined as static
-export const dynamicParams = false;
+export const dynamicParams = true;
 // Define static params
 export function generateStaticParams() {
-    return ["agriculture", "artificial-intelligence", "quantum"].map(ecosystem => ({ ecosystem }));
+    return ["agriculture", "artificial-intelligence", "quantum", "gaming"].map(ecosystem => ({ ecosystem }));
 }                           
 //Set title 
 export function generateMetadata({params: {ecosystem}} : ecosystemPageProps): Metadata {

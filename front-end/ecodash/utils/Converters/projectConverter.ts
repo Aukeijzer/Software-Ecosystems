@@ -1,5 +1,5 @@
-import { projectDTO } from "@/app/interfaces/DTOs/projectDTO";
-import projectClass from "@/app/classes/projectClass";
+import { projectDTO } from "@/interfaces/DTOs/projectDTO";
+import projectClass from "@/classes/projectClass";
 
 export function projectDTOConverter(project: projectDTO){
     return new projectClass(project.name, project.owner, project.numberOfStars);

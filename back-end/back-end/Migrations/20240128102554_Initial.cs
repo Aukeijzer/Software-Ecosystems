@@ -5,11 +5,22 @@
 namespace SECODashBackend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDb : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "BannedTopics",
+                columns: table => new
+                {
+                    Term = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BannedTopics", x => x.Term);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Ecosystems",
                 columns: table => new
@@ -37,14 +48,14 @@ namespace SECODashBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Technology",
+                name: "Technologies",
                 columns: table => new
                 {
                     Term = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Technology", x => x.Term);
+                    table.PrimaryKey("PK_Technologies", x => x.Term);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,11 +64,35 @@ namespace SECODashBackend.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     UserName = table.Column<string>(type: "text", nullable: false),
-                    UserType = table.Column<string>(type: "text", nullable: false)
+                    Type = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BannedTopicEcosystem",
+                columns: table => new
+                {
+                    BannedTopicsTerm = table.Column<string>(type: "text", nullable: false),
+                    EcosystemsId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BannedTopicEcosystem", x => new { x.BannedTopicsTerm, x.EcosystemsId });
+                    table.ForeignKey(
+                        name: "FK_BannedTopicEcosystem_BannedTopics_BannedTopicsTerm",
+                        column: x => x.BannedTopicsTerm,
+                        principalTable: "BannedTopics",
+                        principalColumn: "Term",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BannedTopicEcosystem_Ecosystems_EcosystemsId",
+                        column: x => x.EcosystemsId,
+                        principalTable: "Ecosystems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,9 +136,9 @@ namespace SECODashBackend.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EcosystemTechnology_Technology_TechnologiesTerm",
+                        name: "FK_EcosystemTechnology_Technologies_TechnologiesTerm",
                         column: x => x.TechnologiesTerm,
-                        principalTable: "Technology",
+                        principalTable: "Technologies",
                         principalColumn: "Term",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -133,6 +168,11 @@ namespace SECODashBackend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_BannedTopicEcosystem_EcosystemsId",
+                table: "BannedTopicEcosystem",
+                column: "EcosystemsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ecosystems_Name",
                 table: "Ecosystems",
                 column: "Name",
@@ -160,8 +200,8 @@ namespace SECODashBackend.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Technology_Term",
-                table: "Technology",
+                name: "IX_Technologies_Term",
+                table: "Technologies",
                 column: "Term",
                 unique: true);
 
@@ -176,6 +216,9 @@ namespace SECODashBackend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "BannedTopicEcosystem");
+
+            migrationBuilder.DropTable(
                 name: "EcosystemTaxonomy");
 
             migrationBuilder.DropTable(
@@ -185,10 +228,13 @@ namespace SECODashBackend.Migrations
                 name: "EcosystemUser");
 
             migrationBuilder.DropTable(
+                name: "BannedTopics");
+
+            migrationBuilder.DropTable(
                 name: "Taxonomy");
 
             migrationBuilder.DropTable(
-                name: "Technology");
+                name: "Technologies");
 
             migrationBuilder.DropTable(
                 name: "Ecosystems");

@@ -1,4 +1,4 @@
-import { ecosystemDTO } from "../interfaces/DTOs/ecosystemDTO";
+import { ecosystemDTO } from "@/interfaces/DTOs/ecosystemDTO";
 
 /**
  * Fetches ecosystem data by topic from the specified URL.
@@ -7,7 +7,7 @@ import { ecosystemDTO } from "../interfaces/DTOs/ecosystemDTO";
  * @param arg.topics - An array of topics to filter the ecosystem data.
  * @returns A promise that resolves to the fetched ecosystem data.
  */
-export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics: string[], technologies: string[]}}){
+export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics: string[], technologies: string[], languages: string[]}}){
     //Variables for post body
     const numberOfTopContributors = 5;
     const numberOfTopLanguages = 5;
@@ -19,9 +19,9 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
     const currentDateISO = lastMonthDate.toISOString();
     console.log(currentDateISO);
     
-    //Get previous date 1 year ago
+    //Get previous date 2 year ago
     const previousDate = new Date();
-    previousDate.setFullYear(previousDate.getFullYear() - 1);
+    previousDate.setFullYear(previousDate.getFullYear() - 2);
     const previousDateISO = previousDate.toISOString();
     
     console.log(previousDateISO);
