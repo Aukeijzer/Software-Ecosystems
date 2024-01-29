@@ -388,7 +388,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         console.log(topicsGrowing);
         var topicLabels = getLabels(data.topicsActivityTimeSeries);
 
-        //Timed data graph
+        //Timed data graph sub-topics
         const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
         const cardLineGraph = <div className="col-span-full h-[500px]">
             <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
@@ -411,6 +411,15 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         </div>
         cardList.push(projectCard)
        
+        //Timed data graph ecosystem
+        var ecosystemGrowing = convertTimedData(data.ecosystemActivityTimeSeries);
+        var labelsEcosystem = getLabels(data.ecosystemActivityTimeSeries);
+        const lineGraphEcosystemGrowing = <GraphLine items={ecosystemGrowing} labels={labelsEcosystem}/>
+        const cardLineGraphEcosystem = <div className="col-span-full h-[500px]">
+            <InfoCard title={""} data={lineGraphEcosystemGrowing} Color={colors.topic}/>
+        </div>
+        cardList.push(cardLineGraphEcosystem)
+
         } else {
              cardList.push(<div className="col-span-full bg-white py-10 justify-center flex"> No data available with selected filters.</div>)
         }
