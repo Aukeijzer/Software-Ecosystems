@@ -530,7 +530,7 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
     public static List<SubEcosystemDto> FilterSubEcosystems(IEnumerable<SubEcosystemDto> subEcosystemDtos, List<string> topics, List<string> technologies)
     {
         return subEcosystemDtos
-            .Where(s => !topics.Contains(s.Topic)) // TODO: check if this is correct
+            .Where(s => !topics.Contains(s.Topic))
             .Where(s => s.ProjectCount >= MinimumNumberOfProjects)
             .Where(s => !ProgrammingLanguageTopics.Contains(s.Topic))
             .Where(s => !technologies.Contains(s.Topic))
