@@ -28,11 +28,8 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         // Request the data processor for additional topics 
         var topicDtos = await dataProcessorService.GetTopics(newDtos);
         
-        // Add additional topics to the projects
-        dataProcessorService.AddTopicsToProjects(topicDtos, newDtos);
-        
         // Save these projects to elasticsearch
-        await elasticsearchService.AddProjects(newDtos);
+        await elasticsearchService.AddProjects(topicDtos);
     }
     /// <summary>
     /// Requests the Spider for projects related to the given keyword, requests Data Processor for additional topics
@@ -48,11 +45,8 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         // Request the data processor for additional topics 
         var topicDtos = await dataProcessorService.GetTopics(newDtos);
         
-        // Add additional topics to the projects
-        dataProcessorService.AddTopicsToProjects(topicDtos, newDtos);
-        
         // Save these projects to elasticsearch
-        await elasticsearchService.AddProjects(newDtos);
+        await elasticsearchService.AddProjects(topicDtos);
     }
 
     /// <summary>
@@ -96,9 +90,6 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
         // Request the data processor for additional topics 
         var topicDtos = await dataProcessorService.GetTopics(projectDtos);
         
-        // Add additional topics to the projects
-        dataProcessorService.AddTopicsToProjects(topicDtos, projectDtos);
-        
-        await elasticsearchService.AddProjects(projectDtos);
+        await elasticsearchService.AddProjects(topicDtos);
     }
 }
