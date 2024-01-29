@@ -27,7 +27,18 @@ public class EcosystemsService(EcosystemsContext dbContext,
         var ecosystems = await dbContext.Ecosystems
             .AsNoTracking()
             .ToListAsync();
-        return ecosystems.Select(EcosystemConverter.ToDto).ToList();
+        var dtos = ecosystems.Select(EcosystemConverter.ToDto).ToList();
+
+        foreach (var dto in dtos)
+        {
+           var metric = await analysisService.GetEcosystemMetricsAsync(dto.Name);
+           dto.NumberOfStars = metric.NumberOfStars;
+           dto.NumberOfContributors = metric.NumberOfContributors;
+           dto.NumberOfProjects = metric.NumberOfProjects;
+           dto.NumberOfSubTopics = metric.NumberOfSubTopics;
+        }
+        
+        return dtos;
     }
 
     /// <summary>
