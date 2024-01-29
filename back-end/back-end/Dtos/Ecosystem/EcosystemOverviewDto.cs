@@ -34,7 +34,7 @@ public class EcosystemOverviewDto
     [DataMember(Name = "numberOfSubTopics")] public long? NumberOfSubTopics { get; set; }
     
     /// <summary>
-    /// The total number of contributions to all projects in the ecosystem.
+    /// The total number of contributors to all projects in the ecosystem.
     /// </summary>
     [DataMember(Name = "numberOfContributors")] public long? NumberOfContributors { get; set; }
     

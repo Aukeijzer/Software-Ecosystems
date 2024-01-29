@@ -8,6 +8,7 @@ using SECODashBackend.Dtos.ProgrammingLanguage;
 using SECODashBackend.Dtos.Project;
 using SECODashBackend.Dtos.TimedData;
 using SECODashBackend.Models;
+using SECODashBackend.Records;
 using SECODashBackend.Services.ElasticSearch;
 
 namespace SECODashBackend.Services.Analysis;

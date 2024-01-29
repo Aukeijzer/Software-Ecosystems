@@ -1,4 +1,4 @@
-﻿namespace SECODashBackend.Models;
+﻿namespace SECODashBackend.Records;
 
 /// <summary>
 /// The metrics of a top-level ecosystem.
@@ -16,7 +16,7 @@ public record EcosystemMetrics
     public long NumberOfSubTopics { get; init; }
     
     /// <summary>
-    /// The total number of contributions to all projects in the ecosystem.
+    /// The total number of contributors to all projects in the ecosystem.
     /// </summary>
     public long NumberOfContributors { get; init; }
     
