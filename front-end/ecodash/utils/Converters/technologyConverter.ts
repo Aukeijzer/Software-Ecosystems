@@ -1,5 +1,5 @@
-import technologyClass from "../../classes/technologyClass";
-import { technologyDTO } from "../../interfaces/DTOs/technologyDTO";
+import technologyClass from "@/classes/technologyClass";
+import { technologyDTO } from "@/interfaces/DTOs/technologyDTO";
 
 /**
  * Converts a technologyDTO object to a technologyClass object.

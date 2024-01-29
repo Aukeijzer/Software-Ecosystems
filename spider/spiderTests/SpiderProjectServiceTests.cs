@@ -40,7 +40,8 @@ public class SpiderProjectServiceTests
             Description = "Agriculture is the science and art of cultivating plants and livestock.",
             DefaultBranchRef = null!,
             RepositoryTopics = new TopicsWrapper() {Nodes = Array.Empty<TopicWrapper>()},
-            Languages = new Languages() {Edges = Array.Empty<Language>(), TotalSize = 0}
+            Languages = new Languages() {Edges = Array.Empty<Language>(), TotalSize = 0},
+            StargazerCount = 10
         };
         for (int i = 0; i < 25; i++)
         {

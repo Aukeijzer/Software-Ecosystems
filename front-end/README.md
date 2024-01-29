@@ -2,13 +2,169 @@
 # Getting started 
 For more information to get started with the front-end go to [project readme](../README.md/#front-end). 
 
+
 # Contents
+- [File structure](#file-structure)
 - [Components](#components)
 - [Utils](#util-files)
 - [Classes](#classes)
 - [Interfaces](#interfaces)
+- [API routes](#api)
 - [Pages](#pages)
+
+# File structure
+
+```
+└── 📁ecodash
+    └── .dockerignore
+    └── .env.development
+    └── .env.production
+    └── .eslintrc.json
+    └── 📁app
+        └── 📁api
+            └── 📁auth
+                └── 📁[...nextauth]
+                    └── route.ts
+            └── 📁ecosystemPagePost
+                └── route.ts
+            └── 📁homePageGet
+                └── route.ts
+            └── 📁newAdmin
+                └── route.ts
+            └── 📁newEcosystem
+                └── route.ts
+            └── 📁saveEdit
+                └── route.ts
+        └── error.tsx
+        └── favicon.ico
+        └── globals.css
+        └── layout.tsx
+        └── 📁newAdmin
+            └── page.tsx
+        └── 📁newDashboard
+            └── page.tsx
+        └── not-found.tsx
+        └── page.tsx
+        └── 📁[ecosystem]
+            └── page.tsx
+    └── babel.config.js
+    └── 📁classes
+        └── contributorClass.tsx
+        └── displayableGraphItem.tsx
+        └── displayableListItem.tsx
+        └── displayableTableItem.tsx
+        └── languageClass.tsx
+        └── projectClass.tsx
+        └── risingClass.tsx
+        └── subEcosystemClass.tsx
+        └── technologyClass.tsx
+    └── 📁components
+        └── button.tsx
+        └── card.tsx
+        └── ecosystemButton.tsx
+        └── ecosystemDescription.tsx
+        └── ecosystemInformationData.tsx
+        └── filters.tsx
+        └── graphComponent.tsx
+        └── graphLine.tsx
+        └── infoCard.tsx
+        └── layoutEcosystem.tsx
+        └── layoutHomePage.tsx
+        └── listComponent.tsx
+        └── loginBox.tsx
+        └── NavbarTop.tsx
+        └── popUpBox.tsx
+        └── sessionProvider.tsx
+        └── smallDataBox.tsx
+        └── spinner.tsx
+        └── tableComponent.tsx
+        └── topicSearch.tsx
+    └── 📁cypress
+        └── 📁component
+            └── ecosystemButton.cy.tsx
+            └── ecosystemDescription.cy.tsx
+            └── graphComponent.cy.tsx
+            └── graphLine.cy.tsx
+            └── infoCard.cy.tsx
+            └── listComponent.cy.tsx
+            └── navBar.cy.tsx
+            └── spinner.cy.tsx
+        └── 📁downloads
+        └── 📁e2e
+            └── ecosystemRouting.cy.ts
+            └── homePageRouting.cy.ts
+            └── loginSystem.cy.js
+        └── 📁fixtures
+            └── apiCallEcosystem.json
+            └── example.json
+            └── mockData.tsx
+        └── 📁support
+            └── commands.ts
+            └── component-index.html
+            └── component.ts
+            └── e2e.ts
+    └── cypress.config.ts
+    └── Dockerfile
+    └── 📁enums
+        └── filterColor.ts
+    └── 📁interfaces
+        └── cardWrapper.ts
+        └── colors.ts
+        └── 📁DTOs
+            └── contributorDTO.ts
+            └── ecosystemDTO.ts
+            └── languageDTO.ts
+            └── projectDTO.tsx
+            └── risingDTO.ts
+            └── technologyDTO.ts
+        └── lineData.ts
+    └── 📁jest
+        └── languageConverter.test.tsx
+        └── risingConverter.test.tsx
+        └── subdomain.test.ts
+        └── subEcosystemConverter.test.tsx
+        └── technologyConverter.test.tsx
+    └── middlewareOld.ts
+    └── 📁mockData
+        └── mockAgriculture.ts
+        └── mockEcosystems.ts
+    └── next-env.d.ts
+    └── next.config.js
+    └── package-lock.json
+    └── package.json
+    └── postcss.config.js
+    └── 📁public
+        └── logo.png
+        └── next.svg
+        └── vercel.svg
+    └── tailwind.config.ts
+    └── tsconfig.json
+    └── 📁utils
+        └── apiFetcher.ts
+        └── authOptions.ts
+        └── 📁Converters
+            └── contributorConverter.ts
+            └── languageConverter.ts
+            └── projectConverter.ts
+            └── risingConverter.ts
+            └── subEcosystemConverter.ts
+            └── technologyConverter.ts
+            └── timedDataConverter.ts
+        └── subdomain.ts
+```
+
+
+## Expanding the front-end
+The front-end of the secodash project contains two main pages. The homepage and the ecosystem page. The homepage displays all available ecosystems and allows admin users to create new ecosystems.
+
+The ecosystem page displays the ecosystem data in tables and graphs. Ecosystem page contents can be changed by expanding layoutEcosystem. This makes an API call to the backend with [apiFetcher](#apifetcherts), this retreives data in a DTO. This get converted into instanciated classes [classes](#classes) with [converters](#converterslanguageconverterts). Finally this is rendered by adding the tables / graphs to the cardList which gets rendered in the gridLayout. 
+To display additional information on the ecosystem page add the information into a [card](#infocard) and add it to the cardList 
+
+
+
 # Components
+
+
 ## EcosystemButton
 
 Represents an Ecosystem Button component. When clicked, it goes to the corresponding ecosystem.
@@ -292,71 +448,7 @@ A promise that resolves to the fetched homepage ecosystem data.
 const data = await fetcherHomePage('example-url');
 ```
 
-## cardbuilder.tsx
 
-### `buildPieGraphCard`
-
-Builds a pie graph card.
-
-### Parameters
-- `topics` (required): The displayable topics for the graph.
-- `title` (required): The title of the card.
-- `x` (required): The x-coordinate of the card.
-- `y` (required): The y-coordinate of the card.
-
-### Returns
-The wrapped card object.
-
-### Example
-```tsx
-const pieGraphCard = buildPieGraphCard(['topic1', 'topic2'], 'Pie Graph', 1, 2);
-```
-
----
-
-### `buildListCard`
-
-Builds a list card.
-
-### Parameters
-- `topics` (required): The displayable topics for the list.
-- `onClick` (required): The click event handler for the list items.
-- `title` (required): The title of the card.
-- `x` (required): The x-coordinate of the card.
-- `y` (required): The y-coordinate of the card.
-- `width` (required): The width of the card.
-- `height` (required): The height of the card.
-- `alert` (optional): Optional alert message for the card.
-
-### Returns
-The wrapped card object.
-
-### Example
-```tsx
-const listCard = buildListCard(['item1', 'item2'], handleItemClick, 'List Card', 1, 2, 2, 3, 'Alert Message');
-```
-
----
-
-### `buildLineGraphCard`
-
-Builds a line graph card.
-
-### Parameters
-- `data` (required): The data for the line graph.
-- `title` (required): The title of the card.
-- `x` (required): The x-coordinate of the card.
-- `y` (required): The y-coordinate of the card.
-
-### Returns
-The wrapped card object.
-
-### Example
-```tsx
-const lineGraphCard = buildLineGraphCard(lineGraphData, 'Line Graph', 1, 2);
-```
-
----
 
 ## subdomain.ts
 
@@ -774,9 +866,194 @@ const technologyData: technologyDTO = {
 };
 ```
 
+# API
+## auth
+### description
+Sends POST / GET request to nextAuth. Uses [authoptions](#authOptions) 
+
+### returns
+A signed JWT token containing the users session
+
+### origin
+Call is made when logging in. Call from [navbar](#navbar)
+## ecosystemPagePost
+### Description
+Sends POST request to /ecosystems with the following data
+```tsx
+{
+ topics: string[],
+ technologies: string[],
+ numberOfTopLanguages: number,
+ numberOfTopSubEcosystems: number,
+ numberOfTopContributors: number,
+ numberOfTopTechnologies: number,
+ numberOfTopProjects: number,
+ startTime: previousDateISO,
+ endTime: currentDateISO,
+ timeBucket: number 
+}
+
+```
+
+### Returns
+Ecosystem data
+```tsx
+
+  "displayName": "string",
+  "description": "string",
+  "numberOfStars": 0,
+  "topics": [
+    "string"
+  ],
+  "topTechnologies": [
+    {
+      "topic": "string",
+      "projectCount": 0
+    }
+  ],
+  "topLanguages": [
+    {
+      "language": "string",
+      "percentage": 0
+    }
+  ],
+  "topSubEcosystems": [
+    {
+      "topic": "string",
+      "projectCount": 0
+    }
+  ],
+  "topContributors": [
+    {
+      "login": "string",
+      "contributions": 0
+    }
+  ],
+  "topProjects": [
+    {
+      "name": "string",
+      "owner": "string",
+      "numberOfStars": 0
+    }
+  ],
+  "numberOfProjects": 0,
+  "numberOfTopics": 0,
+  "numberOfContributors": 0,
+  "numberOfContributions": 0,
+  "timedDataTopics": [
+    {
+      "dateLabel": "string",
+      "topics": [
+        {
+          "topic": "string",
+          "projectCount": 0
+        }
+      ]
+    }
+  ],
+  "timedDataEcosystem": [
+    {
+      "dateLabel": "string",
+      "topics": [
+        {
+          "topic": "string",
+          "projectCount": 0
+        }
+      ]
+    }
+  ]
+}
+
+
+```
+
+### Origin
+
+Call is made in layoutEcosytem each time the selected filters are updated using [apiFetcher](#apifetcherts)
+
+## homePageGet
+### Description
+Sends a GET request to /ecosystems to retreive all availlable ecosystems on the homepage
+
+### Returns
+A list of ecosystems available
+```tsx
+[
+  {
+    "displayName": "string",
+    "description": "string",
+    "numberOfStars": 0
+  }
+]
+
+```
+
+### Origin
+Call is made in [layoutHomepage](#homepagelayout)
+
+## newAdmin
+### Description
+Sends a post request to /users/updatePermission to update a users userType with the following data
+```tsx
+  email: (number) (hashed to safely store),
+  userType: enum (0 = user, 1 = admin, 2 = rootAdmin)
+
+```
+
+### Returns
+status 200 when the operation is succesful
+### Origin
+Call is made in [new admin page](#newadmin)
+
+## newEcosystem
+
+### Description
+Sends a POST request to /ecosystem/createEcosystem with the following data
+```tsx
+{
+    topics: string[]
+    technologies: string[]
+    bannedTopics: string[]
+    email: number (Hashed email)
+    ecosystenName: string
+    description: string
+}
+   
+```
+
+### Returns
+Status code 200 when operation is succesful
+
+### Origin
+Call is made in [new dashboard page](#newdashboard)
+
+## saveEdit
+
+### Description
+Sends a POST request to /ecosystem/saveEdit with the following data
+```tsx
+{
+    ecosystem: string
+    description: string
+}
+
+```
+### Returns
+Status code 200 when operation is succesful
+### Origin
+Call is made in [layoutEcosystem.](#ecosystempagelayout) when an authorized user updates the description
+
+
+# Login system
+The login system uses [nextauth](https://www.next-auth.com) to login. The following providers have been enabled. These can be seen in [authOptions](#authOptions)
+
+* GitHub
+* Google
+* Linkdin
+
+
 # Pages
 ## Homepage
-## `Home` Page
 
 ```tsx
 import React from 'react';
@@ -801,10 +1078,32 @@ The `Home` page component renders the Home page and includes the `LayoutHomePage
 
 ## [Ecosystem] page
 
-## `ecosystemPage` Page
 
 
 ### Description
 
-The `EcosystemPage` component represents a page with a dynamic path. The dynamic parameters from the URL are passed as props to the page. It includes the `LayoutEcosystem` component.
+The `EcosystemPage` component represents a page with a dynamic path. The dynamic parameters from the URL are passed as props to the page. It includes the `LayoutEcosystem` component. See [how to add data](#expanding-the-front-end) to expand the ecosystem page
+
+
+## newDashboard
+
+The new ecosystem dashboard page lets authorized users (Admins and root-admins) create new dashboards by uploading a structureud .json file and setting a name / description.
+
+The newdashboard page lets users upload the following format json:
+```json
+{
+    topics: [],
+    technologies: [],
+    excludedTopics: []
+}
+```
+This data gets processed and gets send to the back-end via an [API Call]()
+
+## newAdmin
+
+The new admin page lets authorized users (Root-admins) set the user type of another user. To do this they can enter the users email. These are hashed and sent to the backend.
+
+In order to for another users usertype to be changed they need to be known in the database. (They need to have logged in once before)
+
+
 

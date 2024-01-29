@@ -12,8 +12,8 @@ using SECODashBackend.Database;
 namespace SECODashBackend.Migrations
 {
     [DbContext(typeof(EcosystemsContext))]
-    [Migration("20240111150006_InitialDb")]
-    partial class InitialDb
+    [Migration("20240128102554_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace SECODashBackend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
+
+            modelBuilder.Entity("BannedTopicEcosystem", b =>
+                {
+                    b.Property<string>("BannedTopicsTerm")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EcosystemsId")
+                        .HasColumnType("text");
+
+                    b.HasKey("BannedTopicsTerm", "EcosystemsId");
+
+                    b.HasIndex("EcosystemsId");
+
+                    b.ToTable("BannedTopicEcosystem");
+                });
 
             modelBuilder.Entity("EcosystemTaxonomy", b =>
                 {
@@ -68,6 +83,16 @@ namespace SECODashBackend.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("EcosystemUser");
+                });
+
+            modelBuilder.Entity("SECODashBackend.Models.BannedTopic", b =>
+                {
+                    b.Property<string>("Term")
+                        .HasColumnType("text");
+
+                    b.HasKey("Term");
+
+                    b.ToTable("BannedTopics");
                 });
 
             modelBuilder.Entity("SECODashBackend.Models.Ecosystem", b =>
@@ -119,7 +144,7 @@ namespace SECODashBackend.Migrations
                     b.HasIndex("Term")
                         .IsUnique();
 
-                    b.ToTable("Technology");
+                    b.ToTable("Technologies");
                 });
 
             modelBuilder.Entity("SECODashBackend.Models.User", b =>
@@ -127,11 +152,10 @@ namespace SECODashBackend.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("UserType")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -141,6 +165,21 @@ namespace SECODashBackend.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BannedTopicEcosystem", b =>
+                {
+                    b.HasOne("SECODashBackend.Models.BannedTopic", null)
+                        .WithMany()
+                        .HasForeignKey("BannedTopicsTerm")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SECODashBackend.Models.Ecosystem", null)
+                        .WithMany()
+                        .HasForeignKey("EcosystemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EcosystemTaxonomy", b =>

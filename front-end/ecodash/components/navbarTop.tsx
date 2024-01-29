@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link'
 import PopUpBox from './popUpBox';
 import LoginBox from './loginBox';
-import { ExtendedUser } from '@/app/utils/authOptions';
+import { ExtendedUser } from '@/utils/authOptions';
 import { useSession} from "next-auth/react";
 import Button from './button';
 /**
@@ -23,7 +23,7 @@ export default function NavBarTop(){
     //For now has the basepath 
     return(
         <Navbar data-cy='navBar' fluid  className='bg-white shadow-sm mb-5 px-5 lg:px-32 md:px-20' >
-            <Navbar.Brand as={Link}  href={process.env.NEXT_PUBLIC_LOCAL_ADRESS} >
+            <Navbar.Brand as={Link}  href={"/"} >
                 <Image
                     data-cy='navLogo'
                     src={logo}
