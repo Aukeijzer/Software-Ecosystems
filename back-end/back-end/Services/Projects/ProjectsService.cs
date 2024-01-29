@@ -2,18 +2,21 @@ using System.Collections.Concurrent;
 using SECODashBackend.Dtos.Project;
 using SECODashBackend.Services.ElasticSearch;
 using SECODashBackend.Services.Spider;
+using SECODashBackend.Services.DataProcessor;
 
 namespace SECODashBackend.Services.Projects;
 
 /// <summary>
-/// This service is responsible for requesting the Spider for projects and saving them to Elasticsearch.
+/// This service is responsible for requesting the Spider for projects, requesting the Data Processor for additional
+/// topics and saving them to Elasticsearch.
 /// </summary>
 public class ProjectsService(IElasticsearchService elasticsearchService,
-        ISpiderService spiderService)
+        ISpiderService spiderService, IDataProcessorService dataProcessorService)
     : IProjectsService
 {
     /// <summary>
-    /// Requests the Spider for projects related to the given topic and saves them to Elasticsearch.
+    /// Requests the Spider for projects related to the given topic, requests Data Processor for additional topics
+    /// and saves them to Elasticsearch.
     /// </summary>
     /// <param name="topic">The topic to to search for. </param>
     /// <param name="ecosystem">The ecosystem the request is linked to</param>
@@ -22,6 +25,9 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
     {
         // Request the Spider for projects related to this topic.
         var newDtos = await spiderService.GetProjectsByTopicAsync(topic, amount);
+
+        // Request the data processor for additional topics 
+        var topicDtos = await dataProcessorService.GetTopics(newDtos);
         
         foreach (var dto in newDtos)
         {
@@ -31,10 +37,11 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
             }
         }
         // Save these projects to elasticsearch
-        await elasticsearchService.AddProjects(newDtos);
+        await elasticsearchService.AddProjects(topicDtos);
     }
     /// <summary>
-    /// Requests the Spider for projects related to the given keyword and saves them to Elasticsearch.
+    /// Requests the Spider for projects related to the given keyword, requests Data Processor for additional topics
+    /// and saves them to Elasticsearch.
     /// </summary>
     /// <param name="keyword">The keyword to to search for. </param>
     /// <param name="ecosystem">The ecosystem the request is linked to</param>
@@ -51,12 +58,16 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
                 dto.Topics.Add(ecosystem);
             }
         }
+        // Request the data processor for additional topics 
+        var topicDtos = await dataProcessorService.GetTopics(newDtos);
+        
         // Save these projects to elasticsearch
-        await elasticsearchService.AddProjects(newDtos);
+        await elasticsearchService.AddProjects(topicDtos);
     }
 
     /// <summary>
-    /// Requests the Spider for projects related to the given taxonomy and saves them to Elasticsearch.
+    /// Requests the Spider for projects related to the given taxonomy, requests Data Processor for additional topics
+    /// and saves them to Elasticsearch.
     /// </summary>
     /// <param name="taxonomy">The list of strings to mine off of github</param>
     /// <param name="ecosystem">The ecosystem the request is linked to</param>
@@ -97,6 +108,13 @@ public class ProjectsService(IElasticsearchService elasticsearchService,
             
         }
         await Task.WhenAll(tasks);
-        await elasticsearchService.AddProjects(newDtos.Values.ToList());
+        
+        // Convert to list of projectDtos 
+        var projectDtos = newDtos.Values.ToList();
+        
+        // Request the data processor for additional topics 
+        var topicDtos = await dataProcessorService.GetTopics(projectDtos);
+        
+        await elasticsearchService.AddProjects(topicDtos);
     }
 }
