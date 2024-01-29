@@ -31,20 +31,14 @@ public static class Extensions
          var services = scope.ServiceProvider;
          var ecosystemsContext = services.GetRequiredService<EcosystemsContext>();
          var scheduler = services.GetRequiredService<IScheduler>();
-         var ecosystems = ecosystemsContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy)
-            .Include(ecosystem => ecosystem.Technologies).ToList();
-         //For all ecosystems: Merge taxonomy and technology terms into one List for scheduled mining.
+         var ecosystems = ecosystemsContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy).ToList();
+         //For all ecosystems: Add taxonomy terms into one List for scheduled mining.
          var miningList = new List<string>();
          foreach (var ecosystem in ecosystems)
          {
             foreach (var tax in ecosystem.Taxonomy)
             {
                miningList.Add(tax.Term);
-            }
-
-            foreach (var tech in ecosystem.Technologies)
-            {
-               miningList.Add(tech.Term);
             }
             //Ensure the ecosystem name is included in the mined topics.
             if (!miningList.Contains(ecosystem.Name))

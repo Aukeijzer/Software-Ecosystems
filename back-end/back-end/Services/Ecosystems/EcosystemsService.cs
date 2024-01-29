@@ -271,17 +271,12 @@ public class EcosystemsService(EcosystemsContext dbContext,
     /// <param name="ecosystemName">Name of the new ecosystem.</param>
     public Task ScheduleEcosystem(string ecosystemName)
     {
-        var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy)
-            .Include(ecosystem => ecosystem.Technologies).FirstOrDefault(e => e.Name == ecosystemName);
-        //Merge taxonomy and technology terms into one list for scheduled mining
+        var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy).FirstOrDefault(e => e.Name == ecosystemName);
+        //Add taxonomy terms to a list for scheduled mining
         var miningList = new List<string>();
         foreach (var tax in ecosystem.Taxonomy)
         {
             miningList.Add(tax.Term);
-        }
-        foreach (var tech in ecosystem.Technologies)
-        {
-            miningList.Add(tech.Term);
         }
         //Ensure the ecosystem name is included in the mined topics.
         if(!miningList.Contains(ecosystemName))
