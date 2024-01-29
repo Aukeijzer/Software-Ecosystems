@@ -401,10 +401,10 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         cardList.push(cardLineGraph)
 
         //List of technologies
-        const technologies = listTechnologyDTOConverter(topTechnologies)
+        const technologies = listTechnologyDTOConverter(data.topTechnologies)
         const technologyTable = <TableComponent items={technologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
         const technologyCard = <div>
-            <InfoCard title={""} data={technologyTable} Color={colors.technology}/>
+            <InfoCard title={"Technologies"} data={technologyTable} Color={colors.technology}/>
         </div>
         cardList.push(technologyCard)
 
