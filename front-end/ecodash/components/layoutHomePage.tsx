@@ -128,7 +128,6 @@ export default function LayoutHomePage(){
             //const ecosystemname = data[i].displayName.toLowerCase().replaceAll(" ", "-");
             var removable = false;
             if(user && userEcosystems){
-                console.log(userEcosystems);
                 removable = userEcosystems.includes(data[i].displayName);
                 if(user.userType === "RootAdmin"){
                     removable = true;
@@ -166,7 +165,6 @@ export default function LayoutHomePage(){
                         data={addAdminButton}
                         Color={COLORS[4]}
                         onClick={() => Router.push('/newAdmin')}
-                        className="cursor-pointer"
                         />
                     </div>
                     cardList.push(addAdminButtonCard);

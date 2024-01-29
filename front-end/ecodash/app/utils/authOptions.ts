@@ -120,7 +120,6 @@ async function fetchUserData(userId: string, username: string) {
     const convertedResponse = await response.json();
     let userTypeResult = convertedResponse.userType;
     let enumType = userType[userTypeResult];
-    console.log(enumType);
     return  {userType: enumType, ecosystems: convertedResponse.ecosystems}
 }
 
