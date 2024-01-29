@@ -19,9 +19,9 @@ export async function fetcherEcosystemByTopic(url: string, {arg }:{arg: {topics:
     const currentDateISO = lastMonthDate.toISOString();
     console.log(currentDateISO);
     
-    //Get previous date 1 year ago
+    //Get previous date 2 year ago
     const previousDate = new Date();
-    previousDate.setFullYear(previousDate.getFullYear() - 1);
+    previousDate.setFullYear(previousDate.getFullYear() - 2);
     const previousDateISO = previousDate.toISOString();
     
     console.log(previousDateISO);

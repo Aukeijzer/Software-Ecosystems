@@ -330,7 +330,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //Small data boxes  
         const smallBoxes = (
                  <div className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
-                    <SmallDataBox item={"Topics"} count={abbreviate(data.numberOfTopics)} increase={5}  />
+                    <SmallDataBox item={"Sub-ecosystems"} count={abbreviate(data.numberOfTopics)} increase={5}  />
                     <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfProjects)} increase={5} />
                     <SmallDataBox item={"Contributors"} count={abbreviate(data.numberOfContributors)} increase={5} />
                     <SmallDataBox item={"Contributions"} count={abbreviate(data.numberOfContributions)} increase={5} />
@@ -384,22 +384,27 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         cardList.push(languageCard);
         
         //Line graph topicsGrowing 
-        var topicsGrowing = convertTimedData(data.timedDataTopics);
+        var topicsGrowing = convertTimedData(data.topicsActivityTimeSeries);
         console.log(topicsGrowing);
-        var topicLabels = getLabels(data.timedDataTopics);
+        var topicLabels = getLabels(data.topicsActivityTimeSeries);
 
-        //Timed data graph
+        //Timed data graph sub-topics
         const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
-        const cardLineGraph = <div className="col-span-full h-[500px]">
-            <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
+        const cardLineGraph = <div className="col-span-full h-[600px] flex flex-col">
+            <InfoCard title={"Sub-ecosystem activity"} data={lineGraphTopicsGrowing} Color={colors.topic} >
+                <div className="bg-white justify-center flex text-sm text-gray-900">
+                  Number of active projects of the most popular sub-topics over time
+                </div>
+            </InfoCard>
+           
         </div>
         cardList.push(cardLineGraph)
 
         //List of technologies
-        const technologies = listTechnologyDTOConverter(topTechnologies)
+        const technologies = listTechnologyDTOConverter(data.topTechnologies)
         const technologyTable = <TableComponent items={technologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
         const technologyCard = <div>
-            <InfoCard title={""} data={technologyTable} Color={colors.technology}/>
+            <InfoCard title={"Technologies"} data={technologyTable} Color={colors.technology}/>
         </div>
         cardList.push(technologyCard)
 
@@ -411,6 +416,20 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         </div>
         cardList.push(projectCard)
        
+        //Timed data graph ecosystem
+        var ecosystemGrowing = convertTimedData(data.ecosystemActivityTimeSeries);
+        var labelsEcosystem = getLabels(data.ecosystemActivityTimeSeries);
+        const lineGraphEcosystemGrowing = <GraphLine items={ecosystemGrowing} labels={labelsEcosystem}/>
+        const cardLineGraphEcosystem = <div className="col-span-full h-[600px] flex flex-col">
+            <InfoCard title={"Ecosystem activity"} data={lineGraphEcosystemGrowing} Color={colors.topic}>
+                <div className="flex justify-center bg-white text-sm">
+                  Number of active projects in the ecosystem over time
+                </div>
+            </InfoCard>
+           
+        </div>
+        cardList.push(cardLineGraphEcosystem)
+
         } else {
              cardList.push(<div className="col-span-full bg-white py-10 justify-center flex"> No data available with selected filters.</div>)
         }
