@@ -390,8 +390,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
 
         //Timed data graph sub-topics
         const lineGraphTopicsGrowing = <GraphLine items={topicsGrowing} labels={topicLabels}/>
-        const cardLineGraph = <div className="col-span-full h-[500px]">
-            <InfoCard title={""} data={lineGraphTopicsGrowing} Color={colors.topic}/>
+        const cardLineGraph = <div className="col-span-full h-[600px] flex flex-col">
+            <InfoCard title={"Sub-ecosystem activity"} data={lineGraphTopicsGrowing} Color={colors.topic} >
+                <div className="bg-white justify-center flex text-sm text-gray-900">
+                  Number of active projects of the most popular sub-topics over time
+                </div>
+            </InfoCard>
+           
         </div>
         cardList.push(cardLineGraph)
 
@@ -415,8 +420,13 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         var ecosystemGrowing = convertTimedData(data.ecosystemActivityTimeSeries);
         var labelsEcosystem = getLabels(data.ecosystemActivityTimeSeries);
         const lineGraphEcosystemGrowing = <GraphLine items={ecosystemGrowing} labels={labelsEcosystem}/>
-        const cardLineGraphEcosystem = <div className="col-span-full h-[500px]">
-            <InfoCard title={""} data={lineGraphEcosystemGrowing} Color={colors.topic}/>
+        const cardLineGraphEcosystem = <div className="col-span-full h-[600px] flex flex-col">
+            <InfoCard title={"Ecosystem activity"} data={lineGraphEcosystemGrowing} Color={colors.topic}>
+                <div className="flex justify-center bg-white text-sm">
+                  Number of active projects in the ecosystem over time
+                </div>
+            </InfoCard>
+           
         </div>
         cardList.push(cardLineGraphEcosystem)
 
