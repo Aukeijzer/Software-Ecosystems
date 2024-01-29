@@ -169,7 +169,6 @@ export default function LayoutHomePage(){
 
         //Prepare card for each ecosystem availlable
         for(var i = 0; i < data.length; i++){
-            //const ecosystemname = data[i].displayName.toLowerCase().replaceAll(" ", "-");
             var removable = false;
             if(user && userEcosystems){
                 removable = userEcosystems.includes(data[i].displayName);
