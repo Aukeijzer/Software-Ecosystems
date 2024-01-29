@@ -229,7 +229,102 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             TimedDataTopics = await GetTimedData(startTime, endTime, timeBucket, topics, 
                 topXSubEcosystems.Select(s => s.Topic).ToList()),
             TimedDataEcosystem = await GetTimedData(startTime, endTime, timeBucket, topics, topics) // TODO: clean up
+    /// <summary>
+    /// Gathers the metrics of a top-level/main ecosystem by querying the Elasticsearch index for projects that contain the given topics
+    /// and aggregating the relevant data from the search response.
+    /// </summary>
+    /// <param name="topic">The topic of the ecosystem.</param>
+    /// <returns>The metrics of the ecosystem.</returns>
+    public async Task<EcosystemMetrics> GetEcosystemMetricsAsync(string topic)
+    {
+        // Query that matches all projects that contain the ecosystem name in the topics field
+        // https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
+        var termQuery = new TermQuery(TopicField)
+        {
+            Value = topic
         };
+        // Aggregation of the unique values of the topic field
+        var topicTermsAggregation = new TermsAggregation(TopicAggregateName)
+        {
+            Field = TopicField,
+        };
+        
+        // Aggregation of the nested Contributor documents in the Project documents 
+        var nestedContributorsAggregation = new NestedAggregation(NestedContributorsAggregateName)
+        {
+            Path = ContributorsPath,
+            Aggregations = new AggregationDictionary
+            {
+                // Aggregation of the unique values of the contributor.login field
+                new TermsAggregation(TermsContributorsAggregateName)
+                {
+                    Field = ContributorLoginField,
+                    Size = MaxBucketSize,
+                }
+            }
+        };
+        
+        // Aggregation of the sum of the numberOfStars field of all projects
+        var numberOfStarsSumAggregation = new SumAggregation(NumberOfStarsAggregateName)
+        {
+            Field = NumberOfStarsField
+        };
+
+        var searchRequest = new SearchRequest
+        {
+            Query = termQuery,
+            Size = 0,
+            Aggregations = new AggregationDictionary
+            {
+                numberOfStarsSumAggregation,
+                topicTermsAggregation,
+                nestedContributorsAggregation
+            }
+        };
+        
+        var response = await elasticsearchService.QueryProjects(searchRequest);
+        
+        return new EcosystemMetrics
+        {
+            NumberOfProjects = GetNumberOfProjects(response),
+            NumberOfSubTopics = GetNumberOfTopics(response),
+            NumberOfContributors = GetNumberOfContributors(response),
+            NumberOfStars = GetNumberOfStars(response)
+        };
+    }
+    
+    /// <summary>
+    /// Retrieves the total number of topics in the ecosystem from the search response.
+    /// </summary>
+    /// <param name="searchResponse">The search response that should contain the topic aggregation.</param>
+    /// <returns> The total number of topics in the ecosystem.</returns>
+    private static long GetNumberOfTopics(SearchResponse<ProjectDto> searchResponse)
+    {
+        var topicsAggregate = searchResponse.Aggregations?.GetStringTerms(TopicAggregateName);
+        if(topicsAggregate == null) throw new ArgumentException(
+            "Elasticsearch aggregate for topics not found in search response"); 
+        
+        long numberOfTopics = topicsAggregate.Buckets.Count;
+        // Add the sum of the other documents that were not returned in the search response
+        if (topicsAggregate.SumOtherDocCount != null)
+            numberOfTopics += topicsAggregate.SumOtherDocCount.Value;
+        
+        return numberOfTopics;
+    }
+
+
+    /// <summary>
+    /// Retrieves the total number of stars of all projects in the ecosystem from the search response.
+    /// </summary>
+    /// <param name="searchResponse">The search response that should contain the number of stars sum aggregation.</param>
+    /// <returns> The total number of stars of all projects in the ecosystem.</returns>
+    private static long GetNumberOfStars(SearchResponse<ProjectDto> searchResponse)
+    {
+        var sumAggregate = searchResponse.Aggregations?.GetSum("numberOfStars");
+        if (sumAggregate == null)
+            throw new ArgumentException(
+                "Elasticsearch aggregate for number of stars not found in search response");
+        return (long)sumAggregate.Value!;
     }
     
     #region Contributors
@@ -280,6 +375,28 @@ public class ElasticsearchAnalysisService(IElasticsearchService elasticsearchSer
             .Take(numberOfTopContributors)
             .ToList();
         return topXContributors;
+    }
+    
+    /// <summary>
+    /// Retrieves the total number of contributors in the ecosystem from the search response.
+    /// </summary>
+    /// <param name="searchResponse">The search response that should contain the contributor aggregation.</param>
+    /// <returns> The total number of contributors in the ecosystem.</returns>
+    private static long GetNumberOfContributors(SearchResponse<ProjectDto> searchResponse)
+    {
+        var nestedAggregate = searchResponse.Aggregations?.GetNested(NestedContributorsAggregateName);
+        var contributorsAggregate = nestedAggregate?.GetStringTerms(TermsContributorsAggregateName);
+        
+        if (contributorsAggregate == null)
+            throw new ArgumentException(
+                "Elasticsearch aggregate for contributors not found in search response");
+        
+        long numberOfContributors = contributorsAggregate.Buckets.Count;
+        // Add the sum of the other documents that were not returned in the search response
+        if(contributorsAggregate.SumOtherDocCount != null)
+            numberOfContributors += contributorsAggregate.SumOtherDocCount.Value;
+        
+        return numberOfContributors;
     }
     #endregion
     

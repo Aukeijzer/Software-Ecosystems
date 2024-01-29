@@ -26,4 +26,12 @@ public interface IAnalysisService
         int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, 
         int numberOfTopTechnologies, int numberOfTopProjects,
         DateTime startTime, DateTime endTime, int timeBucket);
+    
+    /// <summary>
+    /// Gathers the metrics of a top-level/main ecosystem by the projects database for projects that contain the given topics
+    /// and aggregating the relevant data from the search response.
+    /// </summary>
+    /// <param name="topic">The topic of the ecosystem.</param>
+    /// <returns>The metrics of the ecosystem.</returns>
+    public Task<EcosystemMetrics> GetEcosystemMetricsAsync(string topic);
 }
