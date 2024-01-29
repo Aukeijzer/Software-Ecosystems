@@ -246,7 +246,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         }
 
         //Send to node backend,
-        const response : Response = await fetch(process.env.NEXT_PUBLIC_LOCAL_ADRESS + "/api/saveEdit", {
+        const response : Response = await fetch("/api/saveEdit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -255,12 +255,15 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         })
 
         //Check if response is ok, if not throw error 500
-        if (response.status == 500){
-            console.log("Failed to update description");
-            throw new Error(response.statusText)
+        if(response.ok){
+            if(response.status === 200){
+                alert("Description updated");
+            } else {
+                alert("Error updating description");
+            }
+        } else {
+            throw new Error("Error in response");
         }
-        alert("Description updated successfully")
-        Router.refresh();
     }
 
     function changeDescription(description: string){
@@ -362,7 +365,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const smallBoxes = (
                  <div className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
                     <SmallDataBox item={"Topics"} count={abbreviate(data.numberOfTopics)} increase={5}  />
-                    <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfTopics)} increase={5} />
+                    <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfProjects)} increase={5} />
                     <SmallDataBox item={"Contributors"} count={abbreviate(data.numberOfContributors)} increase={5} />
                     <SmallDataBox item={"Contributions"} count={abbreviate(data.numberOfContributions)} increase={5} />
                 </div>

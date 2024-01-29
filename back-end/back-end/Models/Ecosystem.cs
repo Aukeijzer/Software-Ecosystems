@@ -33,4 +33,7 @@ public class Ecosystem
 
    [DataMember(Name = "technologies")] 
    public List<Technology> Technologies { get; set; } = [];
+
+   [DataMember(Name = "bannedTopic")]
+   public List<BannedTopic> BannedTopics { get; set; } = [];
 }

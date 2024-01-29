@@ -43,7 +43,7 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal cursor-pointer ' + props.className}>
+        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal' + props.className}>
             <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
             
             {props.remove && 
