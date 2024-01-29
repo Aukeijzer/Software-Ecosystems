@@ -365,7 +365,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         const smallBoxes = (
                  <div className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
                     <SmallDataBox item={"Topics"} count={abbreviate(data.numberOfTopics)} increase={5}  />
-                    <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfTopics)} increase={5} />
+                    <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfProjects)} increase={5} />
                     <SmallDataBox item={"Contributors"} count={abbreviate(data.numberOfContributors)} increase={5} />
                     <SmallDataBox item={"Contributions"} count={abbreviate(data.numberOfContributions)} increase={5} />
                 </div>
