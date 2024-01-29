@@ -126,7 +126,7 @@ export default function LayoutHomePage(){
         const info = (<div className="flex flex-col "> 
                 <span> Total ecosystems: {data.length}</span>
                 <span> Total projects: {abbreviate(totalProjects)} </span>
-                <span> Total sub-topics: {abbreviate(totalTopics)} </span>
+                <span> Total sub-ecosystems: {abbreviate(totalTopics)} </span>
                 <span> Total stars: {abbreviate(totalStars)} </span>
                 <span> Total contributors: {abbreviate(totalContributors)} </span>
             </div>
