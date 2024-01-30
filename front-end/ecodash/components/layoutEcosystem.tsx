@@ -1,13 +1,31 @@
+/*
+Copyright (C) <2024> <OdinDash>
+
+This file is part of SECODash
+
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 "use client"
 
 import { useEffect, useState} from "react"
 import useSWRMutation from 'swr/mutation'
 import SpinnerComponent from "./spinner"
-import { topTechnologies} from "@/mockData/mockAgriculture"
 import EcosystemDescription from "./ecosystemDescription"
 import  listLanguageDTOConverter  from "@/utils/Converters/languageConverter"
 import { useRouter, useSearchParams } from 'next/navigation'
-import listTechnologyDTOConverter from "@/utils/Converters/technologyConverter"
 import listSubEcosystemDTOConverter from "@/utils/Converters/subEcosystemConverter"
 import { fetcherEcosystemByTopic } from "@/utils/apiFetcher"
 import listContributorDTOConverter from "@/utils/Converters/contributorConverter"
@@ -400,18 +418,12 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         </div>
         cardList.push(cardLineGraph)
 
-        //List of technologies
-        const technologies = listTechnologyDTOConverter(data.topTechnologies)
-        const technologyTable = <TableComponent items={technologies} onClick={(technology : string) => onClickFilter(technology, "technologies")}/>
-        const technologyCard = <div>
-            <InfoCard title={"Technologies"} data={technologyTable} Color={colors.technology}/>
-        </div>
-        cardList.push(technologyCard)
+      
 
         //List of projects
         const projects = listprojectDTOConverter(data.topProjects);
         const projectTable = <TableComponent items={projects} onClick={(project : string) => (console.log(project))}/>
-        const projectCard = <div className="col-span-1">
+        const projectCard = <div className="col-span-3">
             <InfoCard title={""} data={projectTable} Color={colors.project}/>
         </div>
         cardList.push(projectCard)

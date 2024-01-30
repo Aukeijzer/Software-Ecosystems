@@ -25,7 +25,7 @@ public static class InitialDatabases
     {
         EcosystemName = "agriculture",
         Description = "Software related to agriculture",
-        Email = "3898088433",
+        Email = "4087568626",
         Topics = 
         [
             "Agriculture", 
@@ -61,7 +61,7 @@ public static class InitialDatabases
     {
         EcosystemName = "artificial-intelligence", 
         Description = "Software related to artificial intelligence",
-        Email = "3898088433",
+        Email = "4087568626",
         Topics = 
         [
             "Machine Learning",
@@ -96,7 +96,7 @@ public static class InitialDatabases
     {
         EcosystemName = "quantum", 
         Description = "Software related to quantum mechanics",
-        Email = "3898088433",
+        Email = "4087568626",
         Topics = 
         [
             "Quantum Computing",
