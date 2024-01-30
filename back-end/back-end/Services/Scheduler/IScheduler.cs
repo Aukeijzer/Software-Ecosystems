@@ -31,6 +31,7 @@ public interface IScheduler
     /// </summary>
     /// <param name="keyword"> The keyword belonging to the job that is to removed. </param>
     public void RemoveRecurringKeywordMiningJob(string keyword);
+
     /// <summary>
     /// Add a recurring job that mines projects by a taxonomy.
     /// </summary>
@@ -38,7 +39,8 @@ public interface IScheduler
     /// <param name="taxonomy"> The taxonomy to mine by. </param>
     /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
-    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount);
+    /// <param name="day">Zero indexed day of the week, starting on Sunday.</param>
+    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount, DayOfWeek day);
     /// <summary>
     /// Removes a recurring job that mines projects by a taxonomy.
     /// </summary>
