@@ -54,7 +54,7 @@ export async function POST(req: NextRequest){
     })
 
     if (response.status !== 200) {
-        throw new Error(response.statusText)
+        throw new NextResponse("Error", {status: 500})
     }
 
     return new NextResponse("succesfull", {status: 200})
