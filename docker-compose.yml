@@ -114,7 +114,7 @@ volumes:
 
 secrets:
   backend-secrets:
-    file: secrets/backend-connectionstrings.json
+    file: secrets/backend-secrets.json
   postgres-password:
     file: secrets/postgres-password.txt
   git-api-token:
