@@ -68,7 +68,7 @@ public class HangfireScheduler(
     /// <param name="taxonomy"> The taxonomy to mine by. </param>
     /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
-    /// <param name="day">Zero indexed day of the week.</param>
+    /// <param name="day">Zero indexed day of the week, starting on Sunday.</param>
     public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount, DayOfWeek day)
     {
         var jobId = $"taxonomy-mining_ecosystem={ecosystemName}";

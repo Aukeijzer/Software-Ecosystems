@@ -107,7 +107,7 @@ builder.Services.AddHangfire((provider, config) => config
     .UseDashboardMetrics(DashboardMetrics.RecurringJobCount)
     .UseDashboardMetrics(DashboardMetrics.RetriesCount));
 
-// Configure the Hangfire scheduler to retry failed jobs three times with a delay of 1 hour, 2 hours and 12 hours.
+// Configure the Hangfire scheduler to retry failed jobs three times with a delay of 1 hour, 6 hours and 12 hours.
 GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute
 {
     Attempts = 3, 
