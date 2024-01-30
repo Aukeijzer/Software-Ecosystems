@@ -1,3 +1,4 @@
+using System.Data.SqlTypes;
 using GraphQL.Client.Abstractions.Websocket;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
@@ -13,11 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 var _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
 string? token;
 if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
+{
+    string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()+"/secrets/spider-git-api-token.txt";
+    string s = File.ReadAllText(path).Trim();
+    Environment.SetEnvironmentVariable("API_Token", s);
     token = Environment.GetEnvironmentVariable("API_Token");
+}
 else
 {
     string? tokenPath = Environment.GetEnvironmentVariable("API_Token_File");
-    token = File.ReadAllText(tokenPath);
+    token = File.ReadAllText(tokenPath).Trim();
 }
 
 _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);

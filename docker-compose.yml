@@ -42,7 +42,7 @@ services:
     environment:
       API_Token_File: /run/secrets/git-api-token
       ASPNETCORE_URLS: http://*:5205
-      Docker_Enviroment: local
+      Docker_Environment: local
     ports:
       - 5205:5205
 
@@ -81,9 +81,12 @@ services:
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile
+    secrets:
+      - backend-secrets
     environment:
+      backend-secrets: /run/secrets/backend-secrets
       ASPNETCORE_URLS: http://*:5003
-      Docker_Enviroment: local
+      Docker_Environment: local
     ports:
       - 5003:5003
     networks:
@@ -110,6 +113,8 @@ volumes:
   postgres-data:
 
 secrets:
+  backend-secrets:
+    file: secrets/backend-secrets.json
   postgres-password:
     file: secrets/postgres-password.txt
   git-api-token:
