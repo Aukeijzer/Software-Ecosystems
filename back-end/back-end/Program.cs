@@ -17,10 +17,6 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Scheduler;
 using SECODashBackend.Services.Spider;
 using SECODashBackend.Services.Users;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Certificate;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 var builder = WebApplication.CreateBuilder(args);
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -133,8 +129,6 @@ if (app.Environment.IsDevelopment())
 }
 bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
 if ( app.Environment.IsDevelopment() || local )
-// TODO: turn on HttpsRedirection when https is fixed
-//app.UseHttpsRedirection();
 
 app.UseCors(myAllowSpecificOrigins);
 app.UseAuthorization();

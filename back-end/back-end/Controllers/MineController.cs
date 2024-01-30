@@ -111,7 +111,7 @@ public class MineController(
         logger.LogInformation($"Mining job for keyword: {keyword} unscheduled if it existed.");
         return Accepted();
     }
-    
+
     /// <summary>
     /// This method schedules a recurring job that mines projects based on the given taxonomy.
     /// </summary>
@@ -119,9 +119,9 @@ public class MineController(
     /// <param name="taxonomy"> The taxonomy to mine by. </param>
     /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
-    /// <param name="miningFrequency"> The frequency of mining. </param>
+    /// <param name="dayofweek">Zero indexed day of the week.</param>
     [HttpPost("schedule/taxonomy")]
-    public IActionResult ScheduleMineByTaxonomy(string ecosystem, List<string> taxonomy, int keywordAmount, int topicAmount, MiningFrequency miningFrequency, DayOfWeek dayofweek)
+    public IActionResult ScheduleMineByTaxonomy(string ecosystem, List<string> taxonomy, int keywordAmount, int topicAmount, DayOfWeek dayofweek)
     {
         scheduler.AddRecurringTaxonomyMiningJob(ecosystem, taxonomy, keywordAmount, topicAmount, dayofweek); 
         logger.LogInformation(
