@@ -54,9 +54,8 @@ export async function POST(req: NextRequest){
     })
 
     if (response.status !== 200) {
-        throw new NextResponse("Error", {status: 500})
+        throw new NextResponse(`Internal server error: ${response.text}`, {status: 500})
     }
 
     return new NextResponse("succesfull", {status: 200})
-  
 }
