@@ -314,7 +314,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
     if(data){
         if(user !== undefined && user !== null && (user.userType === "Admin" || user.userType === "RootAdmin") && user.ecosystems.includes(props.ecosystem)) {
             const ecosystemEdit = (
-                <div className="rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-3">
+                <div className="rounded-sm  p-3 text-yellow-700 bg-red-200 col-span-full">
                     <form className="flex flex-col">
                         <div className="flex flex-row gap-3">
                             <label> edit mode:</label>
@@ -347,7 +347,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         
         //Small data boxes  
         const smallBoxes = (
-                 <div className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
+                 <div className="grid w-full grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
                     <SmallDataBox item={"Sub-ecosystems"} count={abbreviate(data.numberOfTopics)} increase={5}  />
                     <SmallDataBox item={"Projects"} count={abbreviate(data.numberOfProjects)} increase={5} />
                     <SmallDataBox item={"Contributors"} count={abbreviate(data.numberOfContributors)} increase={5} />
@@ -423,7 +423,7 @@ export default function LayoutEcosystem(props: layoutEcosystemProps){
         //List of projects
         const projects = listprojectDTOConverter(data.topProjects);
         const projectTable = <TableComponent items={projects} onClick={(project : string) => (console.log(project))}/>
-        const projectCard = <div className="col-span-3">
+        const projectCard = <div className="col-span-full">
             <InfoCard title={""} data={projectTable} Color={colors.project}/>
         </div>
         cardList.push(projectCard)
