@@ -32,23 +32,22 @@ public static class Extensions
          var ecosystemsContext = services.GetRequiredService<EcosystemsContext>();
          var scheduler = services.GetRequiredService<IScheduler>();
          var ecosystems = ecosystemsContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy).ToList();
-         //For all ecosystems: Add taxonomy terms into one List for scheduled mining.
-         var miningList = new List<string>();
          //Divide jobs evenly over the week with a 2 day interval.
          var dayIndex = 0;
+         
          foreach (var ecosystem in ecosystems)
          {
             DayOfWeek scheduleDay = (DayOfWeek)dayIndex;
-            foreach (var tax in ecosystem.Taxonomy)
-            {
-               miningList.Add(tax.Term);
-            }
+            
+            var miningTerms = new List<string>();
+            miningTerms.AddRange(ecosystem.Taxonomy.Select(tax => tax.Term));
+            
             //Ensure the ecosystem name is included in the mined topics.
-            if (!miningList.Contains(ecosystem.Name))
+            if (!miningTerms.Contains(ecosystem.Name))
             {
-               miningList.Add(ecosystem.Name);
+               miningTerms.Add(ecosystem.Name);
             }
-            scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 1000, 1000, scheduleDay);
+            scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningTerms, 1000, 1000, scheduleDay);
             dayIndex = (dayIndex + 2) % 7;
          }
       }
