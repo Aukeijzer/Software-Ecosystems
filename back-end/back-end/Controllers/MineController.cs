@@ -121,9 +121,9 @@ public class MineController(
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
     /// <param name="miningFrequency"> The frequency of mining. </param>
     [HttpPost("schedule/taxonomy")]
-    public IActionResult ScheduleMineByTaxonomy(string ecosystem, List<string> taxonomy, int keywordAmount, int topicAmount, MiningFrequency miningFrequency)
+    public IActionResult ScheduleMineByTaxonomy(string ecosystem, List<string> taxonomy, int keywordAmount, int topicAmount, MiningFrequency miningFrequency, DayOfWeek dayofweek)
     {
-        scheduler.AddRecurringTaxonomyMiningJob(ecosystem, taxonomy, keywordAmount, topicAmount); 
+        scheduler.AddRecurringTaxonomyMiningJob(ecosystem, taxonomy, keywordAmount, topicAmount, dayofweek); 
         logger.LogInformation(
             $"Mining job for ecosystem: {ecosystem} using taxonomy: {taxonomy} with keyword amount: {keywordAmount} and topic amount: {topicAmount} scheduled.");
         return Accepted();
