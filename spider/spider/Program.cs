@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
 string? token;
-if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
+if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
 {
     string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()+"/secrets/spider-git-api-token.txt";
     string s = File.ReadAllText(path).Trim();
@@ -49,7 +49,7 @@ builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Log
 
 var app = builder.Build();
 
-bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
+bool local = Environment.GetEnvironmentVariable("Docker_Environment") == "local";
 if ( app.Environment.IsDevelopment() || local ) {   
     app.UseSwagger();
     app.UseSwaggerUI();

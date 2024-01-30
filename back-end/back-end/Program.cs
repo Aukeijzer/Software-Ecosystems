@@ -131,7 +131,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
+bool local = Environment.GetEnvironmentVariable("Docker_Environment") == "local";
 if ( app.Environment.IsDevelopment() || local )
 // TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
