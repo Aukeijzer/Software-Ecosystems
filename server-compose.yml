@@ -100,7 +100,7 @@ volumes:
 
 secrets:
   backend-secrets:
-    file: secrets/backend-connectionstrings.json
+    file: secrets/backend-secrets.json
   db-password:
     file: secrets/db-password.txt
   git-api-token:
