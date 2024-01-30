@@ -68,10 +68,11 @@ public class HangfireScheduler(
     /// <param name="taxonomy"> The taxonomy to mine by. </param>
     /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
-    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount)
+    /// <param name="day">Zero indexed day of the week, starting on Sunday.</param>
+    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount, DayOfWeek day)
     {
         var jobId = $"taxonomy-mining_ecosystem={ecosystemName}";
-        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTaxonomyAsync(taxonomy, ecosystemName, keywordAmount, topicAmount), Cron.Minutely());
+        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTaxonomyAsync(taxonomy, ecosystemName, keywordAmount, topicAmount), Cron.Weekly(day));
         logger.LogInformation($"Job Id: {jobId} added.");
     }
 
@@ -95,7 +96,6 @@ public class HangfireScheduler(
     {
         return miningFrequency switch
         {
-            MiningFrequency.Minutely => Cron.Minutely(),
             MiningFrequency.Hourly => Cron.Hourly(),
             MiningFrequency.Daily => Cron.Daily(),
             MiningFrequency.Weekly => Cron.Weekly(),
