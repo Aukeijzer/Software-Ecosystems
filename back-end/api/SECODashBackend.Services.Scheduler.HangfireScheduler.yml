@@ -1,0 +1,1237 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler
+  commentId: T:SECODashBackend.Services.Scheduler.HangfireScheduler
+  id: HangfireScheduler
+  parent: SECODashBackend.Services.Scheduler
+  children:
+  - SECODashBackend.Services.Scheduler.HangfireScheduler.#ctor(Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Scheduler.HangfireScheduler},Hangfire.IRecurringJobManager,SECODashBackend.Services.Projects.IProjectsService)
+  - SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  - SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  - SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+  - SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob(System.String)
+  - SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+  - SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob(System.String)
+  langs:
+  - csharp
+  - vb
+  name: HangfireScheduler
+  nameWithType: HangfireScheduler
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: HangfireScheduler
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 8
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Implementation of <xref href="SECODashBackend.Services.Scheduler.IScheduler" data-throw-if-not-resolved="false"></xref> using Hangfire.
+  example: []
+  syntax:
+    content: 'public class HangfireScheduler : IScheduler'
+    content.vb: Public Class HangfireScheduler Implements IScheduler
+  inheritance:
+  - System.Object
+  implements:
+  - SECODashBackend.Services.Scheduler.IScheduler
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.#ctor(Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Scheduler.HangfireScheduler},Hangfire.IRecurringJobManager,SECODashBackend.Services.Projects.IProjectsService)
+  commentId: M:SECODashBackend.Services.Scheduler.HangfireScheduler.#ctor(Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Scheduler.HangfireScheduler},Hangfire.IRecurringJobManager,SECODashBackend.Services.Projects.IProjectsService)
+  id: '#ctor(Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Scheduler.HangfireScheduler},Hangfire.IRecurringJobManager,SECODashBackend.Services.Projects.IProjectsService)'
+  parent: SECODashBackend.Services.Scheduler.HangfireScheduler
+  langs:
+  - csharp
+  - vb
+  name: HangfireScheduler(ILogger<HangfireScheduler>, IRecurringJobManager, IProjectsService)
+  nameWithType: HangfireScheduler.HangfireScheduler(ILogger<HangfireScheduler>, IRecurringJobManager, IProjectsService)
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.HangfireScheduler(Microsoft.Extensions.Logging.ILogger<SECODashBackend.Services.Scheduler.HangfireScheduler>, Hangfire.IRecurringJobManager, SECODashBackend.Services.Projects.IProjectsService)
+  type: Constructor
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: .ctor
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 8
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Implementation of <xref href="SECODashBackend.Services.Scheduler.IScheduler" data-throw-if-not-resolved="false"></xref> using Hangfire.
+  example: []
+  syntax:
+    content: public HangfireScheduler(ILogger<HangfireScheduler> logger, IRecurringJobManager recurringJobManager, IProjectsService projectsService)
+    parameters:
+    - id: logger
+      type: Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Scheduler.HangfireScheduler}
+    - id: recurringJobManager
+      type: Hangfire.IRecurringJobManager
+    - id: projectsService
+      type: SECODashBackend.Services.Projects.IProjectsService
+    content.vb: Public Sub New(logger As ILogger(Of HangfireScheduler), recurringJobManager As IRecurringJobManager, projectsService As IProjectsService)
+  overload: SECODashBackend.Services.Scheduler.HangfireScheduler.#ctor*
+  nameWithType.vb: HangfireScheduler.New(ILogger(Of HangfireScheduler), IRecurringJobManager, IProjectsService)
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.New(Microsoft.Extensions.Logging.ILogger(Of SECODashBackend.Services.Scheduler.HangfireScheduler), Hangfire.IRecurringJobManager, SECODashBackend.Services.Projects.IProjectsService)
+  name.vb: New(ILogger(Of HangfireScheduler), IRecurringJobManager, IProjectsService)
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  commentId: M:SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  id: AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  parent: SECODashBackend.Services.Scheduler.HangfireScheduler
+  langs:
+  - csharp
+  - vb
+  name: AddOrUpdateRecurringTopicMiningJob(string, string, int, MiningFrequency)
+  nameWithType: HangfireScheduler.AddOrUpdateRecurringTopicMiningJob(string, string, int, MiningFrequency)
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob(string, string, int, SECODashBackend.Services.Scheduler.MiningFrequency)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddOrUpdateRecurringTopicMiningJob
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 20
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Adds or updates a recurring job that mines projects by a topic.
+  example: []
+  syntax:
+    content: public void AddOrUpdateRecurringTopicMiningJob(string topic, string ecosystem, int amount, MiningFrequency miningFrequency)
+    parameters:
+    - id: topic
+      type: System.String
+      description: The topic to mine by
+    - id: ecosystem
+      type: System.String
+      description: The ecosystem the request is linked to
+    - id: amount
+      type: System.Int32
+      description: The amount of projects to mine.
+    - id: miningFrequency
+      type: SECODashBackend.Services.Scheduler.MiningFrequency
+      description: The frequency of mining.
+    content.vb: Public Sub AddOrUpdateRecurringTopicMiningJob(topic As String, ecosystem As String, amount As Integer, miningFrequency As MiningFrequency)
+  overload: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob*
+  implements:
+  - SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  nameWithType.vb: HangfireScheduler.AddOrUpdateRecurringTopicMiningJob(String, String, Integer, MiningFrequency)
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob(String, String, Integer, SECODashBackend.Services.Scheduler.MiningFrequency)
+  name.vb: AddOrUpdateRecurringTopicMiningJob(String, String, Integer, MiningFrequency)
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  commentId: M:SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  id: AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  parent: SECODashBackend.Services.Scheduler.HangfireScheduler
+  langs:
+  - csharp
+  - vb
+  name: AddOrUpdateRecurringKeywordMiningJob(string, string, int, MiningFrequency)
+  nameWithType: HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob(string, string, int, MiningFrequency)
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob(string, string, int, SECODashBackend.Services.Scheduler.MiningFrequency)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddOrUpdateRecurringKeywordMiningJob
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 34
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Adds or updates a recurring job that mines projects by a keyword.
+  example: []
+  syntax:
+    content: public void AddOrUpdateRecurringKeywordMiningJob(string keyword, string ecosystem, int amount, MiningFrequency miningFrequency)
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The keyword to mine by.
+    - id: ecosystem
+      type: System.String
+      description: The ecosystem the request is linked to
+    - id: amount
+      type: System.Int32
+      description: The amount of projects to mine.
+    - id: miningFrequency
+      type: SECODashBackend.Services.Scheduler.MiningFrequency
+      description: The frequency of mining.
+    content.vb: Public Sub AddOrUpdateRecurringKeywordMiningJob(keyword As String, ecosystem As String, amount As Integer, miningFrequency As MiningFrequency)
+  overload: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob*
+  implements:
+  - SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  nameWithType.vb: HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob(String, String, Integer, MiningFrequency)
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob(String, String, Integer, SECODashBackend.Services.Scheduler.MiningFrequency)
+  name.vb: AddOrUpdateRecurringKeywordMiningJob(String, String, Integer, MiningFrequency)
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob(System.String)
+  commentId: M:SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob(System.String)
+  id: RemoveRecurringTopicMiningJob(System.String)
+  parent: SECODashBackend.Services.Scheduler.HangfireScheduler
+  langs:
+  - csharp
+  - vb
+  name: RemoveRecurringTopicMiningJob(string)
+  nameWithType: HangfireScheduler.RemoveRecurringTopicMiningJob(string)
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob(string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: RemoveRecurringTopicMiningJob
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 45
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Removes a recurring job that mines projects by a topic.
+  example: []
+  syntax:
+    content: public void RemoveRecurringTopicMiningJob(string topic)
+    parameters:
+    - id: topic
+      type: System.String
+      description: The topic belonging to the job that is to removed.
+    content.vb: Public Sub RemoveRecurringTopicMiningJob(topic As String)
+  overload: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob*
+  implements:
+  - SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTopicMiningJob(System.String)
+  nameWithType.vb: HangfireScheduler.RemoveRecurringTopicMiningJob(String)
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob(String)
+  name.vb: RemoveRecurringTopicMiningJob(String)
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob(System.String)
+  commentId: M:SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob(System.String)
+  id: RemoveRecurringKeywordMiningJob(System.String)
+  parent: SECODashBackend.Services.Scheduler.HangfireScheduler
+  langs:
+  - csharp
+  - vb
+  name: RemoveRecurringKeywordMiningJob(string)
+  nameWithType: HangfireScheduler.RemoveRecurringKeywordMiningJob(string)
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob(string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: RemoveRecurringKeywordMiningJob
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 56
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Removes a recurring job that mines projects by a keyword.
+  example: []
+  syntax:
+    content: public void RemoveRecurringKeywordMiningJob(string keyword)
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The keyword belonging to the job that is to removed.
+    content.vb: Public Sub RemoveRecurringKeywordMiningJob(keyword As String)
+  overload: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob*
+  implements:
+  - SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringKeywordMiningJob(System.String)
+  nameWithType.vb: HangfireScheduler.RemoveRecurringKeywordMiningJob(String)
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob(String)
+  name.vb: RemoveRecurringKeywordMiningJob(String)
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+  commentId: M:SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+  id: AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+  parent: SECODashBackend.Services.Scheduler.HangfireScheduler
+  langs:
+  - csharp
+  - vb
+  name: AddRecurringTaxonomyMiningJob(string, List<string>, int, int)
+  nameWithType: HangfireScheduler.AddRecurringTaxonomyMiningJob(string, List<string>, int, int)
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob(string, System.Collections.Generic.List<string>, int, int)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddRecurringTaxonomyMiningJob
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 70
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Add a recurring job that mines projects by a taxonomy.
+  example: []
+  syntax:
+    content: public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount)
+    parameters:
+    - id: ecosystemName
+      type: System.String
+      description: The name of the ecosystem.
+    - id: taxonomy
+      type: System.Collections.Generic.List{System.String}
+      description: The taxonomy to mine by.
+    - id: keywordAmount
+      type: System.Int32
+      description: The amount of projects to mine for each term using keyword search.
+    - id: topicAmount
+      type: System.Int32
+      description: The amount of projects to mine for each term using topic search.
+    content.vb: Public Sub AddRecurringTaxonomyMiningJob(ecosystemName As String, taxonomy As List(Of String), keywordAmount As Integer, topicAmount As Integer)
+  overload: SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob*
+  implements:
+  - SECODashBackend.Services.Scheduler.IScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+  nameWithType.vb: HangfireScheduler.AddRecurringTaxonomyMiningJob(String, List(Of String), Integer, Integer)
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob(String, System.Collections.Generic.List(Of String), Integer, Integer)
+  name.vb: AddRecurringTaxonomyMiningJob(String, List(Of String), Integer, Integer)
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+  commentId: M:SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+  id: RemoveRecurringTaxonomyMiningJob(System.String)
+  parent: SECODashBackend.Services.Scheduler.HangfireScheduler
+  langs:
+  - csharp
+  - vb
+  name: RemoveRecurringTaxonomyMiningJob(string)
+  nameWithType: HangfireScheduler.RemoveRecurringTaxonomyMiningJob(string)
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob(string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Scheduler/HangfireScheduler.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: RemoveRecurringTaxonomyMiningJob
+    path: back-end/Services/Scheduler/HangfireScheduler.cs
+    startLine: 81
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Scheduler
+  summary: Removes a recurring job that mines projects by a taxonomy.
+  example: []
+  syntax:
+    content: public void RemoveRecurringTaxonomyMiningJob(string ecosystem)
+    parameters:
+    - id: ecosystem
+      type: System.String
+      description: The name of the ecosystem that the job belongs to.
+    content.vb: Public Sub RemoveRecurringTaxonomyMiningJob(ecosystem As String)
+  overload: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob*
+  implements:
+  - SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+  nameWithType.vb: HangfireScheduler.RemoveRecurringTaxonomyMiningJob(String)
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob(String)
+  name.vb: RemoveRecurringTaxonomyMiningJob(String)
+references:
+- uid: SECODashBackend.Services.Scheduler.IScheduler
+  commentId: T:SECODashBackend.Services.Scheduler.IScheduler
+  parent: SECODashBackend.Services.Scheduler
+  href: SECODashBackend.Services.Scheduler.IScheduler.html
+  name: IScheduler
+  nameWithType: IScheduler
+  fullName: SECODashBackend.Services.Scheduler.IScheduler
+- uid: SECODashBackend.Services.Scheduler
+  commentId: N:SECODashBackend.Services.Scheduler
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Scheduler
+  nameWithType: SECODashBackend.Services.Scheduler
+  fullName: SECODashBackend.Services.Scheduler
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Scheduler
+    name: Scheduler
+    href: SECODashBackend.Services.Scheduler.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Scheduler
+    name: Scheduler
+    href: SECODashBackend.Services.Scheduler.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.#ctor*
+  commentId: Overload:SECODashBackend.Services.Scheduler.HangfireScheduler.#ctor
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html#SECODashBackend_Services_Scheduler_HangfireScheduler__ctor_Microsoft_Extensions_Logging_ILogger_SECODashBackend_Services_Scheduler_HangfireScheduler__Hangfire_IRecurringJobManager_SECODashBackend_Services_Projects_IProjectsService_
+  name: HangfireScheduler
+  nameWithType: HangfireScheduler.HangfireScheduler
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.HangfireScheduler
+  nameWithType.vb: HangfireScheduler.New
+  fullName.vb: SECODashBackend.Services.Scheduler.HangfireScheduler.New
+  name.vb: New
+- uid: Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Scheduler.HangfireScheduler}
+  commentId: T:Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Scheduler.HangfireScheduler}
+  parent: Microsoft.Extensions.Logging
+  definition: Microsoft.Extensions.Logging.ILogger`1
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<HangfireScheduler>
+  nameWithType: ILogger<HangfireScheduler>
+  fullName: Microsoft.Extensions.Logging.ILogger<SECODashBackend.Services.Scheduler.HangfireScheduler>
+  nameWithType.vb: ILogger(Of HangfireScheduler)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of SECODashBackend.Services.Scheduler.HangfireScheduler)
+  name.vb: ILogger(Of HangfireScheduler)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - uid: SECODashBackend.Services.Scheduler.HangfireScheduler
+    name: HangfireScheduler
+    href: SECODashBackend.Services.Scheduler.HangfireScheduler.html
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Services.Scheduler.HangfireScheduler
+    name: HangfireScheduler
+    href: SECODashBackend.Services.Scheduler.HangfireScheduler.html
+  - name: )
+- uid: Hangfire.IRecurringJobManager
+  commentId: T:Hangfire.IRecurringJobManager
+  parent: Hangfire
+  isExternal: true
+  name: IRecurringJobManager
+  nameWithType: IRecurringJobManager
+  fullName: Hangfire.IRecurringJobManager
+- uid: SECODashBackend.Services.Projects.IProjectsService
+  commentId: T:SECODashBackend.Services.Projects.IProjectsService
+  parent: SECODashBackend.Services.Projects
+  href: SECODashBackend.Services.Projects.IProjectsService.html
+  name: IProjectsService
+  nameWithType: IProjectsService
+  fullName: SECODashBackend.Services.Projects.IProjectsService
+- uid: Microsoft.Extensions.Logging.ILogger`1
+  commentId: T:Microsoft.Extensions.Logging.ILogger`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<TCategoryName>
+  nameWithType: ILogger<TCategoryName>
+  fullName: Microsoft.Extensions.Logging.ILogger<TCategoryName>
+  nameWithType.vb: ILogger(Of TCategoryName)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of TCategoryName)
+  name.vb: ILogger(Of TCategoryName)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - name: TCategoryName
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TCategoryName
+  - name: )
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: Hangfire
+  commentId: N:Hangfire
+  isExternal: true
+  name: Hangfire
+  nameWithType: Hangfire
+  fullName: Hangfire
+- uid: SECODashBackend.Services.Projects
+  commentId: N:SECODashBackend.Services.Projects
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Projects
+  nameWithType: SECODashBackend.Services.Projects
+  fullName: SECODashBackend.Services.Projects
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Projects
+    name: Projects
+    href: SECODashBackend.Services.Projects.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Projects
+    name: Projects
+    href: SECODashBackend.Services.Projects.html
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob*
+  commentId: Overload:SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html#SECODashBackend_Services_Scheduler_HangfireScheduler_AddOrUpdateRecurringTopicMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  name: AddOrUpdateRecurringTopicMiningJob
+  nameWithType: HangfireScheduler.AddOrUpdateRecurringTopicMiningJob
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringTopicMiningJob
+- uid: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  commentId: M:SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  parent: SECODashBackend.Services.Scheduler.IScheduler
+  isExternal: true
+  href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddOrUpdateRecurringTopicMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  name: AddOrUpdateRecurringTopicMiningJob(string, string, int, MiningFrequency)
+  nameWithType: IScheduler.AddOrUpdateRecurringTopicMiningJob(string, string, int, MiningFrequency)
+  fullName: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringTopicMiningJob(string, string, int, SECODashBackend.Services.Scheduler.MiningFrequency)
+  nameWithType.vb: IScheduler.AddOrUpdateRecurringTopicMiningJob(String, String, Integer, MiningFrequency)
+  fullName.vb: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringTopicMiningJob(String, String, Integer, SECODashBackend.Services.Scheduler.MiningFrequency)
+  name.vb: AddOrUpdateRecurringTopicMiningJob(String, String, Integer, MiningFrequency)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+    name: AddOrUpdateRecurringTopicMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddOrUpdateRecurringTopicMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: SECODashBackend.Services.Scheduler.MiningFrequency
+    name: MiningFrequency
+    href: SECODashBackend.Services.Scheduler.MiningFrequency.html
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringTopicMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+    name: AddOrUpdateRecurringTopicMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddOrUpdateRecurringTopicMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: SECODashBackend.Services.Scheduler.MiningFrequency
+    name: MiningFrequency
+    href: SECODashBackend.Services.Scheduler.MiningFrequency.html
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency
+  commentId: T:SECODashBackend.Services.Scheduler.MiningFrequency
+  parent: SECODashBackend.Services.Scheduler
+  href: SECODashBackend.Services.Scheduler.MiningFrequency.html
+  name: MiningFrequency
+  nameWithType: MiningFrequency
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob*
+  commentId: Overload:SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html#SECODashBackend_Services_Scheduler_HangfireScheduler_AddOrUpdateRecurringKeywordMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  name: AddOrUpdateRecurringKeywordMiningJob
+  nameWithType: HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.AddOrUpdateRecurringKeywordMiningJob
+- uid: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  commentId: M:SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+  parent: SECODashBackend.Services.Scheduler.IScheduler
+  isExternal: true
+  href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddOrUpdateRecurringKeywordMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  name: AddOrUpdateRecurringKeywordMiningJob(string, string, int, MiningFrequency)
+  nameWithType: IScheduler.AddOrUpdateRecurringKeywordMiningJob(string, string, int, MiningFrequency)
+  fullName: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringKeywordMiningJob(string, string, int, SECODashBackend.Services.Scheduler.MiningFrequency)
+  nameWithType.vb: IScheduler.AddOrUpdateRecurringKeywordMiningJob(String, String, Integer, MiningFrequency)
+  fullName.vb: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringKeywordMiningJob(String, String, Integer, SECODashBackend.Services.Scheduler.MiningFrequency)
+  name.vb: AddOrUpdateRecurringKeywordMiningJob(String, String, Integer, MiningFrequency)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+    name: AddOrUpdateRecurringKeywordMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddOrUpdateRecurringKeywordMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: SECODashBackend.Services.Scheduler.MiningFrequency
+    name: MiningFrequency
+    href: SECODashBackend.Services.Scheduler.MiningFrequency.html
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.AddOrUpdateRecurringKeywordMiningJob(System.String,System.String,System.Int32,SECODashBackend.Services.Scheduler.MiningFrequency)
+    name: AddOrUpdateRecurringKeywordMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddOrUpdateRecurringKeywordMiningJob_System_String_System_String_System_Int32_SECODashBackend_Services_Scheduler_MiningFrequency_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: SECODashBackend.Services.Scheduler.MiningFrequency
+    name: MiningFrequency
+    href: SECODashBackend.Services.Scheduler.MiningFrequency.html
+  - name: )
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob*
+  commentId: Overload:SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html#SECODashBackend_Services_Scheduler_HangfireScheduler_RemoveRecurringTopicMiningJob_System_String_
+  name: RemoveRecurringTopicMiningJob
+  nameWithType: HangfireScheduler.RemoveRecurringTopicMiningJob
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTopicMiningJob
+- uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTopicMiningJob(System.String)
+  commentId: M:SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTopicMiningJob(System.String)
+  parent: SECODashBackend.Services.Scheduler.IScheduler
+  isExternal: true
+  href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringTopicMiningJob_System_String_
+  name: RemoveRecurringTopicMiningJob(string)
+  nameWithType: IScheduler.RemoveRecurringTopicMiningJob(string)
+  fullName: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTopicMiningJob(string)
+  nameWithType.vb: IScheduler.RemoveRecurringTopicMiningJob(String)
+  fullName.vb: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTopicMiningJob(String)
+  name.vb: RemoveRecurringTopicMiningJob(String)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTopicMiningJob(System.String)
+    name: RemoveRecurringTopicMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringTopicMiningJob_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTopicMiningJob(System.String)
+    name: RemoveRecurringTopicMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringTopicMiningJob_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob*
+  commentId: Overload:SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html#SECODashBackend_Services_Scheduler_HangfireScheduler_RemoveRecurringKeywordMiningJob_System_String_
+  name: RemoveRecurringKeywordMiningJob
+  nameWithType: HangfireScheduler.RemoveRecurringKeywordMiningJob
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringKeywordMiningJob
+- uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringKeywordMiningJob(System.String)
+  commentId: M:SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringKeywordMiningJob(System.String)
+  parent: SECODashBackend.Services.Scheduler.IScheduler
+  isExternal: true
+  href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringKeywordMiningJob_System_String_
+  name: RemoveRecurringKeywordMiningJob(string)
+  nameWithType: IScheduler.RemoveRecurringKeywordMiningJob(string)
+  fullName: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringKeywordMiningJob(string)
+  nameWithType.vb: IScheduler.RemoveRecurringKeywordMiningJob(String)
+  fullName.vb: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringKeywordMiningJob(String)
+  name.vb: RemoveRecurringKeywordMiningJob(String)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringKeywordMiningJob(System.String)
+    name: RemoveRecurringKeywordMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringKeywordMiningJob_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringKeywordMiningJob(System.String)
+    name: RemoveRecurringKeywordMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringKeywordMiningJob_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob*
+  commentId: Overload:SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html#SECODashBackend_Services_Scheduler_HangfireScheduler_AddRecurringTaxonomyMiningJob_System_String_System_Collections_Generic_List_System_String__System_Int32_System_Int32_
+  name: AddRecurringTaxonomyMiningJob
+  nameWithType: HangfireScheduler.AddRecurringTaxonomyMiningJob
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.AddRecurringTaxonomyMiningJob
+- uid: SECODashBackend.Services.Scheduler.IScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+  commentId: M:SECODashBackend.Services.Scheduler.IScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+  parent: SECODashBackend.Services.Scheduler.IScheduler
+  isExternal: true
+  href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddRecurringTaxonomyMiningJob_System_String_System_Collections_Generic_List_System_String__System_Int32_System_Int32_
+  name: AddRecurringTaxonomyMiningJob(string, List<string>, int, int)
+  nameWithType: IScheduler.AddRecurringTaxonomyMiningJob(string, List<string>, int, int)
+  fullName: SECODashBackend.Services.Scheduler.IScheduler.AddRecurringTaxonomyMiningJob(string, System.Collections.Generic.List<string>, int, int)
+  nameWithType.vb: IScheduler.AddRecurringTaxonomyMiningJob(String, List(Of String), Integer, Integer)
+  fullName.vb: SECODashBackend.Services.Scheduler.IScheduler.AddRecurringTaxonomyMiningJob(String, System.Collections.Generic.List(Of String), Integer, Integer)
+  name.vb: AddRecurringTaxonomyMiningJob(String, List(Of String), Integer, Integer)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+    name: AddRecurringTaxonomyMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddRecurringTaxonomyMiningJob_System_String_System_Collections_Generic_List_System_String__System_Int32_System_Int32_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.AddRecurringTaxonomyMiningJob(System.String,System.Collections.Generic.List{System.String},System.Int32,System.Int32)
+    name: AddRecurringTaxonomyMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_AddRecurringTaxonomyMiningJob_System_String_System_Collections_Generic_List_System_String__System_Int32_System_Int32_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob*
+  commentId: Overload:SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html#SECODashBackend_Services_Scheduler_HangfireScheduler_RemoveRecurringTaxonomyMiningJob_System_String_
+  name: RemoveRecurringTaxonomyMiningJob
+  nameWithType: HangfireScheduler.RemoveRecurringTaxonomyMiningJob
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler.RemoveRecurringTaxonomyMiningJob
+- uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+  commentId: M:SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+  parent: SECODashBackend.Services.Scheduler.IScheduler
+  isExternal: true
+  href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringTaxonomyMiningJob_System_String_
+  name: RemoveRecurringTaxonomyMiningJob(string)
+  nameWithType: IScheduler.RemoveRecurringTaxonomyMiningJob(string)
+  fullName: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTaxonomyMiningJob(string)
+  nameWithType.vb: IScheduler.RemoveRecurringTaxonomyMiningJob(String)
+  fullName.vb: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTaxonomyMiningJob(String)
+  name.vb: RemoveRecurringTaxonomyMiningJob(String)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+    name: RemoveRecurringTaxonomyMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringTaxonomyMiningJob_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Scheduler.IScheduler.RemoveRecurringTaxonomyMiningJob(System.String)
+    name: RemoveRecurringTaxonomyMiningJob
+    href: SECODashBackend.Services.Scheduler.IScheduler.html#SECODashBackend_Services_Scheduler_IScheduler_RemoveRecurringTaxonomyMiningJob_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )

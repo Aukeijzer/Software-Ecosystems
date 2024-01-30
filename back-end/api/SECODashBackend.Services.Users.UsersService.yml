@@ -1,0 +1,1119 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Users.UsersService
+  commentId: T:SECODashBackend.Services.Users.UsersService
+  id: UsersService
+  parent: SECODashBackend.Services.Users
+  children:
+  - SECODashBackend.Services.Users.UsersService.#ctor(SECODashBackend.Database.EcosystemsContext,Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Users.UsersService})
+  - SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem(System.String,System.String,System.String)
+  - SECODashBackend.Services.Users.UsersService.AddUserAsync(System.String,System.String)
+  - SECODashBackend.Services.Users.UsersService.GetAllAsync
+  - SECODashBackend.Services.Users.UsersService.GetByNameAsync(System.String)
+  - SECODashBackend.Services.Users.UsersService.LoginRequest(System.String,System.String)
+  - SECODashBackend.Services.Users.UsersService.RemoveById(System.String)
+  - SECODashBackend.Services.Users.UsersService.UpdateUserType(System.String,SECODashBackend.Models.User.UserType)
+  langs:
+  - csharp
+  - vb
+  name: UsersService
+  nameWithType: UsersService
+  fullName: SECODashBackend.Services.Users.UsersService
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UsersService
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 10
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: This service is responsible for handling all user-related requests.
+  example: []
+  syntax:
+    content: public class UsersService
+    content.vb: Public Class UsersService
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SECODashBackend.Services.Users.UsersService.#ctor(SECODashBackend.Database.EcosystemsContext,Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Users.UsersService})
+  commentId: M:SECODashBackend.Services.Users.UsersService.#ctor(SECODashBackend.Database.EcosystemsContext,Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Users.UsersService})
+  id: '#ctor(SECODashBackend.Database.EcosystemsContext,Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Users.UsersService})'
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: UsersService(EcosystemsContext, ILogger<UsersService>)
+  nameWithType: UsersService.UsersService(EcosystemsContext, ILogger<UsersService>)
+  fullName: SECODashBackend.Services.Users.UsersService.UsersService(SECODashBackend.Database.EcosystemsContext, Microsoft.Extensions.Logging.ILogger<SECODashBackend.Services.Users.UsersService>)
+  type: Constructor
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: .ctor
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 10
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: This service is responsible for handling all user-related requests.
+  example: []
+  syntax:
+    content: public UsersService(EcosystemsContext userContext, ILogger<UsersService> _logger)
+    parameters:
+    - id: userContext
+      type: SECODashBackend.Database.EcosystemsContext
+      description: Is used to interact with the database.
+    - id: _logger
+      type: Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Users.UsersService}
+    content.vb: Public Sub New(userContext As EcosystemsContext, _logger As ILogger(Of UsersService))
+  overload: SECODashBackend.Services.Users.UsersService.#ctor*
+  nameWithType.vb: UsersService.New(EcosystemsContext, ILogger(Of UsersService))
+  fullName.vb: SECODashBackend.Services.Users.UsersService.New(SECODashBackend.Database.EcosystemsContext, Microsoft.Extensions.Logging.ILogger(Of SECODashBackend.Services.Users.UsersService))
+  name.vb: New(EcosystemsContext, ILogger(Of UsersService))
+- uid: SECODashBackend.Services.Users.UsersService.GetAllAsync
+  commentId: M:SECODashBackend.Services.Users.UsersService.GetAllAsync
+  id: GetAllAsync
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: GetAllAsync()
+  nameWithType: UsersService.GetAllAsync()
+  fullName: SECODashBackend.Services.Users.UsersService.GetAllAsync()
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetAllAsync
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 16
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: Retrieve all users from the database.
+  example: []
+  syntax:
+    content: public Task<List<User>> GetAllAsync()
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Models.User}}
+      description: <xref href="System.Collections.Generic.List%601" data-throw-if-not-resolved="false"></xref> of type <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref>.
+    content.vb: Public Function GetAllAsync() As Task(Of List(Of User))
+  overload: SECODashBackend.Services.Users.UsersService.GetAllAsync*
+- uid: SECODashBackend.Services.Users.UsersService.AddUserAsync(System.String,System.String)
+  commentId: M:SECODashBackend.Services.Users.UsersService.AddUserAsync(System.String,System.String)
+  id: AddUserAsync(System.String,System.String)
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: AddUserAsync(string, string)
+  nameWithType: UsersService.AddUserAsync(string, string)
+  fullName: SECODashBackend.Services.Users.UsersService.AddUserAsync(string, string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddUserAsync
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 30
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: >-
+    Add a user to the database using a given id and username.
+
+    All new users start as User.
+  example: []
+  syntax:
+    content: public Task AddUserAsync(string id, string userName)
+    parameters:
+    - id: id
+      type: System.String
+      description: The Id as <xref href="System.String" data-throw-if-not-resolved="false"></xref> generated by the login provider.
+    - id: userName
+      type: System.String
+      description: The UserName as <xref href="System.String" data-throw-if-not-resolved="false"></xref> provided by the user.
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function AddUserAsync(id As String, userName As String) As Task
+  overload: SECODashBackend.Services.Users.UsersService.AddUserAsync*
+  nameWithType.vb: UsersService.AddUserAsync(String, String)
+  fullName.vb: SECODashBackend.Services.Users.UsersService.AddUserAsync(String, String)
+  name.vb: AddUserAsync(String, String)
+- uid: SECODashBackend.Services.Users.UsersService.GetByNameAsync(System.String)
+  commentId: M:SECODashBackend.Services.Users.UsersService.GetByNameAsync(System.String)
+  id: GetByNameAsync(System.String)
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: GetByNameAsync(string)
+  nameWithType: UsersService.GetByNameAsync(string)
+  fullName: SECODashBackend.Services.Users.UsersService.GetByNameAsync(string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetByNameAsync
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 45
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: This method returns the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> with the provided UserName.
+  example: []
+  syntax:
+    content: public Task<User?> GetByNameAsync(string userName)
+    parameters:
+    - id: userName
+      type: System.String
+      description: The userName of the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> to lookup in the database, provided as <xref href="System.String" data-throw-if-not-resolved="false"></xref>.
+    return:
+      type: System.Threading.Tasks.Task{SECODashBackend.Models.User}
+      description: Returns the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> if it is present in the database. Returns null if not found.
+    content.vb: Public Function GetByNameAsync(userName As String) As Task(Of User)
+  overload: SECODashBackend.Services.Users.UsersService.GetByNameAsync*
+  nameWithType.vb: UsersService.GetByNameAsync(String)
+  fullName.vb: SECODashBackend.Services.Users.UsersService.GetByNameAsync(String)
+  name.vb: GetByNameAsync(String)
+- uid: SECODashBackend.Services.Users.UsersService.RemoveById(System.String)
+  commentId: M:SECODashBackend.Services.Users.UsersService.RemoveById(System.String)
+  id: RemoveById(System.String)
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: RemoveById(string)
+  nameWithType: UsersService.RemoveById(string)
+  fullName: SECODashBackend.Services.Users.UsersService.RemoveById(string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: RemoveById
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 55
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: This method removes the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> with the provided Id from the database.
+  example: []
+  syntax:
+    content: public Task RemoveById(string id)
+    parameters:
+    - id: id
+      type: System.String
+      description: The Id of the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> to remove from the database, provided as <xref href="System.String" data-throw-if-not-resolved="false"></xref>.
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function RemoveById(id As String) As Task
+  overload: SECODashBackend.Services.Users.UsersService.RemoveById*
+  nameWithType.vb: UsersService.RemoveById(String)
+  fullName.vb: SECODashBackend.Services.Users.UsersService.RemoveById(String)
+  name.vb: RemoveById(String)
+- uid: SECODashBackend.Services.Users.UsersService.LoginRequest(System.String,System.String)
+  commentId: M:SECODashBackend.Services.Users.UsersService.LoginRequest(System.String,System.String)
+  id: LoginRequest(System.String,System.String)
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: LoginRequest(string, string)
+  nameWithType: UsersService.LoginRequest(string, string)
+  fullName: SECODashBackend.Services.Users.UsersService.LoginRequest(string, string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: LoginRequest
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 68
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: >-
+    This method handles the Login requests received.
+
+    If the User exists, return the UserType. Otherwise create a new User and then return the UserType.
+  example: []
+  syntax:
+    content: public Task<UserPermissionsDto> LoginRequest(string id, string userName)
+    parameters:
+    - id: id
+      type: System.String
+      description: The Id of the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> that is trying to log in.
+    - id: userName
+      type: System.String
+      description: The UserName of the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> that is trying to log in.
+    return:
+      type: System.Threading.Tasks.Task{SECODashBackend.Dtos.User.UserPermissionsDto}
+      description: Returns the <xref href="SECODashBackend.Models.User.Type" data-throw-if-not-resolved="false"></xref> of the <xref href="SECODashBackend.Models.User" data-throw-if-not-resolved="false"></xref> that is logging in.
+    content.vb: Public Function LoginRequest(id As String, userName As String) As Task(Of UserPermissionsDto)
+  overload: SECODashBackend.Services.Users.UsersService.LoginRequest*
+  nameWithType.vb: UsersService.LoginRequest(String, String)
+  fullName.vb: SECODashBackend.Services.Users.UsersService.LoginRequest(String, String)
+  name.vb: LoginRequest(String, String)
+- uid: SECODashBackend.Services.Users.UsersService.UpdateUserType(System.String,SECODashBackend.Models.User.UserType)
+  commentId: M:SECODashBackend.Services.Users.UsersService.UpdateUserType(System.String,SECODashBackend.Models.User.UserType)
+  id: UpdateUserType(System.String,SECODashBackend.Models.User.UserType)
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: UpdateUserType(string, UserType)
+  nameWithType: UsersService.UpdateUserType(string, User.UserType)
+  fullName: SECODashBackend.Services.Users.UsersService.UpdateUserType(string, SECODashBackend.Models.User.UserType)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UpdateUserType
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 94
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: Change the UserType of the provided UserName to the new UserType.
+  example: []
+  syntax:
+    content: public Task<string> UpdateUserType(string userName, User.UserType newUserType)
+    parameters:
+    - id: userName
+      type: System.String
+    - id: newUserType
+      type: SECODashBackend.Models.User.UserType
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+    content.vb: Public Function UpdateUserType(userName As String, newUserType As User.UserType) As Task(Of String)
+  overload: SECODashBackend.Services.Users.UsersService.UpdateUserType*
+  nameWithType.vb: UsersService.UpdateUserType(String, User.UserType)
+  fullName.vb: SECODashBackend.Services.Users.UsersService.UpdateUserType(String, SECODashBackend.Models.User.UserType)
+  name.vb: UpdateUserType(String, UserType)
+- uid: SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem(System.String,System.String,System.String)
+  commentId: M:SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem(System.String,System.String,System.String)
+  id: AddEditorToEcosystem(System.String,System.String,System.String)
+  parent: SECODashBackend.Services.Users.UsersService
+  langs:
+  - csharp
+  - vb
+  name: AddEditorToEcosystem(string, string, string)
+  nameWithType: UsersService.AddEditorToEcosystem(string, string, string)
+  fullName: SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem(string, string, string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Users/UsersService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddEditorToEcosystem
+    path: back-end/Services/Users/UsersService.cs
+    startLine: 113
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Users
+  summary: Add an Admin to an ecosystem as an editor.
+  example: []
+  syntax:
+    content: public Task<string> AddEditorToEcosystem(string rootAdminId, string userName, string topEcosystem)
+    parameters:
+    - id: rootAdminId
+      type: System.String
+    - id: userName
+      type: System.String
+    - id: topEcosystem
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+    content.vb: Public Function AddEditorToEcosystem(rootAdminId As String, userName As String, topEcosystem As String) As Task(Of String)
+  overload: SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem*
+  nameWithType.vb: UsersService.AddEditorToEcosystem(String, String, String)
+  fullName.vb: SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem(String, String, String)
+  name.vb: AddEditorToEcosystem(String, String, String)
+references:
+- uid: SECODashBackend.Services.Users
+  commentId: N:SECODashBackend.Services.Users
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Users
+  nameWithType: SECODashBackend.Services.Users
+  fullName: SECODashBackend.Services.Users
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Users
+    name: Users
+    href: SECODashBackend.Services.Users.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Users
+    name: Users
+    href: SECODashBackend.Services.Users.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Services.Users.UsersService.#ctor*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.#ctor
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService__ctor_SECODashBackend_Database_EcosystemsContext_Microsoft_Extensions_Logging_ILogger_SECODashBackend_Services_Users_UsersService__
+  name: UsersService
+  nameWithType: UsersService.UsersService
+  fullName: SECODashBackend.Services.Users.UsersService.UsersService
+  nameWithType.vb: UsersService.New
+  fullName.vb: SECODashBackend.Services.Users.UsersService.New
+  name.vb: New
+- uid: SECODashBackend.Database.EcosystemsContext
+  commentId: T:SECODashBackend.Database.EcosystemsContext
+  parent: SECODashBackend.Database
+  href: SECODashBackend.Database.EcosystemsContext.html
+  name: EcosystemsContext
+  nameWithType: EcosystemsContext
+  fullName: SECODashBackend.Database.EcosystemsContext
+- uid: Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Users.UsersService}
+  commentId: T:Microsoft.Extensions.Logging.ILogger{SECODashBackend.Services.Users.UsersService}
+  parent: Microsoft.Extensions.Logging
+  definition: Microsoft.Extensions.Logging.ILogger`1
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<UsersService>
+  nameWithType: ILogger<UsersService>
+  fullName: Microsoft.Extensions.Logging.ILogger<SECODashBackend.Services.Users.UsersService>
+  nameWithType.vb: ILogger(Of UsersService)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of SECODashBackend.Services.Users.UsersService)
+  name.vb: ILogger(Of UsersService)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - uid: SECODashBackend.Services.Users.UsersService
+    name: UsersService
+    href: SECODashBackend.Services.Users.UsersService.html
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Services.Users.UsersService
+    name: UsersService
+    href: SECODashBackend.Services.Users.UsersService.html
+  - name: )
+- uid: SECODashBackend.Database
+  commentId: N:SECODashBackend.Database
+  href: SECODashBackend.html
+  name: SECODashBackend.Database
+  nameWithType: SECODashBackend.Database
+  fullName: SECODashBackend.Database
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Database
+    name: Database
+    href: SECODashBackend.Database.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Database
+    name: Database
+    href: SECODashBackend.Database.html
+- uid: Microsoft.Extensions.Logging.ILogger`1
+  commentId: T:Microsoft.Extensions.Logging.ILogger`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<TCategoryName>
+  nameWithType: ILogger<TCategoryName>
+  fullName: Microsoft.Extensions.Logging.ILogger<TCategoryName>
+  nameWithType.vb: ILogger(Of TCategoryName)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of TCategoryName)
+  name.vb: ILogger(Of TCategoryName)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - name: TCategoryName
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TCategoryName
+  - name: )
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SECODashBackend.Models.User
+  commentId: T:SECODashBackend.Models.User
+  href: SECODashBackend.Models.User.html
+  name: User
+  nameWithType: User
+  fullName: SECODashBackend.Models.User
+- uid: SECODashBackend.Services.Users.UsersService.GetAllAsync*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.GetAllAsync
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService_GetAllAsync
+  name: GetAllAsync
+  nameWithType: UsersService.GetAllAsync
+  fullName: SECODashBackend.Services.Users.UsersService.GetAllAsync
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Models.User}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Models.User}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<List<User>>
+  nameWithType: Task<List<User>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.List<SECODashBackend.Models.User>>
+  nameWithType.vb: Task(Of List(Of User))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.List(Of SECODashBackend.Models.User))
+  name.vb: Task(Of List(Of User))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: )
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SECODashBackend.Services.Users.UsersService.AddUserAsync*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.AddUserAsync
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService_AddUserAsync_System_String_System_String_
+  name: AddUserAsync
+  nameWithType: UsersService.AddUserAsync
+  fullName: SECODashBackend.Services.Users.UsersService.AddUserAsync
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: SECODashBackend.Services.Users.UsersService.GetByNameAsync*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.GetByNameAsync
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService_GetByNameAsync_System_String_
+  name: GetByNameAsync
+  nameWithType: UsersService.GetByNameAsync
+  fullName: SECODashBackend.Services.Users.UsersService.GetByNameAsync
+- uid: System.Threading.Tasks.Task{SECODashBackend.Models.User}
+  commentId: T:System.Threading.Tasks.Task{SECODashBackend.Models.User}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<User>
+  nameWithType: Task<User>
+  fullName: System.Threading.Tasks.Task<SECODashBackend.Models.User>
+  nameWithType.vb: Task(Of User)
+  fullName.vb: System.Threading.Tasks.Task(Of SECODashBackend.Models.User)
+  name.vb: Task(Of User)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: )
+- uid: SECODashBackend.Services.Users.UsersService.RemoveById*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.RemoveById
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService_RemoveById_System_String_
+  name: RemoveById
+  nameWithType: UsersService.RemoveById
+  fullName: SECODashBackend.Services.Users.UsersService.RemoveById
+- uid: SECODashBackend.Models.User.Type
+  commentId: P:SECODashBackend.Models.User.Type
+  href: SECODashBackend.Models.User.html#SECODashBackend_Models_User_Type
+  name: Type
+  nameWithType: User.Type
+  fullName: SECODashBackend.Models.User.Type
+- uid: SECODashBackend.Services.Users.UsersService.LoginRequest*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.LoginRequest
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService_LoginRequest_System_String_System_String_
+  name: LoginRequest
+  nameWithType: UsersService.LoginRequest
+  fullName: SECODashBackend.Services.Users.UsersService.LoginRequest
+- uid: System.Threading.Tasks.Task{SECODashBackend.Dtos.User.UserPermissionsDto}
+  commentId: T:System.Threading.Tasks.Task{SECODashBackend.Dtos.User.UserPermissionsDto}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<UserPermissionsDto>
+  nameWithType: Task<UserPermissionsDto>
+  fullName: System.Threading.Tasks.Task<SECODashBackend.Dtos.User.UserPermissionsDto>
+  nameWithType.vb: Task(Of UserPermissionsDto)
+  fullName.vb: System.Threading.Tasks.Task(Of SECODashBackend.Dtos.User.UserPermissionsDto)
+  name.vb: Task(Of UserPermissionsDto)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: SECODashBackend.Dtos.User.UserPermissionsDto
+    name: UserPermissionsDto
+    href: SECODashBackend.Dtos.User.UserPermissionsDto.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.User.UserPermissionsDto
+    name: UserPermissionsDto
+    href: SECODashBackend.Dtos.User.UserPermissionsDto.html
+  - name: )
+- uid: SECODashBackend.Services.Users.UsersService.UpdateUserType*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.UpdateUserType
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService_UpdateUserType_System_String_SECODashBackend_Models_User_UserType_
+  name: UpdateUserType
+  nameWithType: UsersService.UpdateUserType
+  fullName: SECODashBackend.Services.Users.UsersService.UpdateUserType
+- uid: SECODashBackend.Models.User.UserType
+  commentId: T:SECODashBackend.Models.User.UserType
+  parent: SECODashBackend.Models
+  href: SECODashBackend.Models.User.html
+  name: User.UserType
+  nameWithType: User.UserType
+  fullName: SECODashBackend.Models.User.UserType
+  spec.csharp:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html
+  spec.vb:
+  - uid: SECODashBackend.Models.User
+    name: User
+    href: SECODashBackend.Models.User.html
+  - name: .
+  - uid: SECODashBackend.Models.User.UserType
+    name: UserType
+    href: SECODashBackend.Models.User.UserType.html
+- uid: System.Threading.Tasks.Task{System.String}
+  commentId: T:System.Threading.Tasks.Task{System.String}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<string>
+  nameWithType: Task<string>
+  fullName: System.Threading.Tasks.Task<string>
+  nameWithType.vb: Task(Of String)
+  fullName.vb: System.Threading.Tasks.Task(Of String)
+  name.vb: Task(Of String)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: SECODashBackend.Models
+  commentId: N:SECODashBackend.Models
+  href: SECODashBackend.html
+  name: SECODashBackend.Models
+  nameWithType: SECODashBackend.Models
+  fullName: SECODashBackend.Models
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Models
+    name: Models
+    href: SECODashBackend.Models.html
+- uid: SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem*
+  commentId: Overload:SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem
+  href: SECODashBackend.Services.Users.UsersService.html#SECODashBackend_Services_Users_UsersService_AddEditorToEcosystem_System_String_System_String_System_String_
+  name: AddEditorToEcosystem
+  nameWithType: UsersService.AddEditorToEcosystem
+  fullName: SECODashBackend.Services.Users.UsersService.AddEditorToEcosystem

@@ -1,3 +1,23 @@
+/*
+Copyright (C) <2024> <OdinDash>
+
+This file is part of SECODash
+
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 "use client"
 
 /**
@@ -20,7 +40,7 @@
  */
 import { Alert } from 'flowbite-react'
 import Card from './card'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { HiInformationCircle } from 'react-icons/hi'
 
 interface InfoCardProps {
@@ -33,6 +53,7 @@ interface InfoCardProps {
     remove?: boolean,
     onRemove?: any,
     ecoystem?: string
+    children?: ReactNode
 }
 
 export default function InfoCard(props: InfoCardProps) {
@@ -43,7 +64,7 @@ export default function InfoCard(props: InfoCardProps) {
         func = props.onClick;
     }
     return (
-        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal cursor-pointer ' + props.className}>
+        <Card onClick={() => func(props.title)} className={'relative w-full h-full p-2 justify-normal' + props.className}>
             <div className="absolute top-0 left-0 w-full h-2 bg-skew" style={{ backgroundColor: props.Color }}> </div>
             
             {props.remove && 
@@ -52,9 +73,11 @@ export default function InfoCard(props: InfoCardProps) {
             </div>
             }
 
-            <h5 className="flex text-2xl font-bold tracking-tight text-gray-900">
+            <h5 className="flex text-2xl justify-center w-full m-3 font-medium text-gray-900 tracking-tight text-gray-900">
                 {props.title}   
             </h5>
+
+            {props.children? props.children : <></>}
 
             {props.alert && <Alert color="green" icon={HiInformationCircle} rounded className='mb-2 text-yellow-700 bg-yellow-100 border-yellow-500 dark:bg-yellow-200 dark:text-yellow-800'> <p>{props.alert}  </p></Alert>}
             <div className='mt-3'>

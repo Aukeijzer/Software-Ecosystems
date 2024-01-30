@@ -1,4 +1,21 @@
 """
+Copyright (C) <2024> <OdinDash>
+ 
+This file is part of SECODash
+ 
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+ 
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+ 
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
 Module: test_topic_service
 
 This module defines tests for the topic_service.py module
@@ -26,7 +43,39 @@ class TestTopicService(unittest.TestCase):
     """
      A class for testing the functionality of the topic_service module.
     """
-    def test_extract_topics_integration(self):
+    def test_extract_topics_bertopic_integration(self):
+        """
+        Test the extract_topics+bertopic method by mocking dependent functions
+        and checking the interactions.
+        """
+        # Mock preprocessDocs function
+        preprocess_docs_mock = MagicMock()
+        preprocess_docs_mock.return_value = ["processed_doc_1",
+                                            "processed_doc_2"]
+
+        # Mock extract_topics_bertopic function
+        extract_topics_bertopic_mock = MagicMock()
+        extract_topics_bertopic_mock.return_value = [
+            {"topics": ["Quantum", "Agriculture", "AI"]},
+            {"topics": ["Software", "Hardware", "Mobile Application"]},
+        ]
+
+        # Patch the functions with the mock functions
+        with unittest.mock.patch('topic_service.preprocess_docs',
+                                 preprocess_docs_mock), \
+             unittest.mock.patch('topic_service.extract_topics_bertopic',
+                                 extract_topics_bertopic_mock):
+            # Create an instance of TopicService with mock data
+            topic_service = TopicService(mock_data)
+
+            # Call the extractTopics method
+            _ = topic_service.extract_topics_bertopic()
+
+            # Assertions
+            preprocess_docs_mock.assert_called_once()
+            extract_topics_bertopic_mock.assert_called_once()
+
+    def test_extract_topics_lda_integration(self):
         """
         Test the extract_topics method by mocking dependent functions and checking the interactions.
         """
@@ -56,14 +105,14 @@ class TestTopicService(unittest.TestCase):
                                  preprocess_docs_mock), \
              unittest.mock.patch('topic_service.extract_topics_lda',
                                  extract_topics_lda_mock), \
-             unittest.mock.patch('topic_service.map_topics',
+             unittest.mock.patch('topic_service.map_topics_cosine',
                                  map_topics_mock):
 
             # Create an instance of TopicService with mock data
             topic_service = TopicService(mock_data)
 
             # Call the extractTopics method
-            _ = topic_service.extract_topics()
+            _ = topic_service.extract_topics_lda()
 
             # Assertions
             preprocess_docs_mock.assert_called_once()
@@ -79,16 +128,14 @@ class TestTopicService(unittest.TestCase):
             result_json = file.read()
 
         # Convert the JSON string to a dictionary
-        result_dict = json.loads(result_json)
+        result = json.loads(result_json)
 
         # Type checks on the structure
-        self.assertIsInstance(result_dict, dict)
-        self.assertIn('result', result_dict)
-        self.assertIsInstance(result_dict['result'], list)
+        self.assertIsInstance(result, list)
 
         # Check the project structure
-        for item in result_dict['result']:
-            self.assertIsInstance(item, dict)
+        for item in result:
+            self.assertIsInstance(item, object)
             self.assertIn('projectId', item)
             self.assertIsInstance(item['projectId'], str)
             self.assertIn('topics', item)
@@ -96,16 +143,7 @@ class TestTopicService(unittest.TestCase):
 
             # Check the topic structure
             for topic in item['topics']:
-                self.assertIsInstance(topic, dict)
-                self.assertIn('keywords', topic)
-                self.assertIsInstance(topic['keywords'], list)
-                self.assertIn('mapped_topic', topic)
-                self.assertIsInstance(topic['mapped_topic'], str)
-                self.assertIn('probability', topic)
-                self.assertIsInstance(topic['probability'], float)
-                self.assertIn('topicId', topic)
-                self.assertIsInstance(topic['topicId'], int)
-
+                self.assertIsInstance(topic, str)
 
 if __name__ == '__main__':
     unittest.main()

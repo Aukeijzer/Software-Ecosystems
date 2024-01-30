@@ -74,7 +74,6 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 */.idea*
-/spider/spider/Properties/launchSettings.json
 
 ###############
 
@@ -108,6 +107,9 @@ _[Ss]cripts
 /front-end/ecodash/.env.local
 /front-end/ecodash/.env.development
 /front-end/ecodash/.env.production
+.env.local
+.env.production
+.env.development
 
 # vercel
 /front-end/ecodash/.vercel

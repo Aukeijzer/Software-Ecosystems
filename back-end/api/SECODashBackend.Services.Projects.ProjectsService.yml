@@ -1,0 +1,1008 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Projects.ProjectsService
+  commentId: T:SECODashBackend.Services.Projects.ProjectsService
+  id: ProjectsService
+  parent: SECODashBackend.Services.Projects
+  children:
+  - SECODashBackend.Services.Projects.ProjectsService.#ctor(SECODashBackend.Services.ElasticSearch.IElasticsearchService,SECODashBackend.Services.Spider.ISpiderService,SECODashBackend.Services.DataProcessor.IDataProcessorService)
+  - SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+  - SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+  - SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ProjectsService
+  nameWithType: ProjectsService
+  fullName: SECODashBackend.Services.Projects.ProjectsService
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Services/Projects/ProjectsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: ProjectsService
+    path: back-end/Services/Projects/ProjectsService.cs
+    startLine: 12
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Projects
+  summary: >-
+    This service is responsible for requesting the Spider for projects, requesting the Data Processor for additional
+
+    topics and saving them to Elasticsearch.
+  example: []
+  syntax:
+    content: 'public class ProjectsService : IProjectsService'
+    content.vb: Public Class ProjectsService Implements IProjectsService
+  inheritance:
+  - System.Object
+  implements:
+  - SECODashBackend.Services.Projects.IProjectsService
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SECODashBackend.Services.Projects.ProjectsService.#ctor(SECODashBackend.Services.ElasticSearch.IElasticsearchService,SECODashBackend.Services.Spider.ISpiderService,SECODashBackend.Services.DataProcessor.IDataProcessorService)
+  commentId: M:SECODashBackend.Services.Projects.ProjectsService.#ctor(SECODashBackend.Services.ElasticSearch.IElasticsearchService,SECODashBackend.Services.Spider.ISpiderService,SECODashBackend.Services.DataProcessor.IDataProcessorService)
+  id: '#ctor(SECODashBackend.Services.ElasticSearch.IElasticsearchService,SECODashBackend.Services.Spider.ISpiderService,SECODashBackend.Services.DataProcessor.IDataProcessorService)'
+  parent: SECODashBackend.Services.Projects.ProjectsService
+  langs:
+  - csharp
+  - vb
+  name: ProjectsService(IElasticsearchService, ISpiderService, IDataProcessorService)
+  nameWithType: ProjectsService.ProjectsService(IElasticsearchService, ISpiderService, IDataProcessorService)
+  fullName: SECODashBackend.Services.Projects.ProjectsService.ProjectsService(SECODashBackend.Services.ElasticSearch.IElasticsearchService, SECODashBackend.Services.Spider.ISpiderService, SECODashBackend.Services.DataProcessor.IDataProcessorService)
+  type: Constructor
+  source:
+    remote:
+      path: back-end/back-end/Services/Projects/ProjectsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: .ctor
+    path: back-end/Services/Projects/ProjectsService.cs
+    startLine: 12
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Projects
+  summary: >-
+    This service is responsible for requesting the Spider for projects, requesting the Data Processor for additional
+
+    topics and saving them to Elasticsearch.
+  example: []
+  syntax:
+    content: public ProjectsService(IElasticsearchService elasticsearchService, ISpiderService spiderService, IDataProcessorService dataProcessorService)
+    parameters:
+    - id: elasticsearchService
+      type: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+    - id: spiderService
+      type: SECODashBackend.Services.Spider.ISpiderService
+    - id: dataProcessorService
+      type: SECODashBackend.Services.DataProcessor.IDataProcessorService
+    content.vb: Public Sub New(elasticsearchService As IElasticsearchService, spiderService As ISpiderService, dataProcessorService As IDataProcessorService)
+  overload: SECODashBackend.Services.Projects.ProjectsService.#ctor*
+  nameWithType.vb: ProjectsService.New(IElasticsearchService, ISpiderService, IDataProcessorService)
+  fullName.vb: SECODashBackend.Services.Projects.ProjectsService.New(SECODashBackend.Services.ElasticSearch.IElasticsearchService, SECODashBackend.Services.Spider.ISpiderService, SECODashBackend.Services.DataProcessor.IDataProcessorService)
+  name.vb: New(IElasticsearchService, ISpiderService, IDataProcessorService)
+- uid: SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+  commentId: M:SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+  id: MineByTopicAsync(System.String,System.String,System.Int32)
+  parent: SECODashBackend.Services.Projects.ProjectsService
+  langs:
+  - csharp
+  - vb
+  name: MineByTopicAsync(string, string, int)
+  nameWithType: ProjectsService.MineByTopicAsync(string, string, int)
+  fullName: SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync(string, string, int)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Projects/ProjectsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: MineByTopicAsync
+    path: back-end/Services/Projects/ProjectsService.cs
+    startLine: 23
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Projects
+  summary: >-
+    Requests the Spider for projects related to the given topic, requests Data Processor for additional topics
+
+    and saves them to Elasticsearch.
+  example: []
+  syntax:
+    content: public Task MineByTopicAsync(string topic, string ecosystem, int amount)
+    parameters:
+    - id: topic
+      type: System.String
+      description: The topic to to search for.
+    - id: ecosystem
+      type: System.String
+      description: The ecosystem the request is linked to
+    - id: amount
+      type: System.Int32
+      description: The amount of repos to search for.
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function MineByTopicAsync(topic As String, ecosystem As String, amount As Integer) As Task
+  overload: SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync*
+  implements:
+  - SECODashBackend.Services.Projects.IProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+  nameWithType.vb: ProjectsService.MineByTopicAsync(String, String, Integer)
+  fullName.vb: SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync(String, String, Integer)
+  name.vb: MineByTopicAsync(String, String, Integer)
+- uid: SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+  commentId: M:SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+  id: MineByKeywordAsync(System.String,System.String,System.Int32)
+  parent: SECODashBackend.Services.Projects.ProjectsService
+  langs:
+  - csharp
+  - vb
+  name: MineByKeywordAsync(string, string, int)
+  nameWithType: ProjectsService.MineByKeywordAsync(string, string, int)
+  fullName: SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync(string, string, int)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Projects/ProjectsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: MineByKeywordAsync
+    path: back-end/Services/Projects/ProjectsService.cs
+    startLine: 48
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Projects
+  summary: >-
+    Requests the Spider for projects related to the given keyword, requests Data Processor for additional topics
+
+    and saves them to Elasticsearch.
+  example: []
+  syntax:
+    content: public Task MineByKeywordAsync(string keyword, string ecosystem, int amount)
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The keyword to to search for.
+    - id: ecosystem
+      type: System.String
+      description: The ecosystem the request is linked to
+    - id: amount
+      type: System.Int32
+      description: The amount of repos to search for.
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function MineByKeywordAsync(keyword As String, ecosystem As String, amount As Integer) As Task
+  overload: SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync*
+  implements:
+  - SECODashBackend.Services.Projects.IProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+  nameWithType.vb: ProjectsService.MineByKeywordAsync(String, String, Integer)
+  fullName.vb: SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync(String, String, Integer)
+  name.vb: MineByKeywordAsync(String, String, Integer)
+- uid: SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+  commentId: M:SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+  id: MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+  parent: SECODashBackend.Services.Projects.ProjectsService
+  langs:
+  - csharp
+  - vb
+  name: MineByTaxonomyAsync(List<string>, string, int, int)
+  nameWithType: ProjectsService.MineByTaxonomyAsync(List<string>, string, int, int)
+  fullName: SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List<string>, string, int, int)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Projects/ProjectsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: MineByTaxonomyAsync
+    path: back-end/Services/Projects/ProjectsService.cs
+    startLine: 75
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Projects
+  summary: >-
+    Requests the Spider for projects related to the given taxonomy, requests Data Processor for additional topics
+
+    and saves them to Elasticsearch.
+  example: []
+  syntax:
+    content: public Task MineByTaxonomyAsync(List<string> taxonomy, string ecosystem, int keywordAmount, int topicAmount)
+    parameters:
+    - id: taxonomy
+      type: System.Collections.Generic.List{System.String}
+      description: The list of strings to mine off of github
+    - id: ecosystem
+      type: System.String
+      description: The ecosystem the request is linked to
+    - id: keywordAmount
+      type: System.Int32
+      description: The amount of repos to search for with keyword search
+    - id: topicAmount
+      type: System.Int32
+      description: The amount of repos to search for with topic search
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function MineByTaxonomyAsync(taxonomy As List(Of String), ecosystem As String, keywordAmount As Integer, topicAmount As Integer) As Task
+  overload: SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync*
+  implements:
+  - SECODashBackend.Services.Projects.IProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+  nameWithType.vb: ProjectsService.MineByTaxonomyAsync(List(Of String), String, Integer, Integer)
+  fullName.vb: SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List(Of String), String, Integer, Integer)
+  name.vb: MineByTaxonomyAsync(List(Of String), String, Integer, Integer)
+references:
+- uid: SECODashBackend.Services.Projects
+  commentId: N:SECODashBackend.Services.Projects
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Projects
+  nameWithType: SECODashBackend.Services.Projects
+  fullName: SECODashBackend.Services.Projects
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Projects
+    name: Projects
+    href: SECODashBackend.Services.Projects.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Projects
+    name: Projects
+    href: SECODashBackend.Services.Projects.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: SECODashBackend.Services.Projects.IProjectsService
+  commentId: T:SECODashBackend.Services.Projects.IProjectsService
+  parent: SECODashBackend.Services.Projects
+  href: SECODashBackend.Services.Projects.IProjectsService.html
+  name: IProjectsService
+  nameWithType: IProjectsService
+  fullName: SECODashBackend.Services.Projects.IProjectsService
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Services.Projects.ProjectsService.#ctor*
+  commentId: Overload:SECODashBackend.Services.Projects.ProjectsService.#ctor
+  href: SECODashBackend.Services.Projects.ProjectsService.html#SECODashBackend_Services_Projects_ProjectsService__ctor_SECODashBackend_Services_ElasticSearch_IElasticsearchService_SECODashBackend_Services_Spider_ISpiderService_SECODashBackend_Services_DataProcessor_IDataProcessorService_
+  name: ProjectsService
+  nameWithType: ProjectsService.ProjectsService
+  fullName: SECODashBackend.Services.Projects.ProjectsService.ProjectsService
+  nameWithType.vb: ProjectsService.New
+  fullName.vb: SECODashBackend.Services.Projects.ProjectsService.New
+  name.vb: New
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  commentId: T:SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  parent: SECODashBackend.Services.ElasticSearch
+  href: SECODashBackend.Services.ElasticSearch.IElasticsearchService.html
+  name: IElasticsearchService
+  nameWithType: IElasticsearchService
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+- uid: SECODashBackend.Services.Spider.ISpiderService
+  commentId: T:SECODashBackend.Services.Spider.ISpiderService
+  parent: SECODashBackend.Services.Spider
+  href: SECODashBackend.Services.Spider.ISpiderService.html
+  name: ISpiderService
+  nameWithType: ISpiderService
+  fullName: SECODashBackend.Services.Spider.ISpiderService
+- uid: SECODashBackend.Services.DataProcessor.IDataProcessorService
+  commentId: T:SECODashBackend.Services.DataProcessor.IDataProcessorService
+  parent: SECODashBackend.Services.DataProcessor
+  href: SECODashBackend.Services.DataProcessor.IDataProcessorService.html
+  name: IDataProcessorService
+  nameWithType: IDataProcessorService
+  fullName: SECODashBackend.Services.DataProcessor.IDataProcessorService
+- uid: SECODashBackend.Services.ElasticSearch
+  commentId: N:SECODashBackend.Services.ElasticSearch
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.ElasticSearch
+  nameWithType: SECODashBackend.Services.ElasticSearch
+  fullName: SECODashBackend.Services.ElasticSearch
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.ElasticSearch
+    name: ElasticSearch
+    href: SECODashBackend.Services.ElasticSearch.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.ElasticSearch
+    name: ElasticSearch
+    href: SECODashBackend.Services.ElasticSearch.html
+- uid: SECODashBackend.Services.Spider
+  commentId: N:SECODashBackend.Services.Spider
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Spider
+  nameWithType: SECODashBackend.Services.Spider
+  fullName: SECODashBackend.Services.Spider
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Spider
+    name: Spider
+    href: SECODashBackend.Services.Spider.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Spider
+    name: Spider
+    href: SECODashBackend.Services.Spider.html
+- uid: SECODashBackend.Services.DataProcessor
+  commentId: N:SECODashBackend.Services.DataProcessor
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.DataProcessor
+  nameWithType: SECODashBackend.Services.DataProcessor
+  fullName: SECODashBackend.Services.DataProcessor
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.DataProcessor
+    name: DataProcessor
+    href: SECODashBackend.Services.DataProcessor.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.DataProcessor
+    name: DataProcessor
+    href: SECODashBackend.Services.DataProcessor.html
+- uid: SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync*
+  commentId: Overload:SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync
+  href: SECODashBackend.Services.Projects.ProjectsService.html#SECODashBackend_Services_Projects_ProjectsService_MineByTopicAsync_System_String_System_String_System_Int32_
+  name: MineByTopicAsync
+  nameWithType: ProjectsService.MineByTopicAsync
+  fullName: SECODashBackend.Services.Projects.ProjectsService.MineByTopicAsync
+- uid: SECODashBackend.Services.Projects.IProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+  commentId: M:SECODashBackend.Services.Projects.IProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+  parent: SECODashBackend.Services.Projects.IProjectsService
+  isExternal: true
+  href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByTopicAsync_System_String_System_String_System_Int32_
+  name: MineByTopicAsync(string, string, int)
+  nameWithType: IProjectsService.MineByTopicAsync(string, string, int)
+  fullName: SECODashBackend.Services.Projects.IProjectsService.MineByTopicAsync(string, string, int)
+  nameWithType.vb: IProjectsService.MineByTopicAsync(String, String, Integer)
+  fullName.vb: SECODashBackend.Services.Projects.IProjectsService.MineByTopicAsync(String, String, Integer)
+  name.vb: MineByTopicAsync(String, String, Integer)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Projects.IProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+    name: MineByTopicAsync
+    href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByTopicAsync_System_String_System_String_System_Int32_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Projects.IProjectsService.MineByTopicAsync(System.String,System.String,System.Int32)
+    name: MineByTopicAsync
+    href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByTopicAsync_System_String_System_String_System_Int32_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync*
+  commentId: Overload:SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync
+  href: SECODashBackend.Services.Projects.ProjectsService.html#SECODashBackend_Services_Projects_ProjectsService_MineByKeywordAsync_System_String_System_String_System_Int32_
+  name: MineByKeywordAsync
+  nameWithType: ProjectsService.MineByKeywordAsync
+  fullName: SECODashBackend.Services.Projects.ProjectsService.MineByKeywordAsync
+- uid: SECODashBackend.Services.Projects.IProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+  commentId: M:SECODashBackend.Services.Projects.IProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+  parent: SECODashBackend.Services.Projects.IProjectsService
+  isExternal: true
+  href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByKeywordAsync_System_String_System_String_System_Int32_
+  name: MineByKeywordAsync(string, string, int)
+  nameWithType: IProjectsService.MineByKeywordAsync(string, string, int)
+  fullName: SECODashBackend.Services.Projects.IProjectsService.MineByKeywordAsync(string, string, int)
+  nameWithType.vb: IProjectsService.MineByKeywordAsync(String, String, Integer)
+  fullName.vb: SECODashBackend.Services.Projects.IProjectsService.MineByKeywordAsync(String, String, Integer)
+  name.vb: MineByKeywordAsync(String, String, Integer)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Projects.IProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+    name: MineByKeywordAsync
+    href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByKeywordAsync_System_String_System_String_System_Int32_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Projects.IProjectsService.MineByKeywordAsync(System.String,System.String,System.Int32)
+    name: MineByKeywordAsync
+    href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByKeywordAsync_System_String_System_String_System_Int32_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync*
+  commentId: Overload:SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync
+  href: SECODashBackend.Services.Projects.ProjectsService.html#SECODashBackend_Services_Projects_ProjectsService_MineByTaxonomyAsync_System_Collections_Generic_List_System_String__System_String_System_Int32_System_Int32_
+  name: MineByTaxonomyAsync
+  nameWithType: ProjectsService.MineByTaxonomyAsync
+  fullName: SECODashBackend.Services.Projects.ProjectsService.MineByTaxonomyAsync
+- uid: SECODashBackend.Services.Projects.IProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+  commentId: M:SECODashBackend.Services.Projects.IProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+  parent: SECODashBackend.Services.Projects.IProjectsService
+  isExternal: true
+  href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByTaxonomyAsync_System_Collections_Generic_List_System_String__System_String_System_Int32_System_Int32_
+  name: MineByTaxonomyAsync(List<string>, string, int, int)
+  nameWithType: IProjectsService.MineByTaxonomyAsync(List<string>, string, int, int)
+  fullName: SECODashBackend.Services.Projects.IProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List<string>, string, int, int)
+  nameWithType.vb: IProjectsService.MineByTaxonomyAsync(List(Of String), String, Integer, Integer)
+  fullName.vb: SECODashBackend.Services.Projects.IProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List(Of String), String, Integer, Integer)
+  name.vb: MineByTaxonomyAsync(List(Of String), String, Integer, Integer)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Projects.IProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+    name: MineByTaxonomyAsync
+    href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByTaxonomyAsync_System_Collections_Generic_List_System_String__System_String_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Projects.IProjectsService.MineByTaxonomyAsync(System.Collections.Generic.List{System.String},System.String,System.Int32,System.Int32)
+    name: MineByTaxonomyAsync
+    href: SECODashBackend.Services.Projects.IProjectsService.html#SECODashBackend_Services_Projects_IProjectsService_MineByTaxonomyAsync_System_Collections_Generic_List_System_String__System_String_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

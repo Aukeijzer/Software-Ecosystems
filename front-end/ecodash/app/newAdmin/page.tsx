@@ -1,20 +1,46 @@
+/*
+Copyright (C) <2024> <OdinDash>
+
+This file is part of SECODash
+
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 "use client"
 
 import { useSession } from "next-auth/react";
-import { ExtendedUser } from "../utils/authOptions";
+import { ExtendedUser } from "@/utils/authOptions";
 import Button from "@/components/button";
 import { useState } from "react";
 import SpinnerComponent from "@/components/spinner";
+import { useRouter } from "next/navigation";
 
 enum UserType {
     Admin = "Admin",
     RootAdmin = "RootAdmin"
 }
-
+/**
+ * Represents the NewAdminPage component.
+ * This component allows a root admin to add a new admin by entering their email.
+ * 
+ */
 export default function NewAdminPage(){
     const [userType, setUserType] = useState<UserType>(UserType.Admin);
     const [email, setEmail] = useState<string>("");
 
+    const router = useRouter();
     //Check if is rootAdmin
     const { data: session, status } = useSession()
     if(status === "loading"){
@@ -79,7 +105,9 @@ export default function NewAdminPage(){
             });
 
             if(response.status === 200){
-                alert("Admin created successfully");
+
+                alert("Succesfullly created admin");
+                router.push("/");
             } else {
                 alert("Error creating admin");
             }

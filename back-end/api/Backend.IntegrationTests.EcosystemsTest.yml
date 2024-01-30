@@ -1,0 +1,621 @@
+### YamlMime:ManagedReference
+items:
+- uid: Backend.IntegrationTests.EcosystemsTest
+  commentId: T:Backend.IntegrationTests.EcosystemsTest
+  id: EcosystemsTest
+  parent: Backend.IntegrationTests
+  children:
+  - Backend.IntegrationTests.EcosystemsTest.#ctor(Backend.IntegrationTests.BackendWebApplicationFactory{Program})
+  - Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems
+  - Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems
+  langs:
+  - csharp
+  - vb
+  name: EcosystemsTest
+  nameWithType: EcosystemsTest
+  fullName: Backend.IntegrationTests.EcosystemsTest
+  type: Class
+  source:
+    remote:
+      path: back-end/Backend.IntegrationTests/EcosystemsTest.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: EcosystemsTest
+    path: Backend.IntegrationTests/EcosystemsTest.cs
+    startLine: 17
+  assemblies:
+  - Backend.IntegrationTests
+  namespace: Backend.IntegrationTests
+  summary: >-
+    Integration tests for the EcosystemsController.
+
+    Uses the BackendWebApplicationFactory that replaces the standard ElasticsearchClient with one that uses a dedicated test index.
+
+    See Backend.IntegrationTests/BackendWebApplicationFactory.cs for more information.
+  example: []
+  syntax:
+    content: 'public class EcosystemsTest : IClassFixture<BackendWebApplicationFactory<Program>>'
+    content.vb: Public Class EcosystemsTest Implements IClassFixture(Of BackendWebApplicationFactory(Of Program))
+  inheritance:
+  - System.Object
+  implements:
+  - Xunit.IClassFixture{Backend.IntegrationTests.BackendWebApplicationFactory{Program}}
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Backend.IntegrationTests.EcosystemsTest.#ctor(Backend.IntegrationTests.BackendWebApplicationFactory{Program})
+  commentId: M:Backend.IntegrationTests.EcosystemsTest.#ctor(Backend.IntegrationTests.BackendWebApplicationFactory{Program})
+  id: '#ctor(Backend.IntegrationTests.BackendWebApplicationFactory{Program})'
+  parent: Backend.IntegrationTests.EcosystemsTest
+  langs:
+  - csharp
+  - vb
+  name: EcosystemsTest(BackendWebApplicationFactory<Program>)
+  nameWithType: EcosystemsTest.EcosystemsTest(BackendWebApplicationFactory<Program>)
+  fullName: Backend.IntegrationTests.EcosystemsTest.EcosystemsTest(Backend.IntegrationTests.BackendWebApplicationFactory<Program>)
+  type: Constructor
+  source:
+    remote:
+      path: back-end/Backend.IntegrationTests/EcosystemsTest.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: .ctor
+    path: Backend.IntegrationTests/EcosystemsTest.cs
+    startLine: 17
+  assemblies:
+  - Backend.IntegrationTests
+  namespace: Backend.IntegrationTests
+  summary: >-
+    Integration tests for the EcosystemsController.
+
+    Uses the BackendWebApplicationFactory that replaces the standard ElasticsearchClient with one that uses a dedicated test index.
+
+    See Backend.IntegrationTests/BackendWebApplicationFactory.cs for more information.
+  example: []
+  syntax:
+    content: public EcosystemsTest(BackendWebApplicationFactory<Program> factory)
+    parameters:
+    - id: factory
+      type: Backend.IntegrationTests.BackendWebApplicationFactory{Program}
+    content.vb: Public Sub New(factory As BackendWebApplicationFactory(Of Program))
+  overload: Backend.IntegrationTests.EcosystemsTest.#ctor*
+  nameWithType.vb: EcosystemsTest.New(BackendWebApplicationFactory(Of Program))
+  fullName.vb: Backend.IntegrationTests.EcosystemsTest.New(Backend.IntegrationTests.BackendWebApplicationFactory(Of Program))
+  name.vb: New(BackendWebApplicationFactory(Of Program))
+- uid: Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems
+  commentId: M:Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems
+  id: Get_Ecosystems_ReturnsCorrectEcosystems
+  parent: Backend.IntegrationTests.EcosystemsTest
+  langs:
+  - csharp
+  - vb
+  name: Get_Ecosystems_ReturnsCorrectEcosystems()
+  nameWithType: EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems()
+  fullName: Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems()
+  type: Method
+  source:
+    remote:
+      path: back-end/Backend.IntegrationTests/EcosystemsTest.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Get_Ecosystems_ReturnsCorrectEcosystems
+    path: Backend.IntegrationTests/EcosystemsTest.cs
+    startLine: 29
+  assemblies:
+  - Backend.IntegrationTests
+  namespace: Backend.IntegrationTests
+  summary: Checks whether a GET request to /ecosystems returns the correct ecosystems.
+  example: []
+  syntax:
+    content: >-
+      [Fact]
+
+      public Task Get_Ecosystems_ReturnsCorrectEcosystems()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <Fact>
+
+      Public Function Get_Ecosystems_ReturnsCorrectEcosystems() As Task
+  overload: Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems
+  commentId: M:Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems
+  id: Post_Ecosystems_ReturnsCorrectEcosystems
+  parent: Backend.IntegrationTests.EcosystemsTest
+  langs:
+  - csharp
+  - vb
+  name: Post_Ecosystems_ReturnsCorrectEcosystems()
+  nameWithType: EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems()
+  fullName: Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems()
+  type: Method
+  source:
+    remote:
+      path: back-end/Backend.IntegrationTests/EcosystemsTest.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: Post_Ecosystems_ReturnsCorrectEcosystems
+    path: Backend.IntegrationTests/EcosystemsTest.cs
+    startLine: 50
+  assemblies:
+  - Backend.IntegrationTests
+  namespace: Backend.IntegrationTests
+  summary: Checks whether a POST request to /ecosystems returns the correct EcosystemDto.
+  example: []
+  syntax:
+    content: >-
+      [Fact]
+
+      public Task Post_Ecosystems_ReturnsCorrectEcosystems()
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: >-
+      <Fact>
+
+      Public Function Post_Ecosystems_ReturnsCorrectEcosystems() As Task
+  overload: Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+references:
+- uid: Backend.IntegrationTests
+  commentId: N:Backend.IntegrationTests
+  href: Backend.html
+  name: Backend.IntegrationTests
+  nameWithType: Backend.IntegrationTests
+  fullName: Backend.IntegrationTests
+  spec.csharp:
+  - uid: Backend
+    name: Backend
+    href: Backend.html
+  - name: .
+  - uid: Backend.IntegrationTests
+    name: IntegrationTests
+    href: Backend.IntegrationTests.html
+  spec.vb:
+  - uid: Backend
+    name: Backend
+    href: Backend.html
+  - name: .
+  - uid: Backend.IntegrationTests
+    name: IntegrationTests
+    href: Backend.IntegrationTests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Xunit.IClassFixture{Backend.IntegrationTests.BackendWebApplicationFactory{Program}}
+  commentId: T:Xunit.IClassFixture{Backend.IntegrationTests.BackendWebApplicationFactory{Program}}
+  parent: Xunit
+  definition: Xunit.IClassFixture`1
+  href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  name: IClassFixture<BackendWebApplicationFactory<Program>>
+  nameWithType: IClassFixture<BackendWebApplicationFactory<Program>>
+  fullName: Xunit.IClassFixture<Backend.IntegrationTests.BackendWebApplicationFactory<Program>>
+  nameWithType.vb: IClassFixture(Of BackendWebApplicationFactory(Of Program))
+  fullName.vb: Xunit.IClassFixture(Of Backend.IntegrationTests.BackendWebApplicationFactory(Of Program))
+  name.vb: IClassFixture(Of BackendWebApplicationFactory(Of Program))
+  spec.csharp:
+  - uid: Xunit.IClassFixture`1
+    name: IClassFixture
+    isExternal: true
+  - name: <
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: <
+  - uid: Program
+    name: Program
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: Xunit.IClassFixture`1
+    name: IClassFixture
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Program
+    name: Program
+  - name: )
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Xunit.IClassFixture`1
+  commentId: T:Xunit.IClassFixture`1
+  isExternal: true
+  name: IClassFixture<TFixture>
+  nameWithType: IClassFixture<TFixture>
+  fullName: Xunit.IClassFixture<TFixture>
+  nameWithType.vb: IClassFixture(Of TFixture)
+  fullName.vb: Xunit.IClassFixture(Of TFixture)
+  name.vb: IClassFixture(Of TFixture)
+  spec.csharp:
+  - uid: Xunit.IClassFixture`1
+    name: IClassFixture
+    isExternal: true
+  - name: <
+  - name: TFixture
+  - name: '>'
+  spec.vb:
+  - uid: Xunit.IClassFixture`1
+    name: IClassFixture
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TFixture
+  - name: )
+- uid: Xunit
+  commentId: N:Xunit
+  isExternal: true
+  name: Xunit
+  nameWithType: Xunit
+  fullName: Xunit
+- uid: Backend.IntegrationTests.EcosystemsTest.#ctor*
+  commentId: Overload:Backend.IntegrationTests.EcosystemsTest.#ctor
+  href: Backend.IntegrationTests.EcosystemsTest.html#Backend_IntegrationTests_EcosystemsTest__ctor_Backend_IntegrationTests_BackendWebApplicationFactory_Program__
+  name: EcosystemsTest
+  nameWithType: EcosystemsTest.EcosystemsTest
+  fullName: Backend.IntegrationTests.EcosystemsTest.EcosystemsTest
+  nameWithType.vb: EcosystemsTest.New
+  fullName.vb: Backend.IntegrationTests.EcosystemsTest.New
+  name.vb: New
+- uid: Backend.IntegrationTests.BackendWebApplicationFactory{Program}
+  commentId: T:Backend.IntegrationTests.BackendWebApplicationFactory{Program}
+  parent: Backend.IntegrationTests
+  definition: Backend.IntegrationTests.BackendWebApplicationFactory`1
+  href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  name: BackendWebApplicationFactory<Program>
+  nameWithType: BackendWebApplicationFactory<Program>
+  fullName: Backend.IntegrationTests.BackendWebApplicationFactory<Program>
+  nameWithType.vb: BackendWebApplicationFactory(Of Program)
+  fullName.vb: Backend.IntegrationTests.BackendWebApplicationFactory(Of Program)
+  name.vb: BackendWebApplicationFactory(Of Program)
+  spec.csharp:
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: <
+  - uid: Program
+    name: Program
+  - name: '>'
+  spec.vb:
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Program
+    name: Program
+  - name: )
+- uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+  commentId: T:Backend.IntegrationTests.BackendWebApplicationFactory`1
+  href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  name: BackendWebApplicationFactory<TProgram>
+  nameWithType: BackendWebApplicationFactory<TProgram>
+  fullName: Backend.IntegrationTests.BackendWebApplicationFactory<TProgram>
+  nameWithType.vb: BackendWebApplicationFactory(Of TProgram)
+  fullName.vb: Backend.IntegrationTests.BackendWebApplicationFactory(Of TProgram)
+  name.vb: BackendWebApplicationFactory(Of TProgram)
+  spec.csharp:
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: <
+  - name: TProgram
+  - name: '>'
+  spec.vb:
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory
+    href: Backend.IntegrationTests.BackendWebApplicationFactory-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TProgram
+  - name: )
+- uid: Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems*
+  commentId: Overload:Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems
+  href: Backend.IntegrationTests.EcosystemsTest.html#Backend_IntegrationTests_EcosystemsTest_Get_Ecosystems_ReturnsCorrectEcosystems
+  name: Get_Ecosystems_ReturnsCorrectEcosystems
+  nameWithType: EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems
+  fullName: Backend.IntegrationTests.EcosystemsTest.Get_Ecosystems_ReturnsCorrectEcosystems
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems*
+  commentId: Overload:Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems
+  href: Backend.IntegrationTests.EcosystemsTest.html#Backend_IntegrationTests_EcosystemsTest_Post_Ecosystems_ReturnsCorrectEcosystems
+  name: Post_Ecosystems_ReturnsCorrectEcosystems
+  nameWithType: EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems
+  fullName: Backend.IntegrationTests.EcosystemsTest.Post_Ecosystems_ReturnsCorrectEcosystems

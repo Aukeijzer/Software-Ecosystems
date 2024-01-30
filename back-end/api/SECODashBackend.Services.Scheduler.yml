@@ -1,0 +1,76 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Scheduler
+  commentId: N:SECODashBackend.Services.Scheduler
+  id: SECODashBackend.Services.Scheduler
+  children:
+  - SECODashBackend.Services.Scheduler.HangfireAuthorizationFilter
+  - SECODashBackend.Services.Scheduler.HangfireScheduler
+  - SECODashBackend.Services.Scheduler.IScheduler
+  - SECODashBackend.Services.Scheduler.MiningFrequency
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.Scheduler
+  nameWithType: SECODashBackend.Services.Scheduler
+  fullName: SECODashBackend.Services.Scheduler
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.Scheduler.HangfireAuthorizationFilter
+  commentId: T:SECODashBackend.Services.Scheduler.HangfireAuthorizationFilter
+  href: SECODashBackend.Services.Scheduler.HangfireAuthorizationFilter.html
+  name: HangfireAuthorizationFilter
+  nameWithType: HangfireAuthorizationFilter
+  fullName: SECODashBackend.Services.Scheduler.HangfireAuthorizationFilter
+- uid: SECODashBackend.Services.Scheduler.HangfireScheduler
+  commentId: T:SECODashBackend.Services.Scheduler.HangfireScheduler
+  href: SECODashBackend.Services.Scheduler.HangfireScheduler.html
+  name: HangfireScheduler
+  nameWithType: HangfireScheduler
+  fullName: SECODashBackend.Services.Scheduler.HangfireScheduler
+- uid: SECODashBackend.Services.Scheduler.IScheduler
+  commentId: T:SECODashBackend.Services.Scheduler.IScheduler
+  parent: SECODashBackend.Services.Scheduler
+  href: SECODashBackend.Services.Scheduler.IScheduler.html
+  name: IScheduler
+  nameWithType: IScheduler
+  fullName: SECODashBackend.Services.Scheduler.IScheduler
+- uid: SECODashBackend.Services.Scheduler.MiningFrequency
+  commentId: T:SECODashBackend.Services.Scheduler.MiningFrequency
+  parent: SECODashBackend.Services.Scheduler
+  href: SECODashBackend.Services.Scheduler.MiningFrequency.html
+  name: MiningFrequency
+  nameWithType: MiningFrequency
+  fullName: SECODashBackend.Services.Scheduler.MiningFrequency
+- uid: SECODashBackend.Services.Scheduler
+  commentId: N:SECODashBackend.Services.Scheduler
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Scheduler
+  nameWithType: SECODashBackend.Services.Scheduler
+  fullName: SECODashBackend.Services.Scheduler
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Scheduler
+    name: Scheduler
+    href: SECODashBackend.Services.Scheduler.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Scheduler
+    name: Scheduler
+    href: SECODashBackend.Services.Scheduler.html

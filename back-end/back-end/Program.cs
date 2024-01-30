@@ -20,6 +20,7 @@ using SECODashBackend.Services.Users;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 var builder = WebApplication.CreateBuilder(args);
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -32,32 +33,24 @@ builder.Services.AddCors(options =>
             });
 });
 
-//TODO: configure authentication below to only accept certain urls/certs.
-builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
-    .AddCertificate(options =>
-    {
-        options.Events = new CertificateAuthenticationEvents
-        {
-            OnCertificateValidated = context =>
-            {
-                var claims = new[]
-                {
-                    new Claim(
-                        ClaimTypes.NameIdentifier,
-                        context.ClientCertificate.Subject,
-                        ClaimValueTypes.String, context.Options.ClaimsIssuer),
-                    new Claim(
-                        ClaimTypes.Name,
-                        context.ClientCertificate.Subject,
-                        ClaimValueTypes.String, context.Options.ClaimsIssuer)
-                };
-                context.Principal = new ClaimsPrincipal(
-                    new ClaimsIdentity(claims, context.Scheme.Name));
-                context.Success();
-                return Task.CompletedTask;
-            }
-        };
-    });
+var apiKey = "";
+var cloudId= "";
+if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
+{
+    string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "/secrets/backend-connectionstrings.json";
+    builder.Configuration.AddJsonFile(path);
+    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+}
+else
+{
+    string? filePath = Environment.GetEnvironmentVariable("backend-secrets");
+    var backendsecrets = File.OpenRead(filePath);
+    builder.Configuration.AddJsonStream(backendsecrets);
+    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+}
+
 
 // Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -77,15 +70,19 @@ if (string.IsNullOrEmpty(spiderConnectionString))
 
 builder.Services.AddScoped<ISpiderService>(_ => new SpiderService(builder.Configuration.GetConnectionString("Spider")!));
 
-builder.Services.AddScoped<IDataProcessorService, DataProcessorService>();
+var dataProcessorConnectionString = builder.Configuration.GetConnectionString("DataProcessor");
+if (string.IsNullOrEmpty(dataProcessorConnectionString))
+{
+    throw new InvalidOperationException("Missing configuration for Data Processor");
+}
 
-// TODO: WARNING move elasticsearch authentication secrets out of appsettings.json
-var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
+
 if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
 {
     throw new InvalidOperationException("Missing configuration for Elasticsearch");
 }
+
 var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
@@ -101,6 +98,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File")
     .GetSection("Options").Bind(options); });
+
 
 // Configure the Hangfire scheduler
 builder.Services.AddHangfire((provider, config) => config
@@ -135,7 +133,6 @@ if (app.Environment.IsDevelopment())
 }
 bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
 if ( app.Environment.IsDevelopment() || local )
-
 // TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
 
@@ -153,6 +150,7 @@ app.MapControllers();
 app.MapHangfireDashboard();
 
 app.CreateDbIfNotExists();
+app.ScheduleInitialJobs();
 app.Run();
 
 // Necessary for integration testing.

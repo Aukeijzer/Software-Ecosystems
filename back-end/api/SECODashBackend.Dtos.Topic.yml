@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.Topic
+  commentId: N:SECODashBackend.Dtos.Topic
+  id: SECODashBackend.Dtos.Topic
+  children:
+  - SECODashBackend.Dtos.Topic.TopicRequestDto
+  - SECODashBackend.Dtos.Topic.TopicResponseDto
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Dtos.Topic
+  nameWithType: SECODashBackend.Dtos.Topic
+  fullName: SECODashBackend.Dtos.Topic
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Dtos.Topic.TopicRequestDto
+  commentId: T:SECODashBackend.Dtos.Topic.TopicRequestDto
+  href: SECODashBackend.Dtos.Topic.TopicRequestDto.html
+  name: TopicRequestDto
+  nameWithType: TopicRequestDto
+  fullName: SECODashBackend.Dtos.Topic.TopicRequestDto
+- uid: SECODashBackend.Dtos.Topic.TopicResponseDto
+  commentId: T:SECODashBackend.Dtos.Topic.TopicResponseDto
+  href: SECODashBackend.Dtos.Topic.TopicResponseDto.html
+  name: TopicResponseDto
+  nameWithType: TopicResponseDto
+  fullName: SECODashBackend.Dtos.Topic.TopicResponseDto

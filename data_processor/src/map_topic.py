@@ -1,27 +1,42 @@
 """
-Module: map_topic
+Copyright (C) <2024> <OdinDash>
+ 
+This file is part of SECODash
+ 
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+ 
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+ 
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
 
-This module provides functionality for mapping topics in a collection of
- projects to predefined topics
-from a taxonomy. It uses cosine similarity between TF-IDF vectors of project
- topics and predefined topics in the taxonomy.
+Module: map_topic.py
+====================
 
-Functions:
-- get_taxonomy: Retrieve and return the predefined taxonomy from a JSON file.
-- flatten_taxonomy_to_strings: Flatten the structure of the taxonomy into a 
-list of strings.
-- map_topics: Map the topics in a collection of projects to the closest
- predefined topics in the taxonomy.
+This module provides functionality for mapping topics in a collection of projects
+to predefined topics from a taxonomy. It uses cosine similarity between TF-IDF
+vectors of project topics and predefined topics in the taxonomy.
 """
+
 
 import json
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-
 def get_taxonomy(file_path):
     """
     Retrieve and return the predefined taxonomy from a JSON file.
+
+    Parameters
+    ----------
+    file_path : str
+        The string containing the name of the file path
 
     Returns
     -------
@@ -70,22 +85,20 @@ def flatten_taxonomy_to_strings(json_data):
     flattened_values = flatten(json_data)
     return flattened_values
 
-
-# Map the found topics to the topics in the taxonomy
-def map_topics(projects):
+def map_topics_cosine(projects):
     """
     Map the topics in a collection of projects to the closest predefined topics
-      in the taxonomy.
+      in the taxonomy using cosine similarity.
 
     Parameters
     ----------
-    projects : list 
+    projects : list
         A list of dictionaries, each representing a project with
         associated topics.
 
     Returns
     -------
-    list: 
+    list:
         A list of dictionaries, each containing mapped topics for the
         corresponding project.
     """
@@ -97,22 +110,28 @@ def map_topics(projects):
         topics = project["topics"]
         result = {}
         # Combine keywords into strings for each topic
-        topic_texts = [' '.join(topic["keywords"]) for topic in topics]
+        topic_texts = [' '.join(topic["keywords"]) for topic in topics
+                       if topic.get("keywords")
+                       and any(keyword.strip() for keyword in topic["keywords"])]
 
-        # Vectorize the combined keywords
-        vectorizer = TfidfVectorizer()
-        topic_vectors = vectorizer.fit_transform(topic_texts)
+        if topic_texts:
+            # Vectorize the combined keywords
+            vectorizer = TfidfVectorizer()
+            topic_vectors = vectorizer.fit_transform(topic_texts)
 
-        # Calculate cosine similarity between each topic and predefined topics
-        mapped_topics = []
-        for topic_vector in topic_vectors:
-            similarities = cosine_similarity(
-                topic_vector,
-                vectorizer.transform(predefined_topics))
-            most_similar_index = similarities.argmax()
-            mapped_topics.append(predefined_topics[most_similar_index])
+            # Calculate cosine similarity between each topic and predefined topics
+            mapped_topics = []
+            for topic_vector in topic_vectors:
+                similarities = cosine_similarity(
+                    topic_vector,
+                    vectorizer.transform(predefined_topics))
+                most_similar_index = similarities.argmax()
+                threshold = 0.5 # Experimenting with this value is needed
+                if similarities.max() > threshold:
+                    if predefined_topics[most_similar_index] not in mapped_topics:
+                        mapped_topics.append(predefined_topics[most_similar_index])
 
-        result["topics"] = mapped_topics
-        results.append(result)
+            result["topics"] = mapped_topics
+            results.append(result)
 
     return results

@@ -1,0 +1,107 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.Ecosystem
+  commentId: N:SECODashBackend.Dtos.Ecosystem
+  id: SECODashBackend.Dtos.Ecosystem
+  children:
+  - SECODashBackend.Dtos.Ecosystem.DescriptionDto
+  - SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+  - SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+  - SECODashBackend.Dtos.Ecosystem.EcosystemDto
+  - SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto
+  - SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+  - SECODashBackend.Dtos.Ecosystem.RemoveEcosystemDto
+  - SECODashBackend.Dtos.Ecosystem.SubEcosystemDto
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Dtos.Ecosystem
+  nameWithType: SECODashBackend.Dtos.Ecosystem
+  fullName: SECODashBackend.Dtos.Ecosystem
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Dtos.Ecosystem.DescriptionDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.DescriptionDto
+  href: SECODashBackend.Dtos.Ecosystem.DescriptionDto.html
+  name: DescriptionDto
+  nameWithType: DescriptionDto
+  fullName: SECODashBackend.Dtos.Ecosystem.DescriptionDto
+- uid: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto.html
+  name: DescriptionRequestDto
+  nameWithType: DescriptionRequestDto
+  fullName: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+- uid: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto.html
+  name: EcosystemCreationDto
+  nameWithType: EcosystemCreationDto
+  fullName: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+- uid: SECODashBackend.Dtos.Ecosystem.EcosystemDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.EcosystemDto
+  href: SECODashBackend.Dtos.Ecosystem.EcosystemDto.html
+  name: EcosystemDto
+  nameWithType: EcosystemDto
+  fullName: SECODashBackend.Dtos.Ecosystem.EcosystemDto
+- uid: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto.html
+  name: EcosystemOverviewDto
+  nameWithType: EcosystemOverviewDto
+  fullName: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto
+- uid: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto.html
+  name: EcosystemRequestDto
+  nameWithType: EcosystemRequestDto
+  fullName: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+- uid: SECODashBackend.Dtos.Ecosystem.RemoveEcosystemDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.RemoveEcosystemDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.RemoveEcosystemDto.html
+  name: RemoveEcosystemDto
+  nameWithType: RemoveEcosystemDto
+  fullName: SECODashBackend.Dtos.Ecosystem.RemoveEcosystemDto
+- uid: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.SubEcosystemDto
+  href: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto.html
+  name: SubEcosystemDto
+  nameWithType: SubEcosystemDto
+  fullName: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto
+- uid: SECODashBackend.Dtos.Ecosystem
+  commentId: N:SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.html
+  name: SECODashBackend.Dtos.Ecosystem
+  nameWithType: SECODashBackend.Dtos.Ecosystem
+  fullName: SECODashBackend.Dtos.Ecosystem
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.Ecosystem
+    name: Ecosystem
+    href: SECODashBackend.Dtos.Ecosystem.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.Ecosystem
+    name: Ecosystem
+    href: SECODashBackend.Dtos.Ecosystem.html

@@ -1,9 +1,28 @@
+/*
+Copyright (C) <2024> <OdinDash>
+
+This file is part of SECODash
+
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 "use client"
-import dynamic from 'next/dynamic'
 import { CartesianGrid, XAxis, YAxis, Line, Legend, ResponsiveContainer, Tooltip, LineChart} from 'recharts'
-import { COLORS } from '@/app/interfaces/colors'
+import { COLORS } from '@/interfaces/colors'
 //Need to import recharts dynamicly so that SSR can be disabled
-import { lineData } from '@/app/interfaces/lineData'
+import { lineData } from '@/interfaces/lineData'
 
 /** Interface for the props of the graphLine component
   * items: lineData[] - The data that should be displayed in the graph
@@ -60,18 +79,19 @@ export default function GraphLine(props: graphLineProps){
     }
     return(
         
-            <div data-cy='line-graph' className='h-[400px] ' >
+            <div data-cy='line-graph' className='h-[450px] ' >
                 <ResponsiveContainer width="100%" >
-                    <LineChart  width={400} height={400} data={props.items} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
+                    <LineChart  width={450} height={400} data={props.items} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date"/>
+                        <XAxis dataKey={"date"}/>  
                         <YAxis />
-                        <Legend />
+                        <Legend wrapperStyle={{ position: 'relative' }}/>
                         <Tooltip itemSorter={(item) => {
                             //-1 to sort in descending order
                             return (item.value as number) * -1;
                         }}/>
-                        {drawLines(props.labels.length, props.labels)}               
+                        {drawLines(props.labels.length, props.labels)}  
+                                   
                     </LineChart>
                 </ResponsiveContainer>
         

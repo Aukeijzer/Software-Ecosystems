@@ -1,0 +1,202 @@
+### YamlMime:TableOfContent
+items:
+- uid: Backend.IntegrationTests
+  name: Backend.IntegrationTests
+  items:
+  - uid: Backend.IntegrationTests.BackendWebApplicationFactory`1
+    name: BackendWebApplicationFactory<TProgram>
+  - uid: Backend.IntegrationTests.EcosystemsTest
+    name: EcosystemsTest
+  - uid: Backend.IntegrationTests.ProjectsTest
+    name: ProjectsTest
+- uid: BackendTests
+  name: BackendTests
+  items:
+  - uid: BackendTests.ElasticsearchAnalysisServiceTests
+    name: ElasticsearchAnalysisServiceTests
+  - uid: BackendTests.SpiderServiceUnitTests
+    name: SpiderServiceUnitTests
+- uid: SECODashBackend.Controllers
+  name: SECODashBackend.Controllers
+  items:
+  - uid: SECODashBackend.Controllers.EcosystemsController
+    name: EcosystemsController
+  - uid: SECODashBackend.Controllers.MineController
+    name: MineController
+  - uid: SECODashBackend.Controllers.UsersController
+    name: UsersController
+- uid: SECODashBackend.DataConverters
+  name: SECODashBackend.DataConverters
+  items:
+  - uid: SECODashBackend.DataConverters.EcosystemConverter
+    name: EcosystemConverter
+- uid: SECODashBackend.Database
+  name: SECODashBackend.Database
+  items:
+  - uid: SECODashBackend.Database.DbInitializer
+    name: DbInitializer
+  - uid: SECODashBackend.Database.EcosystemsContext
+    name: EcosystemsContext
+  - uid: SECODashBackend.Database.Extensions
+    name: Extensions
+  - uid: SECODashBackend.Database.UserContext
+    name: UserContext
+  - uid: SECODashBackend.Database.UserDbInitializer
+    name: UserDbInitializer
+- uid: SECODashBackend.Dtos.Contributors
+  name: SECODashBackend.Dtos.Contributors
+  items:
+  - uid: SECODashBackend.Dtos.Contributors.ContributorDto
+    name: ContributorDto
+  - uid: SECODashBackend.Dtos.Contributors.TopContributorDto
+    name: TopContributorDto
+- uid: SECODashBackend.Dtos.Ecosystem
+  name: SECODashBackend.Dtos.Ecosystem
+  items:
+  - uid: SECODashBackend.Dtos.Ecosystem.DescriptionDto
+    name: DescriptionDto
+  - uid: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+    name: DescriptionRequestDto
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+    name: EcosystemCreationDto
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemDto
+    name: EcosystemDto
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto
+    name: EcosystemOverviewDto
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+    name: EcosystemRequestDto
+  - uid: SECODashBackend.Dtos.Ecosystem.RemoveEcosystemDto
+    name: RemoveEcosystemDto
+  - uid: SECODashBackend.Dtos.Ecosystem.SubEcosystemDto
+    name: SubEcosystemDto
+- uid: SECODashBackend.Dtos.ProgrammingLanguage
+  name: SECODashBackend.Dtos.ProgrammingLanguage
+  items:
+  - uid: SECODashBackend.Dtos.ProgrammingLanguage.ProgrammingLanguageDto
+    name: ProgrammingLanguageDto
+- uid: SECODashBackend.Dtos.Project
+  name: SECODashBackend.Dtos.Project
+  items:
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+  - uid: SECODashBackend.Dtos.Project.ProjectRequestDto
+    name: ProjectRequestDto
+  - uid: SECODashBackend.Dtos.Project.TopProjectDto
+    name: TopProjectDto
+- uid: SECODashBackend.Dtos.TimedData
+  name: SECODashBackend.Dtos.TimedData
+  items:
+  - uid: SECODashBackend.Dtos.TimedData.TopicsBucketDto
+    name: TopicsBucketDto
+- uid: SECODashBackend.Dtos.Topic
+  name: SECODashBackend.Dtos.Topic
+  items:
+  - uid: SECODashBackend.Dtos.Topic.TopicRequestDto
+    name: TopicRequestDto
+  - uid: SECODashBackend.Dtos.Topic.TopicResponseDto
+    name: TopicResponseDto
+- uid: SECODashBackend.Dtos.User
+  name: SECODashBackend.Dtos.User
+  items:
+  - uid: SECODashBackend.Dtos.User.UpdatePermissionsDto
+    name: UpdatePermissionsDto
+  - uid: SECODashBackend.Dtos.User.UserPermissionsDto
+    name: UserPermissionsDto
+  - uid: SECODashBackend.Dtos.User.UserTypeDto
+    name: UserTypeDto
+  - uid: SECODashBackend.Dtos.User.UserTypeRequestDto
+    name: UserTypeRequestDto
+- uid: SECODashBackend.Logging
+  name: SECODashBackend.Logging
+  items:
+  - uid: SECODashBackend.Logging.FileLogger
+    name: FileLogger
+  - uid: SECODashBackend.Logging.FileLoggerExtensions
+    name: FileLoggerExtensions
+  - uid: SECODashBackend.Logging.FileLoggerHelper
+    name: FileLoggerHelper
+  - uid: SECODashBackend.Logging.FileLoggerOptions
+    name: FileLoggerOptions
+  - uid: SECODashBackend.Logging.FileLoggerProvider
+    name: FileLoggerProvider
+- uid: SECODashBackend.Migrations
+  name: SECODashBackend.Migrations
+  items:
+  - uid: SECODashBackend.Migrations.Initial
+    name: Initial
+- uid: SECODashBackend.Models
+  name: SECODashBackend.Models
+  items:
+  - uid: SECODashBackend.Models.BannedTopic
+    name: BannedTopic
+  - uid: SECODashBackend.Models.Ecosystem
+    name: Ecosystem
+  - uid: SECODashBackend.Models.Taxonomy
+    name: Taxonomy
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+  - uid: SECODashBackend.Models.Topic
+    name: Topic
+  - uid: SECODashBackend.Models.User
+    name: User
+  - uid: SECODashBackend.Models.User.UserType
+    name: User.UserType
+- uid: SECODashBackend.Services.Analysis
+  name: SECODashBackend.Services.Analysis
+  items:
+  - uid: SECODashBackend.Services.Analysis.ElasticsearchAnalysisService
+    name: ElasticsearchAnalysisService
+  - uid: SECODashBackend.Services.Analysis.IAnalysisService
+    name: IAnalysisService
+- uid: SECODashBackend.Services.DataProcessor
+  name: SECODashBackend.Services.DataProcessor
+  items:
+  - uid: SECODashBackend.Services.DataProcessor.DataProcessorService
+    name: DataProcessorService
+  - uid: SECODashBackend.Services.DataProcessor.IDataProcessorService
+    name: IDataProcessorService
+- uid: SECODashBackend.Services.Ecosystems
+  name: SECODashBackend.Services.Ecosystems
+  items:
+  - uid: SECODashBackend.Services.Ecosystems.EcosystemsService
+    name: EcosystemsService
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService
+    name: IEcosystemsService
+- uid: SECODashBackend.Services.ElasticSearch
+  name: SECODashBackend.Services.ElasticSearch
+  items:
+  - uid: SECODashBackend.Services.ElasticSearch.ElasticsearchService
+    name: ElasticsearchService
+  - uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+    name: IElasticsearchService
+- uid: SECODashBackend.Services.Projects
+  name: SECODashBackend.Services.Projects
+  items:
+  - uid: SECODashBackend.Services.Projects.IProjectsService
+    name: IProjectsService
+  - uid: SECODashBackend.Services.Projects.ProjectsService
+    name: ProjectsService
+- uid: SECODashBackend.Services.Scheduler
+  name: SECODashBackend.Services.Scheduler
+  items:
+  - uid: SECODashBackend.Services.Scheduler.HangfireAuthorizationFilter
+    name: HangfireAuthorizationFilter
+  - uid: SECODashBackend.Services.Scheduler.HangfireScheduler
+    name: HangfireScheduler
+  - uid: SECODashBackend.Services.Scheduler.IScheduler
+    name: IScheduler
+  - uid: SECODashBackend.Services.Scheduler.MiningFrequency
+    name: MiningFrequency
+- uid: SECODashBackend.Services.Spider
+  name: SECODashBackend.Services.Spider
+  items:
+  - uid: SECODashBackend.Services.Spider.ISpiderService
+    name: ISpiderService
+  - uid: SECODashBackend.Services.Spider.SpiderService
+    name: SpiderService
+- uid: SECODashBackend.Services.Users
+  name: SECODashBackend.Services.Users
+  items:
+  - uid: SECODashBackend.Services.Users.UsersService
+    name: UsersService
+memberLayout: SamePage

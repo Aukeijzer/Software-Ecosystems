@@ -1,8 +1,28 @@
+/*
+Copyright (C) <2024> <OdinDash>
+
+This file is part of SECODash
+
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 "use client"
 
 import dynamic from 'next/dynamic'
 import { Pie, Legend, Tooltip } from "recharts";
-import displayableGraphItem from '@/app/classes/displayableGraphItem';
+import displayableGraphItem from '@/classes/displayableGraphItem';
 
 //This must be imported dynamicly so that SSR can be disabled
 //TODO: Maybe add a spinner to loading time?
@@ -29,8 +49,8 @@ export default function GraphComponent(props: infoCardDataGraphProps){
     if(props.items.length > 1){
     return(
         <div data-cy='pie-chart'>
-              <PieChart width={400} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}} >
-                <Pie data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
+              <PieChart width={350} height={400} margin={{top: 5, right: 5, bottom: 5, left: 5}} >
+                <Pie className="cursor-pointer" data={props.items} nameKey="language" dataKey="percentage" cx="50%" cy="50%"  labelLine={false} label>
                     {props.items.map((entry, index) => (
                        entry.renderAsGraphItem(index, props.onClick)
                     ))}

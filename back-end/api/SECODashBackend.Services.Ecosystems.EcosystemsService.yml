@@ -1,0 +1,1506 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService
+  commentId: T:SECODashBackend.Services.Ecosystems.EcosystemsService
+  id: EcosystemsService
+  parent: SECODashBackend.Services.Ecosystems
+  children:
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.#ctor(SECODashBackend.Database.EcosystemsContext,SECODashBackend.Services.Analysis.IAnalysisService)
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem(System.Collections.Generic.List{SECODashBackend.Models.Taxonomy},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Collections.Generic.List{SECODashBackend.Models.BannedTopic},System.String)
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy(System.String)
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem(System.String)
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  - SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  langs:
+  - csharp
+  - vb
+  name: EcosystemsService
+  nameWithType: EcosystemsService
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService
+  type: Class
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: EcosystemsService
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 14
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: >-
+    This service is responsible for handling all ecosystem-related requests.
+
+    It uses the EcosystemsContext to interact with the database.
+
+    It uses the AnalysisService to analyze ecosystems.
+  example: []
+  syntax:
+    content: 'public class EcosystemsService : IEcosystemsService'
+    content.vb: Public Class EcosystemsService Implements IEcosystemsService
+  inheritance:
+  - System.Object
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.#ctor(SECODashBackend.Database.EcosystemsContext,SECODashBackend.Services.Analysis.IAnalysisService)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.#ctor(SECODashBackend.Database.EcosystemsContext,SECODashBackend.Services.Analysis.IAnalysisService)
+  id: '#ctor(SECODashBackend.Database.EcosystemsContext,SECODashBackend.Services.Analysis.IAnalysisService)'
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: EcosystemsService(EcosystemsContext, IAnalysisService)
+  nameWithType: EcosystemsService.EcosystemsService(EcosystemsContext, IAnalysisService)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.EcosystemsService(SECODashBackend.Database.EcosystemsContext, SECODashBackend.Services.Analysis.IAnalysisService)
+  type: Constructor
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: .ctor
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 14
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: >-
+    This service is responsible for handling all ecosystem-related requests.
+
+    It uses the EcosystemsContext to interact with the database.
+
+    It uses the AnalysisService to analyze ecosystems.
+  example: []
+  syntax:
+    content: public EcosystemsService(EcosystemsContext dbContext, IAnalysisService analysisService)
+    parameters:
+    - id: dbContext
+      type: SECODashBackend.Database.EcosystemsContext
+    - id: analysisService
+      type: SECODashBackend.Services.Analysis.IAnalysisService
+    content.vb: Public Sub New(dbContext As EcosystemsContext, analysisService As IAnalysisService)
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.#ctor*
+  nameWithType.vb: EcosystemsService.New(EcosystemsContext, IAnalysisService)
+  fullName.vb: SECODashBackend.Services.Ecosystems.EcosystemsService.New(SECODashBackend.Database.EcosystemsContext, SECODashBackend.Services.Analysis.IAnalysisService)
+  name.vb: New(EcosystemsContext, IAnalysisService)
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync
+  id: GetAllAsync
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: GetAllAsync()
+  nameWithType: EcosystemsService.GetAllAsync()
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync()
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetAllAsync
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 24
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: Get all top-level ecosystems, i.e., Agriculture, Quantum, Artificial Intelligence.
+  example: []
+  syntax:
+    content: public Task<List<EcosystemOverviewDto>> GetAllAsync()
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto}}
+    content.vb: Public Function GetAllAsync() As Task(Of List(Of EcosystemOverviewDto))
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync*
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService.GetAllAsync
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  id: GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: GetByTopicsAsync(EcosystemRequestDto)
+  nameWithType: EcosystemsService.GetByTopicsAsync(EcosystemRequestDto)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetByTopicsAsync
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 49
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: Get an ecosystem by its topics.
+  example: []
+  syntax:
+    content: public Task<EcosystemDto> GetByTopicsAsync(EcosystemRequestDto dto)
+    parameters:
+    - id: dto
+      type: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+      description: The Dto that contains the request information of the ecosystem to get.
+    return:
+      type: System.Threading.Tasks.Task{SECODashBackend.Dtos.Ecosystem.EcosystemDto}
+      description: The ecosystem.
+    content.vb: Public Function GetByTopicsAsync(dto As EcosystemRequestDto) As Task(Of EcosystemDto)
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync*
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  id: UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: UpdateDescription(DescriptionRequestDto)
+  nameWithType: EcosystemsService.UpdateDescription(DescriptionRequestDto)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UpdateDescription
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 85
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: Update description for ecosystem with given description
+  example: []
+  syntax:
+    content: public Task<string> UpdateDescription(DescriptionRequestDto dto)
+    parameters:
+    - id: dto
+      type: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+      description: The <xref href="SECODashBackend.Dtos.Ecosystem.DescriptionDto" data-throw-if-not-resolved="false"></xref> containts the new description to be saved to the database.
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+      description: Returns a <xref href="System.String" data-throw-if-not-resolved="false"></xref> with the update status.
+    content.vb: Public Function UpdateDescription(dto As DescriptionRequestDto) As Task(Of String)
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription*
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  id: CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: CreateEcosystem(EcosystemCreationDto)
+  nameWithType: EcosystemsService.CreateEcosystem(EcosystemCreationDto)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: CreateEcosystem
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 107
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: Create an ecosystem and add it to the Database for top-level ecosystems.
+  example: []
+  syntax:
+    content: public Task<bool> CreateEcosystem(EcosystemCreationDto dto)
+    parameters:
+    - id: dto
+      type: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+      description: The data transfer object containing all required information.
+    return:
+      type: System.Threading.Tasks.Task{System.Boolean}
+    content.vb: Public Function CreateEcosystem(dto As EcosystemCreationDto) As Task(Of Boolean)
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem*
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  id: UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: UpdateTopics(EcosystemCreationDto)
+  nameWithType: EcosystemsService.UpdateTopics(EcosystemCreationDto)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: UpdateTopics
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 136
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: Update the database with new topics and link the ecosystem to all its topics.
+  example: []
+  syntax:
+    content: public Task<string> UpdateTopics(EcosystemCreationDto dto)
+    parameters:
+    - id: dto
+      type: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+      description: The data transfer object containing all required information.
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+      description: Return a status message.
+    content.vb: Public Function UpdateTopics(dto As EcosystemCreationDto) As Task(Of String)
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics*
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem(System.Collections.Generic.List{SECODashBackend.Models.Taxonomy},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Collections.Generic.List{SECODashBackend.Models.BannedTopic},System.String)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem(System.Collections.Generic.List{SECODashBackend.Models.Taxonomy},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Collections.Generic.List{SECODashBackend.Models.BannedTopic},System.String)
+  id: AddTopicToEcosystem(System.Collections.Generic.List{SECODashBackend.Models.Taxonomy},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Collections.Generic.List{SECODashBackend.Models.BannedTopic},System.String)
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: AddTopicToEcosystem(List<Taxonomy>, List<Technology>, List<BannedTopic>, string)
+  nameWithType: EcosystemsService.AddTopicToEcosystem(List<Taxonomy>, List<Technology>, List<BannedTopic>, string)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem(System.Collections.Generic.List<SECODashBackend.Models.Taxonomy>, System.Collections.Generic.List<SECODashBackend.Models.Technology>, System.Collections.Generic.List<SECODashBackend.Models.BannedTopic>, string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddTopicToEcosystem
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 153
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: Link all topics provided to the new ecosystem.
+  example: []
+  syntax:
+    content: public Task AddTopicToEcosystem(List<Taxonomy> tax, List<Technology> tech, List<BannedTopic> banned, string eco)
+    parameters:
+    - id: tax
+      type: System.Collections.Generic.List{SECODashBackend.Models.Taxonomy}
+      description: <xref href="System.Collections.Generic.List%601" data-throw-if-not-resolved="false"></xref> of <xref href="SECODashBackend.Models.Taxonomy" data-throw-if-not-resolved="false"></xref> to add to the ecosystem.
+    - id: tech
+      type: System.Collections.Generic.List{SECODashBackend.Models.Technology}
+      description: <xref href="System.Collections.Generic.List%601" data-throw-if-not-resolved="false"></xref> of <xref href="SECODashBackend.Models.Technology" data-throw-if-not-resolved="false"></xref> to add to the ecosystem.
+    - id: banned
+      type: System.Collections.Generic.List{SECODashBackend.Models.BannedTopic}
+      description: <xref href="System.Collections.Generic.List%601" data-throw-if-not-resolved="false"></xref> of <xref href="SECODashBackend.Models.BannedTopic" data-throw-if-not-resolved="false"></xref> to add to the ecosystem.
+    - id: eco
+      type: System.String
+      description: The name of the ecosystem to add topics to.
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function AddTopicToEcosystem(tax As List(Of Taxonomy), tech As List(Of Technology), banned As List(Of BannedTopic), eco As String) As Task
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem*
+  nameWithType.vb: EcosystemsService.AddTopicToEcosystem(List(Of Taxonomy), List(Of Technology), List(Of BannedTopic), String)
+  fullName.vb: SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem(System.Collections.Generic.List(Of SECODashBackend.Models.Taxonomy), System.Collections.Generic.List(Of SECODashBackend.Models.Technology), System.Collections.Generic.List(Of SECODashBackend.Models.BannedTopic), String)
+  name.vb: AddTopicToEcosystem(List(Of Taxonomy), List(Of Technology), List(Of BannedTopic), String)
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem(System.String)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem(System.String)
+  id: RemoveEcosystem(System.String)
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: RemoveEcosystem(string)
+  nameWithType: EcosystemsService.RemoveEcosystem(string)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem(string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: RemoveEcosystem
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 243
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: Remove an existing top-level ecosystem from the database.
+  example: []
+  syntax:
+    content: public Task<string> RemoveEcosystem(string ecosystem)
+    parameters:
+    - id: ecosystem
+      type: System.String
+      description: ''
+    return:
+      type: System.Threading.Tasks.Task{System.String}
+      description: ''
+    content.vb: Public Function RemoveEcosystem(ecosystem As String) As Task(Of String)
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem*
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService.RemoveEcosystem(System.String)
+  nameWithType.vb: EcosystemsService.RemoveEcosystem(String)
+  fullName.vb: SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem(String)
+  name.vb: RemoveEcosystem(String)
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy(System.String)
+  commentId: M:SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy(System.String)
+  id: GetTechnologyTaxonomy(System.String)
+  parent: SECODashBackend.Services.Ecosystems.EcosystemsService
+  langs:
+  - csharp
+  - vb
+  name: GetTechnologyTaxonomy(string)
+  nameWithType: EcosystemsService.GetTechnologyTaxonomy(string)
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy(string)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Ecosystems/EcosystemsService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetTechnologyTaxonomy
+    path: back-end/Services/Ecosystems/EcosystemsService.cs
+    startLine: 254
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Ecosystems
+  summary: >-
+    This method returns the technology taxonomy of the given ecosystem.
+
+    That is, the list of technologies that were used to create the ecosystem,
+
+    and was saved in the postgres database when the ecosystem was created.
+  example: []
+  syntax:
+    content: public Task<List<Technology>> GetTechnologyTaxonomy(string ecosystemName)
+    parameters:
+    - id: ecosystemName
+      type: System.String
+      description: The name of the ecosystem we want to find technologies for.
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Models.Technology}}
+      description: A list of technologies for a given ecosystem.
+    content.vb: Public Function GetTechnologyTaxonomy(ecosystemName As String) As Task(Of List(Of Technology))
+  overload: SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy*
+  implements:
+  - SECODashBackend.Services.Ecosystems.IEcosystemsService.GetTechnologyTaxonomy(System.String)
+  nameWithType.vb: EcosystemsService.GetTechnologyTaxonomy(String)
+  fullName.vb: SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy(String)
+  name.vb: GetTechnologyTaxonomy(String)
+references:
+- uid: SECODashBackend.Services.Ecosystems
+  commentId: N:SECODashBackend.Services.Ecosystems
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Ecosystems
+  nameWithType: SECODashBackend.Services.Ecosystems
+  fullName: SECODashBackend.Services.Ecosystems
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Ecosystems
+    name: Ecosystems
+    href: SECODashBackend.Services.Ecosystems.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Ecosystems
+    name: Ecosystems
+    href: SECODashBackend.Services.Ecosystems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  commentId: T:SECODashBackend.Services.Ecosystems.IEcosystemsService
+  parent: SECODashBackend.Services.Ecosystems
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html
+  name: IEcosystemsService
+  nameWithType: IEcosystemsService
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.#ctor*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.#ctor
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService__ctor_SECODashBackend_Database_EcosystemsContext_SECODashBackend_Services_Analysis_IAnalysisService_
+  name: EcosystemsService
+  nameWithType: EcosystemsService.EcosystemsService
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.EcosystemsService
+  nameWithType.vb: EcosystemsService.New
+  fullName.vb: SECODashBackend.Services.Ecosystems.EcosystemsService.New
+  name.vb: New
+- uid: SECODashBackend.Database.EcosystemsContext
+  commentId: T:SECODashBackend.Database.EcosystemsContext
+  parent: SECODashBackend.Database
+  href: SECODashBackend.Database.EcosystemsContext.html
+  name: EcosystemsContext
+  nameWithType: EcosystemsContext
+  fullName: SECODashBackend.Database.EcosystemsContext
+- uid: SECODashBackend.Services.Analysis.IAnalysisService
+  commentId: T:SECODashBackend.Services.Analysis.IAnalysisService
+  parent: SECODashBackend.Services.Analysis
+  href: SECODashBackend.Services.Analysis.IAnalysisService.html
+  name: IAnalysisService
+  nameWithType: IAnalysisService
+  fullName: SECODashBackend.Services.Analysis.IAnalysisService
+- uid: SECODashBackend.Database
+  commentId: N:SECODashBackend.Database
+  href: SECODashBackend.html
+  name: SECODashBackend.Database
+  nameWithType: SECODashBackend.Database
+  fullName: SECODashBackend.Database
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Database
+    name: Database
+    href: SECODashBackend.Database.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Database
+    name: Database
+    href: SECODashBackend.Database.html
+- uid: SECODashBackend.Services.Analysis
+  commentId: N:SECODashBackend.Services.Analysis
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Analysis
+  nameWithType: SECODashBackend.Services.Analysis
+  fullName: SECODashBackend.Services.Analysis
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Analysis
+    name: Analysis
+    href: SECODashBackend.Services.Analysis.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Analysis
+    name: Analysis
+    href: SECODashBackend.Services.Analysis.html
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_GetAllAsync
+  name: GetAllAsync
+  nameWithType: EcosystemsService.GetAllAsync
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.GetAllAsync
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetAllAsync
+  commentId: M:SECODashBackend.Services.Ecosystems.IEcosystemsService.GetAllAsync
+  parent: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetAllAsync
+  name: GetAllAsync()
+  nameWithType: IEcosystemsService.GetAllAsync()
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetAllAsync()
+  spec.csharp:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetAllAsync
+    name: GetAllAsync
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetAllAsync
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetAllAsync
+    name: GetAllAsync
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetAllAsync
+  - name: (
+  - name: )
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<List<EcosystemOverviewDto>>
+  nameWithType: Task<List<EcosystemOverviewDto>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.List<SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto>>
+  nameWithType.vb: Task(Of List(Of EcosystemOverviewDto))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.List(Of SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto))
+  name.vb: Task(Of List(Of EcosystemOverviewDto))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto
+    name: EcosystemOverviewDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto
+    name: EcosystemOverviewDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemOverviewDto.html
+  - name: )
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_GetByTopicsAsync_SECODashBackend_Dtos_Ecosystem_EcosystemRequestDto_
+  name: GetByTopicsAsync
+  nameWithType: EcosystemsService.GetByTopicsAsync
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.GetByTopicsAsync
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.IEcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  parent: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetByTopicsAsync_SECODashBackend_Dtos_Ecosystem_EcosystemRequestDto_
+  name: GetByTopicsAsync(EcosystemRequestDto)
+  nameWithType: IEcosystemsService.GetByTopicsAsync(EcosystemRequestDto)
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+    name: GetByTopicsAsync
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetByTopicsAsync_SECODashBackend_Dtos_Ecosystem_EcosystemRequestDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+    name: EcosystemRequestDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto.html
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetByTopicsAsync(SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto)
+    name: GetByTopicsAsync
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetByTopicsAsync_SECODashBackend_Dtos_Ecosystem_EcosystemRequestDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+    name: EcosystemRequestDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto.html
+  - name: )
+- uid: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto.html
+  name: EcosystemRequestDto
+  nameWithType: EcosystemRequestDto
+  fullName: SECODashBackend.Dtos.Ecosystem.EcosystemRequestDto
+- uid: System.Threading.Tasks.Task{SECODashBackend.Dtos.Ecosystem.EcosystemDto}
+  commentId: T:System.Threading.Tasks.Task{SECODashBackend.Dtos.Ecosystem.EcosystemDto}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<EcosystemDto>
+  nameWithType: Task<EcosystemDto>
+  fullName: System.Threading.Tasks.Task<SECODashBackend.Dtos.Ecosystem.EcosystemDto>
+  nameWithType.vb: Task(Of EcosystemDto)
+  fullName.vb: System.Threading.Tasks.Task(Of SECODashBackend.Dtos.Ecosystem.EcosystemDto)
+  name.vb: Task(Of EcosystemDto)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemDto
+    name: EcosystemDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemDto.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemDto
+    name: EcosystemDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemDto.html
+  - name: )
+- uid: SECODashBackend.Dtos.Ecosystem
+  commentId: N:SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.html
+  name: SECODashBackend.Dtos.Ecosystem
+  nameWithType: SECODashBackend.Dtos.Ecosystem
+  fullName: SECODashBackend.Dtos.Ecosystem
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.Ecosystem
+    name: Ecosystem
+    href: SECODashBackend.Dtos.Ecosystem.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.Ecosystem
+    name: Ecosystem
+    href: SECODashBackend.Dtos.Ecosystem.html
+- uid: SECODashBackend.Dtos.Ecosystem.DescriptionDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.DescriptionDto
+  href: SECODashBackend.Dtos.Ecosystem.DescriptionDto.html
+  name: DescriptionDto
+  nameWithType: DescriptionDto
+  fullName: SECODashBackend.Dtos.Ecosystem.DescriptionDto
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_UpdateDescription_SECODashBackend_Dtos_Ecosystem_DescriptionRequestDto_
+  name: UpdateDescription
+  nameWithType: EcosystemsService.UpdateDescription
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateDescription
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  parent: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_UpdateDescription_SECODashBackend_Dtos_Ecosystem_DescriptionRequestDto_
+  name: UpdateDescription(DescriptionRequestDto)
+  nameWithType: IEcosystemsService.UpdateDescription(DescriptionRequestDto)
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+    name: UpdateDescription
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_UpdateDescription_SECODashBackend_Dtos_Ecosystem_DescriptionRequestDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+    name: DescriptionRequestDto
+    href: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto.html
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateDescription(SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto)
+    name: UpdateDescription
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_UpdateDescription_SECODashBackend_Dtos_Ecosystem_DescriptionRequestDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+    name: DescriptionRequestDto
+    href: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto.html
+  - name: )
+- uid: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto.html
+  name: DescriptionRequestDto
+  nameWithType: DescriptionRequestDto
+  fullName: SECODashBackend.Dtos.Ecosystem.DescriptionRequestDto
+- uid: System.Threading.Tasks.Task{System.String}
+  commentId: T:System.Threading.Tasks.Task{System.String}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<string>
+  nameWithType: Task<string>
+  fullName: System.Threading.Tasks.Task<string>
+  nameWithType.vb: Task(Of String)
+  fullName.vb: System.Threading.Tasks.Task(Of String)
+  name.vb: Task(Of String)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_CreateEcosystem_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  name: CreateEcosystem
+  nameWithType: EcosystemsService.CreateEcosystem
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.CreateEcosystem
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.IEcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  parent: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_CreateEcosystem_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  name: CreateEcosystem(EcosystemCreationDto)
+  nameWithType: IEcosystemsService.CreateEcosystem(EcosystemCreationDto)
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+    name: CreateEcosystem
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_CreateEcosystem_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+    name: EcosystemCreationDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto.html
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.CreateEcosystem(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+    name: CreateEcosystem
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_CreateEcosystem_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+    name: EcosystemCreationDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto.html
+  - name: )
+- uid: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+  commentId: T:SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+  parent: SECODashBackend.Dtos.Ecosystem
+  href: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto.html
+  name: EcosystemCreationDto
+  nameWithType: EcosystemCreationDto
+  fullName: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+- uid: System.Threading.Tasks.Task{System.Boolean}
+  commentId: T:System.Threading.Tasks.Task{System.Boolean}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<bool>
+  nameWithType: Task<bool>
+  fullName: System.Threading.Tasks.Task<bool>
+  nameWithType.vb: Task(Of Boolean)
+  fullName.vb: System.Threading.Tasks.Task(Of Boolean)
+  name.vb: Task(Of Boolean)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_UpdateTopics_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  name: UpdateTopics
+  nameWithType: EcosystemsService.UpdateTopics
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.UpdateTopics
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  commentId: M:SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  parent: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_UpdateTopics_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  name: UpdateTopics(EcosystemCreationDto)
+  nameWithType: IEcosystemsService.UpdateTopics(EcosystemCreationDto)
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+    name: UpdateTopics
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_UpdateTopics_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+    name: EcosystemCreationDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto.html
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.UpdateTopics(SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto)
+    name: UpdateTopics
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_UpdateTopics_SECODashBackend_Dtos_Ecosystem_EcosystemCreationDto_
+  - name: (
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto
+    name: EcosystemCreationDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemCreationDto.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: SECODashBackend.Models.Taxonomy
+  commentId: T:SECODashBackend.Models.Taxonomy
+  href: SECODashBackend.Models.Taxonomy.html
+  name: Taxonomy
+  nameWithType: Taxonomy
+  fullName: SECODashBackend.Models.Taxonomy
+- uid: SECODashBackend.Models.Technology
+  commentId: T:SECODashBackend.Models.Technology
+  href: SECODashBackend.Models.Technology.html
+  name: Technology
+  nameWithType: Technology
+  fullName: SECODashBackend.Models.Technology
+- uid: SECODashBackend.Models.BannedTopic
+  commentId: T:SECODashBackend.Models.BannedTopic
+  href: SECODashBackend.Models.BannedTopic.html
+  name: BannedTopic
+  nameWithType: BannedTopic
+  fullName: SECODashBackend.Models.BannedTopic
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_AddTopicToEcosystem_System_Collections_Generic_List_SECODashBackend_Models_Taxonomy__System_Collections_Generic_List_SECODashBackend_Models_Technology__System_Collections_Generic_List_SECODashBackend_Models_BannedTopic__System_String_
+  name: AddTopicToEcosystem
+  nameWithType: EcosystemsService.AddTopicToEcosystem
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.AddTopicToEcosystem
+- uid: System.Collections.Generic.List{SECODashBackend.Models.Taxonomy}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.Taxonomy}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<Taxonomy>
+  nameWithType: List<Taxonomy>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.Taxonomy>
+  nameWithType.vb: List(Of Taxonomy)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.Taxonomy)
+  name.vb: List(Of Taxonomy)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.Taxonomy
+    name: Taxonomy
+    href: SECODashBackend.Models.Taxonomy.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.Taxonomy
+    name: Taxonomy
+    href: SECODashBackend.Models.Taxonomy.html
+  - name: )
+- uid: System.Collections.Generic.List{SECODashBackend.Models.Technology}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.Technology}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<Technology>
+  nameWithType: List<Technology>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.Technology>
+  nameWithType.vb: List(Of Technology)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.Technology)
+  name.vb: List(Of Technology)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: )
+- uid: System.Collections.Generic.List{SECODashBackend.Models.BannedTopic}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.BannedTopic}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<BannedTopic>
+  nameWithType: List<BannedTopic>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.BannedTopic>
+  nameWithType.vb: List(Of BannedTopic)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.BannedTopic)
+  name.vb: List(Of BannedTopic)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.BannedTopic
+    name: BannedTopic
+    href: SECODashBackend.Models.BannedTopic.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.BannedTopic
+    name: BannedTopic
+    href: SECODashBackend.Models.BannedTopic.html
+  - name: )
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_RemoveEcosystem_System_String_
+  name: RemoveEcosystem
+  nameWithType: EcosystemsService.RemoveEcosystem
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.RemoveEcosystem
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.RemoveEcosystem(System.String)
+  commentId: M:SECODashBackend.Services.Ecosystems.IEcosystemsService.RemoveEcosystem(System.String)
+  parent: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  isExternal: true
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_RemoveEcosystem_System_String_
+  name: RemoveEcosystem(string)
+  nameWithType: IEcosystemsService.RemoveEcosystem(string)
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService.RemoveEcosystem(string)
+  nameWithType.vb: IEcosystemsService.RemoveEcosystem(String)
+  fullName.vb: SECODashBackend.Services.Ecosystems.IEcosystemsService.RemoveEcosystem(String)
+  name.vb: RemoveEcosystem(String)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.RemoveEcosystem(System.String)
+    name: RemoveEcosystem
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_RemoveEcosystem_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.RemoveEcosystem(System.String)
+    name: RemoveEcosystem
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_RemoveEcosystem_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy*
+  commentId: Overload:SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy
+  href: SECODashBackend.Services.Ecosystems.EcosystemsService.html#SECODashBackend_Services_Ecosystems_EcosystemsService_GetTechnologyTaxonomy_System_String_
+  name: GetTechnologyTaxonomy
+  nameWithType: EcosystemsService.GetTechnologyTaxonomy
+  fullName: SECODashBackend.Services.Ecosystems.EcosystemsService.GetTechnologyTaxonomy
+- uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetTechnologyTaxonomy(System.String)
+  commentId: M:SECODashBackend.Services.Ecosystems.IEcosystemsService.GetTechnologyTaxonomy(System.String)
+  parent: SECODashBackend.Services.Ecosystems.IEcosystemsService
+  isExternal: true
+  href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetTechnologyTaxonomy_System_String_
+  name: GetTechnologyTaxonomy(string)
+  nameWithType: IEcosystemsService.GetTechnologyTaxonomy(string)
+  fullName: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetTechnologyTaxonomy(string)
+  nameWithType.vb: IEcosystemsService.GetTechnologyTaxonomy(String)
+  fullName.vb: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetTechnologyTaxonomy(String)
+  name.vb: GetTechnologyTaxonomy(String)
+  spec.csharp:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetTechnologyTaxonomy(System.String)
+    name: GetTechnologyTaxonomy
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetTechnologyTaxonomy_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: SECODashBackend.Services.Ecosystems.IEcosystemsService.GetTechnologyTaxonomy(System.String)
+    name: GetTechnologyTaxonomy
+    href: SECODashBackend.Services.Ecosystems.IEcosystemsService.html#SECODashBackend_Services_Ecosystems_IEcosystemsService_GetTechnologyTaxonomy_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Models.Technology}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Models.Technology}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<List<Technology>>
+  nameWithType: Task<List<Technology>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.List<SECODashBackend.Models.Technology>>
+  nameWithType.vb: Task(Of List(Of Technology))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.List(Of SECODashBackend.Models.Technology))
+  name.vb: Task(Of List(Of Technology))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: )
+  - name: )

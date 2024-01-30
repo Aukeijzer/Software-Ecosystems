@@ -1,15 +1,35 @@
+/*
+Copyright (C) <2024> <OdinDash>
+
+This file is part of SECODash
+
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 "use client"
 
 import { useEffect} from "react"
 import { useRouter } from 'next/navigation'
-import { fetcherHomePage } from '@/app/utils/apiFetcher';
+import { fetcherHomePage } from '@/utils/apiFetcher';
 import useSWRMutation from 'swr/mutation'
-import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
-import { ExtendedUser } from "@/app/utils/authOptions";
+import { ExtendedUser } from "@/utils/authOptions";
 import { useSession } from "next-auth/react";
+var abbreviate = require('number-abbreviate');
 
 /**
  * Renders the layout for the home page.
@@ -71,13 +91,38 @@ export default function LayoutHomePage(){
         var finalUrl = url[0] + "//" + ecosystem + '.' + url[1] ;
         Router.push(finalUrl);
         */
-        Router.push('/' + ecosystem.toLowerCase());
+        Router.push('/' + ecosystem.toLowerCase().replaceAll(" ", "-"));
     }
 
     function removeEcosystem(event: any, ecosystem: string){
         event.stopPropagation()
         if(confirm("Are you sure you want to remove this ecosystem?")){
             //Remove ecosystem from user
+            //Make api call to remove ecosystem from user
+            var apiPostBody = {
+                ecosystem: ecosystem,
+                userEcosystems: user.ecosystems
+            }
+            fetch('/api/removeEcosystem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(apiPostBody)
+            }).then(response => {
+                if(response.ok){
+                    if(response.status === 200){
+                        alert("Ecosystem removed");
+                        window.location.reload();
+                    } else {
+                        alert("Error removing ecosystem");
+                    }
+                } else {
+                    throw new Error("Error in response");
+                }
+            }).catch(error => {
+                throw new Error("Error in fetch");
+            })
         }
     }
 
@@ -85,42 +130,38 @@ export default function LayoutHomePage(){
     if(data){
         const COLORS = ["#f2c4d8", "#f9d4bb", "#f8e3a1", "#c9e4ca", "#a1d9e8", "#c6c8e7", "#f0c4de", "#d8d8d8"];
 
+        var totalProjects = 0;
+        var totalContributors = 0;
+        var totalTopics = 0;
+        var totalStars = 0;
+        for(var i = 0; i < data.length; i++){
+            totalProjects += data[i].numberOfProjects;
+            totalContributors += data[i].numberOfContributors;
+            totalTopics += data[i].numberOfSubTopics;
+            totalStars += data[i].numberOfStars;
+        }
+
         //General information about SECODash
-        const info = (<div className="flex flex-col"> 
+        const info = (<div className="flex flex-col "> 
                 <span> Total ecosystems: {data.length}</span>
-                <span> Total projects: {totalInformation.totalProjects} </span>
-                <span> Total topics: {totalInformation.totalTopics} </span>
+                <span> Total projects: {abbreviate(totalProjects)} </span>
+                <span> Total sub-ecosystems: {abbreviate(totalTopics)} </span>
+                <span> Total stars: {abbreviate(totalStars)} </span>
+                <span> Total contributors: {abbreviate(totalContributors)} </span>
             </div>
         )
 
-        const infoCard = <div className="col-span-3">
+        const infoCard = <div className="col-span-4">
             <InfoCard title="Information about SECODash" data={info} />
         </div>
         cardList.push(infoCard);
-
-        //Prepare card for each ecosystem availlable
-        for(var i = 0; i < data.length; i++){
-           
-            var removable = false;
-            if(user && userEcosystems){
-                console.log(userEcosystems);
-                removable = userEcosystems.includes(data[i].displayName.toLowerCase());
-            }
-            
-            const button = <EcosystemButton ecosystem={data[i].displayName} projectCount={data[i].numberOfStars} topics={100} />
-        
-            const card = <div className="col-span-1 h-36">
-                <InfoCard title={data[i].displayName!} data={button} onClick={onClickEcosystem} Color={COLORS[i]} remove={removable} onRemove={removeEcosystem} ecoystem={data[i].displayName} />
-            </div>
-            cardList.push(card);
-        }
 
         if(user){
             //If user is admin, make cards draggable
             if(user.userType === "Admin" || user.userType === "RootAdmin"){
                 //Create new dashboard card
-                const newDashboardButton = <div className="h-32">Create </div>
-                const newDashboardButtonCard = <div>
+                const newDashboardButton = <div className="h-16"> </div>
+                const newDashboardButtonCard = <div className="cursor-pointer col-span-2">
                     <InfoCard 
                     title="Create new Dashboard"
                     data={newDashboardButton}
@@ -131,8 +172,8 @@ export default function LayoutHomePage(){
                 cardList.push(newDashboardButtonCard);
                 if(user.userType === "RootAdmin"){
                     //Create new add admin card
-                    const addAdminButton = <div> Add admin </div>
-                    const addAdminButtonCard = <div>
+                    const addAdminButton = <div> </div>
+                    const addAdminButtonCard = <div className="cursor-pointer col-span-2  ">
                         <InfoCard 
                         title="Add new admin"
                         data={addAdminButton}
@@ -144,6 +185,30 @@ export default function LayoutHomePage(){
                 }
             }
         }
+
+        //Prepare card for each ecosystem availlable
+        for(var i = 0; i < data.length; i++){
+            var removable = false;
+            if(user && userEcosystems){
+                removable = userEcosystems.includes(data[i].displayName);
+                if(user.userType === "RootAdmin"){
+                    removable = true;
+                }
+            }
+            
+            const button = <EcosystemButton ecosystem={data[i].displayName}
+             projectCount={data[i].numberOfProjects}  
+             topics={data[i].numberOfSubTopics} 
+             contributors={data[i].numberOfContributors}
+             stars={data[i].numberOfStars} />
+        
+            const card = <div className="col-span-1  cursor-pointer">
+                <InfoCard title={data[i].displayName!} data={button} onClick={onClickEcosystem} Color={COLORS[i]} remove={removable} onRemove={removeEcosystem} ecoystem={data[i].displayName} />
+            </div>
+            cardList.push(card);
+        }
+
+      
     } else {
         //When still loading display spinner
         return(
@@ -154,7 +219,7 @@ export default function LayoutHomePage(){
     }
     return(
         <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32">
-            <div className="grid gap-3 grid-cols-3" >
+            <div className="grid gap-3 grid-cols-4 " >
              {cardList.map((card, i) => (
                  card
              ))}

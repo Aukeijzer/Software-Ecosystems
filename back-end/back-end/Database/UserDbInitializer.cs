@@ -13,8 +13,8 @@ public static class UserDbInitializer
         
         context.Users.Add(new User
         {
-            Id = "InitialRootAdmin",
-            UserName = "InitialRootAdmin",
+            Id = "152970440",
+            UserName = "4087568626",
             Type = User.UserType.RootAdmin,
         });
         context.SaveChanges();

@@ -1,0 +1,76 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.User
+  commentId: N:SECODashBackend.Dtos.User
+  id: SECODashBackend.Dtos.User
+  children:
+  - SECODashBackend.Dtos.User.UpdatePermissionsDto
+  - SECODashBackend.Dtos.User.UserPermissionsDto
+  - SECODashBackend.Dtos.User.UserTypeDto
+  - SECODashBackend.Dtos.User.UserTypeRequestDto
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Dtos.User
+  nameWithType: SECODashBackend.Dtos.User
+  fullName: SECODashBackend.Dtos.User
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Dtos.User.UpdatePermissionsDto
+  commentId: T:SECODashBackend.Dtos.User.UpdatePermissionsDto
+  parent: SECODashBackend.Dtos.User
+  href: SECODashBackend.Dtos.User.UpdatePermissionsDto.html
+  name: UpdatePermissionsDto
+  nameWithType: UpdatePermissionsDto
+  fullName: SECODashBackend.Dtos.User.UpdatePermissionsDto
+- uid: SECODashBackend.Dtos.User.UserPermissionsDto
+  commentId: T:SECODashBackend.Dtos.User.UserPermissionsDto
+  href: SECODashBackend.Dtos.User.UserPermissionsDto.html
+  name: UserPermissionsDto
+  nameWithType: UserPermissionsDto
+  fullName: SECODashBackend.Dtos.User.UserPermissionsDto
+- uid: SECODashBackend.Dtos.User.UserTypeDto
+  commentId: T:SECODashBackend.Dtos.User.UserTypeDto
+  href: SECODashBackend.Dtos.User.UserTypeDto.html
+  name: UserTypeDto
+  nameWithType: UserTypeDto
+  fullName: SECODashBackend.Dtos.User.UserTypeDto
+- uid: SECODashBackend.Dtos.User.UserTypeRequestDto
+  commentId: T:SECODashBackend.Dtos.User.UserTypeRequestDto
+  parent: SECODashBackend.Dtos.User
+  href: SECODashBackend.Dtos.User.UserTypeRequestDto.html
+  name: UserTypeRequestDto
+  nameWithType: UserTypeRequestDto
+  fullName: SECODashBackend.Dtos.User.UserTypeRequestDto
+- uid: SECODashBackend.Dtos.User
+  commentId: N:SECODashBackend.Dtos.User
+  href: SECODashBackend.html
+  name: SECODashBackend.Dtos.User
+  nameWithType: SECODashBackend.Dtos.User
+  fullName: SECODashBackend.Dtos.User
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.User
+    name: User
+    href: SECODashBackend.Dtos.User.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Dtos
+    name: Dtos
+    href: SECODashBackend.Dtos.html
+  - name: .
+  - uid: SECODashBackend.Dtos.User
+    name: User
+    href: SECODashBackend.Dtos.User.html

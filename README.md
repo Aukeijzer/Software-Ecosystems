@@ -63,7 +63,7 @@ The structure of the project is made up of 4 different branches.
 
 ## Back-end (service)
 
-[Go to back-end documentation](back-end/README.md)
+[Go to back-end documentation](https://aukeijzer.github.io/Software-Ecosystems/documentation/backend/index.html)
 
 ![UML diagram of the back-end](assets/backendUML.png)
 
@@ -128,7 +128,8 @@ To start testing with jest follow these steps:
 
 ## Spider
 
-[Go to spider documentation](documentation/spider/_Sidebar.md)
+[Go to spider documentation](https://aukeijzer.github.io/Software-Ecosystems/documentation/spider/index.html)
+
 
 ### Running outside of a container
 In order to run the spider you need to install [C# .net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0). 

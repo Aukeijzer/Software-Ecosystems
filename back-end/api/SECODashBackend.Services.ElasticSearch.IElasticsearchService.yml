@@ -1,0 +1,559 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  commentId: T:SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  id: IElasticsearchService
+  parent: SECODashBackend.Services.ElasticSearch
+  children:
+  - SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects(System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Project.ProjectDto})
+  - SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate(System.DateTime,System.Collections.Generic.List{System.String})
+  - SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects(Elastic.Clients.Elasticsearch.SearchRequest)
+  langs:
+  - csharp
+  - vb
+  name: IElasticsearchService
+  nameWithType: IElasticsearchService
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  type: Interface
+  source:
+    remote:
+      path: back-end/back-end/Services/Elasticsearch/IElasticsearchService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: IElasticsearchService
+    path: back-end/Services/Elasticsearch/IElasticsearchService.cs
+    startLine: 8
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.ElasticSearch
+  summary: Interface for the service that is responsible for handling all Elasticsearch related requests.
+  example: []
+  syntax:
+    content: public interface IElasticsearchService
+    content.vb: Public Interface IElasticsearchService
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects(System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Project.ProjectDto})
+  commentId: M:SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects(System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Project.ProjectDto})
+  id: AddProjects(System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Project.ProjectDto})
+  parent: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  langs:
+  - csharp
+  - vb
+  name: AddProjects(IEnumerable<ProjectDto>)
+  nameWithType: IElasticsearchService.AddProjects(IEnumerable<ProjectDto>)
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects(System.Collections.Generic.IEnumerable<SECODashBackend.Dtos.Project.ProjectDto>)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Elasticsearch/IElasticsearchService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AddProjects
+    path: back-end/Services/Elasticsearch/IElasticsearchService.cs
+    startLine: 14
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.ElasticSearch
+  summary: Adds the given projects to the Elasticsearch index.
+  example: []
+  syntax:
+    content: Task AddProjects(IEnumerable<ProjectDto> projectDtos)
+    parameters:
+    - id: projectDtos
+      type: System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Project.ProjectDto}
+      description: The projects to be added to the index.
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Function AddProjects(projectDtos As IEnumerable(Of ProjectDto)) As Task
+  overload: SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects*
+  nameWithType.vb: IElasticsearchService.AddProjects(IEnumerable(Of ProjectDto))
+  fullName.vb: SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects(System.Collections.Generic.IEnumerable(Of SECODashBackend.Dtos.Project.ProjectDto))
+  name.vb: AddProjects(IEnumerable(Of ProjectDto))
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects(Elastic.Clients.Elasticsearch.SearchRequest)
+  commentId: M:SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects(Elastic.Clients.Elasticsearch.SearchRequest)
+  id: QueryProjects(Elastic.Clients.Elasticsearch.SearchRequest)
+  parent: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  langs:
+  - csharp
+  - vb
+  name: QueryProjects(SearchRequest)
+  nameWithType: IElasticsearchService.QueryProjects(SearchRequest)
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects(Elastic.Clients.Elasticsearch.SearchRequest)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Elasticsearch/IElasticsearchService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: QueryProjects
+    path: back-end/Services/Elasticsearch/IElasticsearchService.cs
+    startLine: 20
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.ElasticSearch
+  summary: Queries the Elasticsearch index for projects that match the given search request.
+  example: []
+  syntax:
+    content: Task<SearchResponse<ProjectDto>> QueryProjects(SearchRequest searchRequest)
+    parameters:
+    - id: searchRequest
+      type: Elastic.Clients.Elasticsearch.SearchRequest
+      description: The search request.
+    return:
+      type: System.Threading.Tasks.Task{Elastic.Clients.Elasticsearch.SearchResponse{SECODashBackend.Dtos.Project.ProjectDto}}
+      description: A SearchResponse for the projects that match the search request.
+    content.vb: Function QueryProjects(searchRequest As SearchRequest) As Task(Of SearchResponse(Of ProjectDto))
+  overload: SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects*
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate(System.DateTime,System.Collections.Generic.List{System.String})
+  commentId: M:SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate(System.DateTime,System.Collections.Generic.List{System.String})
+  id: GetProjectCountByDate(System.DateTime,System.Collections.Generic.List{System.String})
+  parent: SECODashBackend.Services.ElasticSearch.IElasticsearchService
+  langs:
+  - csharp
+  - vb
+  name: GetProjectCountByDate(DateTime, List<string>)
+  nameWithType: IElasticsearchService.GetProjectCountByDate(DateTime, List<string>)
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate(System.DateTime, System.Collections.Generic.List<string>)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Elasticsearch/IElasticsearchService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetProjectCountByDate
+    path: back-end/Services/Elasticsearch/IElasticsearchService.cs
+    startLine: 21
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.ElasticSearch
+  syntax:
+    content: Task<long> GetProjectCountByDate(DateTime startTime, List<string> topic)
+    parameters:
+    - id: startTime
+      type: System.DateTime
+    - id: topic
+      type: System.Collections.Generic.List{System.String}
+    return:
+      type: System.Threading.Tasks.Task{System.Int64}
+    content.vb: Function GetProjectCountByDate(startTime As Date, topic As List(Of String)) As Task(Of Long)
+  overload: SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate*
+  nameWithType.vb: IElasticsearchService.GetProjectCountByDate(Date, List(Of String))
+  fullName.vb: SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate(Date, System.Collections.Generic.List(Of String))
+  name.vb: GetProjectCountByDate(Date, List(Of String))
+references:
+- uid: SECODashBackend.Services.ElasticSearch
+  commentId: N:SECODashBackend.Services.ElasticSearch
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.ElasticSearch
+  nameWithType: SECODashBackend.Services.ElasticSearch
+  fullName: SECODashBackend.Services.ElasticSearch
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.ElasticSearch
+    name: ElasticSearch
+    href: SECODashBackend.Services.ElasticSearch.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.ElasticSearch
+    name: ElasticSearch
+    href: SECODashBackend.Services.ElasticSearch.html
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects*
+  commentId: Overload:SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects
+  href: SECODashBackend.Services.ElasticSearch.IElasticsearchService.html#SECODashBackend_Services_ElasticSearch_IElasticsearchService_AddProjects_System_Collections_Generic_IEnumerable_SECODashBackend_Dtos_Project_ProjectDto__
+  name: AddProjects
+  nameWithType: IElasticsearchService.AddProjects
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService.AddProjects
+- uid: System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Project.ProjectDto}
+  commentId: T:System.Collections.Generic.IEnumerable{SECODashBackend.Dtos.Project.ProjectDto}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<ProjectDto>
+  nameWithType: IEnumerable<ProjectDto>
+  fullName: System.Collections.Generic.IEnumerable<SECODashBackend.Dtos.Project.ProjectDto>
+  nameWithType.vb: IEnumerable(Of ProjectDto)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of SECODashBackend.Dtos.Project.ProjectDto)
+  name.vb: IEnumerable(Of ProjectDto)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: )
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects*
+  commentId: Overload:SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects
+  href: SECODashBackend.Services.ElasticSearch.IElasticsearchService.html#SECODashBackend_Services_ElasticSearch_IElasticsearchService_QueryProjects_Elastic_Clients_Elasticsearch_SearchRequest_
+  name: QueryProjects
+  nameWithType: IElasticsearchService.QueryProjects
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService.QueryProjects
+- uid: Elastic.Clients.Elasticsearch.SearchRequest
+  commentId: T:Elastic.Clients.Elasticsearch.SearchRequest
+  parent: Elastic.Clients.Elasticsearch
+  isExternal: true
+  name: SearchRequest
+  nameWithType: SearchRequest
+  fullName: Elastic.Clients.Elasticsearch.SearchRequest
+- uid: System.Threading.Tasks.Task{Elastic.Clients.Elasticsearch.SearchResponse{SECODashBackend.Dtos.Project.ProjectDto}}
+  commentId: T:System.Threading.Tasks.Task{Elastic.Clients.Elasticsearch.SearchResponse{SECODashBackend.Dtos.Project.ProjectDto}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<SearchResponse<ProjectDto>>
+  nameWithType: Task<SearchResponse<ProjectDto>>
+  fullName: System.Threading.Tasks.Task<Elastic.Clients.Elasticsearch.SearchResponse<SECODashBackend.Dtos.Project.ProjectDto>>
+  nameWithType.vb: Task(Of SearchResponse(Of ProjectDto))
+  fullName.vb: System.Threading.Tasks.Task(Of Elastic.Clients.Elasticsearch.SearchResponse(Of SECODashBackend.Dtos.Project.ProjectDto))
+  name.vb: Task(Of SearchResponse(Of ProjectDto))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Elastic.Clients.Elasticsearch.SearchResponse`1
+    name: SearchResponse
+    isExternal: true
+  - name: <
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Elastic.Clients.Elasticsearch.SearchResponse`1
+    name: SearchResponse
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: )
+  - name: )
+- uid: Elastic.Clients.Elasticsearch
+  commentId: N:Elastic.Clients.Elasticsearch
+  isExternal: true
+  name: Elastic.Clients.Elasticsearch
+  nameWithType: Elastic.Clients.Elasticsearch
+  fullName: Elastic.Clients.Elasticsearch
+  spec.csharp:
+  - uid: Elastic
+    name: Elastic
+    isExternal: true
+  - name: .
+  - uid: Elastic.Clients
+    name: Clients
+    isExternal: true
+  - name: .
+  - uid: Elastic.Clients.Elasticsearch
+    name: Elasticsearch
+    isExternal: true
+  spec.vb:
+  - uid: Elastic
+    name: Elastic
+    isExternal: true
+  - name: .
+  - uid: Elastic.Clients
+    name: Clients
+    isExternal: true
+  - name: .
+  - uid: Elastic.Clients.Elasticsearch
+    name: Elasticsearch
+    isExternal: true
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate*
+  commentId: Overload:SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate
+  href: SECODashBackend.Services.ElasticSearch.IElasticsearchService.html#SECODashBackend_Services_ElasticSearch_IElasticsearchService_GetProjectCountByDate_System_DateTime_System_Collections_Generic_List_System_String__
+  name: GetProjectCountByDate
+  nameWithType: IElasticsearchService.GetProjectCountByDate
+  fullName: SECODashBackend.Services.ElasticSearch.IElasticsearchService.GetProjectCountByDate
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.datetime
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Threading.Tasks.Task{System.Int64}
+  commentId: T:System.Threading.Tasks.Task{System.Int64}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<long>
+  nameWithType: Task<long>
+  fullName: System.Threading.Tasks.Task<long>
+  nameWithType.vb: Task(Of Long)
+  fullName.vb: System.Threading.Tasks.Task(Of Long)
+  name.vb: Task(Of Long)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Int64
+    name: long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int64
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
