@@ -37,7 +37,8 @@ var apiKey = "";
 var cloudId= "";
 if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
 {
-    builder.Configuration.AddJsonFile("backend.json");
+    string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "secrets/backend-secrets.json";
+    builder.Configuration.AddJsonFile(path);
     apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
     cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
 }
