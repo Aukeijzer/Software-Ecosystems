@@ -118,6 +118,7 @@ _[Ss]cripts
 
 # secrets
 secrets/
+backend.json
 
 spider/spider/.idea/.idea.spider.dir/.idea/
 
