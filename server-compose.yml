@@ -43,7 +43,7 @@ services:
     environment:
       API_Token_File: /run/secrets/git-api-token
       ASPNETCORE_URLS: http://*:5205
-      Docker_Enviroment: server
+      Docker_Environment: server
 
 #####
   # Backend 
@@ -75,7 +75,7 @@ services:
     environment:
       backend-secrets: /run/secrets/backend-secrets
       ASPNETCORE_URLS: http://*:5003
-      Docker_Enviroment: server
+      Docker_Environment: server
     networks:
       - secodash-network
     restart: always
