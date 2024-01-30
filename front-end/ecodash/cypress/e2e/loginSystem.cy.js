@@ -18,7 +18,7 @@ along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
-escribe("Login functionality", () => {
+describe("Login functionality", () => {
     //Sadly this is not implemented fuly. OAuth2 is hard to test with cypress.
     //Link to github issue:https://github.com/lirantal/cypress-social-logins/issues/43
     /*
