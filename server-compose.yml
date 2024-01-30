@@ -70,7 +70,10 @@ services:
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile
+    secrets:
+      - backend-secrets
     environment:
+      backend-secrets: /run/secrets/backend-secrets
       ASPNETCORE_URLS: http://*:5003
       Docker_Enviroment: server
     networks:
@@ -78,6 +81,17 @@ services:
     restart: always
     depends_on:
       - db
+    
+#####
+  # Data processor docker.
+  data-processor-app:
+    container_name: data-processor-app
+    build:
+      context: ./data_processor/
+      dockerfile: ./Dockerfile
+    networks:
+      - secodash-network
+    restart: always
       
 ####
   # Volumes, networks and secrets
@@ -85,6 +99,8 @@ volumes:
   postgres-data:
 
 secrets:
+  backend-secrets:
+    file: secrets/backend-connectionstrings.json
   db-password:
     file: secrets/db-password.txt
   git-api-token:
