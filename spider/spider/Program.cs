@@ -23,7 +23,7 @@ if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
 else
 {
     string? tokenPath = Environment.GetEnvironmentVariable("API_Token_File");
-    token = File.ReadAllText(tokenPath);
+    token = File.ReadAllText(tokenPath).Trim();
 }
 
 _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
