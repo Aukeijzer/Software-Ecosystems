@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Spider
+  commentId: N:SECODashBackend.Services.Spider
+  id: SECODashBackend.Services.Spider
+  children:
+  - SECODashBackend.Services.Spider.ISpiderService
+  - SECODashBackend.Services.Spider.SpiderService
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Services.Spider
+  nameWithType: SECODashBackend.Services.Spider
+  fullName: SECODashBackend.Services.Spider
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Services.Spider.ISpiderService
+  commentId: T:SECODashBackend.Services.Spider.ISpiderService
+  parent: SECODashBackend.Services.Spider
+  href: SECODashBackend.Services.Spider.ISpiderService.html
+  name: ISpiderService
+  nameWithType: ISpiderService
+  fullName: SECODashBackend.Services.Spider.ISpiderService
+- uid: SECODashBackend.Services.Spider.SpiderService
+  commentId: T:SECODashBackend.Services.Spider.SpiderService
+  href: SECODashBackend.Services.Spider.SpiderService.html
+  name: SpiderService
+  nameWithType: SpiderService
+  fullName: SECODashBackend.Services.Spider.SpiderService
+- uid: SECODashBackend.Services.Spider
+  commentId: N:SECODashBackend.Services.Spider
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Spider
+  nameWithType: SECODashBackend.Services.Spider
+  fullName: SECODashBackend.Services.Spider
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Spider
+    name: Spider
+    href: SECODashBackend.Services.Spider.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Spider
+    name: Spider
+    href: SECODashBackend.Services.Spider.html

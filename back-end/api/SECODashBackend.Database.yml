@@ -1,0 +1,74 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Database
+  commentId: N:SECODashBackend.Database
+  id: SECODashBackend.Database
+  children:
+  - SECODashBackend.Database.DbInitializer
+  - SECODashBackend.Database.EcosystemsContext
+  - SECODashBackend.Database.Extensions
+  - SECODashBackend.Database.UserContext
+  - SECODashBackend.Database.UserDbInitializer
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Database
+  nameWithType: SECODashBackend.Database
+  fullName: SECODashBackend.Database
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Database.DbInitializer
+  commentId: T:SECODashBackend.Database.DbInitializer
+  href: SECODashBackend.Database.DbInitializer.html
+  name: DbInitializer
+  nameWithType: DbInitializer
+  fullName: SECODashBackend.Database.DbInitializer
+- uid: SECODashBackend.Database.EcosystemsContext
+  commentId: T:SECODashBackend.Database.EcosystemsContext
+  parent: SECODashBackend.Database
+  href: SECODashBackend.Database.EcosystemsContext.html
+  name: EcosystemsContext
+  nameWithType: EcosystemsContext
+  fullName: SECODashBackend.Database.EcosystemsContext
+- uid: SECODashBackend.Database.Extensions
+  commentId: T:SECODashBackend.Database.Extensions
+  href: SECODashBackend.Database.Extensions.html
+  name: Extensions
+  nameWithType: Extensions
+  fullName: SECODashBackend.Database.Extensions
+- uid: SECODashBackend.Database.UserContext
+  commentId: T:SECODashBackend.Database.UserContext
+  href: SECODashBackend.Database.UserContext.html
+  name: UserContext
+  nameWithType: UserContext
+  fullName: SECODashBackend.Database.UserContext
+- uid: SECODashBackend.Database.UserDbInitializer
+  commentId: T:SECODashBackend.Database.UserDbInitializer
+  href: SECODashBackend.Database.UserDbInitializer.html
+  name: UserDbInitializer
+  nameWithType: UserDbInitializer
+  fullName: SECODashBackend.Database.UserDbInitializer
+- uid: SECODashBackend.Database
+  commentId: N:SECODashBackend.Database
+  href: SECODashBackend.html
+  name: SECODashBackend.Database
+  nameWithType: SECODashBackend.Database
+  fullName: SECODashBackend.Database
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Database
+    name: Database
+    href: SECODashBackend.Database.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Database
+    name: Database
+    href: SECODashBackend.Database.html

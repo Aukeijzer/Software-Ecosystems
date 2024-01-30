@@ -150,6 +150,7 @@ app.MapControllers();
 app.MapHangfireDashboard();
 
 app.CreateDbIfNotExists();
+app.ScheduleInitialJobs();
 app.Run();
 
 // Necessary for integration testing.

@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Dtos.TimedData
+  commentId: N:SECODashBackend.Dtos.TimedData
+  id: SECODashBackend.Dtos.TimedData
+  children:
+  - SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Dtos.TimedData
+  nameWithType: SECODashBackend.Dtos.TimedData
+  fullName: SECODashBackend.Dtos.TimedData
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  commentId: T:SECODashBackend.Dtos.TimedData.TopicsBucketDto
+  href: SECODashBackend.Dtos.TimedData.TopicsBucketDto.html
+  name: TopicsBucketDto
+  nameWithType: TopicsBucketDto
+  fullName: SECODashBackend.Dtos.TimedData.TopicsBucketDto

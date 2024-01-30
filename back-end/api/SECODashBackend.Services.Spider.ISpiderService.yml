@@ -1,0 +1,296 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Spider.ISpiderService
+  commentId: T:SECODashBackend.Services.Spider.ISpiderService
+  id: ISpiderService
+  parent: SECODashBackend.Services.Spider
+  children:
+  - SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync(System.String,System.Int32)
+  - SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync(System.String,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ISpiderService
+  nameWithType: ISpiderService
+  fullName: SECODashBackend.Services.Spider.ISpiderService
+  type: Interface
+  source:
+    remote:
+      path: back-end/back-end/Services/Spider/ISpiderService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: ISpiderService
+    path: back-end/Services/Spider/ISpiderService.cs
+    startLine: 7
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Spider
+  summary: Interface for a service that is responsible for requesting the Spider for projects.
+  example: []
+  syntax:
+    content: public interface ISpiderService
+    content.vb: Public Interface ISpiderService
+- uid: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync(System.String,System.Int32)
+  commentId: M:SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync(System.String,System.Int32)
+  id: GetProjectsByTopicAsync(System.String,System.Int32)
+  parent: SECODashBackend.Services.Spider.ISpiderService
+  langs:
+  - csharp
+  - vb
+  name: GetProjectsByTopicAsync(string, int)
+  nameWithType: ISpiderService.GetProjectsByTopicAsync(string, int)
+  fullName: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync(string, int)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Spider/ISpiderService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetProjectsByTopicAsync
+    path: back-end/Services/Spider/ISpiderService.cs
+    startLine: 14
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Spider
+  summary: Requests the Spider for projects related to the given topic.
+  example: []
+  syntax:
+    content: Task<List<ProjectDto>> GetProjectsByTopicAsync(string topic, int amount)
+    parameters:
+    - id: topic
+      type: System.String
+      description: The topic to search for.
+    - id: amount
+      type: System.Int32
+      description: The amount of repos to search for.
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}}
+    content.vb: Function GetProjectsByTopicAsync(topic As String, amount As Integer) As Task(Of List(Of ProjectDto))
+  overload: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync*
+  nameWithType.vb: ISpiderService.GetProjectsByTopicAsync(String, Integer)
+  fullName.vb: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync(String, Integer)
+  name.vb: GetProjectsByTopicAsync(String, Integer)
+- uid: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync(System.String,System.Int32)
+  commentId: M:SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync(System.String,System.Int32)
+  id: GetProjectsByKeywordAsync(System.String,System.Int32)
+  parent: SECODashBackend.Services.Spider.ISpiderService
+  langs:
+  - csharp
+  - vb
+  name: GetProjectsByKeywordAsync(string, int)
+  nameWithType: ISpiderService.GetProjectsByKeywordAsync(string, int)
+  fullName: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync(string, int)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Spider/ISpiderService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetProjectsByKeywordAsync
+    path: back-end/Services/Spider/ISpiderService.cs
+    startLine: 20
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Spider
+  summary: Requests the Spider for projects related to the given keyword.
+  example: []
+  syntax:
+    content: Task<List<ProjectDto>> GetProjectsByKeywordAsync(string keyword, int amount)
+    parameters:
+    - id: keyword
+      type: System.String
+      description: The keyword to search for.
+    - id: amount
+      type: System.Int32
+      description: The amount of repos to search for.
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}}
+    content.vb: Function GetProjectsByKeywordAsync(keyword As String, amount As Integer) As Task(Of List(Of ProjectDto))
+  overload: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync*
+  nameWithType.vb: ISpiderService.GetProjectsByKeywordAsync(String, Integer)
+  fullName.vb: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync(String, Integer)
+  name.vb: GetProjectsByKeywordAsync(String, Integer)
+references:
+- uid: SECODashBackend.Services.Spider
+  commentId: N:SECODashBackend.Services.Spider
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Spider
+  nameWithType: SECODashBackend.Services.Spider
+  fullName: SECODashBackend.Services.Spider
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Spider
+    name: Spider
+    href: SECODashBackend.Services.Spider.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Spider
+    name: Spider
+    href: SECODashBackend.Services.Spider.html
+- uid: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync*
+  commentId: Overload:SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync
+  href: SECODashBackend.Services.Spider.ISpiderService.html#SECODashBackend_Services_Spider_ISpiderService_GetProjectsByTopicAsync_System_String_System_Int32_
+  name: GetProjectsByTopicAsync
+  nameWithType: ISpiderService.GetProjectsByTopicAsync
+  fullName: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByTopicAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<List<ProjectDto>>
+  nameWithType: Task<List<ProjectDto>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.List<SECODashBackend.Dtos.Project.ProjectDto>>
+  nameWithType.vb: Task(Of List(Of ProjectDto))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.List(Of SECODashBackend.Dtos.Project.ProjectDto))
+  name.vb: Task(Of List(Of ProjectDto))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: )
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync*
+  commentId: Overload:SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync
+  href: SECODashBackend.Services.Spider.ISpiderService.html#SECODashBackend_Services_Spider_ISpiderService_GetProjectsByKeywordAsync_System_String_System_Int32_
+  name: GetProjectsByKeywordAsync
+  nameWithType: ISpiderService.GetProjectsByKeywordAsync
+  fullName: SECODashBackend.Services.Spider.ISpiderService.GetProjectsByKeywordAsync

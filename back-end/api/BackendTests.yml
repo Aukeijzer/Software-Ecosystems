@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: BackendTests
+  commentId: N:BackendTests
+  id: BackendTests
+  children:
+  - BackendTests.ElasticsearchAnalysisServiceTests
+  - BackendTests.SpiderServiceUnitTests
+  langs:
+  - csharp
+  - vb
+  name: BackendTests
+  nameWithType: BackendTests
+  fullName: BackendTests
+  type: Namespace
+  assemblies:
+  - BackendTests
+references:
+- uid: BackendTests.ElasticsearchAnalysisServiceTests
+  commentId: T:BackendTests.ElasticsearchAnalysisServiceTests
+  href: BackendTests.ElasticsearchAnalysisServiceTests.html
+  name: ElasticsearchAnalysisServiceTests
+  nameWithType: ElasticsearchAnalysisServiceTests
+  fullName: BackendTests.ElasticsearchAnalysisServiceTests
+- uid: BackendTests.SpiderServiceUnitTests
+  commentId: T:BackendTests.SpiderServiceUnitTests
+  href: BackendTests.SpiderServiceUnitTests.html
+  name: SpiderServiceUnitTests
+  nameWithType: SpiderServiceUnitTests
+  fullName: BackendTests.SpiderServiceUnitTests

@@ -31,7 +31,7 @@ _client.HttpClient.DefaultRequestHeaders.Add("X-Github-Next-Global-ID", "1");
 
 var options = new RestClientOptions("https://api.github.com");
 var _gitHubRestClient = new RestClient(options);
-_gitHubRestClient.AddDefaultHeader("Authorization", "Bearer " + token);
+_gitHubRestClient.TryAddWithoutValidation("Authorization", "Bearer " + token);
 _gitHubRestClient.AddDefaultHeader("X-Github-Next-Global-ID", "1");
 
 builder.Services.AddControllers();

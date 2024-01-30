@@ -1,0 +1,393 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.Analysis.IAnalysisService
+  commentId: T:SECODashBackend.Services.Analysis.IAnalysisService
+  id: IAnalysisService
+  parent: SECODashBackend.Services.Analysis
+  children:
+  - SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.DateTime,System.DateTime,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: IAnalysisService
+  nameWithType: IAnalysisService
+  fullName: SECODashBackend.Services.Analysis.IAnalysisService
+  type: Interface
+  source:
+    remote:
+      path: back-end/back-end/Services/Analysis/IAnalysisService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: IAnalysisService
+    path: back-end/Services/Analysis/IAnalysisService.cs
+    startLine: 8
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Analysis
+  summary: Interface for services that analyse an ecosystem.
+  example: []
+  syntax:
+    content: public interface IAnalysisService
+    content.vb: Public Interface IAnalysisService
+- uid: SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.DateTime,System.DateTime,System.Int32)
+  commentId: M:SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.DateTime,System.DateTime,System.Int32)
+  id: AnalyzeEcosystemAsync(System.Collections.Generic.List{System.String},System.Collections.Generic.List{SECODashBackend.Models.Technology},System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.DateTime,System.DateTime,System.Int32)
+  parent: SECODashBackend.Services.Analysis.IAnalysisService
+  langs:
+  - csharp
+  - vb
+  name: AnalyzeEcosystemAsync(List<string>, List<Technology>, int, int, int, int, int, DateTime, DateTime, int)
+  nameWithType: IAnalysisService.AnalyzeEcosystemAsync(List<string>, List<Technology>, int, int, int, int, int, DateTime, DateTime, int)
+  fullName: SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync(System.Collections.Generic.List<string>, System.Collections.Generic.List<SECODashBackend.Models.Technology>, int, int, int, int, int, System.DateTime, System.DateTime, int)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/Analysis/IAnalysisService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: AnalyzeEcosystemAsync
+    path: back-end/Services/Analysis/IAnalysisService.cs
+    startLine: 24
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.Analysis
+  summary: Analyzes the ecosystem given by the topics.
+  example: []
+  syntax:
+    content: Task<EcosystemDto> AnalyzeEcosystemAsync(List<string> topics, List<Technology> technologies, int numberOfTopLanguages, int numberOfTopSubEcosystems, int numberOfTopContributors, int numberOfTopTechnologies, int numberOfTopProjects, DateTime startTime, DateTime endTime, int timeBucket)
+    parameters:
+    - id: topics
+      type: System.Collections.Generic.List{System.String}
+      description: The topics of the ecosystem.
+    - id: technologies
+      type: System.Collections.Generic.List{SECODashBackend.Models.Technology}
+      description: The technologies of an ecosystem.
+    - id: numberOfTopLanguages
+      type: System.Int32
+      description: The number of top languages to get.
+    - id: numberOfTopSubEcosystems
+      type: System.Int32
+      description: The number of top sub ecosystems to get.
+    - id: numberOfTopContributors
+      type: System.Int32
+      description: The number of top contributors to get.
+    - id: numberOfTopTechnologies
+      type: System.Int32
+      description: The number od top technologies to retrieve.
+    - id: numberOfTopProjects
+      type: System.Int32
+      description: The number of top projects to retrieve
+    - id: startTime
+      type: System.DateTime
+      description: The start date of the period of time to retrieve.
+    - id: endTime
+      type: System.DateTime
+      description: The end date of the period of time to retrieve.
+    - id: timeBucket
+      type: System.Int32
+      description: The time frame (in days) we want to use to retrieve projects between the start and end time.
+    return:
+      type: System.Threading.Tasks.Task{SECODashBackend.Dtos.Ecosystem.EcosystemDto}
+      description: The result of the analysis.
+    content.vb: Function AnalyzeEcosystemAsync(topics As List(Of String), technologies As List(Of Technology), numberOfTopLanguages As Integer, numberOfTopSubEcosystems As Integer, numberOfTopContributors As Integer, numberOfTopTechnologies As Integer, numberOfTopProjects As Integer, startTime As Date, endTime As Date, timeBucket As Integer) As Task(Of EcosystemDto)
+  overload: SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync*
+  nameWithType.vb: IAnalysisService.AnalyzeEcosystemAsync(List(Of String), List(Of Technology), Integer, Integer, Integer, Integer, Integer, Date, Date, Integer)
+  fullName.vb: SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync(System.Collections.Generic.List(Of String), System.Collections.Generic.List(Of SECODashBackend.Models.Technology), Integer, Integer, Integer, Integer, Integer, Date, Date, Integer)
+  name.vb: AnalyzeEcosystemAsync(List(Of String), List(Of Technology), Integer, Integer, Integer, Integer, Integer, Date, Date, Integer)
+references:
+- uid: SECODashBackend.Services.Analysis
+  commentId: N:SECODashBackend.Services.Analysis
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.Analysis
+  nameWithType: SECODashBackend.Services.Analysis
+  fullName: SECODashBackend.Services.Analysis
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Analysis
+    name: Analysis
+    href: SECODashBackend.Services.Analysis.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.Analysis
+    name: Analysis
+    href: SECODashBackend.Services.Analysis.html
+- uid: SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync*
+  commentId: Overload:SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync
+  href: SECODashBackend.Services.Analysis.IAnalysisService.html#SECODashBackend_Services_Analysis_IAnalysisService_AnalyzeEcosystemAsync_System_Collections_Generic_List_System_String__System_Collections_Generic_List_SECODashBackend_Models_Technology__System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_DateTime_System_DateTime_System_Int32_
+  name: AnalyzeEcosystemAsync
+  nameWithType: IAnalysisService.AnalyzeEcosystemAsync
+  fullName: SECODashBackend.Services.Analysis.IAnalysisService.AnalyzeEcosystemAsync
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Collections.Generic.List{SECODashBackend.Models.Technology}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Models.Technology}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<Technology>
+  nameWithType: List<Technology>
+  fullName: System.Collections.Generic.List<SECODashBackend.Models.Technology>
+  nameWithType.vb: List(Of Technology)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Models.Technology)
+  name.vb: List(Of Technology)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Models.Technology
+    name: Technology
+    href: SECODashBackend.Models.Technology.html
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.datetime
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: System.Threading.Tasks.Task{SECODashBackend.Dtos.Ecosystem.EcosystemDto}
+  commentId: T:System.Threading.Tasks.Task{SECODashBackend.Dtos.Ecosystem.EcosystemDto}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<EcosystemDto>
+  nameWithType: Task<EcosystemDto>
+  fullName: System.Threading.Tasks.Task<SECODashBackend.Dtos.Ecosystem.EcosystemDto>
+  nameWithType.vb: Task(Of EcosystemDto)
+  fullName.vb: System.Threading.Tasks.Task(Of SECODashBackend.Dtos.Ecosystem.EcosystemDto)
+  name.vb: Task(Of EcosystemDto)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemDto
+    name: EcosystemDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemDto.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Ecosystem.EcosystemDto
+    name: EcosystemDto
+    href: SECODashBackend.Dtos.Ecosystem.EcosystemDto.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

@@ -1,0 +1,75 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Logging
+  commentId: N:SECODashBackend.Logging
+  id: SECODashBackend.Logging
+  children:
+  - SECODashBackend.Logging.FileLogger
+  - SECODashBackend.Logging.FileLoggerExtensions
+  - SECODashBackend.Logging.FileLoggerHelper
+  - SECODashBackend.Logging.FileLoggerOptions
+  - SECODashBackend.Logging.FileLoggerProvider
+  langs:
+  - csharp
+  - vb
+  name: SECODashBackend.Logging
+  nameWithType: SECODashBackend.Logging
+  fullName: SECODashBackend.Logging
+  type: Namespace
+  assemblies:
+  - SECODashBackend
+references:
+- uid: SECODashBackend.Logging.FileLogger
+  commentId: T:SECODashBackend.Logging.FileLogger
+  href: SECODashBackend.Logging.FileLogger.html
+  name: FileLogger
+  nameWithType: FileLogger
+  fullName: SECODashBackend.Logging.FileLogger
+- uid: SECODashBackend.Logging.FileLoggerExtensions
+  commentId: T:SECODashBackend.Logging.FileLoggerExtensions
+  href: SECODashBackend.Logging.FileLoggerExtensions.html
+  name: FileLoggerExtensions
+  nameWithType: FileLoggerExtensions
+  fullName: SECODashBackend.Logging.FileLoggerExtensions
+- uid: SECODashBackend.Logging.FileLoggerHelper
+  commentId: T:SECODashBackend.Logging.FileLoggerHelper
+  href: SECODashBackend.Logging.FileLoggerHelper.html
+  name: FileLoggerHelper
+  nameWithType: FileLoggerHelper
+  fullName: SECODashBackend.Logging.FileLoggerHelper
+- uid: SECODashBackend.Logging.FileLoggerOptions
+  commentId: T:SECODashBackend.Logging.FileLoggerOptions
+  parent: SECODashBackend.Logging
+  href: SECODashBackend.Logging.FileLoggerOptions.html
+  name: FileLoggerOptions
+  nameWithType: FileLoggerOptions
+  fullName: SECODashBackend.Logging.FileLoggerOptions
+- uid: SECODashBackend.Logging.FileLoggerProvider
+  commentId: T:SECODashBackend.Logging.FileLoggerProvider
+  parent: SECODashBackend.Logging
+  href: SECODashBackend.Logging.FileLoggerProvider.html
+  name: FileLoggerProvider
+  nameWithType: FileLoggerProvider
+  fullName: SECODashBackend.Logging.FileLoggerProvider
+- uid: SECODashBackend.Logging
+  commentId: N:SECODashBackend.Logging
+  href: SECODashBackend.html
+  name: SECODashBackend.Logging
+  nameWithType: SECODashBackend.Logging
+  fullName: SECODashBackend.Logging
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Logging
+    name: Logging
+    href: SECODashBackend.Logging.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Logging
+    name: Logging
+    href: SECODashBackend.Logging.html

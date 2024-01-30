@@ -110,14 +110,17 @@ public class EcosystemsController(ILogger<EcosystemsController> logger, IEcosyst
         }
         var update = await ecosystemsService.UpdateTopics(dto);
         logger.LogInformation("{Origin}: Successfully updated the topics for {ecosystem}.",this,dto.EcosystemName);
-        return "Ecosystem created" + " and " + update;
+        await ecosystemsService.ScheduleEcosystem(dto.EcosystemName);
+        return "Ecosystem created";
     }
 
     [HttpPost("RemoveEcosystem")]
     [SwaggerOperation("Remove an existing ecosystem")]
     [SwaggerResponse(statusCode: 200, description: "Successfully removed the ecosystem")]
     public async Task<string> RemoveEcosystem(RemoveEcosystemDto dto)
-    {
-       return await ecosystemsService.RemoveEcosystem(dto.Ecosystem);
+    { 
+        var result = await ecosystemsService.RemoveEcosystem(dto.Ecosystem);
+        logger.LogInformation("{Origin}:" + result ,this);
+        return result;
     }
 }

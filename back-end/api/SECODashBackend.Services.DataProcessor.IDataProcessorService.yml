@@ -1,0 +1,315 @@
+### YamlMime:ManagedReference
+items:
+- uid: SECODashBackend.Services.DataProcessor.IDataProcessorService
+  commentId: T:SECODashBackend.Services.DataProcessor.IDataProcessorService
+  id: IDataProcessorService
+  parent: SECODashBackend.Services.DataProcessor
+  children:
+  - SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics(System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto})
+  langs:
+  - csharp
+  - vb
+  name: IDataProcessorService
+  nameWithType: IDataProcessorService
+  fullName: SECODashBackend.Services.DataProcessor.IDataProcessorService
+  type: Interface
+  source:
+    remote:
+      path: back-end/back-end/Services/DataProcessor/IDataProcessorService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: IDataProcessorService
+    path: back-end/Services/DataProcessor/IDataProcessorService.cs
+    startLine: 8
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.DataProcessor
+  summary: Interface for the service is responsible for sending the readme data to the data processor and returning the resulting topics.
+  example: []
+  syntax:
+    content: public interface IDataProcessorService
+    content.vb: Public Interface IDataProcessorService
+- uid: SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics(System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto})
+  commentId: M:SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics(System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto})
+  id: GetTopics(System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto})
+  parent: SECODashBackend.Services.DataProcessor.IDataProcessorService
+  langs:
+  - csharp
+  - vb
+  name: GetTopics(List<ProjectDto>)
+  nameWithType: IDataProcessorService.GetTopics(List<ProjectDto>)
+  fullName: SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics(System.Collections.Generic.List<SECODashBackend.Dtos.Project.ProjectDto>)
+  type: Method
+  source:
+    remote:
+      path: back-end/back-end/Services/DataProcessor/IDataProcessorService.cs
+      branch: sprint10/c#-documentation
+      repo: https://github.com/Aukeijzer/Software-Ecosystems.git
+    id: GetTopics
+    path: back-end/Services/DataProcessor/IDataProcessorService.cs
+    startLine: 15
+  assemblies:
+  - SECODashBackend
+  namespace: SECODashBackend.Services.DataProcessor
+  summary: Sends the readme data to the data processor and returns the resulting topics.
+  example: []
+  syntax:
+    content: Task<List<ProjectDto>> GetTopics(List<ProjectDto> projectDtos)
+    parameters:
+    - id: projectDtos
+      type: System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}}
+      description: The resulting topics.
+    content.vb: Function GetTopics(projectDtos As List(Of ProjectDto)) As Task(Of List(Of ProjectDto))
+  overload: SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics*
+  nameWithType.vb: IDataProcessorService.GetTopics(List(Of ProjectDto))
+  fullName.vb: SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics(System.Collections.Generic.List(Of SECODashBackend.Dtos.Project.ProjectDto))
+  name.vb: GetTopics(List(Of ProjectDto))
+references:
+- uid: SECODashBackend.Services.DataProcessor
+  commentId: N:SECODashBackend.Services.DataProcessor
+  href: SECODashBackend.html
+  name: SECODashBackend.Services.DataProcessor
+  nameWithType: SECODashBackend.Services.DataProcessor
+  fullName: SECODashBackend.Services.DataProcessor
+  spec.csharp:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.DataProcessor
+    name: DataProcessor
+    href: SECODashBackend.Services.DataProcessor.html
+  spec.vb:
+  - uid: SECODashBackend
+    name: SECODashBackend
+    href: SECODashBackend.html
+  - name: .
+  - uid: SECODashBackend.Services
+    name: Services
+    href: SECODashBackend.Services.html
+  - name: .
+  - uid: SECODashBackend.Services.DataProcessor
+    name: DataProcessor
+    href: SECODashBackend.Services.DataProcessor.html
+- uid: SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics*
+  commentId: Overload:SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics
+  href: SECODashBackend.Services.DataProcessor.IDataProcessorService.html#SECODashBackend_Services_DataProcessor_IDataProcessorService_GetTopics_System_Collections_Generic_List_SECODashBackend_Dtos_Project_ProjectDto__
+  name: GetTopics
+  nameWithType: IDataProcessorService.GetTopics
+  fullName: SECODashBackend.Services.DataProcessor.IDataProcessorService.GetTopics
+- uid: System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}
+  commentId: T:System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<ProjectDto>
+  nameWithType: List<ProjectDto>
+  fullName: System.Collections.Generic.List<SECODashBackend.Dtos.Project.ProjectDto>
+  nameWithType.vb: List(Of ProjectDto)
+  fullName.vb: System.Collections.Generic.List(Of SECODashBackend.Dtos.Project.ProjectDto)
+  name.vb: List(Of ProjectDto)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: )
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.List{SECODashBackend.Dtos.Project.ProjectDto}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<List<ProjectDto>>
+  nameWithType: Task<List<ProjectDto>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.List<SECODashBackend.Dtos.Project.ProjectDto>>
+  nameWithType.vb: Task(Of List(Of ProjectDto))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.List(Of SECODashBackend.Dtos.Project.ProjectDto))
+  name.vb: Task(Of List(Of ProjectDto))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SECODashBackend.Dtos.Project.ProjectDto
+    name: ProjectDto
+    href: SECODashBackend.Dtos.Project.ProjectDto.html
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
