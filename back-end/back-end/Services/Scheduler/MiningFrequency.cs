@@ -22,8 +22,6 @@ namespace SECODashBackend.Services.Scheduler;
 /// </summary>
 public enum MiningFrequency
 {
-    // TODO: remove Minutely in production
-    Minutely,
     Hourly,
     Daily,
     Weekly,

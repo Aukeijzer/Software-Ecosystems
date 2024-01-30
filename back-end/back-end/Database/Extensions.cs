@@ -51,8 +51,11 @@ public static class Extensions
          var ecosystems = ecosystemsContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy).ToList();
          //For all ecosystems: Add taxonomy terms into one List for scheduled mining.
          var miningList = new List<string>();
+         //Divide jobs evenly over the week with a 2 day interval.
+         var dayIndex = 0;
          foreach (var ecosystem in ecosystems)
          {
+            DayOfWeek scheduleDay = (DayOfWeek)dayIndex;
             foreach (var tax in ecosystem.Taxonomy)
             {
                miningList.Add(tax.Term);
@@ -62,7 +65,8 @@ public static class Extensions
             {
                miningList.Add(ecosystem.Name);
             }
-            scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+            scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 1000, 1000, scheduleDay);
+            dayIndex = (dayIndex + 2) % 7;
          }
       }
    }

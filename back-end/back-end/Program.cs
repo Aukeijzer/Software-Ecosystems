@@ -34,10 +34,6 @@ using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Scheduler;
 using SECODashBackend.Services.Spider;
 using SECODashBackend.Services.Users;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Certificate;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 var builder = WebApplication.CreateBuilder(args);
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -128,11 +124,11 @@ builder.Services.AddHangfire((provider, config) => config
     .UseDashboardMetrics(DashboardMetrics.RecurringJobCount)
     .UseDashboardMetrics(DashboardMetrics.RetriesCount));
 
-// Configure the Hangfire scheduler to retry failed jobs three times with a delay of 2 minutes, 1 hour, and 12 hours.
+// Configure the Hangfire scheduler to retry failed jobs three times with a delay of 1 hour, 6 hours and 12 hours.
 GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute
 {
     Attempts = 3, 
-    DelaysInSeconds = [120, 60 * 60 * 1, 60 * 60 * 12]
+    DelaysInSeconds = [60 * 60 * 1, 60 * 60 * 6, 60 * 60 * 12]
 });
 
 // Add the Hangfire server that is responsible for executing the scheduled jobs.
@@ -150,8 +146,6 @@ if (app.Environment.IsDevelopment())
 }
 bool local = Environment.GetEnvironmentVariable("Docker_Environment") == "local";
 if ( app.Environment.IsDevelopment() || local )
-// TODO: turn on HttpsRedirection when https is fixed
-//app.UseHttpsRedirection();
 
 app.UseCors(myAllowSpecificOrigins);
 app.UseAuthorization();

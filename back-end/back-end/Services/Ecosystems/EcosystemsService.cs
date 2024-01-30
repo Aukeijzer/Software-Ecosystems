@@ -304,6 +304,8 @@ public class EcosystemsService(EcosystemsContext dbContext,
         var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy).FirstOrDefault(e => e.Name == ecosystemName);
         //Add taxonomy terms to a list for scheduled mining
         var miningList = new List<string>();
+        //Schedule on a random day of the week.
+        DayOfWeek scheduleDay = (DayOfWeek)Random.Shared.Next(7);
         foreach (var tax in ecosystem.Taxonomy)
         {
             miningList.Add(tax.Term);
@@ -313,7 +315,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
         {
             miningList.Add(ecosystemName);
         }
-        scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+        scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 1000, 1000, scheduleDay);
         return Task.CompletedTask;
     }
     /// <summary>
