@@ -99,11 +99,11 @@ builder.Services.AddSwaggerGen();
 builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Logging").GetSection("File")
     .GetSection("Options").Bind(options); });
 
-var t = builder.Configuration.GetConnectionString("Hangfire");
+
 // Configure the Hangfire scheduler
 builder.Services.AddHangfire((provider, config) => config
     .UsePostgreSqlStorage(c => c
-        .UseNpgsqlConnection(t))
+        .UseNpgsqlConnection(builder.Configuration.GetConnectionString("Hangfire")))
     .UseActivator(new AspNetCoreJobActivator(provider.GetRequiredService<IServiceScopeFactory>()))
     .UseRecommendedSerializerSettings()
     .UseSimpleAssemblyNameTypeSerializer()
@@ -133,7 +133,6 @@ if (app.Environment.IsDevelopment())
 }
 bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
 if ( app.Environment.IsDevelopment() || local )
-{}
 // TODO: turn on HttpsRedirection when https is fixed
 //app.UseHttpsRedirection();
 
