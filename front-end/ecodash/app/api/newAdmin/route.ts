@@ -53,11 +53,9 @@ export async function POST(req: NextRequest){
         body: JSON.stringify(apiPostBody)
     })
 
-    if(response.status == 200){
-        const messages : any = await response.json();
-        return new NextResponse(JSON.stringify(messages), {status: 200})
-    } else {
-        return new NextResponse("Error", {status: 500})
+    if (response.status !== 200) {
+        throw new NextResponse(`Internal server error: ${response.text}`, {status: 500})
     }
-  
+
+    return new NextResponse("successful", {status: 200})
 }
