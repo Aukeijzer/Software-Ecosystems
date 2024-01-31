@@ -1,8 +1,31 @@
-# Secodash documentation
-Secodash (Software-Ecosystems) is a web-application which gathers, analyses and displays ecosystems. 
+# SECODash documentation
+<p align="center"><img width="133" height="169" src="assets/SECODash_logo.png"></p>
 
-# Running Secodash
-Secodash is fully containerized with Docker. As such it is portable and easy to run. You only need to download [Docker](https://docs.docker.com/get-docker/) to be able to run the project.
+## SECODash
+SECODash (Software-Ecosystems) is a web-application which gathers, analyses and displays ecosystems. It was create as a Computer Science Bachelor Thesis at Utrecht University by the project group ODINDash.
+
+### ODINDash Members
+- Akdimi, Y. (Youssra)
+- Boucher, L.C. (Lucas)
+- Hendrix, M.T.A.M. (Matean)
+- Hillebrand, D. (Daan)
+- Hol, S. (Simon)
+- Kopp, Q.F. (Quentin)
+- Ning, V.Y. (Vivian)
+- Roest, A. (Auke)
+- Uunen, I.R. van (Ian)
+
+
+## Client
+The SECODash project has been commissioned by [Dr. R.L. (Slinger) Jansen](https://www.uu.nl/medewerkers/RLJansen) and [Dr. S. (Siamak) Farshidi](https://www.uu.nl/medewerkers/SFarshidi) from the Department of Information and Computer Science at Utrecht University.
+
+# Open-Source 
+<p align="center"><img width="155" height="51" src="assets/agplv3.png"></p>
+
+SECODash is an Open-Source project and is released under the [GNU Affero General Public License](LICENSE). For more information on the The GNU Affero General Public License visit [www.gnu.org/licenses/agpl-3.0.en.html](https://www.gnu.org/licenses/agpl-3.0.en.html).
+
+# Running SECODash
+SECODash is fully containerized with Docker. As such it is portable and easy to run. You only need to download [Docker](https://docs.docker.com/get-docker/) to be able to run the project.
 Furthermore this project needs a [personal access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) token from an account on GitHub in order to query data and a valid ssl certificate and private key.
 
 ## Managing secrets
@@ -137,7 +160,7 @@ In order to run the spider you need to install [C# .net 8.0](https://dotnet.micr
 Afterwards you can open the project solution in your IDE (visual studio or rider) and run the project using the http profile.
 
 ### Documentation
-[Go to spider documentation](spider/README.md)
+[Go to spider documentation](https://aukeijzer.github.io/Software-Ecosystems/documentation/spider/index.html)
 
 ## Data Processor
 [Go to data processor documentation](data_processor/README.md)
