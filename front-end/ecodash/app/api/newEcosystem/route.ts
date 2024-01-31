@@ -69,5 +69,5 @@ export async function POST(req: NextRequest) {
         throw new Error(response.statusText)
     }
 
-    return new NextResponse("succesfull", {status: 200})
+    return new NextResponse("successful", {status: 200})
 }
