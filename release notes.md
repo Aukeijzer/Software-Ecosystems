@@ -15,3 +15,5 @@
 
 # Known Issues
 - The elasticsearch database runs on a trial version which needs a new trial account every 2 weeks
+- The amount of projects the github api will show in a search query is capped
+- Projects aren't timestamped when stored in the database
