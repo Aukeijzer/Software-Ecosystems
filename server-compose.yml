@@ -32,6 +32,7 @@ services:
 #####
   # Spider
   spider-app:
+    container_name: spider-app
     build:
       context: ./spider/
       dockerfile: ./Dockerfile
@@ -42,15 +43,21 @@ services:
     environment:
       API_Token_File: /run/secrets/git-api-token
       ASPNETCORE_URLS: http://*:5205
-      Docker_Enviroment: server
+      Docker_Environment: server
 
 #####
   # Backend 
   db:
+    container_name: db
     image: postgres
     networks:
       - secodash-network
+    secrets:
+      - db-password
     restart: always
+    build:
+      context: ./database
+      dockerfile: db.Dockerfile
     environment:
       POSTGRES_Username: postgres
       POSTGRES_PASSWORD_FILE: /run/secrets/db-password
@@ -59,17 +66,32 @@ services:
  ####
   # Backend (service) layer application
   backend-app:
+    container_name: backend-app
     build:
       context: ./back-end/
       dockerfile: ./Dockerfile
+    secrets:
+      - backend-secrets
     environment:
+      backend-secrets: /run/secrets/backend-secrets
       ASPNETCORE_URLS: http://*:5003
-      Docker_Enviroment: server
+      Docker_Environment: server
     networks:
       - secodash-network
     restart: always
     depends_on:
       - db
+    
+#####
+  # Data processor docker.
+  data-processor-app:
+    container_name: data-processor-app
+    build:
+      context: ./data_processor/
+      dockerfile: ./Dockerfile
+    networks:
+      - secodash-network
+    restart: always
       
 ####
   # Volumes, networks and secrets
@@ -77,6 +99,8 @@ volumes:
   postgres-data:
 
 secrets:
+  backend-secrets:
+    file: secrets/backend-secrets.json
   db-password:
     file: secrets/db-password.txt
   git-api-token:

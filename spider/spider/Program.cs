@@ -1,3 +1,4 @@
+using System.Data.SqlTypes;
 using GraphQL.Client.Abstractions.Websocket;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
@@ -12,14 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var _client = new GraphQLHttpClient("https://api.github.com/graphql", new SystemTextJsonSerializer());
 string? token;
-if (Environment.GetEnvironmentVariable("Docker_Enviroment") == null)
+if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
+{
+    string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()+"/secrets/spider-git-api-token.txt";
+    string s = File.ReadAllText(path).Trim();
+    Environment.SetEnvironmentVariable("API_Token", s);
     token = Environment.GetEnvironmentVariable("API_Token");
+}
 else
 {
-    var tokenPath = Environment.GetEnvironmentVariable("API_Token_File");
-	if (tokenPath == null)
-        throw new InvalidOperationException("Missing api token file location");
-    token = File.ReadAllText(tokenPath);
+    string? tokenPath = Environment.GetEnvironmentVariable("API_Token_File");
+    token = File.ReadAllText(tokenPath).Trim();
 }
 
 _client.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
@@ -45,7 +49,7 @@ builder.Logging.AddFileLogger(options => { builder.Configuration.GetSection("Log
 
 var app = builder.Build();
 
-bool local = Environment.GetEnvironmentVariable("Docker_Enviroment") == "local";
+bool local = Environment.GetEnvironmentVariable("Docker_Environment") == "local";
 if ( app.Environment.IsDevelopment() || local ) {   
     app.UseSwagger();
     app.UseSwaggerUI();

@@ -1,4 +1,21 @@
-﻿namespace SECODashBackend.Services.Scheduler;
+﻿// Copyright (C) <2024>  <ODINDash>
+// 
+// This file is part of SECODash.
+// 
+// SECODash is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// SECODash is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+namespace SECODashBackend.Services.Scheduler;
 
 /// <summary>
 /// Interface for a scheduler that is responsible for scheduling jobs.
@@ -31,6 +48,7 @@ public interface IScheduler
     /// </summary>
     /// <param name="keyword"> The keyword belonging to the job that is to removed. </param>
     public void RemoveRecurringKeywordMiningJob(string keyword);
+
     /// <summary>
     /// Add a recurring job that mines projects by a taxonomy.
     /// </summary>
@@ -38,7 +56,8 @@ public interface IScheduler
     /// <param name="taxonomy"> The taxonomy to mine by. </param>
     /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
-    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount);
+    /// <param name="day">Zero indexed day of the week, starting on Sunday.</param>
+    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount, DayOfWeek day);
     /// <summary>
     /// Removes a recurring job that mines projects by a taxonomy.
     /// </summary>

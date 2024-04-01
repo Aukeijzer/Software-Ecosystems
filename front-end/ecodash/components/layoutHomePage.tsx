@@ -1,10 +1,29 @@
+/*
+Copyright (C) <2024> <OdinDash>
+
+This file is part of SECODash
+
+SECODash is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+SECODash is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 "use client"
 
 import { useEffect} from "react"
 import { useRouter } from 'next/navigation'
 import { fetcherHomePage } from '@/utils/apiFetcher';
 import useSWRMutation from 'swr/mutation'
-import { totalInformation } from "@/mockData/mockEcosystems";
 import InfoCard from "./infoCard";
 import EcosystemButton from "./ecosystemButton";
 import SpinnerComponent from "./spinner";
@@ -132,7 +151,7 @@ export default function LayoutHomePage(){
             </div>
         )
 
-        const infoCard = <div className="col-span-4">
+        const infoCard = <div className="col-span-full">
             <InfoCard title="Information about SECODash" data={info} />
         </div>
         cardList.push(infoCard);
@@ -153,7 +172,7 @@ export default function LayoutHomePage(){
                 cardList.push(newDashboardButtonCard);
                 if(user.userType === "RootAdmin"){
                     //Create new add admin card
-                    const addAdminButton = <div> </div>
+                    const addAdminButton = <div className="h-16"> </div>
                     const addAdminButtonCard = <div className="cursor-pointer col-span-2  ">
                         <InfoCard 
                         title="Add new admin"
@@ -200,7 +219,7 @@ export default function LayoutHomePage(){
     }
     return(
         <div className="lg:ml-44 lg:mr-44 md:ml-32 md:mr-32">
-            <div className="grid gap-3 grid-cols-4 " >
+            <div className="grid gap-3 grid-cols-2 lg:grid-cols-4 " >
              {cardList.map((card, i) => (
                  card
              ))}

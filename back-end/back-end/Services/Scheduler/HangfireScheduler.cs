@@ -1,4 +1,21 @@
-﻿using Hangfire;
+﻿// Copyright (C) <2024>  <ODINDash>
+// 
+// This file is part of SECODash.
+// 
+// SECODash is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// SECODash is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
+using Hangfire;
 using SECODashBackend.Services.Projects;
 
 namespace SECODashBackend.Services.Scheduler;
@@ -68,10 +85,11 @@ public class HangfireScheduler(
     /// <param name="taxonomy"> The taxonomy to mine by. </param>
     /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
-    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount)
+    /// <param name="day">Zero indexed day of the week, starting on Sunday.</param>
+    public void AddRecurringTaxonomyMiningJob(string ecosystemName, List<string> taxonomy, int keywordAmount, int topicAmount, DayOfWeek day)
     {
         var jobId = $"taxonomy-mining_ecosystem={ecosystemName}";
-        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTaxonomyAsync(taxonomy, ecosystemName, keywordAmount, topicAmount), Cron.Minutely());
+        recurringJobManager.AddOrUpdate(jobId,() => projectsService.MineByTaxonomyAsync(taxonomy, ecosystemName, keywordAmount, topicAmount), Cron.Weekly(day));
         logger.LogInformation($"Job Id: {jobId} added.");
     }
 
@@ -95,7 +113,6 @@ public class HangfireScheduler(
     {
         return miningFrequency switch
         {
-            MiningFrequency.Minutely => Cron.Minutely(),
             MiningFrequency.Hourly => Cron.Hourly(),
             MiningFrequency.Daily => Cron.Daily(),
             MiningFrequency.Weekly => Cron.Weekly(),

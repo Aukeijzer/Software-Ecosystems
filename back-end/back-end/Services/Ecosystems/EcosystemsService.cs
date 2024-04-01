@@ -1,3 +1,20 @@
+// Copyright (C) <2024>  <ODINDash>
+// 
+// This file is part of SECODash.
+// 
+// SECODash is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// SECODash is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
 using Microsoft.EntityFrameworkCore;
 using SECODashBackend.Database;
 using SECODashBackend.DataConverters;
@@ -287,6 +304,8 @@ public class EcosystemsService(EcosystemsContext dbContext,
         var ecosystem = dbContext.Ecosystems.Include(ecosystem => ecosystem.Taxonomy).FirstOrDefault(e => e.Name == ecosystemName);
         //Add taxonomy terms to a list for scheduled mining
         var miningList = new List<string>();
+        //Schedule on a random day of the week.
+        DayOfWeek scheduleDay = (DayOfWeek)Random.Shared.Next(7);
         foreach (var tax in ecosystem.Taxonomy)
         {
             miningList.Add(tax.Term);
@@ -296,7 +315,7 @@ public class EcosystemsService(EcosystemsContext dbContext,
         {
             miningList.Add(ecosystemName);
         }
-        scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 50, 50);
+        scheduler.AddRecurringTaxonomyMiningJob(ecosystem.Name, miningList, 1000, 1000, scheduleDay);
         return Task.CompletedTask;
     }
     /// <summary>

@@ -1,3 +1,20 @@
+// Copyright (C) <2024>  <ODINDash>
+// 
+// This file is part of SECODash.
+// 
+// SECODash is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// SECODash is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+// 
+// You should have received a copy of the GNU Affero General Public License
+// along with SECODash.  If not, see <https://www.gnu.org/licenses/>.
+
 using Microsoft.AspNetCore.Mvc;
 using SECODashBackend.Services.Projects;
 using SECODashBackend.Services.Scheduler;
@@ -111,7 +128,7 @@ public class MineController(
         logger.LogInformation($"Mining job for keyword: {keyword} unscheduled if it existed.");
         return Accepted();
     }
-    
+
     /// <summary>
     /// This method schedules a recurring job that mines projects based on the given taxonomy.
     /// </summary>
@@ -119,11 +136,11 @@ public class MineController(
     /// <param name="taxonomy"> The taxonomy to mine by. </param>
     /// <param name="keywordAmount"> The amount of projects to mine for each term using keyword search. </param>
     /// <param name="topicAmount"> The amount of projects to mine for each term using topic search. </param>
-    /// <param name="miningFrequency"> The frequency of mining. </param>
+    /// <param name="dayOfWeek">Zero indexed day of the week, starting on Sunday.</param>
     [HttpPost("schedule/taxonomy")]
-    public IActionResult ScheduleMineByTaxonomy(string ecosystem, List<string> taxonomy, int keywordAmount, int topicAmount, MiningFrequency miningFrequency)
+    public IActionResult ScheduleMineByTaxonomy(string ecosystem, List<string> taxonomy, int keywordAmount, int topicAmount, DayOfWeek dayOfWeek)
     {
-        scheduler.AddRecurringTaxonomyMiningJob(ecosystem, taxonomy, keywordAmount, topicAmount); 
+        scheduler.AddRecurringTaxonomyMiningJob(ecosystem, taxonomy, keywordAmount, topicAmount, dayOfWeek); 
         logger.LogInformation(
             $"Mining job for ecosystem: {ecosystem} using taxonomy: {taxonomy} with keyword amount: {keywordAmount} and topic amount: {topicAmount} scheduled.");
         return Accepted();
