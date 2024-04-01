@@ -85,6 +85,8 @@ services:
       dockerfile: ./Dockerfile
     secrets:
       - backend-secrets
+      - postgres-password
+      - elasticsearch-password
     environment:
       backend-secrets: /run/secrets/backend-secrets
       ASPNETCORE_URLS: http://*:5003
@@ -95,9 +97,6 @@ services:
       - 127.0.0.1:5003:5003
     networks:
       - secodash-network
-    secrets:
-      - postgres-password
-      - elasticsearch-password
     restart: always
     depends_on:
       - db

@@ -101,10 +101,11 @@ if (string.IsNullOrEmpty(dataProcessorConnectionString))
 
 builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
+ElasticsearchClientSettings settings;
 if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
 {
-    var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-    var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
     if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
     {
         throw new InvalidOperationException("Missing configuration for Elasticsearch");
@@ -131,11 +132,13 @@ else
         .Authentication(new BasicAuthentication("elastic", password));
 }
 
+/*
 var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
         .IndexName("projects-03")
     );
+    */
 
 builder.Services.AddSingleton(
     new ElasticsearchClient(settings));
