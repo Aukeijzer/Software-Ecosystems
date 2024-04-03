@@ -48,7 +48,8 @@ builder.Services.AddCors(options =>
 
 var apiKey = "";
 var cloudId= "";
-if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
+
+if (false) // Environment.GetEnvironmentVariable("Docker_Environment") == null)
 {
     string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "/secrets/backend-connectionstrings.json";
     builder.Configuration.AddJsonFile(path);
@@ -71,12 +72,6 @@ builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNa
     .AddJsonOptions(options =>  options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var connectionString = builder.Configuration.GetConnectionString("PostgresDb");
-// If running in docker, get the password from a file
-if (Environment.GetEnvironmentVariable("Docker_Enviroment") != null)
-{
-    var password = GetSecret("Postgres_Password_File");
-    connectionString = String.Format(connectionString, password);
-}
     
 builder.Services.AddDbContext<EcosystemsContext>(
     o => o.UseNpgsql(connectionString)
@@ -102,7 +97,7 @@ if (string.IsNullOrEmpty(dataProcessorConnectionString))
 builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
 ElasticsearchClientSettings settings;
-if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
+if (false)
 {
     apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
     cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
@@ -126,10 +121,14 @@ else
     };
     var pool = new StaticNodePool(nodes);
     
-    var password = GetSecret("Elasticsearch_Password_File");
+    var password = "secodash"; 
+    //GetSecret("Elasticsearch_Password_File");
     settings = new ElasticsearchClientSettings(pool)
-        .CertificateFingerprint("1d4903c26c88badd55d250d54bd6b3e6c291c033")
-        .Authentication(new BasicAuthentication("elastic", password));
+        .CertificateFingerprint("34571ffcb69d22c0a0edaa8ddc2cdb5c8f5314ec")
+        .Authentication(new BasicAuthentication("elastic", password))
+        .DefaultMappingFor<ProjectDto>(i => i
+            .IndexName("projects-03")
+        );
 }
 
 /*
