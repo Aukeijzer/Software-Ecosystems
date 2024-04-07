@@ -91,16 +91,48 @@ if (string.IsNullOrEmpty(dataProcessorConnectionString))
 
 builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
-if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
+ElasticsearchClientSettings settings;
+if (true)
 {
-    throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+    apiKey = "czdXTHVZNEJyNzFtTXc4dkdVRFQ6TzNhSE1LaVFRME82Z3ViQUJYcnRXQQ==";
+    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+    cloudId = "My_deployment:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJDY2N2I3ZGNhZDM0YjRkNjU4YWY2YjBjY2NjNWNiZmE5JDExMmYwODMwOTNlNDQxYzhiY2EwMjg1N2MzODU4MGJh";
+    if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId));
+    {
+        throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    }
+    settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
+        // set default index for ProjectDtos
+        .DefaultMappingFor<ProjectDto>(i => i
+            .IndexName("projects-03")
+        );
+}
+else
+{
+    var nodes = new Uri[]
+    {
+        new ("https://es01:9200"),
+    };
+    var pool = new StaticNodePool(nodes);
+    
+    var password = "secodash"; 
+    //GetSecret("Elasticsearch_Password_File");
+    settings = new ElasticsearchClientSettings(pool)
+        .CertificateFingerprint("07478fe7c04a49abd0d356eb1ffc47b343d856bb169618a458c372fcee014818")
+        .Authentication(new BasicAuthentication("elastic", "oW7Rlyq0ARD=Q81Fyjw*"))
+        .DefaultMappingFor<ProjectDto>(i => i
+            .IndexName("projects-03")
+        );
 }
 
+/*
 var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
     // set default index for ProjectDtos
     .DefaultMappingFor<ProjectDto>(i => i
         .IndexName("projects-03")
     );
+    */
 
 builder.Services.AddSingleton(
     new ElasticsearchClient(settings));
@@ -138,8 +170,8 @@ builder.Services.AddScoped<IScheduler, HangfireScheduler>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Use swagger if not in production
+if ( Environment.GetEnvironmentVariable("Docker_Enviroment") != "server")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -163,6 +195,18 @@ app.MapHangfireDashboard();
 app.CreateDbIfNotExists();
 app.ScheduleInitialJobs();
 app.Run();
+
+/// <summary>
+/// Reads the contents of a secret file. 
+/// </summary>
+/// <param name="name"> Name of the secret. </param>
+string GetSecret(string name)
+{
+    var path = Environment.GetEnvironmentVariable(name);
+    if (path == null)
+        throw new InvalidOperationException("Secret file location not specified");
+    return File.ReadAllText(path);
+}
 
 // Necessary for integration testing.
 // See https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-8.0#basic-tests-with-the-default-webapplicationfactory
