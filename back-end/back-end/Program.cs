@@ -46,22 +46,17 @@ builder.Services.AddCors(options =>
             });
 });
 
-var apiKey = "";
-var cloudId= "";
+//Set connection strings
 if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
 {
     string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "/secrets/backend-connectionstrings.json";
     builder.Configuration.AddJsonFile(path);
-    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
 }
 else
 {
     string? filePath = Environment.GetEnvironmentVariable("backend-secrets");
     var backendsecrets = File.OpenRead(filePath);
     builder.Configuration.AddJsonStream(backendsecrets);
-    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
 }
 
 
@@ -91,21 +86,53 @@ if (string.IsNullOrEmpty(dataProcessorConnectionString))
 
 builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
-if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId))
+ElasticsearchClientSettings settings;
+if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
 {
-    throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    //If ran locally we try to connect to a remote elasticsearch database
+    var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+    var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
+    if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId));
+    {
+        throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    }
+    settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
+        // set default index for ProjectDtos
+        .DefaultMappingFor<ProjectDto>(i => i
+            .IndexName("projects-03")
+        );
 }
-
-var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
-    // set default index for ProjectDtos
-    .DefaultMappingFor<ProjectDto>(i => i
-        .IndexName("projects-03")
-    );
-
-builder.Services.AddSingleton(
-    new ElasticsearchClient(settings));
+else
+{
+    //If ran in docker we try to connect to the local elasticsearch container
+    var nodeStrings = builder.Configuration.GetSection("Elasticsearch").GetSection("Nodes").Get<string[]>();
+    var password = builder.Configuration.GetSection("Elasticsearch").GetSection("Password").Value;
+    var fingerprint = builder.Configuration.GetSection("Elasticsearch").GetSection("Fingerprint").Value;
+    Console.WriteLine(builder.Configuration.GetSection("Elasticsearch").Value);
+    if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(fingerprint) 
+        || nodeStrings == null || nodeStrings.Length == 0)
+    {
+        throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    }
+    
+    var nodes = new Uri[nodeStrings.Length];
+    for(int i = 0; i<nodeStrings.Length; i++) {
+        nodes[i] = new Uri(nodeStrings[i]);
+    }
+    var pool = new StaticNodePool(nodes);
+    
+    settings = new ElasticsearchClientSettings(pool)
+        .CertificateFingerprint(fingerprint)
+        .Authentication(new BasicAuthentication("elastic", password))
+        // set default index for ProjectDtos
+        .DefaultMappingFor<ProjectDto>(i => i
+            .IndexName("projects-03")
+        );
+}
+builder.Services.AddSingleton(new ElasticsearchClient(settings));
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
 builder.Services.AddScoped<IAnalysisService, ElasticsearchAnalysisService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -138,8 +165,8 @@ builder.Services.AddScoped<IScheduler, HangfireScheduler>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Use swagger if not in production
+if ( Environment.GetEnvironmentVariable("Docker_Enviroment") != "server")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
