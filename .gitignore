@@ -135,3 +135,5 @@ data_processor/tests/__pycache__/
 data_processor/tests/test_data/__pycache__/
 
 data_processor/.venv/
+/elasticsearch/certs
+elasticsearch/.env

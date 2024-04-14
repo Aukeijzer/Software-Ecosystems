@@ -25,34 +25,148 @@ The SECODash project has been commissioned by [Dr. R.L. (Slinger) Jansen](https:
 SECODash is an Open-Source project and is released under the [GNU Affero General Public License](LICENSE). For more information on the The GNU Affero General Public License visit [www.gnu.org/licenses/agpl-3.0.en.html](https://www.gnu.org/licenses/agpl-3.0.en.html).
 
 # Running SECODash
-SECODash is fully containerized with Docker. As such it is portable and easy to run. You only need to download [Docker](https://docs.docker.com/get-docker/) to be able to run the project.
-Furthermore this project needs a [personal access](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) token from an account on GitHub in order to query data and a valid ssl certificate and private key.
+SECODash is fully containerized with Docker. As such it is portable and easy to run. For installation you only need to download [Docker](https://docs.docker.com/get-docker/) to be able to run the project. 
 
-## Managing secrets
+## Setup and Secrets
 This project has some private information which is not included "out-of-the-box". As such we need to add this information manually, namely.
 
-- Database password
+- elasticsearch .env file
+- back-end connection strings
 - SSL certificate and private key
-- github personal access token 
+- github personal access token
+- front-end .env files
 
-In order to include this information we need to make a directory called `secrets`. In this directory we add these files.
+Most of this information is in a directory called `secrets`. The enviroment files must be placed in their respective project folders.
 
-- db-password.txt
-- fullchain.pem
-- privkey.pem
-- spider-git-api-token.txt
+Furthermore in order to run the project we need to setup connection with a elasticsearch database. Either locally or remote we have included instructions to do this correctly below.
 
-Some notes:  
-- You do not need to include a database name it will automatically use the postgress database as default.
-- If you want to use a already pre-existing database you need to add it as a volume in the Docker compose file. 
-- The project needs a valid ssl certificate to properly work. If running locally make sure you have a valid certificate for localhost.
-- It does not matter in which format the certificates are as long as you make sure they are properly referenced in the Docker compose file.
+### Setup elasticsearch database connection
+We can either use a remote database or set one up locally. For our project we have use a local elasticsearch database for production and a remote elasticsearch database for development. 
 
-Once you have done this you are ready to start running the project.
+If you use a remote database connection you can connect to it by using the **cloud id** of the deployment and by generating a **api-key**. Fill both of these values in the [backend-secrets.json](/README.md#backend-connectionstringsjson-outside-docker) secrets file and you are done.
+
+Running the elasticsearch database locally uses the template given by the [documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html) of elasticsearch. First need to make sure you have set [vm_max_map to atleast 262144](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_set_vm_max_map_count_to_at_least_262144). After that you make a file `.env` in the `elasticsearch` directory and paste the following contents in the file.
+``` conf
+# Password for the 'elastic' user (at least 6 characters)
+ELASTIC_PASSWORD=<elastic_password>
+
+# Password for the 'kibana_system' user (at least 6 characters)
+KIBANA_PASSWORD=<kibana_password>
+
+# Version of Elastic products
+STACK_VERSION=8.13.0
+
+# Set the cluster name
+CLUSTER_NAME=docker-cluster
+
+# Set to 'basic' or 'trial' to automatically start the 30-day trial
+LICENSE=basic
+#LICENSE=trial
+
+# Port to expose Elasticsearch HTTP API to the host
+#ES_PORT=9200
+ES_PORT=127.0.0.1:9200
+
+# Port to expose Kibana to the host
+KIBANA_PORT=5601
+#KIBANA_PORT=80
+
+# Increase or decrease based on the available host memory (in bytes)
+MEM_LIMIT=1073741824
+
+# Project namespace (defaults to the current folder name if not set)
+#COMPOSE_PROJECT_NAME=myproject
+```
+Be sure to set the elastic_search password and kibana_password to something else.
+
+After that you can start the elasticsearch database. To do this run the batch file in the `elasticsearch` directory. This starts up the elasticsearch database. If you can't run batch files in your machine you can also just copy paste all commands in the terminal. The last command will display the ssl sha256-thumbprint needed to connect to the database. Be sure to also enter the thumbprint and elastic_password in the [backend-secrets.json](README.md#backend-secretsjson-in-docker).
+
+### Backend connection-strings
+In order to keep the database passwords private the connection strings the back-end uses have been put in the secrets file. This normally would be the `appsettings.json` file. We use 2 versions of this file. `backend-secrets.json` for running the back-end in a docker container and `backend-secrets.json` for running it in a docker container.
+
+#### backend-secrets.json (In docker)
+``` json
+{
+  "ConnectionStrings": {
+    "DevelopmentDb": "Server=0.0.0.0;Port=5432;Host=db;Database=postgres;Username=postgres;Password=<postgress-password>",
+    "Spider": "http://spider-app:5205/Spider",
+    "DataProcessor" : "http://data-processor-app:5000",
+    "Hangfire" : "Server=0.0.0.0;Port=5432;Host=db; Database=hangfire; Username=postgres; Password=<postgress-password>"
+   },
+  "Elasticsearch": {
+    "Password": "<elastic-password>",
+    "Fingerprint": "<fingerprint>",
+    "Nodes": [
+      "https://<elastic-container-name-1>:9200"
+      "https://<elastic-container-name-2>:9200"
+      "https://<elastic-container-name-3>:9200"
+    ]
+  }
+}
+```
+#### backend-connectionstrings.json (Outside docker)
+``` json
+{
+  "ConnectionStrings": {
+    "DevelopmentDb" : "Server=localhost; Database=develop; Port=5432; User Id=postgres; Password=<postgress-password>",
+    "Spider": "http://localhost:5205/Spider",
+    "DataProcessor": "http://localhost:5000",
+    "Hangfire" : "Server=localhost; Database=hangfire; Port=5432; User Id=postgres; Password=<postgress-password>"
+  },
+  "Elasticsearch": {
+    "CloudId": "<cloudid>",
+    "ApiKey": "<apikey>"
+  }
+}
+```
+
+Some notes:
+- \<postgress-password\> is the password used for the postgres sql database. You also need to make a file called `postgres-password.txt` with the same value so the database container knows which password it has to use.
+- These files assume you use a remote elasticsearch connection for running the project outside of docker and a local elasticsearch for running the project inside docker. If you want to use a local database for running inside a docker container or vice versa just use the *"Elasticsearch"* attribute of the other file. [Click here to see how to setup a elasticsearch database](Readme.md#setup-elasticsearch-database-connection)
+
+### SSL Certificates
+Creating personal certificates isn't nescessary, but it allows the application to run in https in the browser. Create a folder called `certs` and put the certificate and private key into it with the names `fullchain.pem` and `privkey.pem`. If you make a personal certificale make sure it is trusted by your machine by installing it.
+
+### Personal access token
+Get a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) from github and paste it into a file named `spider-git-api-token.txt`. Do note that github does limit how many requests you can make to its api. So it is not recommended to do this with any active account. Also note that using multiple api token's to exceed github's rate limit is against [Terms of Service](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#h-api-terms).
+
+### Front-end enviroment files
+The front-end has 2 enviroment files. `.env.development` is used for running the project outside of Docker and `.env.production` is used for running the project in Docker. The templates for both files have been given below.
+#### .env.development
+``` conf
+NEXT_PUBLIC_LOCAL_ADRESS=http://localhost
+NEXT_PUBLIC_BACKEND_ADRESS=http://localhost:5003
+
+NEXTAUTH_URL=http://localhost:3000
+
+NEXTAUTH_SECRET=
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+```
+
+#### .env.production
+``` conf
+NEXT_PUBLIC_LOCAL_ADRESS=http://localhost
+NEXT_PUBLIC_BACKEND_ADRESS=http://backend-app:5003
+
+NEXTAUTH_URL=http://localhost:3000
+
+NEXTAUTH_SECRET=
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+```
 
 ## Running locally
 
-We have included a batch file run.bat you can use to start up the project. Below we have outlined how it works.
+Once all setup is done (if you are using a local elasticsearch database make sure its running) the project can be run by running batch file run.bat in the project folder. Below we have outlined how it works.
 
 When in Docker applications use the docker network to communicate instead of ports on localhost. So before we start up our project this the network needs to be created first.
 
@@ -90,18 +204,17 @@ The structure of the project is made up of 4 different branches.
 
 ![UML diagram of the back-end](assets/backendUML.png)
 
-Typically a 'back-end' in a project is viewed as everything which happens behind the scenes. From this perspective other parts of the project, such as the dataprocessor and spider can both be seen as back-end. **In our project we use a different definition for back-end.** We see the back-end as the application which manages communication between applications. All applications only communicate with the back-end. As such the back-end can be seen as the glue which holds everything together.
+Typically the 'back-end' in a project is viewed as everything which happens server-side. With this definition other parts of the project, such as the dataprocessor and spider are technically both back-end. **In our project we use a different definition for back-end.** We see the back-end as the *application* which manages communication between applications all other applications. Most applications send and recieve information soley from the back-end application. Furthermore the back-end is responsible for managing the databases.
 
 The back-end consists of a .NET application which keeps a connection with a SQL and a Elasticsearch database.
 
-The application runs on a postgres
-
 ### Elasticsearch database
+TODO
+### Postgres database
+TODO
 
-##3 Running outside of an container
-In order to run the spider you need to install [C# .net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) and [PostgreSQL](https://www.postgresql.org/download/). While installing postgress it is recommended to also install the database-browser pgadmin4 via the installer.
-
-
+### Running outside of an container
+In order to run the spider you need to install [C# .net 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) and [PostgreSQL](https://www.postgresql.org/download/). While installing postgress it is recommended to also install the database-browser pgadmin4 via the installer. Be sure you have set up the [connection string](README.md#backend-connection-strings) properly.
 
 Afterwards you can open the project solution in your IDE (visual studio or rider) and run it using the http profile. 
 
@@ -127,6 +240,8 @@ Outside of a container we just run the Next.js on http so we do not need Nginx. 
 3. Run the following command "npm ci". This chain installs all required packages
 4. to run the front-end in development mode excecute: `npm run dev`
 5. To run the front-end in production mode execute: `npm run build` followed by `npm start`
+
+Also be sure you have added the [eviroment files](README.md#front-end-enviroment-files).
 
 ### Testing
 Front-end testing is doen with Cypress and Jest. Cypress is used for component testing and e2e tests. Jest is used for all seperate functions.

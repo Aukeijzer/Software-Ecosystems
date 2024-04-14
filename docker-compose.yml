@@ -1,6 +1,7 @@
 # 
 # This is the compose file used for development purposes. For more information read the documentation
 # 
+
 services:
 ####
   # Frontend
@@ -9,7 +10,7 @@ services:
       context: ./front-end/ecodash/
       dockerfile: ./Dockerfile
     ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000
     networks:
       - secodash-network
         
@@ -20,8 +21,8 @@ services:
       context: ./front-end/nginx/
       dockerfile: ./Dockerfile
     ports:
-      - 80:80
-      - 443:443
+      - 127.0.0.1:80:80
+      - 127.0.0.1:443:443
     secrets:
      - ssl-certificate
      - ssl-private-key
@@ -44,7 +45,7 @@ services:
       ASPNETCORE_URLS: http://*:5205
       Docker_Environment: local
     ports:
-      - 5205:5205
+      - 127.0.0.1:5205:5205
 
 #####
   # SQL Database 
@@ -64,16 +65,17 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
     volumes:
       - postgres-data:/var/lib/postgresql/data
-  
+
 ####
   # Database browser
   adminer:
     image: adminer
     ports:
-      - 8080:8080
+      - 127.0.0.1:8080:8080
     networks:
       - secodash-network
     restart: always
+
 ####
   # Backend (service) layer application
   backend-app:
@@ -83,12 +85,16 @@ services:
       dockerfile: ./Dockerfile
     secrets:
       - backend-secrets
+      - postgres-password
+      - elasticsearch-password
     environment:
       backend-secrets: /run/secrets/backend-secrets
       ASPNETCORE_URLS: http://*:5003
       Docker_Environment: local
+      Postgres_Password_File: /run/secrets/postgres-password
+      Elasticsearch_Password_File: /run/secrets/elasticsearch-password.txt
     ports:
-      - 5003:5003
+      - 127.0.0.1:5003:5003
     networks:
       - secodash-network
     restart: always
@@ -117,6 +123,8 @@ secrets:
     file: secrets/backend-secrets.json
   postgres-password:
     file: secrets/postgres-password.txt
+  elasticsearch-password:
+    file: secrets/elasticsearch-password.txt
   git-api-token:
     file: secrets/spider-git-api-token.txt
   ssl-certificate:
