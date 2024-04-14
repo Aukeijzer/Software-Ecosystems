@@ -46,22 +46,17 @@ builder.Services.AddCors(options =>
             });
 });
 
-var apiKey = "";
-var cloudId= "";
+//Set connection strings
 if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
 {
     string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + "/secrets/backend-connectionstrings.json";
     builder.Configuration.AddJsonFile(path);
-    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
 }
 else
 {
     string? filePath = Environment.GetEnvironmentVariable("backend-secrets");
     var backendsecrets = File.OpenRead(filePath);
     builder.Configuration.AddJsonStream(backendsecrets);
-    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
 }
 
 
@@ -92,12 +87,11 @@ if (string.IsNullOrEmpty(dataProcessorConnectionString))
 builder.Services.AddScoped<IDataProcessorService>(_ => new DataProcessorService(builder.Configuration.GetConnectionString("DataProcessor")!));
 
 ElasticsearchClientSettings settings;
-if (true)
+if (Environment.GetEnvironmentVariable("Docker_Environment") == null)
 {
-    apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
-    apiKey = "czdXTHVZNEJyNzFtTXc4dkdVRFQ6TzNhSE1LaVFRME82Z3ViQUJYcnRXQQ==";
-    cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
-    cloudId = "My_deployment:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJDY2N2I3ZGNhZDM0YjRkNjU4YWY2YjBjY2NjNWNiZmE5JDExMmYwODMwOTNlNDQxYzhiY2EwMjg1N2MzODU4MGJh";
+    //If ran locally we try to connect to a remote elasticsearch database
+    var apiKey = builder.Configuration.GetSection("Elasticsearch").GetSection("ApiKey").Value;
+    var cloudId = builder.Configuration.GetSection("Elasticsearch").GetSection("CloudId").Value;
     if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(cloudId));
     {
         throw new InvalidOperationException("Missing configuration for Elasticsearch");
@@ -110,34 +104,35 @@ if (true)
 }
 else
 {
-    var nodes = new Uri[]
+    //If ran in docker we try to connect to the local elasticsearch container
+    var nodeStrings = builder.Configuration.GetSection("Elasticsearch").GetSection("Nodes").Get<string[]>();
+    var password = builder.Configuration.GetSection("Elasticsearch").GetSection("Password").Value;
+    var fingerprint = builder.Configuration.GetSection("Elasticsearch").GetSection("Fingerprint").Value;
+    Console.WriteLine(builder.Configuration.GetSection("Elasticsearch").Value);
+    if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(fingerprint) 
+        || nodeStrings == null || nodeStrings.Length == 0)
     {
-        new ("https://es01:9200"),
-    };
+        throw new InvalidOperationException("Missing configuration for Elasticsearch");
+    }
+    
+    var nodes = new Uri[nodeStrings.Length];
+    for(int i = 0; i<nodeStrings.Length; i++) {
+        nodes[i] = new Uri(nodeStrings[i]);
+    }
     var pool = new StaticNodePool(nodes);
     
-    var password = "secodash"; 
-    //GetSecret("Elasticsearch_Password_File");
     settings = new ElasticsearchClientSettings(pool)
-        .CertificateFingerprint("07478fe7c04a49abd0d356eb1ffc47b343d856bb169618a458c372fcee014818")
-        .Authentication(new BasicAuthentication("elastic", "oW7Rlyq0ARD=Q81Fyjw*"))
+        .CertificateFingerprint(fingerprint)
+        .Authentication(new BasicAuthentication("elastic", password))
+        // set default index for ProjectDtos
         .DefaultMappingFor<ProjectDto>(i => i
             .IndexName("projects-03")
         );
 }
-
-/*
-var settings = new ElasticsearchClientSettings(cloudId, new ApiKey(apiKey))
-    // set default index for ProjectDtos
-    .DefaultMappingFor<ProjectDto>(i => i
-        .IndexName("projects-03")
-    );
-    */
-
-builder.Services.AddSingleton(
-    new ElasticsearchClient(settings));
+builder.Services.AddSingleton(new ElasticsearchClient(settings));
 builder.Services.AddScoped<IElasticsearchService, ElasticsearchService>();
 builder.Services.AddScoped<IAnalysisService, ElasticsearchAnalysisService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -195,18 +190,6 @@ app.MapHangfireDashboard();
 app.CreateDbIfNotExists();
 app.ScheduleInitialJobs();
 app.Run();
-
-/// <summary>
-/// Reads the contents of a secret file. 
-/// </summary>
-/// <param name="name"> Name of the secret. </param>
-string GetSecret(string name)
-{
-    var path = Environment.GetEnvironmentVariable(name);
-    if (path == null)
-        throw new InvalidOperationException("Secret file location not specified");
-    return File.ReadAllText(path);
-}
 
 // Necessary for integration testing.
 // See https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-8.0#basic-tests-with-the-default-webapplicationfactory

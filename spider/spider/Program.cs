@@ -55,8 +55,6 @@ if ( app.Environment.IsDevelopment() || local ) {
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
